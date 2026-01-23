@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZALO: 0352803379 - STUDIO V35.80 (GITHUB READY)</title>
+    <title>ZALO: 0352803379 - STUDIO V35.80 (GITHUB EDITION)</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1114,7 +1114,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const apiKey = ""; // NHẬP API KEY GOOGLE GEMINI CỦA BẠN VÀO ĐÂY (NẾU MUỐN CỐ ĐỊNH, NHƯNG KHUYÊN DÙNG CẤU HÌNH UI)
+            // ⚠️ QUAN TRỌNG: KHI CHẠY TRÊN GITHUB, HÃY ĐIỀN API KEY CỦA BẠN VÀO ĐÂY HOẶC ĐỂ TRỐNG VÀ NHẬP TRONG CÀI ĐẶT
+            const apiKey = ""; 
 
             // === HỆ THỐNG MÃ HÓA BẢO MẬT ===
             const SimpleSec = {
@@ -1391,8 +1392,25 @@
                 }, 3000);
             };
 
-            // === LOCK SCREEN LOGIC ===
-            const gateScreen = document.getElementById('security-gate');
+            // === GITHUB AUTO-SETUP CHECK ===
+            setTimeout(() => {
+                const { key } = getApiConfig();
+                if (!key && (window.location.hostname.includes('github.io') || window.location.hostname === 'localhost' || !apiKey)) {
+                    showToast("⚠️ CẦN CẤU HÌNH API KEY CHO WEB GITHUB!", "warning");
+                    const adminModal = document.getElementById('admin-modal');
+                    const adminLoginView = document.getElementById('admin-login-view');
+                    const adminDashView = document.getElementById('admin-dashboard-view');
+                    const passInput = document.getElementById('admin-password');
+                    
+                    if (adminModal && adminLoginView) {
+                        adminModal.classList.remove('hidden');
+                        adminLoginView.classList.remove('hidden');
+                        if (adminDashView) adminDashView.classList.add('hidden');
+                        if (passInput) passInput.focus();
+                    }
+                }
+            }, 2000);
+
             const gateSubmit = document.getElementById('gate-submit');
             const gateStatus = document.getElementById('gate-status');
             const gateAdminKey = document.getElementById('gate-admin-key');
