@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZALO: 0352803379 - STUDIO V35.80 (DUAL STORAGE SAFE)</title>
+    <title>ZALO: 0352803379 - STUDIO V35.80 (GITHUB READY)</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1114,7 +1114,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const apiKey = ""; 
+            const apiKey = ""; // NHẬP API KEY GOOGLE GEMINI CỦA BẠN VÀO ĐÂY (NẾU MUỐN CỐ ĐỊNH, NHƯNG KHUYÊN DÙNG CẤU HÌNH UI)
 
             // === HỆ THỐNG MÃ HÓA BẢO MẬT ===
             const SimpleSec = {
@@ -2142,6 +2142,23 @@
                     
                     const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
 
+                    // === NEW: API KEY CHECK FOR AUTO SCAN ===
+                    if (!keyToUse) {
+                        showToast("⚠️ Chưa có API Key! Vui lòng nhập trong 'PROMPT & API' hoặc 'Cấu Hình'", "error");
+                        // Open Prompt module to show input
+                        const promptModule = document.getElementById('content-prompt');
+                        const apiKeyInput = document.getElementById('user-api-key');
+                        if (promptModule) promptModule.classList.add('open');
+                        if (apiKeyInput) {
+                            apiKeyInput.focus();
+                            apiKeyInput.classList.add('border-red-500');
+                            setTimeout(() => apiKeyInput.classList.remove('border-red-500'), 3000);
+                        }
+                        btnAutoPilot.disabled = false;
+                        btnAutoPilot.innerHTML = originalText;
+                        return;
+                    }
+
                     try {
                         const resizedBase64 = await resizeImage(state.base64);
                         const headers = { 'Content-Type': 'application/json' };
@@ -2548,6 +2565,27 @@
                         return; 
                     }
                     
+                    const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+
+                    // === NEW: API KEY CHECK FOR PROCESS BUTTON ===
+                    if (!keyToUse) {
+                        showToast("⚠️ Chưa có API Key! Vui lòng nhập trong 'PROMPT & API' hoặc 'Cấu Hình'", "error");
+                        
+                        // Open Prompt module if not open
+                        const promptModule = document.getElementById('content-prompt');
+                        const apiKeyInput = document.getElementById('user-api-key');
+                        if (promptModule) promptModule.classList.add('open');
+                        if (apiKeyInput) {
+                            apiKeyInput.focus();
+                            apiKeyInput.classList.add('border-red-500');
+                            setTimeout(() => apiKeyInput.classList.remove('border-red-500'), 3000);
+                        }
+                        
+                        // Refund credits since we didn't run
+                        UserSystem.addCredits(20);
+                        return;
+                    }
+                    
                     processBtn.disabled = true;
                     processBtn.innerHTML = "FLUX/KONTEXT PROCESSING...";
                     document.getElementById('ai-terminal-overlay').classList.remove('hidden');
@@ -2825,8 +2863,6 @@
                             stepIdx++;
                         }
                     }, 800);
-
-                    const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
 
                     try {
                         const resizedBase64 = await resizeImage(state.base64);
