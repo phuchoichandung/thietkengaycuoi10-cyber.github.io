@@ -920,7 +920,7 @@
                         </div>
                     </div>
                     
-                    <div id="placeholder-state" class="text-center px-6 py-20 md:p-24 border border-dashed border-violet-500/50 rounded-3xl bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500 animate-float backdrop-blur-sm w-[90%] max-w-lg mx-auto flex flex-col items-center justify-center mb-20 md:mb-0 cursor-pointer shadow-[0_0_30px_rgba(124,58,237,0.1)]">
+                    <div id="placeholder-state" class="text-center px-6 py-20 md:p-24 rounded-3xl bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500 animate-float backdrop-blur-sm w-[90%] max-w-lg mx-auto flex flex-col items-center justify-center mb-20 md:mb-0 cursor-pointer shadow-[0_0_30px_rgba(124,58,237,0.1)]">
                         <div class="w-24 h-24 bg-gradient-to-tr from-slate-800 to-slate-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(139,92,246,0.2)] border border-white/10 group-hover:scale-110 transition-transform duration-300">
                             <svg class="w-12 h-12 text-violet-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
                         </div>
@@ -934,7 +934,7 @@
 
     <!-- NEW: RECHARGE MODAL (MOBILE OPTIMIZED: SCROLLABLE & COMPACT) -->
     <div id="recharge-modal" class="fixed inset-0 z-[110] bg-black/95 backdrop-blur-xl hidden flex items-center justify-center modal-fade-in sm:p-4 overflow-y-auto">
-        <div class="relative w-full max-w-4xl bg-[#0a0b10] border border-white/10 rounded-none sm:rounded-3xl shadow-2xl flex flex-col md:flex-row min-h-screen sm:min-h-0 sm:max-h-[90vh] md:h-[600px] overflow-hidden">
+        <div class="relative w-full max-w-4xl bg-[#0a0b10] border border-white/10 rounded-none sm:rounded-3xl shadow-2xl flex flex-col md:flex-row h-auto max-h-[95vh] md:h-[600px] overflow-hidden my-auto">
             
             <!-- CLOSE BUTTON (ABSOLUTE) -->
             <button id="close-recharge" class="absolute top-4 right-4 text-slate-500 hover:text-white p-2 bg-black/40 hover:bg-white/10 rounded-full transition-all z-50">
@@ -942,9 +942,9 @@
             </button>
 
             <!-- LEFT COLUMN: PACKAGES & INFO -->
-            <div class="w-full md:flex-1 p-6 pb-2 flex flex-col border-b md:border-b-0 md:border-r border-white/5 bg-white/[0.01]">
+            <div class="w-full md:flex-1 p-6 pb-2 flex flex-col border-b md:border-b-0 md:border-r border-white/5 bg-white/[0.01] overflow-y-auto">
                 <!-- Header -->
-                <div class="mb-4 md:mb-6 mt-2 md:mt-0">
+                <div class="mb-4 md:mb-6 mt-2 md:mt-0 flex-shrink-0">
                     <h3 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 uppercase tracking-widest flex items-center gap-2">
                         <svg class="w-6 h-6 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                         NẠP RH COINS
@@ -953,7 +953,7 @@
                 </div>
 
                 <!-- 1. CHOOSE PACKAGE -->
-                <div class="space-y-3 mb-4 md:mb-6">
+                <div class="space-y-3 mb-4 md:mb-6 flex-shrink-0">
                     <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pl-1 flex items-center gap-1">
                         <span class="w-4 h-4 rounded-full bg-violet-500/20 text-violet-400 flex items-center justify-center text-[8px]">1</span>
                         CHỌN GÓI NẠP
@@ -1007,7 +1007,7 @@
                 </div>
 
                 <!-- 4. REDEEM CODE (Moved here) -->
-                <div class="mt-auto pt-4 border-t border-white/5 pb-4 md:pb-0">
+                <div class="mt-auto pt-4 border-t border-white/5 pb-4 md:pb-0 flex-shrink-0">
                     <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2 block">CÓ MÃ KÍCH HOẠT?</label>
                     <div class="flex gap-2">
                         <input type="text" id="recharge-input" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-center font-mono text-[11px] uppercase text-white focus:border-violet-500/50 outline-none placeholder-slate-600 transition-all" placeholder="NHẬP MÃ (V35-...)">
@@ -1020,18 +1020,18 @@
             </div>
 
             <!-- RIGHT COLUMN: PAYMENT GATEWAY UI -->
-            <div class="w-full md:w-[400px] bg-[#0f1016] p-6 flex flex-col relative overflow-y-auto h-[90vh] md:h-auto pb-20 md:pb-6">
+            <div class="w-full md:w-[400px] bg-[#0f1016] p-6 flex flex-col relative overflow-y-auto pb-20 md:pb-6">
                 <!-- Background decorative elements -->
                 <div class="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 rounded-full blur-[80px] pointer-events-none"></div>
                 
-                <div class="relative z-10 flex-1 flex flex-col justify-center">
-                    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pl-1 mb-3 flex items-center gap-1 mt-4 md:mt-0">
+                <div class="relative z-10 flex-1 flex flex-col justify-center min-h-0">
+                    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pl-1 mb-3 flex items-center gap-1 mt-4 md:mt-0 flex-shrink-0">
                         <span class="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-[8px]">2</span>
                         QUÉT MÃ QR (AUTO UPDATE)
                     </label>
 
                     <!-- DYNAMIC QR CODE CARD -->
-                    <div class="bg-white p-3 rounded-2xl shadow-xl mb-4 self-center w-[200px] sm:w-[240px] relative group mx-auto md:mx-0">
+                    <div class="bg-white p-3 rounded-2xl shadow-xl mb-4 self-center w-[200px] sm:w-[240px] relative group mx-auto md:mx-0 flex-shrink-0">
                         <!-- QR Image with Loading State -->
                         <div class="aspect-square bg-slate-100 rounded-xl overflow-hidden relative">
                             <div id="qr-loading" class="absolute inset-0 flex items-center justify-center bg-slate-50 z-10 transition-opacity duration-300 opacity-0 pointer-events-none">
@@ -1048,7 +1048,7 @@
                     </div>
 
                     <!-- BANK CARD UI -->
-                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-4 border border-white/5 relative overflow-hidden group cursor-pointer hover:border-violet-500/30 transition-all mb-4" onclick="navigator.clipboard.writeText('85543556868'); showToast('Đã copy số tài khoản MB!', 'success');">
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-4 border border-white/5 relative overflow-hidden group cursor-pointer hover:border-violet-500/30 transition-all mb-4 flex-shrink-0" onclick="navigator.clipboard.writeText('85543556868'); showToast('Đã copy số tài khoản MB!', 'success');">
                         <div class="absolute top-0 right-0 p-3 opacity-20"><svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
                         <div class="flex justify-between items-start mb-4">
                             <div class="text-[10px] font-bold text-slate-400">MB BANK</div>
@@ -1059,7 +1059,7 @@
                     </div>
 
                     <!-- 3. VERIFY ACTION -->
-                    <div class="mt-auto space-y-2">
+                    <div class="mt-auto space-y-2 flex-shrink-0">
                         <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest pl-1 flex items-center gap-1">
                             <span class="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[8px]">3</span>
                             XÁC NHẬN GIAO DỊCH
