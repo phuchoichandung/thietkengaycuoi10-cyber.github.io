@@ -134,13 +134,12 @@
         /* THEME STYLES - PRO MASTER */
         :root { --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        /* FIX MOBILE HEIGHT: use 100dvh instead of 100vh or h-screen to avoid browser bar cutoff */
         body { 
             background-color: #050505; 
             background-image: radial-gradient(circle at top right, #0f172a, #050505);
             color: #e2e8f0;
             -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-            height: 100dvh; /* Dynamic Viewport Height */
+            height: 100dvh;
             min-height: 100dvh;
         }
         input, textarea { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
@@ -276,10 +275,16 @@
                     <span class="relative z-10">VÀO PHỤC CHẾ ẢNH</span>
                     <svg class="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </button>
+                
+                 <!-- NEW: IMPORT CONFIG BUTTON -->
+                 <button id="gate-import-config" class="w-full py-2.5 bg-white/5 hover:bg-white/10 text-slate-400 rounded-xl text-[10px] font-bold tracking-widest transition-all flex items-center justify-center gap-2 border border-white/5 mt-2">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <span>NHẬP MÃ CẤU HÌNH TỪ ADMIN</span>
+                </button>
             </div>
             
             <!-- Status Text -->
-            <div class="mt-6 h-4 flex items-center justify-center">
+            <div class="mt-4 h-4 flex items-center justify-center">
                 <p id="gate-status" class="text-[10px] text-slate-500 transition-colors animate-pulse">Đang quét thông tin thiết bị...</p>
             </div>
 
@@ -287,6 +292,16 @@
             <div class="absolute bottom-4 left-0 right-0 text-center opacity-30 pointer-events-none">
                 <p class="text-[8px] font-mono">SECURE GATEWAY • IP VERIFICATION</p>
             </div>
+        </div>
+    </div>
+
+    <!-- NEW: IMPORT CONFIG MODAL -->
+    <div id="import-config-modal" class="fixed inset-0 z-[10005] bg-black/90 backdrop-blur-md hidden flex items-center justify-center modal-fade-in">
+        <div class="w-[400px] glass-panel rounded-xl border border-white/10 shadow-2xl p-6 relative">
+             <button id="close-import" class="absolute top-4 right-4 text-slate-400 hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+             <h3 class="text-xs font-bold text-violet-400 tracking-widest mb-4 uppercase">NHẬP MÃ CẤU HÌNH (TỪ MÁY CHỦ)</h3>
+             <textarea id="import-config-input" class="pro-input w-full p-3 h-32 resize-none font-mono text-[10px] mb-4" placeholder="Dán mã cấu hình mà Admin đã gửi vào đây..."></textarea>
+             <button id="btn-apply-import" class="w-full py-3 bg-violet-600 hover:bg-violet-500 text-white rounded text-xs font-bold transition-colors shadow-lg">ÁP DỤNG CẤU HÌNH</button>
         </div>
     </div>
 
@@ -1074,6 +1089,10 @@
                         <h3 class="text-xs font-bold text-violet-400 tracking-widest mb-3 uppercase">CẤU HÌNH API & TÀI KHOẢN</h3>
                         
                         <div class="space-y-3">
+                             <div class="bg-blue-500/10 border border-blue-500/30 p-2 rounded text-[10px] text-blue-200">
+                                <strong>LƯU Ý:</strong> Các thay đổi ở đây chỉ lưu trên máy này (Local Storage). Để dùng chung cho mọi máy, hãy nhập Key trực tiếp vào Code hoặc dùng chức năng Xuất Cấu Hình.
+                            </div>
+
                             <div>
                                 <label class="text-[10px] font-bold text-slate-400 uppercase mb-1 block">IP Thiết Bị</label>
                                 <input type="text" id="display-ip-address" class="pro-input w-full py-2 bg-white/5 border-violet-500/20 text-violet-300 font-mono tracking-widest text-center" readonly value="Đang quét IP...">
@@ -1096,7 +1115,10 @@
                             <div>
                                 <label class="text-[10px] font-bold text-slate-400 uppercase mb-1 block">API Key (Lưu vào trình duyệt)</label>
                                 <input type="password" id="modal-api-key" class="pro-input w-full py-2 text-center tracking-widest font-mono text-violet-300" placeholder="sk-...">
-                                <div class="flex justify-end mt-1"><button id="toggle-show-key" class="text-[9px] text-slate-500 hover:text-slate-300">Hiện/Ẩn</button></div>
+                                <div class="flex justify-between mt-1 px-1">
+                                    <span id="hardcoded-key-status" class="text-[9px] text-slate-500 italic">Hệ thống: Chưa có Key chung</span>
+                                    <button id="toggle-show-key" class="text-[9px] text-slate-500 hover:text-slate-300">Hiện/Ẩn</button>
+                                </div>
                             </div>
 
                             <div id="base-url-section" class="hidden">
@@ -1104,9 +1126,14 @@
                                 <input type="text" id="modal-base-url" class="pro-input w-full py-2 font-mono text-[10px]" value="https://generativelanguage.googleapis.com">
                                 <p class="text-[9px] text-slate-500 mt-1 italic" id="url-hint">Mặc định: https://generativelanguage.googleapis.com</p>
                             </div>
+                            
+                            <!-- NEW: EXPORT CONFIG BUTTON -->
+                            <div class="pt-2">
+                                <button id="btn-export-config" class="w-full py-2 bg-white/5 hover:bg-white/10 text-slate-400 border border-white/10 rounded text-xs font-bold transition-colors mb-2">📤 SAO CHÉP MÃ CẤU HÌNH (CHO MÁY KHÁC)</button>
+                            </div>
 
-                            <div class="pt-2 flex flex-col gap-2">
-                                <button id="btn-save-login" class="w-full py-2 bg-violet-600 hover:bg-violet-500 text-white rounded text-xs font-bold transition-colors shadow-lg">LƯU CẤU HÌNH</button>
+                            <div class="flex flex-col gap-2">
+                                <button id="btn-save-login" class="w-full py-2 bg-violet-600 hover:bg-violet-500 text-white rounded text-xs font-bold transition-colors shadow-lg">LƯU CẤU HÌNH (MÁY NÀY)</button>
                                 <button id="btn-logout" class="w-full py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded text-xs font-bold transition-colors hidden">ĐĂNG XUẤT / RESET</button>
                             </div>
                         </div>
@@ -1118,6 +1145,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // === GIẢI PHÁP 1: ADMIN HÃY ĐIỀN API KEY VÀO GIỮA 2 DẤU NGOẶC KÉP BÊN DƯỚI ===
+            // Ví dụ: const apiKey = "sk-AbCdEfGhIjK...";
             const apiKey = ""; 
 
             // === HỆ THỐNG MÃ HÓA BẢO MẬT ===
@@ -1263,6 +1292,13 @@
                         if (gateIpDisplay) gateIpDisplay.textContent = `Offline | ${this.deviceId}`;
                         const topBarIp = document.getElementById('top-bar-ip');
                         if (topBarIp) topBarIp.textContent = `IP: Offline`;
+                        
+                        // Enable gate anyway if IP fails, to avoid lock out
+                        const gateBtn = document.getElementById('gate-submit');
+                         if(gateBtn) {
+                            gateBtn.disabled = false;
+                            gateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        }
                         return null;
                     }
                 },
@@ -1422,9 +1458,12 @@
             } catch(e) {}
 
             async function loginByIP() {
-                if(!UserSystem.ipAddress) return showToast("Chưa tìm thấy IP, vui lòng đợi...", "error");
+                // Bỏ qua check IP nếu đã có hardcoded key, cho vào luôn
+                if(apiKey && apiKey.length > 10) {
+                     console.log("System Key found, skipping IP check for UX");
+                }
                 
-                gateStatus.textContent = `Đang xác thực IP: ${UserSystem.ipAddress}...`;
+                gateStatus.textContent = `Đang xác thực IP: ${UserSystem.ipAddress || 'Checking'}...`;
                 gateStatus.className = "mt-6 text-[10px] text-blue-400 font-bold animate-pulse";
                 gateSubmit.disabled = true;
                 gateSubmit.classList.add('opacity-70');
@@ -1438,7 +1477,8 @@
                     setTimeout(() => {
                         gateScreen.classList.add('animate-fade-out');
                         setTimeout(() => { gateScreen.style.display = 'none'; }, 500);
-                        showToast(`IP Đã Xác Thực: ${UserSystem.ipAddress}`, "smart");
+                        showToast(`IP Đã Xác Thực: ${UserSystem.ipAddress || 'Local'}`, "smart");
+                        if(apiKey && !state.userSettings.apiKey) showToast("Đang dùng Key dùng chung (System Key)", "warning");
                     }, 500);
                 }, 1500);
             }
@@ -1474,9 +1514,27 @@
             const loginDot = document.getElementById('login-status-dot');
             const urlHint = document.getElementById('url-hint');
             const displayIp = document.getElementById('display-ip-address');
+            
+            // New Export
+            const btnExportConfig = document.getElementById('btn-export-config');
 
             function updateLoginUI() {
-                if(state.userSettings.apiKey) {
+                const hasLocalKey = !!state.userSettings.apiKey;
+                const hasSystemKey = !!apiKey;
+                
+                // Cập nhật trạng thái hiển thị trong Admin Modal
+                const hardcodedStatus = document.getElementById('hardcoded-key-status');
+                if(hardcodedStatus) {
+                    if(hasSystemKey) {
+                        hardcodedStatus.textContent = "Hệ thống: ĐÃ CÓ Key dùng chung (Hardcoded)";
+                        hardcodedStatus.className = "text-[9px] text-green-400 font-bold";
+                    } else {
+                        hardcodedStatus.textContent = "Hệ thống: Chưa có Key dùng chung (Chỉ dùng Local)";
+                        hardcodedStatus.className = "text-[9px] text-slate-500 italic";
+                    }
+                }
+
+                if(hasLocalKey || hasSystemKey) {
                     if(loginDot) {
                         loginDot.classList.remove('bg-slate-600');
                         loginDot.classList.add('bg-green-500', 'shadow-[0_0_8px_#22c55e]');
@@ -1492,7 +1550,8 @@
                     if(btnOpenAdmin) btnOpenAdmin.title = "Admin / Cấu hình";
                 }
             }
-            if(state.userSettings.apiKey) updateLoginUI();
+            // Init check
+            updateLoginUI();
 
             if(btnOpenAdmin) btnOpenAdmin.addEventListener('click', () => {
                 adminModal.classList.remove('hidden');
@@ -1594,6 +1653,83 @@
                 modalKey.type = modalKey.type === 'password' ? 'text' : 'password';
             });
             
+            // === NEW: EXPORT/IMPORT CONFIG LOGIC ===
+            if(btnExportConfig) {
+                btnExportConfig.addEventListener('click', () => {
+                    const cfg = {
+                        k: modalKey.value.trim(),
+                        u: modalUser.value.trim(),
+                        p: state.userSettings.provider,
+                        b: modalBaseUrl.value.trim()
+                    };
+                    if(!cfg.k) return showToast("Chưa có API Key để xuất!", "error");
+                    
+                    const str = JSON.stringify(cfg);
+                    const enc = SimpleSec.encrypt(str); // Mã hóa chuỗi config
+                    const finalCode = `V35CFG-${enc}`; // Prefix nhận diện
+
+                    // Copy to clipboard
+                    const textArea = document.createElement("textarea");
+                    textArea.value = finalCode;
+                    textArea.style.position = "fixed"; 
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        showToast("Đã copy MÃ CẤU HÌNH! Gửi cho máy khác để nhập.", "success");
+                    } catch (err) {
+                         showToast("Lỗi copy.", "error");
+                    }
+                    document.body.removeChild(textArea);
+                });
+            }
+
+            const btnGateImport = document.getElementById('gate-import-config');
+            const importModal = document.getElementById('import-config-modal');
+            const closeImport = document.getElementById('close-import');
+            const btnApplyImport = document.getElementById('btn-apply-import');
+            const importInput = document.getElementById('import-config-input');
+
+            if(btnGateImport) {
+                btnGateImport.addEventListener('click', () => {
+                    importModal.classList.remove('hidden');
+                    importInput.value = '';
+                    importInput.focus();
+                });
+            }
+            if(closeImport) closeImport.addEventListener('click', () => importModal.classList.add('hidden'));
+
+            if(btnApplyImport) {
+                btnApplyImport.addEventListener('click', () => {
+                    let code = importInput.value.trim();
+                    if(!code.startsWith('V35CFG-')) return showToast("Mã cấu hình không hợp lệ!", "error");
+                    
+                    try {
+                        const encryptedPart = code.substring(7); // Bỏ prefix
+                        const decrypted = SimpleSec.decrypt(encryptedPart);
+                        const cfg = JSON.parse(decrypted);
+                        
+                        // Apply settings
+                        state.userSettings.apiKey = cfg.k || '';
+                        state.userSettings.username = cfg.u || '';
+                        state.userSettings.provider = cfg.p || 'google';
+                        state.userSettings.baseUrl = cfg.b || 'https://generativelanguage.googleapis.com';
+                        
+                        // Save to local storage
+                        const dataStr = JSON.stringify(state.userSettings);
+                        const reEnc = SimpleSec.encrypt(dataStr);
+                        localStorage.setItem('v35_user_settings', reEnc);
+                        
+                        showToast("Đã nhập cấu hình thành công! Đang tải lại...", "success");
+                        setTimeout(() => window.location.reload(), 1000);
+
+                    } catch(e) {
+                        showToast("Lỗi giải mã cấu hình!", "error");
+                    }
+                });
+            }
+
             // === NEW: LICENSE KEY GENERATOR LOGIC ===
             const pkgBtns = document.querySelectorAll('.gen-pkg-btn');
             const selectedCreditInput = document.getElementById('gen-selected-credit');
@@ -1684,11 +1820,17 @@
             
             // Helper to get effective API Key and URL
             const getApiConfig = () => {
+                // Ưu tiên 1: Key nhập tay trong box (dùng 1 lần)
                 const manualKey = document.getElementById('user-api-key')?.value.trim();
-                const key = manualKey || state.userSettings.apiKey || apiKey;
-                const base = state.userSettings.baseUrl || "https://generativelanguage.googleapis.com";
-                const isComet = state.userSettings.provider === 'comet';
-                return { key, base, isComet };
+                if(manualKey) return { key: manualKey, base: state.userSettings.baseUrl, isComet: state.userSettings.provider === 'comet' };
+
+                // Ưu tiên 2: Key cá nhân lưu trong máy (Local Storage)
+                if(state.userSettings.apiKey) return { key: state.userSettings.apiKey, base: state.userSettings.baseUrl, isComet: state.userSettings.provider === 'comet' };
+                
+                // Ưu tiên 3: Key chung của hệ thống (Hardcoded trong file) - Giải pháp cho "tất cả các máy"
+                if(apiKey) return { key: apiKey, base: "https://generativelanguage.googleapis.com", isComet: false };
+
+                return { key: '', base: state.userSettings.baseUrl, isComet: false };
             };
             
             const resizeImage = (base64Str, maxWidth = 1536) => {
@@ -2352,10 +2494,7 @@
                                 }
                             }
 
-                            if(result.hasStrabismus) {
-                                document.getElementById('check-cross-eyed').checked = true;
-                                showToast("👁️ Phát hiện Mắt Lé (Strabismus): Đã bật chế độ giữ mắt lé", "warning");
-                            }
+                            if(result.hasStrabismus) document.getElementById('check-cross-eyed').checked = true;
                             
                             if(result.hasDroopyEyelids) {
                                 const ptosisCheck = document.getElementById('check-ptosis');
@@ -2387,16 +2526,9 @@
                                 }
                             }
 
-                            // ALWAYS ENABLE REPLICA MODE ON AUTO SCAN AS REQUESTED
                             if (!state.isReplicaMode) {
-                                const repCheck = document.getElementById('mode-replica');
-                                if(repCheck) {
-                                    repCheck.checked = true;
-                                    // Trigger change event manually to update UI state
-                                    const event = new Event('change');
-                                    repCheck.dispatchEvent(event);
-                                }
-                                showToast("💎 Auto Scan: Đã TỰ ĐỘNG BẬT Chế độ Sao Y Bản Chính (Replica)", "warning");
+                                document.getElementById('mode-replica').click();
+                                showToast("💎 Auto Scan: Đã kích hoạt Chế độ Sao Y Bản Chính (Replica)", "warning");
                             }
                             
                             let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed background:1.3). `;
