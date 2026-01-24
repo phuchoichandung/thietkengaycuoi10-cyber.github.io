@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZALO: 0352803379 - STUDIO V35.80 (DUAL STORAGE SAFE)</title>
+    <title>ZALO: 0352803379 - STUDIO V35.80 (SECURE TOKEN SYSTEM)</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -763,7 +763,7 @@
                         <div class="module-inner">
                             <textarea id="prompt-main" rows="3" class="pro-input w-full p-2 resize-none text-[10px] font-mono save-input mb-2" data-key="promptMainValue" placeholder="Hệ thống sẽ tự động tối ưu theo chuẩn Flux..."></textarea>
                             <input type="text" id="prompt-negative" placeholder="Loại trừ..." class="pro-input w-full py-1.5 save-input mb-2" data-key="promptNegative">
-                            <input type="password" id="user-api-key" placeholder="API Key riêng (Nếu cần)" class="pro-input w-full py-1.5 save-input" data-key="userApiKey">
+                            <input type="password" id="user-api-key" placeholder="API Key riêng (hoặc Token mã hóa)" class="pro-input w-full py-1.5 save-input font-mono" data-key="userApiKey">
                         </div>
                     </div>
                 </div>
@@ -1067,11 +1067,31 @@
                         <div class="text-[10px] font-mono text-violet-300 break-all" id="admin-device-id">---</div>
                     </div>
 
+                    <!-- NEW: SHAREABLE ENCRYPTED API KEY GENERATOR -->
+                    <div class="pt-4 mt-2 border-t border-white/5">
+                        <h3 class="text-xs font-bold text-blue-400 tracking-widest mb-3 uppercase flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            MÃ HÓA API KEY (CHIA SẺ CHO KHÁCH)
+                        </h3>
+                        <div class="space-y-3 bg-white/5 p-3 rounded-lg border border-white/10">
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block">API Key Gốc (Admin nhập vào)</label>
+                                <input type="text" id="admin-raw-key-input" class="pro-input w-full py-2 font-mono text-[10px] text-blue-300" placeholder="AIzaSy...">
+                            </div>
+                            <button id="btn-encrypt-share-key" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-bold transition-colors shadow-lg">TẠO MÃ KHÓA (ENCRYPT)</button>
+                            <div id="share-key-result" class="hidden mt-2">
+                                <label class="text-[9px] font-bold text-green-400 uppercase mb-1 block">Token An Toàn (Gửi cái này cho khách)</label>
+                                <input type="text" id="share-key-output" class="pro-input w-full py-2 font-mono text-[10px] text-green-400 cursor-pointer bg-green-500/10 border-green-500/30" readonly>
+                                <p class="text-[8px] text-slate-500 mt-1 italic">*Khách hàng nhập mã này vào ô API Key. Hệ thống sẽ tự giải mã ngầm.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- NEW: LICENSE GENERATOR SECTION -->
                     <div class="pt-4 mt-2 border-t border-white/5">
                         <h3 class="text-xs font-bold text-yellow-500 tracking-widest mb-3 uppercase flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
-                            🛠 CÔNG CỤ TẠO MÃ KÍCH HOẠT (V2 - CHỐNG SPAM)
+                            CÔNG CỤ TẠO MÃ NẠP TIỀN (CREDITS)
                         </h3>
                         
                         <div class="space-y-3 bg-white/5 p-3 rounded-lg border border-white/10">
@@ -1635,7 +1655,39 @@
                 modalKey.type = modalKey.type === 'password' ? 'text' : 'password';
             });
             
-            // === NEW: LICENSE KEY GENERATOR LOGIC ===
+            // === NEW: SHAREABLE ENCRYPTED API KEY LOGIC ===
+            const adminRawKeyInput = document.getElementById('admin-raw-key-input');
+            const btnEncryptShare = document.getElementById('btn-encrypt-share-key');
+            const shareKeyResult = document.getElementById('share-key-result');
+            const shareKeyOutput = document.getElementById('share-key-output');
+
+            if(btnEncryptShare && adminRawKeyInput) {
+                btnEncryptShare.addEventListener('click', () => {
+                    const rawKey = adminRawKeyInput.value.trim();
+                    if(!rawKey) return showToast("Vui lòng nhập API Key gốc!", "error");
+                    if(rawKey.startsWith("V35-ACCESS-")) return showToast("Đây là mã đã mã hóa rồi!", "error");
+
+                    // Encrypt with SimpleSec and add prefix
+                    const encrypted = SimpleSec.encrypt(rawKey);
+                    const finalToken = `V35-ACCESS-${encrypted}`;
+                    
+                    shareKeyOutput.value = finalToken;
+                    shareKeyResult.classList.remove('hidden');
+                    showToast("Đã tạo mã truy cập an toàn!", "success");
+                });
+            }
+
+            if(shareKeyOutput) {
+                shareKeyOutput.addEventListener('click', () => {
+                    shareKeyOutput.select();
+                    try {
+                        document.execCommand('copy');
+                        showToast("Đã copy Token!", "success");
+                    } catch(e){}
+                });
+            }
+
+            // === NEW: LICENSE KEY GENERATOR LOGIC (CREDITS) ===
             const pkgBtns = document.querySelectorAll('.gen-pkg-btn');
             const selectedCreditInput = document.getElementById('gen-selected-credit');
             const btnGenerate = document.getElementById('btn-generate-key');
@@ -1723,10 +1775,23 @@
                 });
             }
             
-            // Helper to get effective API Key and URL
+            // Helper to get effective API Key and URL (UPDATED FOR DECRYPTION)
             const getApiConfig = () => {
-                const manualKey = document.getElementById('user-api-key')?.value.trim();
-                const key = manualKey || state.userSettings.apiKey || apiKey;
+                let manualKey = document.getElementById('user-api-key')?.value.trim();
+                let key = manualKey || state.userSettings.apiKey || apiKey;
+                
+                // DECRYPTION LOGIC: CHECK FOR V35-ACCESS PREFIX
+                if (key.startsWith("V35-ACCESS-")) {
+                    try {
+                        const encryptedPart = key.replace("V35-ACCESS-", "");
+                        key = SimpleSec.decrypt(encryptedPart);
+                        console.log("Decrypted API Token successfully");
+                    } catch(e) {
+                        console.error("Token decryption failed", e);
+                        showToast("Mã Token không hợp lệ!", "error");
+                    }
+                }
+
                 const base = state.userSettings.baseUrl || "https://generativelanguage.googleapis.com";
                 const isComet = state.userSettings.provider === 'comet';
                 return { key, base, isComet };
