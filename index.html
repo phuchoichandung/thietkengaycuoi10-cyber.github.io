@@ -1205,29 +1205,41 @@
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; 
 
-            // === HỆ THỐNG MÃ HÓA BẢO MẬT ===
+            // === HỆ THỐNG MÃ HÓA BẢO MẬT (UPDATED V2 ROBUST) ===
             const SimpleSec = {
                 _key: "V35_SECURE_KEY_SALT", 
                 encrypt: function(text) {
                     if(!text) return '';
                     try {
+                        // V2: Encode URI để an toàn với mọi ký tự đặc biệt
+                        const safeText = encodeURIComponent(text);
                         let result = '';
-                        for(let i = 0; i < text.length; i++) {
-                            result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
+                        for(let i = 0; i < safeText.length; i++) {
+                            result += String.fromCharCode(safeText.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
                         }
                         return btoa(result);
-                    } catch(e) { return text; }
+                    } catch(e) { console.error("Encrypt error:", e); return text; }
                 },
                 decrypt: function(encoded) {
                     if(!encoded) return '';
                     try {
-                        let text = atob(encoded);
+                        // V2: Fix lỗi thiếu padding (=) khi copy thiếu
+                        let fixedEncoded = encoded.trim();
+                        while (fixedEncoded.length % 4 !== 0) {
+                            fixedEncoded += '=';
+                        }
+                        
+                        let text = atob(fixedEncoded);
                         let result = '';
                         for(let i = 0; i < text.length; i++) {
                             result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
                         }
-                        return result;
-                    } catch(e) { return encoded; }
+                        // V2: Decode URI để lấy lại chuỗi gốc chính xác
+                        return decodeURIComponent(result);
+                    } catch(e) { 
+                        console.error("Decrypt error (Base64/URI):", e); 
+                        return null; // Trả về null để biết là giải mã thất bại
+                    }
                 }
             };
 
@@ -1799,20 +1811,30 @@
                 });
             }
             
-            // Helper to get effective API Key and URL (UPDATED FOR DECRYPTION)
+            // Helper to get effective API Key and URL (UPDATED FOR DECRYPTION V2)
             const getApiConfig = () => {
                 let manualKey = document.getElementById('user-api-key')?.value.trim();
+                // Ưu tiên key nhập tay, sau đó đến setting, cuối cùng là hardcode
                 let key = manualKey || state.userSettings.apiKey || apiKey;
                 
                 // DECRYPTION LOGIC: CHECK FOR V35-ACCESS PREFIX
-                if (key.startsWith("V35-ACCESS-")) {
+                if (key && key.startsWith("V35-ACCESS-")) {
                     try {
                         const encryptedPart = key.replace("V35-ACCESS-", "");
-                        key = SimpleSec.decrypt(encryptedPart);
-                        console.log("Decrypted API Token successfully");
+                        // Thử giải mã
+                        const decrypted = SimpleSec.decrypt(encryptedPart);
+                        
+                        if (decrypted) {
+                            key = decrypted;
+                            console.log("✅ Decrypted API Token successfully");
+                        } else {
+                            console.error("❌ Token decryption returned null");
+                            // Không showToast ngay ở đây để tránh spam nếu người dùng đang nhập dở
+                            // Nhưng nếu đang click Process thì sẽ lỗi
+                        }
                     } catch(e) {
                         console.error("Token decryption failed", e);
-                        showToast("Mã Token không hợp lệ!", "error");
+                        showToast("Lỗi giải mã Token!", "error");
                     }
                 }
 
