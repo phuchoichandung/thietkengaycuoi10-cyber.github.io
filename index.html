@@ -347,7 +347,7 @@
                     <input type="file" id="image-upload" accept="image/*" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;">
                     <label id="drop-zone" for="image-upload" class="flex flex-col items-center justify-center w-full h-28 border border-dashed border-violet-500/50 rounded-lg cursor-pointer bg-white/[0.02] hover:bg-violet-900/[0.1] hover:border-violet-500 transition-all duration-200">
                         <div id="upload-placeholder" class="flex flex-col items-center pointer-events-none">
-                            <svg class="w-5 h-5 text-violet-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                            <svg class="w-5 h-5 text-violet-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
                             <span class="text-[10px] font-bold text-slate-400 uppercase">Tải ảnh gốc (Kéo thả hoặc Bấm vào)</span>
                         </div>
                     </label>
@@ -1100,13 +1100,13 @@
                         <div class="space-y-3 bg-white/5 p-3 rounded-lg border border-white/10">
                             <div>
                                 <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block">API Key Gốc (Admin nhập vào)</label>
-                                <input type="text" id="admin-raw-key-input" class="pro-input w-full py-2 font-mono text-[10px] text-blue-300" placeholder="AIzaSy...">
+                                <input type="text" id="admin-raw-key-input" class="pro-input w-full py-2 font-mono text-[10px] text-blue-300" placeholder="AIzaSy... hoặc sk-...">
                             </div>
-                            <button id="btn-encrypt-share-key" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-bold transition-colors shadow-lg">TẠO MÃ KHÓA (ENCRYPT)</button>
+                            <button id="btn-encrypt-share-key" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-bold transition-colors shadow-lg">TẠO MÃ KHÓA (NGẮN GỌN)</button>
                             <div id="share-key-result" class="hidden mt-2">
                                 <label class="text-[9px] font-bold text-green-400 uppercase mb-1 block">Token An Toàn (Gửi cái này cho khách)</label>
                                 <input type="text" id="share-key-output" class="pro-input w-full py-2 font-mono text-[10px] text-green-400 cursor-pointer bg-green-500/10 border-green-500/30" readonly>
-                                <p class="text-[8px] text-slate-500 mt-1 italic">*Khách hàng nhập mã này vào ô API Key. Hệ thống sẽ tự giải mã ngầm.</p>
+                                <p class="text-[8px] text-slate-500 mt-1 italic">*Mã đã được nén Base64 ngắn gọn. Khách chỉ cần dán vào.</p>
                             </div>
                         </div>
                     </div>
@@ -1205,38 +1205,47 @@
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; 
 
-            // === HỆ THỐNG MÃ HÓA BẢO MẬT (UPDATED V3: HEX ROBUST - MOBILE SAFE) ===
-            // Chuyển sang dùng HEX để tránh lỗi copy paste thiếu ký tự trên điện thoại
+            // === HỆ THỐNG MÃ HÓA BẢO MẬT (UPDATED V4: BASE64 COMPACT & ROBUST) ===
+            // SỬ DỤNG BASE64 ĐỂ NGẮN GỌN HƠN HEX VÀ AN TOÀN HƠN
             const SimpleSec = {
                 _key: "V35_SECURE_KEY_SALT", 
+                
                 encrypt: function(text) {
                     if(!text) return '';
                     try {
-                        // V3: XOR và chuyển sang HEX (An toàn tuyệt đối khi copy)
-                        let hexResult = '';
+                        // 1. XOR biến đổi ký tự
+                        let chars = [];
                         for(let i = 0; i < text.length; i++) {
                             const code = text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length);
-                            // Chuyển thành 2 ký tự Hex, đệm số 0 nếu cần
-                            hexResult += ("00" + code.toString(16)).slice(-2);
+                            chars.push(String.fromCharCode(code));
                         }
-                        return hexResult.toUpperCase(); 
-                    } catch(e) { console.error("Encrypt error:", e); return text; }
+                        const xorString = chars.join("");
+                        
+                        // 2. Chuyển sang Base64 (Ngắn hơn Hex)
+                        // btoa chỉ hỗ trợ ASCII, nên nếu XOR ra ký tự lạ có thể lỗi. 
+                        // -> Safe Encode: encodeURIComponent trước để đảm bảo an toàn
+                        return btoa(encodeURIComponent(xorString));
+                    } catch(e) { 
+                        console.error("Encrypt error:", e); 
+                        return text; 
+                    }
                 },
+
                 decrypt: function(encoded) {
                     if(!encoded) return '';
                     try {
-                        let text = '';
-                        // V3: Lọc bỏ ký tự rác nếu khách lỡ tay nhập space hoặc xuống dòng
-                        const cleanHex = encoded.replace(/[^0-9A-Fa-f]/g, '').trim();
+                        // 1. Giải mã Base64 -> String
+                        const xorString = decodeURIComponent(atob(encoded.trim()));
                         
-                        for(let i = 0; i < cleanHex.length; i += 2) {
-                            const hexPart = cleanHex.substr(i, 2);
-                            const code = parseInt(hexPart, 16) ^ this._key.charCodeAt((i / 2) % this._key.length);
+                        // 2. XOR ngược lại để lấy text gốc
+                        let text = '';
+                        for(let i = 0; i < xorString.length; i++) {
+                            const code = xorString.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length);
                             text += String.fromCharCode(code);
                         }
-                        return text;
+                        return text.trim(); // QUAN TRỌNG: TRIM ĐỂ XÓA KHOẢNG TRẮNG THỪA
                     } catch(e) { 
-                        console.error("Decrypt error (Hex):", e); 
+                        console.error("Decrypt error (Base64):", e); 
                         return null; 
                     }
                 }
@@ -1810,36 +1819,33 @@
                 });
             }
             
-            // Helper to get effective API Key and URL (UPDATED FOR DECRYPTION V3)
+            // Helper to get effective API Key and URL (UPDATED FOR DECRYPTION V4)
             const getApiConfig = () => {
                 let manualKey = document.getElementById('user-api-key')?.value.trim();
                 // Ưu tiên key nhập tay, sau đó đến setting, cuối cùng là hardcode
                 let key = manualKey || state.userSettings.apiKey || apiKey;
                 
                 // DECRYPTION LOGIC: CHECK FOR V35-ACCESS PREFIX
-                // Kiểm tra xem key có phải dạng mã hóa không
                 if (key && key.startsWith("V35-ACCESS-")) {
                     try {
                         const encryptedPart = key.replace("V35-ACCESS-", "");
-                        // Thử giải mã V3
                         const decrypted = SimpleSec.decrypt(encryptedPart);
                         
-                        // Kiểm tra tính hợp lệ của key sau giải mã (Google Key thường bắt đầu bằng AIza)
-                        // Hoặc ít nhất là một chuỗi có nghĩa, không phải null/rỗng
-                        if (decrypted && decrypted.length > 10) {
-                            key = decrypted;
+                        if (decrypted && decrypted.length > 5) {
+                            key = decrypted; // Dùng key đã giải mã
                             console.log("✅ Decrypted API Token successfully");
                         } else {
-                            console.error("❌ Token decryption returned invalid data");
-                            // Nếu đang chạy lệnh mà key sai thì báo lỗi ngay
-                            const isRunning = document.getElementById('process-image').disabled;
-                            if(isRunning) showToast("Mã API Key không hợp lệ hoặc giải mã thất bại!", "error");
+                            // Nếu giải mã lỗi, giữ nguyên để thử (có thể họ nhập sai định dạng)
+                            console.warn("⚠️ Token format seems invalid after decryption");
                         }
                     } catch(e) {
                         console.error("Token decryption failed", e);
                         showToast("Lỗi cấu trúc Token! Vui lòng copy lại.", "error");
                     }
                 }
+
+                // XÓA KHOẢNG TRẮNG DƯ THỪA (Rất quan trọng)
+                key = key.trim();
 
                 const base = state.userSettings.baseUrl || "https://generativelanguage.googleapis.com";
                 const isComet = state.userSettings.provider === 'comet';
@@ -2430,7 +2436,11 @@
                     try {
                         const resizedBase64 = await resizeImage(state.base64);
                         const headers = { 'Content-Type': 'application/json' };
-                        if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+                        
+                        // SỬA LỖI API HEADER CHO COMET
+                        if (isComet) {
+                            headers['Authorization'] = `Bearer ${keyToUse}`;
+                        }
 
                         const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, {
                             method: 'POST',
@@ -3122,7 +3132,11 @@
                         if (state.refBase64) parts.push({ inlineData: { mimeType: "image/jpeg", data: state.refBase64.split(',')[1] } });
 
                         const headers = { 'Content-Type': 'application/json' };
-                        if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+                        
+                        // SỬA LỖI API HEADER CHO COMET
+                        if (isComet) {
+                            headers['Authorization'] = `Bearer ${keyToUse}`;
+                        }
 
                         const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, {
                             method: 'POST',
@@ -3196,124 +3210,28 @@
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    setTimeout(() => URL.revokeObjectURL(url), 100);
-                    showToast("Đã lưu ảnh PNG (Lossless)!", "success");
+                    URL.revokeObjectURL(url);
+                    showToast("Đang tải xuống...", "success");
                 }, 'image/png');
             };
 
             if(downloadTrigger) downloadTrigger.addEventListener('click', handleDownload);
-            if(btnMobDown) {
-                btnMobDown.addEventListener('click', handleDownload);
-                btnMobDown.addEventListener('touchstart', (e) => { e.preventDefault(); if(!btnMobDown.disabled) handleDownload(); });
-            }
-
-            // === MOBILE SMART BAR LOGIC (NEW) ===
-            const mobBar = document.getElementById('mobile-action-bar');
-            const mobBtnUpload = document.getElementById('mob-btn-upload');
-            const mobBtnScan = document.getElementById('mob-btn-scan');
-            const mobBtnRun = document.getElementById('mob-btn-run');
-            const mobBtnReset = document.getElementById('mob-btn-reset');
-            const mobStatus = document.getElementById('mobile-status-text');
-
-            // 1. Initial State
-            if(mobBar) {
-                setTimeout(() => {
-                    mobBar.classList.remove('translate-y-24', 'opacity-0');
-                }, 1000);
-            }
-
-            // 2. Proxy Events
-            if(mobBtnUpload) mobBtnUpload.onclick = () => document.getElementById('image-upload').click();
+            if(btnMobDown) btnMobDown.addEventListener('click', handleDownload);
             
-            if(mobBtnScan) mobBtnScan.onclick = () => {
-                document.getElementById('btn-auto-pilot').click();
-                // UI Switch to Generate
-                mobBtnScan.classList.add('hidden');
-                mobBtnRun.classList.remove('hidden');
-                mobBtnRun.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> SCANNING...`;
-                
-                // Watch for scan complete (Simulated by checking prompt text change or toast)
-                // In real implementation, we hook into the async function, but here we estimate
-                setTimeout(() => {
-                    mobBtnRun.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> CHẠY NGAY`;
-                    mobStatus.textContent = "READY TO GENERATE";
-                    mobStatus.classList.add('text-emerald-400');
-                    showToast("Đã Scan xong! Bấm 'CHẠY' để tạo ảnh.", "success");
-                }, 3000); // Rough estimate of scan time
-            };
-
-            if(mobBtnRun) mobBtnRun.onclick = () => {
-                document.getElementById('process-image').click();
-                mobBtnRun.disabled = true;
-                
-                // === UPDATE HERE: BETTER LOADING VISUAL ON MOBILE ===
-                mobBtnRun.className = "flex-1 py-3.5 bg-amber-600 border border-amber-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse transition-all cursor-not-allowed";
-                mobBtnRun.innerHTML = `
-                    <svg class="w-5 h-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <span>ĐANG TẠO ẢNH...</span>
-                `;
-                
-                mobStatus.textContent = "AI ĐANG XỬ LÝ (Vui lòng đợi)...";
-                mobStatus.className = "text-[8px] font-mono tracking-widest text-amber-400 font-bold animate-pulse";
-                
-                // Re-enable handled in process-image logic usually, but let's watch for completion
-                const checkInterval = setInterval(() => {
-                    const mainBtn = document.getElementById('process-image');
-                    if(!mainBtn.disabled) {
-                        clearInterval(checkInterval);
-                        mobBtnRun.disabled = false;
-                        
-                        // Reset style to original Green/Teal style but indicating complete/retry
-                        mobBtnRun.className = "flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all";
-                        mobBtnRun.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> <span>LÀM LẠI</span>`;
-                        
-                        mobStatus.textContent = "ĐÃ HOÀN THÀNH";
-                        mobStatus.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
-                    }
-                }, 1000);
-            };
-
-            if(mobBtnReset) mobBtnReset.onclick = () => window.location.reload();
-
-            // 3. Hook into Load Image to switch buttons
-            // In the fileInput listener, we can inject logic.
-            if(fileInput) fileInput.addEventListener('change', (e) => {
-                 if (e.target.files.length > 0) {
-                     mobBtnUpload.classList.add('hidden');
-                     mobBtnScan.classList.remove('hidden');
-                     mobStatus.textContent = "IMAGE LOADED - PRESS SCAN";
-                     mobStatus.classList.add('text-violet-400');
-                 }
+            if(btnReset) btnReset.addEventListener('click', () => {
+                location.reload();
+            });
+            
+            // Admin Add Credits Logic
+            const addCreditBtns = document.querySelectorAll('.add-credit-btn');
+            addCreditBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const amount = parseInt(btn.dataset.amount);
+                    UserSystem.addCredits(amount);
+                    showToast(`Admin: Đã thêm ${amount} credits`, "success");
+                });
             });
 
-            if(btnReset) {
-                const performReset = (e) => {
-                    if(e.cancelable) e.preventDefault();
-                    // UPDATED: ROBUST RESET LOGIC
-                    showToast("Đang làm mới hệ thống...", "info");
-                    setTimeout(() => { 
-                         // Thêm timestamp để ép trình duyệt tải lại trang mới (tránh cache)
-                         const url = window.location.href.split('?')[0] + '?t=' + new Date().getTime();
-                         window.location.href = url;
-                    }, 300);
-                };
-                btnReset.addEventListener('click', performReset);
-                btnReset.addEventListener('touchend', performReset);
-            }
-            
-            if(idSlider && idVal) idSlider.addEventListener('input', (e) => { idVal.textContent = e.target.value + '%'; });
-            if(creativitySlider && creativityVal) {
-                creativitySlider.addEventListener('input', (e) => {
-                    const val = parseInt(e.target.value);
-                    creativityVal.textContent = `Mức ${val}% (LZP Style)`;
-                });
-            }
-            if(grainSlider && grainVal) grainSlider.addEventListener('input', (e) => { grainVal.textContent = e.target.value + '% (Kontext)'; });
-            if(exposureSlider && exposureVal) exposureSlider.addEventListener('input', (e) => { exposureVal.textContent = parseFloat(e.target.value).toFixed(1); });
-            if(structureSlider && structureVal) structureSlider.addEventListener('input', (e) => { structureVal.textContent = "Mạnh (" + (e.target.value/100).toFixed(1) + ")"; });
         });
     </script>
 </body>
