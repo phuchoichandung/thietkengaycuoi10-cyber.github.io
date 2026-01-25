@@ -1111,8 +1111,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // FIX: Gắn cứng API Key theo yêu cầu
-            const apiKey = "AIzaSyCXIWbWNX77UaTV1dt0RNZR4PREQh_oZ6w"; 
+            const apiKey = ""; 
 
             // === HỆ THỐNG MÃ HÓA BẢO MẬT (NEW) ===
             const SimpleSec = {
@@ -1618,9 +1617,11 @@
             
             // Helper to get effective API Key and URL
             const getApiConfig = () => {
-                // FIX: GẮN CỨNG KEY ĐỂ ĐẢM BẢO CHẠY
-                const hardcodedKey = "AIzaSyCXIWbWNX77UaTV1dt0RNZR4PREQh_oZ6w";
-                return { key: hardcodedKey, base: "https://generativelanguage.googleapis.com", isComet: false };
+                const manualKey = document.getElementById('user-api-key')?.value.trim();
+                const key = manualKey || state.userSettings.apiKey || apiKey;
+                const base = state.userSettings.baseUrl || "https://generativelanguage.googleapis.com";
+                const isComet = state.userSettings.provider === 'comet';
+                return { key, base, isComet };
             };
             
             const resizeImage = (base64Str, maxWidth = 1536) => {
@@ -1639,46 +1640,6 @@
                         resolve(canvas.toDataURL('image/jpeg', 0.9));
                     };
                 });
-            };
-
-            // === HÀM PHÂN TÍCH ẢNH CỤC BỘ (LOCAL ANALYSIS) - BACKUP KHI AI LỖI ===
-            const analyzeImageLocal = (imageElement) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = imageElement.naturalWidth;
-                canvas.height = imageElement.naturalHeight;
-                ctx.drawImage(imageElement, 0, 0);
-                
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-                let r, g, b, avg;
-                let colorSum = 0;
-                let brightnessSum = 0;
-                
-                // Lấy mẫu điểm ảnh để tăng tốc độ
-                const step = 10; 
-                let count = 0;
-
-                for(let x = 0; x < data.length; x += step * 4) {
-                    r = data[x];
-                    g = data[x+1];
-                    b = data[x+2];
-                    avg = (r+g+b)/3;
-                    colorSum += Math.abs(r-g) + Math.abs(r-b) + Math.abs(g-b);
-                    brightnessSum += avg;
-                    count++;
-                }
-
-                const brightness = brightnessSum / count; // 0-255
-                const colorness = colorSum / count; // Càng thấp càng giống đen trắng
-
-                return {
-                    isDark: brightness < 60,
-                    isBright: brightness > 200,
-                    isLowContrast: false, // Cần thuật toán phức tạp hơn, tạm bỏ qua
-                    isBlackAndWhite: colorness < 15,
-                    aspectRatio: canvas.width / canvas.height
-                };
             };
 
             const fluxToggle = document.getElementById('mode-flux');
@@ -2109,52 +2070,12 @@
                     
                     const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
 
-                    // === 1. PHÂN TÍCH CỤC BỘ TRƯỚC (LUÔN CHẠY ĐƯỢC) ===
-                    try {
-                        const img = document.getElementById('img-original');
-                        if (img) {
-                            const localStats = analyzeImageLocal(img);
-                            console.log("Local Analysis:", localStats);
-
-                            // Auto-set Anti-flip based on Aspect Ratio
-                            const antiFlip = document.getElementById('check-anti-flip');
-                            if (localStats.aspectRatio < 0.9) { // Portrait
-                                state.aspectRatioType = 'portrait';
-                                if(antiFlip) antiFlip.checked = true;
-                            } else if (localStats.aspectRatio > 1.1) { // Landscape
-                                state.aspectRatioType = 'landscape';
-                                if(antiFlip) antiFlip.checked = true;
-                            } else {
-                                state.aspectRatioType = 'square';
-                            }
-
-                            // Auto-set Lighting/Exposure
-                            if (localStats.isDark) {
-                                document.getElementById('check-soft-light').checked = true;
-                                document.getElementById('container-contrast-fix').classList.add('contrast-highlight');
-                                showToast("🌑 Ảnh tối: Đã bật chế độ Soft Light", "info");
-                            } else if (localStats.isBright) {
-                                document.getElementById('check-qwen-exposure').checked = true;
-                                document.getElementById('content-exposure').classList.add('open');
-                                showToast("☀️ Ảnh sáng: Đã bật khử cháy sáng", "warning");
-                            }
-
-                            // Auto-set Color Grading
-                            const grading = document.getElementById('color-grading');
-                            if (localStats.isBlackAndWhite && grading) {
-                                grading.value = "sepia tone, antique photo style"; // Mặc định cho ảnh đen trắng cũ
-                            }
-                        }
-                    } catch(e) { console.warn("Local analysis error", e); }
-
-                    // === 2. GỌI AI PHÂN TÍCH SÂU (NẾU ĐƯỢC) ===
                     try {
                         const resizedBase64 = await resizeImage(state.base64);
                         const headers = { 'Content-Type': 'application/json' };
                         if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
 
-                        // FIX: Chuyển sang gemini-1.5-flash (Bản ổn định nhất cho phân tích)
-                        const response = await fetch(`${apiBase}/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
+                        const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, {
                             method: 'POST',
                             headers: headers,
                             body: JSON.stringify({
@@ -2166,16 +2087,12 @@
                                 }]
                             })
                         });
-                        
-                        if (!response.ok) throw new Error("API Scan Failed");
-
                         const data = await response.json();
                         let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
                         if(text) {
                             text = text.replace(/```json/g, '').replace(/```/g, '').trim();
                             const result = JSON.parse(text);
                             
-                            // ... (Giữ nguyên logic cập nhật UI từ kết quả AI ở đây) ...
                             const genderSelect = document.getElementById('gender-select');
                             if(genderSelect) {
                                 if(result.gender === 'male') genderSelect.value = 'male';
@@ -2432,12 +2349,7 @@
                             btnAutoPilot.classList.remove('btn-smart-modern');
                             btnAutoPilot.classList.add('bg-violet-600');
                         }
-                    } catch(e) { 
-                        console.error(e); 
-                        showToast("Lỗi API Scan: Đã dùng Local Scan để chọn cài đặt.", "warning"); 
-                        // Prompt fallback
-                        if(promptMain) promptMain.value = "Restore this photo, remove scratches, high quality, 8k, detailed skin texture, vietnamese features.";
-                    } 
+                    } catch(e) { console.error(e); showToast("Lỗi Smart Scan: " + e.message, "error"); } 
                     finally { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }
                 });
             }
@@ -2854,94 +2766,39 @@
                         const headers = { 'Content-Type': 'application/json' };
                         if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
 
-                        // HÀM FETCH CÓ THỬ LẠI (RETRY LOGIC)
-                        const fetchWithRetry = async (url, options, retries = 3, backoff = 3000) => {
-                            try {
-                                const response = await fetch(url, options);
-                                if (response.status === 429 && retries > 0) {
-                                    console.warn(`Quota exceeded. Retrying in ${backoff}ms... (${retries} left)`);
-                                    await new Promise(r => setTimeout(r, backoff));
-                                    return fetchWithRetry(url, options, retries - 1, backoff * 2);
-                                }
-                                return response;
-                            } catch (err) {
-                                if (retries > 0) {
-                                    await new Promise(r => setTimeout(r, backoff));
-                                    return fetchWithRetry(url, options, retries - 1, backoff * 2);
-                                }
-                                throw err;
-                            }
-                        };
-
-                        // Dùng model 2.0 (Model tạo ảnh)
-                        let response = await fetchWithRetry(`${apiBase}/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${keyToUse}`, {
+                        const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, {
                             method: 'POST',
                             headers: headers,
-                            body: JSON.stringify({ 
-                                contents: [{ parts: parts }], 
-                                generationConfig: { responseModalities: ["TEXT", "IMAGE"] } 
-                            })
+                            body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } })
                         });
 
-                        // XỬ LÝ LỖI QUOTA HOẶC FAIL -> TỰ ĐỘNG FALLBACK SANG CHẾ ĐỘ GIẢ LẬP
-                        if (!response.ok) {
-                            console.warn("AI Generation Failed (Quota/Error), switching to Simulated Mode");
-                            throw new Error("ForceFallback");
-                        }
-
                         const data = await response.json();
+                        if (data.error) throw new Error(data.error.message || "Lỗi kết nối đến server AI.");
+                        
                         let base64Img = null;
                         if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
                             for (const part of data.candidates[0].content.parts) {
-                                if (part.inlineData && part.inlineData.data) { 
-                                    base64Img = part.inlineData.data; 
-                                    break; 
-                                }
+                                if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; }
                             }
                         }
 
-                        if (!base64Img) throw new Error("ForceFallback");
-
-                        const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
-                        const restoredImg = new Image();
-                        restoredImg.onload = () => {
-                            state.restoredObj = restoredImg;
-                            const imgMod = document.getElementById('img-modified');
-                            if(imgMod) {
-                                imgMod.src = finalImgSrc;
-                                imgMod.style.filter = "none"; // Reset filter
-                            }
-                            if(magnifier) magnifier.style.backgroundImage = `url('${finalImgSrc}')`;
-                            setTimeout(() => { syncViewerSize(); updateSlider(50); }, 100);
-                            showToast("Phục chế thành công (AI V35)!", "flux");
-                        };
-                        restoredImg.src = finalImgSrc;
-
-                    } catch(e) { 
-                        // === FALLBACK MODE: NẾU AI LỖI, CHẠY CHẾ ĐỘ LỌC CỤC BỘ ===
-                        console.log("Running Fallback Mode due to:", e);
-                        showToast("⚠️ Server quá tải (Quota). Đang chạy chế độ HD Filter...", "warning");
-                        
-                        const resizedBase64 = await resizeImage(state.base64);
-                        const restoredImg = new Image();
-                        restoredImg.onload = () => {
-                            state.restoredObj = restoredImg;
-                            const imgMod = document.getElementById('img-modified');
-                            if(imgMod) {
-                                imgMod.src = resizedBase64;
-                                // Áp dụng bộ lọc CSS mạnh hơn để giả lập phục chế (Tăng nét, khử nhiễu, cân bằng sáng)
-                                // Nâng cấp: Dùng saturate và contrast cao hơn chút để "nịnh mắt"
-                                imgMod.style.filter = "contrast(1.15) brightness(1.08) saturate(1.15) drop-shadow(0 0 1px rgba(0,0,0,0.5))";
-                            }
-                            if(magnifier) magnifier.style.backgroundImage = `url('${resizedBase64}')`;
-                            setTimeout(() => { syncViewerSize(); updateSlider(50); }, 100);
-                            
-                            if(downloadTrigger) { downloadTrigger.disabled = false; downloadTrigger.classList.remove('opacity-50', 'cursor-not-allowed'); }
-                            if(btnMobDown) btnMobDown.disabled = false;
-                            if (window.innerWidth < 1024) document.getElementById('sidebar')?.classList.add('-translate-x-full');
-                        };
-                        restoredImg.src = resizedBase64;
-                    } 
+                        if(base64Img) {
+                            const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
+                            const restoredImg = new Image();
+                            restoredImg.onload = () => {
+                                state.restoredObj = restoredImg;
+                                const imgMod = document.getElementById('img-modified');
+                                if(imgMod) imgMod.src = finalImgSrc;
+                                if(magnifier) magnifier.style.backgroundImage = `url('${finalImgSrc}')`;
+                                setTimeout(() => { syncViewerSize(); updateSlider(50); }, 100);
+                                if(downloadTrigger) { downloadTrigger.disabled = false; downloadTrigger.classList.remove('opacity-50', 'cursor-not-allowed'); }
+                                if(btnMobDown) btnMobDown.disabled = false;
+                                if (window.innerWidth < 1024) document.getElementById('sidebar')?.classList.add('-translate-x-full');
+                                showToast("Phục chế thành công (V35.65)!", "flux");
+                            };
+                            restoredImg.src = finalImgSrc;
+                        } else { throw new Error("Không tạo được ảnh."); }
+                    } catch(e) { console.error(e); showToast("Lỗi: " + e.message, "error"); } 
                     finally {
                         clearInterval(termInterval);
                         processBtn.disabled = false;
@@ -2969,14 +2826,7 @@
                 canvas.width = realWidth;
                 canvas.height = realHeight;
                 const ctx = canvas.getContext('2d');
-                
-                // NẾU LÀ ẢNH GỐC (FALLBACK), ÁP DỤNG FILTER TRÊN CANVAS ĐỂ LƯU
-                if (document.getElementById('img-modified').style.filter !== "none") {
-                    ctx.filter = "contrast(1.1) brightness(1.05) saturate(1.1)";
-                } else {
-                    ctx.filter = `brightness(100%) contrast(100%) saturate(100%)`;
-                }
-                
+                ctx.filter = `brightness(100%) contrast(100%) saturate(100%)`;
                 ctx.drawImage(state.restoredObj, 0, 0, realWidth, realHeight);
                 drawLogo(ctx, realWidth, realHeight);
                 canvas.toBlob((blob) => {
@@ -3104,6 +2954,28 @@
             if(exposureSlider && exposureVal) exposureSlider.addEventListener('input', (e) => { exposureVal.textContent = parseFloat(e.target.value).toFixed(1); });
             if(structureSlider && structureVal) structureSlider.addEventListener('input', (e) => { structureVal.textContent = "Mạnh (" + (e.target.value/100).toFixed(1) + ")"; });
         });
-    </script>
+    </script><!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gemini AI Test</title>
+</head>
+<body style="background:#0b0b0b;color:#fff;font-family:Arial">
+
+  <h2>🔥 Gemini AI – Phục chế ảnh / Text</h2>
+
+  <textarea id="prompt" placeholder="Nhập nội dung..."
+    style="width:100%;height:120px;"></textarea>
+
+  <br><br>
+  <button onclick="runGemini()">Chạy Gemini</button>
+
+  <pre id="result" style="white-space:pre-wrap;margin-top:20px;"></pre>
+
+  <!-- JS TÁCH RIÊNG -->
+  <script src="gemini.js"></script>
+</body>
+</html>
+
 </body>
 </html>
