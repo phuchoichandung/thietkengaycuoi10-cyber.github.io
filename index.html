@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZALO: 0352803379 - STUDIO V35.80 (AUTO SCAN UPGRADE)</title>
+    <title>ZALO: 0352803379 - STUDIO V35.80 (FINAL FIX)</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -931,7 +931,7 @@
                     <div id="placeholder-state" class="text-center px-6 py-10 md:p-24 border border-dashed border-violet-500/50 rounded-2xl bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500 animate-float backdrop-blur-sm w-[85%] max-w-lg md:w-auto mx-auto flex flex-col items-center justify-center mb-16 md:mb-0 cursor-pointer">
                         <div class="w-20 h-20 bg-gradient-to-tr from-slate-800 to-slate-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5"><svg class="w-10 h-10 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
                         <!-- EDITED: CHANGE TEXT HERE -->
-                        <h3 class="text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒI ẢNH</h3>
+                        <h3 class="text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒIẢNH</h3>
                         <p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Kéo thả hoặc Dán ảnh vào đây</p>
                     </div>
                 </div>
@@ -1439,6 +1439,13 @@
                 if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; });
             };
             toggleModule('toggle-processing', 'content-processing', 'icon-processing');
+            toggleModule('toggle-subject', 'content-subject', 'icon-subject');
+            toggleModule('toggle-identity', 'content-identity', 'icon-identity');
+            toggleModule('toggle-prompt', 'content-prompt', 'icon-prompt');
+            toggleModule('toggle-logo', 'content-logo', 'icon-logo');
+            toggleModule('toggle-military', 'content-military', 'icon-military');
+            toggleModule('toggle-cinematic', 'content-cinematic', 'icon-cinematic');
+            toggleModule('toggle-exposure', 'content-exposure', 'icon-exposure');
             // ... (Other modules) ...
 
             // ... (Comparison Slider Logic) ...
