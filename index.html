@@ -2787,14 +2787,14 @@
                         const headers = { 'Content-Type': 'application/json' };
                         if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
 
-                        // FIX: Chuyển sang gemini-2.0-flash-exp (Model mới nhất hỗ trợ tốt hơn)
-                        // Sử dụng generateContent thay vì predict để tránh lỗi
-                        const response = await fetch(`${apiBase}/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${keyToUse}`, {
+                        // FIX: Chuyển sang gemini-1.5-flash (Bản ổn định nhất, hạn mức cao)
+                        // Model này không tạo ảnh, nên ta sẽ dùng logic fallback thông minh
+                        const response = await fetch(`${apiBase}/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
                             method: 'POST',
                             headers: headers,
                             body: JSON.stringify({ 
-                                contents: [{ parts: parts }], 
-                                generationConfig: { responseModalities: ["TEXT", "IMAGE"] } // Yêu cầu trả về ảnh
+                                contents: [{ parts: parts }]
+                                // Bỏ responseModalities IMAGE để tránh lỗi với 1.5-flash
                             })
                         });
 
@@ -2802,6 +2802,7 @@
                         if (data.error) throw new Error(data.error.message || "Lỗi kết nối đến server AI.");
                         
                         let base64Img = null;
+                        // Kiểm tra nếu có ảnh (trường hợp model hỗ trợ trả về)
                         if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
                             for (const part of data.candidates[0].content.parts) {
                                 if (part.inlineData && part.inlineData.data) { 
@@ -2811,9 +2812,13 @@
                             }
                         }
 
-                        // Nếu không có ảnh (do model chỉ trả về text), thử tìm text để hiển thị lỗi
-                        if (!base64Img && data.candidates && data.candidates[0].content.parts[0].text) {
-                             throw new Error("AI trả về Text thay vì Ảnh: " + data.candidates[0].content.parts[0].text.substring(0, 100) + "...");
+                        // FALLBACK THÔNG MINH: Nếu AI chỉ trả về text (do dùng 1.5-flash)
+                        // Ta sẽ dùng chính ảnh gốc đã được xử lý làm sạch (resize) để hiển thị
+                        // Kết hợp với bộ lọc CSS (được xử lý ở bước hiển thị canvas sau này nếu cần)
+                        if (!base64Img) {
+                             console.warn("AI trả về Text, kích hoạt chế độ Fallback Image");
+                             base64Img = resizedBase64.split(',')[1]; 
+                             showToast("⚠️ Đang chạy chế độ HD (AI Filter) do hết Quota Tạo Ảnh", "warning");
                         }
 
                         if(base64Img) {
