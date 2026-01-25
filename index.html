@@ -2095,7 +2095,8 @@
                         const headers = { 'Content-Type': 'application/json' };
                         if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
 
-                        const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, {
+                        // FIX: Chuyển sang gemini-1.5-flash để Auto Scan ổn định
+                        const response = await fetch(`${apiBase}/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
                             method: 'POST',
                             headers: headers,
                             body: JSON.stringify({
@@ -2777,26 +2778,43 @@
 
                     try {
                         const resizedBase64 = await resizeImage(state.base64);
-                        const parts = [
-                            { text: `${finalPrompt}. Negative prompt: ${negPrompt}. (deblur:1.5), (sharpen:1.5), (unblur:1.5)` },
-                            { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }
-                        ];
-                        if (state.refBase64) parts.push({ inlineData: { mimeType: "image/jpeg", data: state.refBase64.split(',')[1] } });
-
+                        // FIX: Logic tạo ảnh cho Imagen 3 (Thay vì Gemini Image Preview cũ)
+                        // Imagen 3 sử dụng endpoint :predict và cấu trúc instances
+                        
                         const headers = { 'Content-Type': 'application/json' };
                         if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
 
-                        const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, {
+                        let apiUrl, requestBody;
+                        
+                        // Sử dụng Imagen 3.0 Generate (Tạo ảnh từ Prompt)
+                        apiUrl = `${apiBase}/v1beta/models/imagen-3.0-generate-001:predict?key=${keyToUse}`;
+                        requestBody = JSON.stringify({
+                            instances: [
+                                { prompt: `${finalPrompt}. Negative prompt: ${negPrompt}. (high quality restoration)` }
+                            ],
+                            parameters: {
+                                sampleCount: 1,
+                                aspectRatio: state.aspectRatioType === 'portrait' ? '3:4' : state.aspectRatioType === 'landscape' ? '4:3' : '1:1'
+                            }
+                        });
+
+                        const response = await fetch(apiUrl, {
                             method: 'POST',
                             headers: headers,
-                            body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } })
+                            body: requestBody
                         });
 
                         const data = await response.json();
                         if (data.error) throw new Error(data.error.message || "Lỗi kết nối đến server AI.");
                         
                         let base64Img = null;
-                        if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+                        
+                        // Parsing cho Imagen 3 (predictions)
+                        if (data.predictions && data.predictions[0] && data.predictions[0].bytesBase64Encoded) {
+                            base64Img = data.predictions[0].bytesBase64Encoded;
+                        } 
+                        // Fallback parsing cho Gemini cũ (nếu dùng endpoint khác)
+                        else if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
                             for (const part of data.candidates[0].content.parts) {
                                 if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; }
                             }
