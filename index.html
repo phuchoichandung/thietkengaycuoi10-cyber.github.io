@@ -1149,7 +1149,6 @@
                 
                 async init() {
                     // 1. TẠO ID MÁY DUY NHẤT (DEVICE SIGNATURE)
-                    // ID này sẽ lưu vào máy người dùng, đảm bảo khác biệt dù chung Wifi
                     try {
                         let storedId = localStorage.getItem('v35_unique_device_id');
                         if (!storedId) {
@@ -1164,83 +1163,66 @@
                         this.deviceId = "GUEST-" + Math.floor(Math.random()*1000);
                     }
                     
-                    // 2. Lấy IP Mạng (Chỉ để hiển thị vị trí mạng)
+                    // 2. Lấy IP Mạng (Cải tiến với Fallback)
                     await this.fetchIP();
                     
-                    // 3. Load Credits theo ID MÁY (Không theo IP mạng nữa)
+                    // 3. Load Credits theo ID MÁY
                     this.loadCredits();
                     this.updateUI();
                 },
 
                 async fetchIP() {
-                    try {
-                        const response = await fetch(`https://api.ipify.org?format=json&t=${Date.now()}`);
-                        const data = await response.json();
-                        this.ipAddress = data.ip;
-                        
-                        const gateIpDisplay = document.getElementById('gate-ip-display');
-                        const gateLoader = document.getElementById('gate-loading-spinner');
-                        const adminIpDisplay = document.getElementById('display-ip-address');
-                        const gateBtn = document.getElementById('gate-submit');
-                        const gateStatus = document.getElementById('gate-status');
-                        
-                        // NEW: UPDATE TOP BAR IP
-                        const topBarIp = document.getElementById('top-bar-ip');
-                        if (topBarIp) topBarIp.textContent = `IP: ${data.ip}`;
+                    const gateIpDisplay = document.getElementById('gate-ip-display');
+                    const gateLoader = document.getElementById('gate-loading-spinner');
+                    const adminIpDisplay = document.getElementById('display-ip-address');
+                    const gateBtn = document.getElementById('gate-submit');
+                    const gateStatus = document.getElementById('gate-status');
+                    const topBarIp = document.getElementById('top-bar-ip');
+                    const zaloMsg = document.getElementById('zalo-msg-content');
 
-                        // Update base template cho Zalo Msg (Lưu lại để dùng khi chọn gói)
-                        const zaloMsg = document.getElementById('zalo-msg-content');
-                        if (zaloMsg) {
-                            zaloMsg.dataset.ipInfo = `IP: ${data.ip} - Máy: ${this.deviceId}`;
-                        }
+                    const updateGateUI = (ipVal, isError = false) => {
+                        this.ipAddress = ipVal;
+                        
+                        if (topBarIp) topBarIp.textContent = `IP: ${ipVal}`;
+                        if (zaloMsg) zaloMsg.dataset.ipInfo = `IP: ${ipVal} - Máy: ${this.deviceId}`;
+                        if (adminIpDisplay) adminIpDisplay.value = `${ipVal} (Device: ${this.deviceId})`;
 
                         if (gateIpDisplay) {
-                            // HIỂN THỊ KẾT HỢP: IP MẠNG + ID MÁY RIÊNG
-                            // Ví dụ: 14.162.x.x | ID-A1B2C3
-                            gateIpDisplay.innerHTML = `<span class="text-slate-400 text-xs">${data.ip}</span> <span class="text-white mx-1">|</span> <span class="text-yellow-400 font-bold">${this.deviceId}</span>`; 
+                            gateIpDisplay.innerHTML = `<span class="text-slate-400 text-xs">${ipVal}</span> <span class="text-white mx-1">|</span> <span class="text-yellow-400 font-bold">${this.deviceId}</span>`; 
                             gateIpDisplay.classList.remove('shimmer-text');
-                            
                             if(gateLoader) gateLoader.style.display = 'none';
                             
-                            // Enable Login Button
+                            // Enable Login Button even if IP fetch fails (Fail-safe)
                             if(gateBtn) {
                                 gateBtn.disabled = false;
                                 gateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                                gateStatus.textContent = `Đã nhận diện thiết bị: ${this.deviceId}`;
-                                gateStatus.classList.add('text-green-500');
+                                gateStatus.textContent = isError ? "Không lấy được IP. Vẫn cho phép truy cập." : `Đã nhận diện thiết bị: ${this.deviceId}`;
+                                gateStatus.classList.add(isError ? 'text-yellow-500' : 'text-green-500');
                             }
                         }
+                    };
 
-                        if(adminIpDisplay) {
-                             adminIpDisplay.value = `${data.ip} (Device: ${this.deviceId})`;
-                        }
-
+                    try {
+                        const response = await fetch(`https://api.ipify.org?format=json&t=${Date.now()}`);
+                        if(!response.ok) throw new Error("IP Service Error");
+                        const data = await response.json();
+                        updateGateUI(data.ip);
                         return data.ip;
                     } catch (e) {
-                        console.error("IP Fetch Error", e);
-                        this.ipAddress = "Offline";
-                        // Vẫn cho hiện ID máy kể cả khi không có mạng
-                        const gateIpDisplay = document.getElementById('gate-ip-display');
-                        if (gateIpDisplay) gateIpDisplay.textContent = `Offline | ${this.deviceId}`;
-                        
-                        // NEW: UPDATE TOP BAR IP FAIL STATE
-                        const topBarIp = document.getElementById('top-bar-ip');
-                        if (topBarIp) topBarIp.textContent = `IP: Offline`;
-
-                        return null;
+                        console.error("IP Fetch Error - Switching to Fail-safe mode", e);
+                        // Fallback Mode: Allow entry even if IP fetch fails
+                        updateGateUI("Unknown IP", true);
+                        return "Unknown";
                     }
                 },
 
                 loadCredits() {
-                    // QUAN TRỌNG: Key lưu trữ dựa trên DEVICE ID, không phải IP
-                    // Đảm bảo mỗi máy riêng biệt dù chung Wifi
                     const key = `v35_credits_${this.deviceId}`;
                     const savedCredits = localStorage.getItem(key);
                     
                     if (savedCredits === null) {
                         this.credits = 20; // 20 Credit Free cho MÁY MỚI này
                         this.save();
-                        console.log(`New Device ${this.deviceId} initialized with 20 credits`);
                     } else {
                         this.credits = parseInt(savedCredits);
                     }
@@ -1338,14 +1320,11 @@
                 // LOAD MÃ HÓA
                 const savedSettings = localStorage.getItem('v35_user_settings');
                 if(savedSettings) {
-                    // Thử giải mã, nếu không được (do bản cũ) thì parse thường
                     try {
                         const decrypted = SimpleSec.decrypt(savedSettings);
-                        // Nếu giải mã ra chuỗi JSON hợp lệ
                         if(decrypted && decrypted.startsWith('{')) {
                             state.userSettings = JSON.parse(decrypted);
                         } else {
-                            // Bản cũ chưa mã hóa
                             state.userSettings = JSON.parse(savedSettings);
                         }
                     } catch(e) {
@@ -1355,9 +1334,10 @@
             } catch(e) {}
 
             async function loginByIP() {
-                if(!UserSystem.ipAddress) return showToast("Chưa tìm thấy IP, vui lòng đợi...", "error");
+                // Không chặn nếu IP chưa load xong (Fail-safe)
+                const currentIP = UserSystem.ipAddress || "Unknown";
                 
-                gateStatus.textContent = `Đang xác thực IP: ${UserSystem.ipAddress}...`;
+                gateStatus.textContent = `Đang xác thực thiết bị...`;
                 gateStatus.className = "mt-6 text-[10px] text-blue-400 font-bold animate-pulse";
                 gateSubmit.disabled = true;
                 gateSubmit.classList.add('opacity-70');
@@ -1371,9 +1351,9 @@
                     setTimeout(() => {
                         gateScreen.classList.add('animate-fade-out');
                         setTimeout(() => { gateScreen.style.display = 'none'; }, 500);
-                        showToast(`IP Đã Xác Thực: ${UserSystem.ipAddress}`, "smart");
+                        showToast(`Chào mừng trở lại! (ID: ${UserSystem.deviceId})`, "smart");
                     }, 500);
-                }, 1500);
+                }, 1000);
             }
 
             gateSubmit.addEventListener('click', loginByIP);
@@ -2063,14 +2043,24 @@
 
             if(btnAutoPilot) {
                 btnAutoPilot.addEventListener('click', async () => {
+                    // 1. Kiểm tra API KEY trước
+                    const config = getApiConfig();
+                    if (!config.key) {
+                        showToast("⚠️ Vui lòng nhập API Key trong Cấu hình (Admin)!", "error");
+                        // Tự động mở modal admin để nhắc nhở
+                        const gateKeyBtn = document.getElementById('gate-admin-key');
+                        if(gateKeyBtn) gateKeyBtn.click();
+                        return;
+                    }
+
                     if(!state.base64) return showToast("Vui lòng tải ảnh trước!", "error");
                     const originalText = btnAutoPilot.innerHTML;
                     btnAutoPilot.disabled = true;
                     btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCAN V35.60 (AUTO-SIZE)...</span>`;
                     
-                    const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
-
                     try {
+                        const { key: keyToUse, base: apiBase, isComet } = config; // Use safe config
+                        
                         const resizedBase64 = await resizeImage(state.base64);
                         const headers = { 'Content-Type': 'application/json' };
                         if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
@@ -2469,6 +2459,16 @@
 
             if(processBtn) {
                 processBtn.addEventListener('click', async () => {
+                    // 1. Kiểm tra API KEY trước
+                    const config = getApiConfig();
+                    if (!config.key) {
+                        showToast("⚠️ Vui lòng nhập API Key trong Cấu hình (Admin)!", "error");
+                        // Tự động mở modal admin để nhắc nhở
+                        const gateKeyBtn = document.getElementById('gate-admin-key');
+                        if(gateKeyBtn) gateKeyBtn.click();
+                        return;
+                    }
+
                     if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
                     if (!UserSystem.deductCredits(20)) {
                         rechargeModal.classList.remove('hidden');
@@ -2753,7 +2753,7 @@
                         }
                     }, 800);
 
-                    const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+                    const { key: keyToUse, base: apiBase, isComet } = config; // Safe config usage
 
                     try {
                         const resizedBase64 = await resizeImage(state.base64);
@@ -2937,7 +2937,8 @@
                 const performReset = (e) => {
                     if(e.cancelable) e.preventDefault();
                     showToast("Đang làm mới hệ thống...", "info");
-                    setTimeout(() => { window.location.href = window.location.pathname + '?t=' + new Date().getTime(); }, 300);
+                    // Update: Robust reload for Github Pages compatibility
+                    setTimeout(() => { window.location.reload(); }, 300);
                 };
                 btnReset.addEventListener('click', performReset);
                 btnReset.addEventListener('touchend', performReset);
