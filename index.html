@@ -3,35 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZALO: 0352803379 - STUDIO V35.80 (FINAL FIX)</title>
+    <title>ZALO: 0352803379 - STUDIO V35.95 (DEFAULT KEY)</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- COPYRIGHT PROTECTION SCRIPT -->
     <script>
-        // HỆ THỐNG BẢO VỆ BẢN QUYỀN - ANTI-THEFT SYSTEM
         (function() {
-            // 1. Chặn chuột phải
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-
-            // 2. Chặn các phím tắt xem code
+            document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
             document.onkeydown = function(e) {
-                if (e.keyCode == 123) return false; // F12
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
-                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
-                if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { // Ctrl+S
-                    e.preventDefault();
-                    alert("Hệ thống được bảo vệ bản quyền. Không thể lưu trang.");
-                    return false;
-                }
+                if (e.keyCode == 123) return false;
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { e.preventDefault(); alert("Hệ thống được bảo vệ bản quyền. Không thể lưu trang."); return false; }
             };
-
             console.log("%cDỪNG LẠI!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px #000;");
             console.log("%cĐây là phần mềm có bản quyền của ZALO: 0352803379.", "color: white; background: red; font-size: 16px; padding: 10px; border-radius: 5px;");
         })();
@@ -41,89 +29,20 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        body: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                        serif: ['"Playfair Display"', 'serif']
-                    },
-                    colors: {
-                        glass: {
-                            100: 'rgba(255, 255, 255, 0.05)',
-                            200: 'rgba(255, 255, 255, 0.1)',
-                            300: 'rgba(255, 255, 255, 0.15)',
-                            border: 'rgba(255, 255, 255, 0.1)',
-                        },
-                        pro: {
-                            500: '#3b82f6', // Pro Blue
-                            600: '#2563eb',
-                            gold: '#f59e0b', // Replica Gold
-                            cine: '#ec4899', // Cinematic Pink
-                            smart: '#10b981', // Smart Green
-                            flux: '#8b5cf6', // Flux Purple
-                            danger: '#f43f5e', // Danger Red
-                            cyan: '#06b6d4', // Qwen Cyan
-                            real: '#f97316', // RealVis Orange
-                            ancient: '#8b4513', // Ancient Brown
-                        }
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'blob': 'blob 7s infinite',
-                        'scan': 'scan 2s linear infinite',
-                        'toast-in': 'toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', 
-                        'pulse-glow': 'pulseGlow 2s infinite',
-                        'flux-pulse': 'fluxPulse 3s infinite',
-                        'real-pulse': 'realPulse 3s infinite',
-                        'fade-out': 'fadeOut 0.5s ease-out forwards',
-                        'fade-in': 'fadeIn 0.3s ease-out forwards',
-                        'enter-up': 'enterUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-                    },
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'], serif: ['"Playfair Display"', 'serif'] },
+                    colors: { glass: { 100: 'rgba(255, 255, 255, 0.05)', 200: 'rgba(255, 255, 255, 0.1)', 300: 'rgba(255, 255, 255, 0.15)', border: 'rgba(255, 255, 255, 0.1)', }, pro: { 500: '#3b82f6', 600: '#2563eb', gold: '#f59e0b', cine: '#ec4899', smart: '#10b981', flux: '#8b5cf6', danger: '#f43f5e', cyan: '#06b6d4', real: '#f97316', ancient: '#8b4513', } },
+                    animation: { 'float': 'float 6s ease-in-out infinite', 'blob': 'blob 7s infinite', 'scan': 'scan 2s linear infinite', 'toast-in': 'toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', 'pulse-glow': 'pulseGlow 2s infinite', 'flux-pulse': 'fluxPulse 3s infinite', 'real-pulse': 'realPulse 3s infinite', 'fade-out': 'fadeOut 0.5s ease-out forwards', 'fade-in': 'fadeIn 0.3s ease-out forwards', 'enter-up': 'enterUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards', },
                     keyframes: {
-                        enterUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
-                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        },
-                        scan: {
-                            '0%': { top: '0%', opacity: '0' },
-                            '10%': { opacity: '1' },
-                            '90%': { opacity: '1' },
-                            '100%': { top: '100%', opacity: '0' },
-                        },
-                        toastIn: {
-                            '0%': { transform: 'translateY(20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(5px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: '1', boxShadow: '0 0 10px #10b981' },
-                            '50%': { opacity: '0.8', boxShadow: '0 0 20px #10b981' },
-                        },
-                        fluxPulse: {
-                            '0%, 100%': { boxShadow: '0 0 5px #8b5cf6' },
-                            '50%': { boxShadow: '0 0 15px #8b5cf6' },
-                        },
-                        realPulse: {
-                            '0%, 100%': { boxShadow: '0 0 5px #f97316' },
-                            '50%': { boxShadow: '0 0 15px #f97316' },
-                        },
-                        fadeOut: {
-                            '0%': { opacity: '1', visibility: 'visible' },
-                            '100%': { opacity: '0', visibility: 'hidden' },
-                        }
+                        enterUp: { '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' }, '100%': { opacity: '1', transform: 'translateY(0) scale(1)' }, },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' }, },
+                        blob: { '0%': { transform: 'translate(0px, 0px) scale(1)' }, '33%': { transform: 'translate(30px, -50px) scale(1.1)' }, '66%': { transform: 'translate(-20px, 20px) scale(0.9)' }, '100%': { transform: 'translate(0px, 0px) scale(1)' }, },
+                        scan: { '0%': { top: '0%', opacity: '0' }, '10%': { opacity: '1' }, '90%': { opacity: '1' }, '100%': { top: '100%', opacity: '0' }, },
+                        toastIn: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' }, },
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(5px)' }, '100%': { opacity: '1', transform: 'translateY(0)' }, },
+                        pulseGlow: { '0%, 100%': { opacity: '1', boxShadow: '0 0 10px #10b981' }, '50%': { opacity: '0.8', boxShadow: '0 0 20px #10b981' }, },
+                        fluxPulse: { '0%, 100%': { boxShadow: '0 0 5px #8b5cf6' }, '50%': { boxShadow: '0 0 15px #8b5cf6' }, },
+                        realPulse: { '0%, 100%': { boxShadow: '0 0 5px #f97316' }, '50%': { boxShadow: '0 0 15px #f97316' }, },
+                        fadeOut: { '0%': { opacity: '1', visibility: 'visible' }, '100%': { opacity: '0', visibility: 'hidden' }, }
                     }
                 }
             }
@@ -131,33 +50,17 @@
     </script>
 
     <style>
-        /* THEME STYLES - PRO MASTER */
         :root { --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
-        body { 
-            background-color: #050505; 
-            background-image: radial-gradient(circle at top right, #0f172a, #050505);
-            color: #e2e8f0;
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-            height: 100dvh; /* Dynamic viewport height fix for mobile browsers */
-        }
+        body { background-color: #050505; background-image: radial-gradient(circle at top right, #0f172a, #050505); color: #e2e8f0; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; height: 100dvh; }
         input, textarea { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
-
-        /* Background blobs */
         .bg-blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15; z-index: 0; animation: blob 15s infinite; }
         .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #8b5cf6; } 
         .blob-2 { bottom: -10%; right: -10%; width: 500px; height: 500px; background: #3b82f6; animation-delay: 2s; }
-        
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 20px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-
+        ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 20px; } ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
         .glass-panel { background: rgba(10, 11, 15, 0.95); backdrop-filter: blur(20px); border-right: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); }
         .pro-input { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: #cbd5e1; transition: all 0.2s; font-size: 11px; border-radius: 6px; padding-left: 10px; }
         .pro-input:focus { background: rgba(255, 255, 255, 0.06); border-color: #8b5cf6; outline: none; }
         select { color-scheme: dark; } select option { background-color: #0f172a; color: #e2e8f0; padding: 12px; } select optgroup { background-color: #020617; color: #94a3b8; font-weight: 700; }
-
         .module-group { border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(255, 255, 255, 0.01); border-radius: 8px; margin-bottom: 6px; overflow: hidden; }
         .module-header { background: rgba(255, 255, 255, 0.02); transition: background 0.2s; padding: 10px 12px; }
         .module-header:hover { background: rgba(255, 255, 255, 0.04); }
@@ -165,7 +68,6 @@
         .module-content.open { grid-template-rows: 1fr; opacity: 1; }
         .module-content.open .module-inner { padding: 10px 12px; }
         .module-inner { min-height: 0; overflow: hidden; }
-        
         .chk-pro { appearance: none; width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(148, 163, 184, 0.4); background: transparent; display: grid; place-content: center; cursor: pointer; transition: all 0.2s; }
         .chk-pro::before { content: ""; width: 8px; height: 8px; transform: scale(0); background: #e2e8f0; border-radius: 2px; transition: transform 0.2s; }
         .chk-pro:checked::before { transform: scale(1); }
@@ -173,70 +75,31 @@
         .chk-gold:checked { border-color: #f59e0b; background: #f59e0b; }
         .chk-red:checked { border-color: #ef4444; background: #ef4444; }
         .chk-real:checked { border-color: #f97316; background: #f97316; }
-
-        .slider-red::-webkit-slider-thumb { background: #e2e8f0; }
-        .slider-blue::-webkit-slider-thumb { background: #3b82f6; }
-        .slider-gold::-webkit-slider-thumb { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
-        .slider-pink::-webkit-slider-thumb { background: #ec4899; box-shadow: 0 0 10px #ec4899; }
-        .slider-green::-webkit-slider-thumb { background: #10b981; box-shadow: 0 0 10px #10b981; }
-        .slider-flux::-webkit-slider-thumb { background: #8b5cf6; box-shadow: 0 0 10px #8b5cf6; }
-        .slider-cyan::-webkit-slider-thumb { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; }
-        .slider-real::-webkit-slider-thumb { background: #f97316; box-shadow: 0 0 10px #f97316; }
-
-        .btn-primary-modern { background: #3b82f6; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .btn-primary-modern:hover { background: #2563eb; transform: translateY(-1px); }
-        .btn-gold-modern { background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%); border: 1px solid rgba(255,215,0,0.3); color: white; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
-        .btn-gold-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(245, 158, 11, 0.5); }
-        .btn-smart-modern { background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: 1px solid rgba(16, 185, 129, 0.3); color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
-        .btn-smart-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
-        .btn-flux-modern { background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%); border: 1px solid rgba(139, 92, 246, 0.3); color: white; box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
-        .btn-flux-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(139, 92, 246, 0.5); }
-        .btn-real-modern { background: linear-gradient(135deg, #c2410c 0%, #f97316 100%); border: 1px solid rgba(249, 115, 22, 0.3); color: white; box-shadow: 0 0 15px rgba(249, 115, 22, 0.3); }
-        .btn-real-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(249, 115, 22, 0.5); }
-        .btn-ancient-modern { background: linear-gradient(135deg, #6b21a8 0%, #a855f7 100%); border: 1px solid rgba(168, 85, 247, 0.3); color: white; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
-        .btn-ancient-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(168, 85, 247, 0.5); }
-
-        .modal-fade-in { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        
-        /* SECURITY GATE STYLES (UPDATED FOR IP LOGIN) */
-        .gate-backdrop {
-            position: fixed; inset: 0; z-index: 9999;
-            background: rgba(5, 5, 8, 0.85); /* Fallback */
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.5s ease;
-        }
-        
-        .shimmer-text {
-            background: linear-gradient(90deg, #fff 0%, #a78bfa 50%, #fff 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-        }
+        .slider-red::-webkit-slider-thumb { background: #e2e8f0; } .slider-blue::-webkit-slider-thumb { background: #3b82f6; } .slider-gold::-webkit-slider-thumb { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; } .slider-pink::-webkit-slider-thumb { background: #ec4899; box-shadow: 0 0 10px #ec4899; } .slider-green::-webkit-slider-thumb { background: #10b981; box-shadow: 0 0 10px #10b981; } .slider-flux::-webkit-slider-thumb { background: #8b5cf6; box-shadow: 0 0 10px #8b5cf6; } .slider-cyan::-webkit-slider-thumb { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; } .slider-real::-webkit-slider-thumb { background: #f97316; box-shadow: 0 0 10px #f97316; }
+        .btn-primary-modern { background: #3b82f6; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); } .btn-primary-modern:hover { background: #2563eb; transform: translateY(-1px); }
+        .btn-gold-modern { background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%); border: 1px solid rgba(255,215,0,0.3); color: white; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); } .btn-gold-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(245, 158, 11, 0.5); }
+        .btn-smart-modern { background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: 1px solid rgba(16, 185, 129, 0.3); color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); } .btn-smart-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
+        .btn-flux-modern { background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%); border: 1px solid rgba(139, 92, 246, 0.3); color: white; box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); } .btn-flux-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(139, 92, 246, 0.5); }
+        .btn-real-modern { background: linear-gradient(135deg, #c2410c 0%, #f97316 100%); border: 1px solid rgba(249, 115, 22, 0.3); color: white; box-shadow: 0 0 15px rgba(249, 115, 22, 0.3); } .btn-real-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(249, 115, 22, 0.5); }
+        .btn-ancient-modern { background: linear-gradient(135deg, #6b21a8 0%, #a855f7 100%); border: 1px solid rgba(168, 85, 247, 0.3); color: white; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); } .btn-ancient-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(168, 85, 247, 0.5); }
+        .modal-fade-in { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); } @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .gate-backdrop { position: fixed; inset: 0; z-index: 9999; background: rgba(5, 5, 8, 0.85); display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
+        .shimmer-text { background: linear-gradient(90deg, #fff 0%, #a78bfa 50%, #fff 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
     </style>
 </head>
 
 <body class="text-slate-300 font-sans h-full flex overflow-hidden select-none relative" oncontextmenu="return false;">
     
-    <!-- SECURITY GATE (REDESIGNED: SOFTER & PROFESSIONAL) -->
     <div id="security-gate" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#050505]/90 backdrop-blur-3xl transition-opacity duration-500">
-        <!-- Ambient Background Glow (Subtle) -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] animate-pulse"></div>
             <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px]"></div>
         </div>
-        
-        <!-- Main Card Container -->
         <div class="relative z-10 w-full max-w-[400px] bg-white/[0.02] border border-white/5 rounded-3xl p-8 shadow-2xl animate-enter-up flex flex-col items-center">
-            
-            <!-- ADMIN KEY BUTTON (Discrete Top Right) -->
             <button id="gate-admin-key" class="absolute top-4 right-4 text-slate-600 hover:text-white transition-colors p-2 z-50 rounded-full hover:bg-white/5" title="Đăng nhập Admin">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
             </button>
-
-            <!-- Logo / Brand Section -->
             <div class="flex flex-col items-center mb-8">
                 <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-violet-600 to-blue-600 p-[1px] mb-4 shadow-lg shadow-violet-500/20 rotate-3 hover:rotate-0 transition-transform duration-500 cursor-pointer group">
                      <div class="w-full h-full rounded-2xl bg-[#0a0a0f] flex items-center justify-center relative overflow-hidden group-hover:bg-opacity-80 transition-all">
@@ -244,8 +107,6 @@
                          <svg class="w-8 h-8 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                      </div>
                 </div>
-                
-                <!-- EDITED: TITLE GATE -->
                 <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight mb-1">PHỤC CHẾ ẢNH</h1>
                 <div class="flex items-center gap-2 opacity-70">
                     <div class="h-[1px] w-8 bg-gradient-to-r from-transparent to-violet-500"></div>
@@ -253,35 +114,25 @@
                     <div class="h-[1px] w-8 bg-gradient-to-l from-transparent to-violet-500"></div>
                 </div>
             </div>
-            
-            <!-- IP & Login Section -->
             <div class="w-full space-y-4">
-                <!-- IP Display Box -->
                 <div class="relative group w-full">
                     <div class="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-blue-600 rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500"></div>
                     <div class="relative bg-black/40 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center transition-all group-hover:border-white/20">
                         <span class="text-[9px] text-slate-500 uppercase tracking-widest font-bold mb-1.5">THIẾT BỊ TRUY CẬP</span>
                         <div class="flex items-center gap-2 h-8">
-                            <!-- IP Display with Shimmer Effect -->
                             <span id="gate-ip-display" class="font-mono text-sm font-bold text-white tracking-wider shimmer-text">Đang kết nối...</span>
                             <div id="gate-loading-spinner" class="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Submit Button - EDITED: TEXT and BACKGROUND -->
                 <button id="gate-submit" class="w-full py-3.5 bg-gradient-to-r from-indigo-100 to-violet-100 text-slate-900 hover:to-white rounded-xl text-xs font-bold tracking-[0.15em] transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.1)] flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden relative" disabled>
                     <span class="relative z-10">VÀO PHỤC CHẾ ẢNH</span>
                     <svg class="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </button>
             </div>
-            
-            <!-- Status Text -->
             <div class="mt-6 h-4 flex items-center justify-center">
                 <p id="gate-status" class="text-[10px] text-slate-500 transition-colors animate-pulse">Đang quét thông tin thiết bị...</p>
             </div>
-
-            <!-- Footer Info -->
             <div class="absolute bottom-4 left-0 right-0 text-center opacity-30 pointer-events-none">
                 <p class="text-[8px] font-mono">SECURE GATEWAY • IP VERIFICATION</p>
             </div>
@@ -292,35 +143,28 @@
     <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
     
     <div class="flex w-full h-full relative z-10 backdrop-blur-[1px]" id="fullscreen-target">
-        <!-- Sidebar and Main Content -->
         
-        <!-- FIXED: SIDEBAR WIDTH for Mobile (w-full sm:w-[360px]) -->
         <aside id="sidebar" class="w-full sm:w-[360px] flex-shrink-0 glass-panel mobile-sidebar-bg flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)] absolute z-50 h-full lg:relative lg:translate-x-0 -translate-x-full">
             <div class="h-14 px-4 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
                 <div class="flex flex-col">
-                    <!-- EDITED: SIDEBAR TITLE -->
                     <h1 class="text-xs font-bold tracking-widest text-violet-500">PHỤC CHẾ ẢNH</h1>
                     <div class="flex items-center gap-2">
-                        <!-- EDITED: REPLACE ZALO WITH IP -->
                         <span id="top-bar-ip" class="text-[9px] text-slate-400 font-mono">IP: Loading...</span>
                         <span class="w-1 h-1 rounded-full bg-violet-500"></span>
-                        <span class="text-[9px] text-violet-400 font-bold">V35.80 (SAFE STORAGE)</span>
+                        <span class="text-[9px] text-violet-400 font-bold">V35.95 (DEFAULT KEY)</span>
                     </div>
                 </div>
-                
                 <div class="flex items-center gap-3">
                     <div class="flex flex-col items-end mr-1" id="credit-display">
                         <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider">CREDITS</span>
                         <span class="text-xs font-mono font-bold text-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.3)]" id="credit-count">---</span>
                     </div>
-                    <!-- REMOVED ADMIN BUTTON AS REQUESTED -->
                     <button id="close-sidebar-mobile" class="lg:hidden text-slate-400 p-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                 </div>
             </div>
 
             <div class="flex-1 overflow-y-auto p-4 scroll-smooth custom-scrollbar space-y-2">
                 
-                <!-- 0. API TOKEN INPUT (NEW PRO LOCATION) -->
                 <div class="mb-4 p-3 rounded-xl bg-gradient-to-r from-violet-900/30 to-blue-900/30 border border-violet-500/30 shadow-lg relative group">
                     <div class="absolute -top-2.5 left-3 bg-[#0a0a0f] px-2 text-[9px] font-bold text-violet-400 border border-violet-500/30 rounded uppercase tracking-widest flex items-center gap-1">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
@@ -329,7 +173,6 @@
                     <div class="mt-1 flex items-center gap-1">
                         <input type="password" id="user-api-key" placeholder="Dán mã Token/Key vào đây..." class="w-full bg-[#050508] border border-white/10 rounded-lg px-3 py-2 text-[10px] font-mono text-violet-300 focus:border-violet-500 focus:outline-none transition-all placeholder-slate-600 save-input" data-key="userApiKey">
                         
-                        <!-- ADDED: SAVE BUTTON FOR MANUAL SAVE -->
                         <button id="btn-quick-save-key" class="p-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 transition-colors flex-shrink-0 shadow-lg active:scale-95" title="Lưu Token">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                         </button>
@@ -344,7 +187,6 @@
                     </p>
                 </div>
 
-                <!-- 1. MAIN UPLOAD -->
                 <div class="relative group">
                     <input type="file" id="image-upload" accept="image/*" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;">
                     <label id="drop-zone" for="image-upload" class="flex flex-col items-center justify-center w-full h-28 border border-dashed border-violet-500/50 rounded-lg cursor-pointer bg-white/[0.02] hover:bg-violet-900/[0.1] hover:border-violet-500 transition-all duration-200">
@@ -355,13 +197,11 @@
                     </label>
                 </div>
 
-                <!-- 2. AUTO-PILOT BUTTON -->
                 <button id="btn-auto-pilot" class="w-full py-2.5 mb-3 btn-flux-modern text-white rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(139,92,246,0.2)]">
                     <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     <span class="text-[10px] font-bold tracking-widest">AUTO SCAN V35.60 (AUTO-SIZE)</span>
                 </button>
 
-                <!-- FLUX KONTEXT (LZP) -->
                 <div class="relative group p-2 rounded-lg border border-violet-500/30 bg-violet-500/5 mb-3 animate-flux-pulse" id="kontext-module-container">
                     <div class="flex items-center gap-2 mb-2">
                          <label class="relative inline-flex items-center cursor-pointer">
@@ -374,7 +214,6 @@
                         </div>
                     </div>
                     
-                    <!-- WORKFLOW SELECTOR -->
                     <div class="pl-11 pr-1 border-t border-violet-500/20 pt-2" id="workflow-container">
                         <label class="block text-[9px] font-bold text-violet-300 mb-1">CHỌN QUY TRÌNH (WORKFLOW PRESETS)</label>
                         <select id="kontext-workflow" class="pro-input w-full py-1.5 cursor-pointer bg-violet-900/20 border-violet-500/30 text-violet-200 transition-all duration-500">
@@ -395,7 +234,6 @@
                     </div>
                 </div>
 
-                <!-- REPLICA MODE -->
                 <div class="relative group p-2 rounded-lg border border-yellow-500/30 bg-yellow-500/5 mb-3">
                     <div class="flex items-center gap-2">
                          <label class="relative inline-flex items-center cursor-pointer">
@@ -409,7 +247,6 @@
                     </div>
                 </div>
 
-                <!-- MODULE: QUÂN SỬ VIỆT NAM -->
                 <div class="module-group border-yellow-500/30" id="module-military">
                     <button id="toggle-military" class="w-full flex justify-between items-center module-header bg-yellow-500/10 hover:bg-yellow-500/20">
                         <span class="text-[10px] font-bold text-yellow-500 tracking-wide uppercase flex items-center gap-2">🇻🇳 QUÂN SỬ & KỶ VẬT (FULL UPGRADE)</span>
@@ -931,7 +768,7 @@
                     <div id="placeholder-state" class="text-center px-6 py-10 md:p-24 border border-dashed border-violet-500/50 rounded-2xl bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500 animate-float backdrop-blur-sm w-[85%] max-w-lg md:w-auto mx-auto flex flex-col items-center justify-center mb-16 md:mb-0 cursor-pointer">
                         <div class="w-20 h-20 bg-gradient-to-tr from-slate-800 to-slate-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5"><svg class="w-10 h-10 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
                         <!-- EDITED: CHANGE TEXT HERE -->
-                        <h3 class="text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒIẢNH</h3>
+                        <h3 class="text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒI ẢNH</h3>
                         <p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Kéo thả hoặc Dán ảnh vào đây</p>
                     </div>
                 </div>
@@ -1154,7 +991,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const apiKey = ""; 
+            const apiKey = "AIzaSyCXIWbWNX77UaTV1dt0RNZR4PREQh_oZ6w"; 
 
             // ... (Security and UserSystem code remains the same) ...
             const SimpleSec = {
@@ -1542,7 +1379,17 @@
                                 showToast("Đã hoàn tất Scan. Kiểm tra thông số bên Sidebar!", "success");
                             }
                         }
-                    } catch(e) { console.error(e); showToast("Lỗi Smart Scan: " + e.message, "error"); } 
+                    } catch(e) { 
+                        console.error(e); 
+                        if (e.message.includes("API key")) {
+                            showToast("API Key không hợp lệ! Vui lòng kiểm tra lại.", "error");
+                            // Highlight the input
+                            document.getElementById('user-api-key').focus();
+                            document.getElementById('user-api-key').parentElement.classList.add('animate-pulse');
+                        } else {
+                            showToast("Lỗi Smart Scan: " + e.message, "error"); 
+                        }
+                    } 
                     finally { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }
                 });
             }
@@ -1666,11 +1513,362 @@
                 });
             }
 
-            // ... (Process Image Logic, Download, etc.) ...
+            // *** RESTORED FULL FUNCTIONALITY FOR PROCESS BUTTON ***
             if(processBtn) {
                 processBtn.addEventListener('click', async () => {
-                    // ... (API Call logic same as V35.80) ...
-                    // Only note: Ensuring final block resets UI
+                    if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
+                    if (!UserSystem.deductCredits(20)) {
+                        rechargeModal.classList.remove('hidden');
+                        return; 
+                    }
+                    
+                    const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+                    
+                    // FIX: Check key existence before anything else
+                    if (!keyToUse) {
+                        showToast("Vui lòng nhập API Key hoặc Token!", "error");
+                        // Refund credits if no key
+                        UserSystem.addCredits(20);
+                        return;
+                    }
+
+                    processBtn.disabled = true;
+                    processBtn.innerHTML = "FLUX/KONTEXT PROCESSING...";
+                    document.getElementById('ai-terminal-overlay').classList.remove('hidden');
+                    document.getElementById('scan-beam').classList.add('active');
+                    
+                    const isAsian = document.getElementById('check-asian-identity')?.checked || false;
+                    const isImperfection = document.getElementById('lock-imperfection')?.checked || false;
+                    const isUniformSkin = document.getElementById('check-uniform-skin')?.checked || false;
+                    const eventContext = document.getElementById('event-context')?.value || '';
+                    const isDehaze = document.getElementById('check-dehaze')?.checked || false;
+                    const isContrastFix = document.getElementById('check-contrast-fix')?.checked || false;
+                    
+                    const milBranch = document.getElementById('mil-branch')?.value || '';
+                    const milUniform = document.getElementById('mil-uniform')?.value || '';
+                    const hatVal = document.getElementById('hat-select')?.value || '';
+                    const rankVal = document.getElementById('rank-select')?.value || ''; 
+                    const isInsigniaBoost = document.getElementById('check-insignia-boost')?.checked || false;
+                    const isSaoVang = document.getElementById('check-sao-vang')?.checked || false;
+                    const isKhangChien = document.getElementById('check-khang-chien')?.checked || false;
+                    const isChienSi = document.getElementById('check-chien-si')?.checked || false;
+                    const isDoan = document.getElementById('check-doan')?.checked || false;
+                    
+                    const isBlockRank = document.getElementById('block-rank')?.checked || false;
+
+                    const grainLevel = parseInt(document.getElementById('grain-slider')?.value) || 0;
+                    const colorGrade = document.getElementById('color-grading')?.value || '';
+                    const isGroupMode = document.getElementById('check-group-mode')?.checked || false;
+                    
+                    const isCrossEyed = document.getElementById('check-cross-eyed')?.checked || false;
+                    
+                    const isPtosis = document.getElementById('check-ptosis')?.checked || false;
+                    const isClosedEyes = document.getElementById('check-closed-eyes')?.checked || false;
+
+                    const isMonolid = document.getElementById('check-monolid')?.checked || false;
+                    const isBuckTeeth = document.getElementById('check-buck-teeth')?.checked || false;
+                    const isBlackTeeth = document.getElementById('check-black-teeth')?.checked || false;
+                    
+                    const isQwenExposure = document.getElementById('check-qwen-exposure')?.checked || false;
+                    const isRemoveShadow = document.getElementById('check-remove-shadow')?.checked || false;
+                    const isSoftLight = document.getElementById('check-soft-light')?.checked || false;
+                    const exposureStrength = parseFloat(document.getElementById('exposure-slider')?.value || 1.0);
+                    
+                    const textureModeVal = document.getElementById('texture-mode')?.value || '';
+                    const isIDPhoto = document.getElementById('check-id-photo')?.checked || false;
+                    const isBlurPrepass = document.getElementById('check-blur-prepass')?.checked || false;
+                    const workflowVal = document.getElementById('kontext-workflow')?.value || 'default';
+                    const isReActor = document.getElementById('check-reactor')?.checked || false;
+                    const isDualControlNet = document.getElementById('check-dual-controlnet')?.checked || false;
+                    const upscaleMode = document.getElementById('upscale-mode')?.value || 'supir';
+                    const isAntiFlip = document.getElementById('check-anti-flip')?.checked || false;
+
+                    let finalPrompt = promptMain?.value || state.defaultPrompt;
+                    let negPrompt = document.getElementById('prompt-negative')?.value || "blur, noise, low quality"; 
+
+                    negPrompt += ", Negative(hands), text, error, cropped, (worst quality:1.2), (low quality:1.2), normal quality, (jpeg artifacts:1.3), signature, watermark, username, blurry, artist name, monochrome, sketch, censorship, censor, (copyright:1.2), extra legs, (forehead mark), (depth of field), (emotionless), (penis), noises, dusts, scratches, multicolor, patches, extra hands, wrong adam apple, dark skin, painting, earring, scratches, stains, old photo damages, bad quality, blurry, (beard:2), (facial hair:2)";
+
+                    const restorePrompt = "Restore old photos, colorize, reconstruct missing parts, repair damage, remove noise, adjust brightness and contrast, adjust color balance, sharpen facial features, restore details, enlarge to high resolution";
+                    
+                    if (state.isFluxMode) {
+                        finalPrompt += `, ${restorePrompt}`;
+                        
+                        if(workflowVal === 'realvis_v5') {
+                            finalPrompt += ", (RealVisXL V5.0 style:1.5), (photorealistic:1.6), (8k uhd:1.4), (high quality:1.5)";
+                            finalPrompt += ", (ControlNet Union Promax:1.2), (DepthAnything V2 based structure:1.4)";
+                            finalPrompt += ", (sharp focus:1.4), (highly detailed:1.3), (professional photography:1.4), (bright natural ambient light:1.3)";
+                            if(isBlurPrepass) {
+                                finalPrompt += ", (pre-blur denoising:1.3), (smooth skin texture:1.4), (remove grain:1.5)";
+                            }
+                        } else if (workflowVal === 'replica_pro') {
+                            finalPrompt += ", (ControlNet Canny Hard:1.2), (ControlNet Depth V2:1.2), (ReferenceLatent:1.3)";
+                            finalPrompt += ", (maintain facial structure:1.6), (preserve eye shape:1.5), (preserve mouth shape:1.5)";
+                            finalPrompt += ", (hyper-detailed skin texture:1.6), (no beautification:1.4), (raw photo:1.5)";
+                            finalPrompt += ", (keep imperfections:1.3), (natural look:1.5)";
+                            negPrompt += ", (beautified:1.5), (makeup:1.2), (smooth skin:1.5), (plastic:1.6), (doll:1.6)";
+                        } else {
+                            finalPrompt += ", (Repair old photos:1.4), (restore to high fidelity photography:1.4), (keep people's appearance and features unchanged:1.5), (recolor and repair damaged areas:1.3)";
+                            finalPrompt += ", (flux generation style:1.5), (lzp old photo style:1.5), (high fidelity:1.5), (photorealistic:1.6)";
+                            
+                            if(workflowVal === 'old_photo_v1') {
+                                 finalPrompt += ", (Kontext_老照片修复lora_v1.safetensors:1.0)";
+                                 finalPrompt += ", (ReferenceLatent:1.2), (FluxGuidance:2.5)"; 
+                            } else if (workflowVal === 'ancient_restore') {
+                                 finalPrompt += ", (Ancient Restoration LoRA:1.0), (Qing Dynasty style:1.2), (traditional painting restoration:1.3)";
+                                 finalPrompt += ", (Flux.1-dev-ControlNet-Union-Pro:1.2)";
+                            } else if (workflowVal === 'wedding_pro') {
+                                 finalPrompt += ", (Kontext_摄影精修lora_v1.safetensors:0.8)";
+                                 finalPrompt += ", (RealESRGAN_x4 upscale simulation:1.4), (wedding photography style:1.3)";
+                            } else if (workflowVal === 'wedding_kontext_v2') {
+                                 finalPrompt += ", (Kontext_摄影精修lora_v1.safetensors:0.8), (FluxGuidance:3.5)";
+                                 finalPrompt += ", (Refine characters:1.4), (adjust color tone:1.3), (transparent and clear image:1.3)";
+                                 finalPrompt += ", (RealESRGAN_x4 upscale:1.0)";
+                            } else if (workflowVal === 'outdoor_mode') {
+                                 finalPrompt += ", (IC-Light:1.0), (PowerPaint:1.0), (Florence2 Captioning:1.2)";
+                            } else if (workflowVal === 'product_mode') {
+                                 finalPrompt += ", (ZenProduct LoRA:0.6), (BiRefNet Segmentation:1.0)";
+                            } else if (workflowVal === 'white_bg') {
+                                 finalPrompt += ", (RMBG-2.0:1.0), (remove background:1.5), (pure white background:1.5)";
+                            } else if (workflowVal === 'qwen_lightning') {
+                                 finalPrompt += ", (Qwen-Image-Edit-2511:1.2), (Lightning-4steps-V1.0-fp32:1.0)";
+                                 finalPrompt += ", (Instruction: High-resolution photo reconstruction:1.5)";
+                                 finalPrompt += ", (Detailed facial preservation, zero identity drift:1.4)";
+                                 finalPrompt += ", (Remove dust, scratches, and grain:1.3), (Full colorization with lifelike subsurface scattering:1.3)";
+                                 finalPrompt += ", (Repair torn edges and artifacts:1.3), (neutral white balance:1.2)";
+                            } else if (workflowVal === 'qwen_restore_full') {
+                                 finalPrompt += ", (Qwen-Image-Edit-2511:1.2), (Lightning-4steps-V1.0-fp32:1.0)";
+                                 finalPrompt += ", (Instruction: High-resolution photo reconstruction. Detailed facial preservation, zero identity drift. Remove dust, scratches, and grain. Full colorization with lifelike subsurface scattering on skin. Naturalistic lighting, professional color grading. Repair torn edges and artifacts. 4K, highly detailed, sharp focus, neutral white balance, professional photography, realistic textures, volumetric lighting:1.5)";
+                            } else {
+                                 finalPrompt += ", (oldphoto-2.safetensors:0.87), (vintage photo restoration:1.2)";
+                            }
+                        }
+
+                        if(upscaleMode === 'supir') {
+                             finalPrompt += ", (SUPIR-v0F_fp16 style:1.4), (RestoreDPMPP2MSampler:1.2)";
+                        } else if (upscaleMode === 'ultrasharp') {
+                             finalPrompt += ", (4x-UltraSharp Upscale:1.5), (sharp details:1.5)";
+                        } else if (upscaleMode === 'realesrgan') {
+                             finalPrompt += ", (RealESRGAN x4 Plus:1.4), (smooth restoration:1.3)";
+                        } else if (upscaleMode === 'pixel_perfect') {
+                             finalPrompt += ", (preserve original pixels:1.4), (no smoothing:1.4), (sharp grain:1.3)";
+                        }
+
+                        if (textureModeVal.includes('Canon')) {
+                            finalPrompt += `, (${textureModeVal}:1.4), (perfect retouched complexion:1.3), (glowing healthy skin:1.2)`;
+                        } else {
+                            finalPrompt += ", (hyper-realistic skin texture:1.6), (detailed pores:1.5), (subsurface scattering:1.4)";
+                        }
+                        
+                        // ... (Other prompt construction logic) ...
+                        if (isGroupMode) {
+                            finalPrompt += ", (group photo:1.5), (all faces sharp:1.4), (individual face detail:1.3), (high resolution faces:1.5)";
+                        }
+
+                        if(colorGrade.includes('rembrandt')) finalPrompt += ", (Rembrandt lighting:1.5), (45 degree key light:1.4), (triangle of light on cheek:1.3), (dramatic contrast:1.4)";
+                        else if(colorGrade.includes('golden_hour')) finalPrompt += ", (Golden hour backlighting:1.6), (warm tones:1.5), (soft rim light:1.5), (lens flare:1.2)";
+                        else if(colorGrade.includes('soft_diffused')) finalPrompt += ", (Soft diffused light:1.5), (even tones:1.4), (no harsh shadows:1.4)";
+                        else if(colorGrade.includes('neon')) finalPrompt += ", (Neon cinematic lighting:1.6), (pink and blue reflections:1.4), (cyberpunk atmosphere:1.3)";
+
+                        if(!(isCrossEyed || isPtosis || isClosedEyes || isMonolid || isBuckTeeth || isBlackTeeth || isImperfection)) {
+                            negPrompt += ", (waxy skin:1.6), (plastic skin:1.6), (airbrushed:1.6), (doll face:1.5), (cartoon:1.5), (3d render:1.5), (disfigured:1.5), (bad art:1.5)";
+                        } else {
+                            negPrompt += ", (waxy skin:1.6), (plastic skin:1.6)";
+                        }
+                        finalPrompt += ", (individual hair strands:1.5), (volumetric hair:1.4)";
+                        
+                        if(isDualControlNet) {
+                             finalPrompt += ", (ControlNet Union Depth:1.0), (ControlNet Union LineArt:1.0), (structure preservation:1.5)";
+                        } else {
+                             finalPrompt += ", (controlnet union style:1.2)";
+                        }
+                    }
+
+                    if (isQwenExposure) {
+                        finalPrompt += `, (Qwen Image Edit V2509 style:1.2)`;
+                        if (isRemoveShadow) {
+                            finalPrompt += `, (remove harsh light and shadow:${(1.5 * exposureStrength).toFixed(1)}), (neutralize exposure:${(1.4 * exposureStrength).toFixed(1)})`;
+                            negPrompt += ", (overexposed:1.5), (blown out highlights:1.5), (harsh shadows:1.5)";
+                        }
+                        if (isSoftLight) {
+                            finalPrompt += `, (soft diffused lighting:${(1.5 * exposureStrength).toFixed(1)}), (relight image:${(1.4 * exposureStrength).toFixed(1)})`;
+                        }
+                    }
+
+                    if (eventContext) finalPrompt += `, (${eventContext}:1.6)`;
+                    
+                    if (isIDPhoto) {
+                        finalPrompt += ", (ID photo:1.8), (passport photo:1.8), (clean blue background:1.5), (even lighting:1.5), (looking straight at camera:1.6), (formal attire:1.4)";
+                    }
+
+                    if(grainLevel > 0) finalPrompt += `, (film grain:${(grainLevel/50).toFixed(1)}), (analog photography:1.2)`;
+                    if(colorGrade && !colorGrade.includes('_')) finalPrompt += `, ${colorGrade}`;
+
+                    if (state.refBase64) {
+                        finalPrompt = "The first image is the target old photo. The second image is a REFERENCE FACE. Restore using reference features. " + finalPrompt;
+                        
+                        if(isReActor) {
+                            finalPrompt += ", (ReActor Face Swap:1.0), (InsightFace Swap:1.0), (codeformer face restore:1.0)";
+                        } else {
+                            finalPrompt += `, (use reference face features:2.0), (ReferenceLatent:1.0)`;
+                        }
+                    }
+
+                    if (isAsian) finalPrompt += ", (vietnamese nationality:1.4), (asian facial features:1.4), (dark brown eyes:1.2), (warm yellow skin tone:1.2)";
+                    if(isDehaze) finalPrompt += ", (dehaze:1.8), (clear atmosphere:1.5)";
+                    
+                    if(isContrastFix) {
+                        finalPrompt += ", (match original color tone:1.3), (consistent color grading:1.3), (KJNodes ColorMatch style:1.2)";
+                        finalPrompt += ", (high contrast:1.3), (tonal range adjustment:1.2), (rich blacks:1.3)";
+                        if(document.getElementById('check-vibrant')?.checked) finalPrompt += ", (saturation boost:1.03)";
+                    }
+
+                    const shouldAddRank = !isBlockRank && rankVal !== 'no_rank_insignia';
+
+                    if (milBranch) finalPrompt += `, (${milBranch}:1.6)`;
+                    if (milUniform) finalPrompt += `, (${milUniform}:1.5)`;
+                    if (hatVal) finalPrompt += `, (${hatVal}:2.5)`;
+                    
+                    if (shouldAddRank && rankVal) {
+                        finalPrompt += `, (${rankVal}:2.5), (sharp collar tab details:1.6)`;
+                    } else if (isBlockRank || rankVal === 'no_rank_insignia') {
+                        finalPrompt += `, (plain collar:1.5), (no rank insignia:1.5)`;
+                        negPrompt += `, collar tabs, rank insignia, shoulder marks, epaulettes, red badge`;
+                    }
+
+                    if (isInsigniaBoost && shouldAddRank) finalPrompt += `, (detailed military insignia:1.6), (shiny gold star badge:1.6), (collar rank details:1.5)`;
+                    
+                    if (isSaoVang) finalPrompt += `, (wearing golden star medal on left chest:2.0)`;
+                    if (isKhangChien) finalPrompt += `, (wearing vietnamese resistance war medals:1.5)`;
+                    if (isChienSi) finalPrompt += `, (wearing soldier of glory badge:1.5)`;
+                    if (isDoan) finalPrompt += `, (wearing ho chi minh communist youth union badge:1.5)`;
+
+                    if(isCrossEyed) finalPrompt += ", (strabismus:2.0), (cross-eyed:2.0)";
+                    if(isPtosis) finalPrompt += ", (droopy eyelids:1.8), (ptosis:1.8), (heavy eyelids:1.6)";
+                    if(isClosedEyes) { 
+                        finalPrompt += ", (closed eyes:1.6), (sleeping:1.4), (eyes shut:1.5)";
+                        negPrompt += ", (wide open eyes:1.5), (staring eyes:1.5), (surprised look:1.4), (looking at camera:1.4)";
+                    }
+                    if(isMonolid) finalPrompt += ", (monolid eyes:1.8), (single eyelid:1.8)";
+                    if(isBuckTeeth) finalPrompt += ", (buck teeth:1.8), (protruding upper teeth:1.8)";
+                    if(isBlackTeeth) { finalPrompt += ", (traditional blackened teeth:2.0), (lacquered black teeth:1.8)"; negPrompt += ", (perfect white teeth:2.0), (bleached teeth:2.0)"; }
+                    
+                    if(isAntiFlip) {
+                         finalPrompt += ", (exact orientation:1.6), (preserve left right orientation:1.5), (no mirroring:1.5)";
+                         if (state.aspectRatioType === 'portrait') {
+                             finalPrompt += ", (vertical orientation:1.5), (portrait mode:1.5), (tall aspect ratio:1.4)";
+                             negPrompt += ", (horizontal orientation:2.0), (landscape mode:2.0), (wide aspect ratio:2.0)";
+                         } else if (state.aspectRatioType === 'landscape') {
+                             finalPrompt += ", (horizontal orientation:1.5), (landscape mode:1.5), (wide aspect ratio:1.4)";
+                             negPrompt += ", (vertical orientation:2.0), (portrait mode:2.0), (tall aspect ratio:2.0)";
+                         } else {
+                             finalPrompt += ", (square aspect ratio:1.5)";
+                         }
+                         negPrompt += ", (flipped:2.0), (mirrored:2.0), (horizontal flip:2.0), (inverted orientation:2.0)";
+                    }
+
+                    if (document.getElementById('check-vibrant')?.checked) finalPrompt += ", (rich colors:1.4), (vibrant fabric:1.4)";
+                    finalPrompt += ", (tiled upscaling style:1.2), (no seams:1.4)";
+
+                    const termContent = document.getElementById('terminal-content');
+                    const steps = ["LOADING AI ENGINE...", "ANALYZING IMAGE STRUCTURE...", "RESTORING DETAILS...", "APPLYING COLOR MATCH...", "FINALIZING..."];
+                    let stepIdx = 0;
+                    const termInterval = setInterval(() => {
+                        if(stepIdx < steps.length) {
+                            if(termContent) termContent.innerHTML += `<div class='text-violet-300'>${steps[stepIdx]}</div>`;
+                            const pBar = document.getElementById('term-progress-bar');
+                            if(pBar) pBar.style.width = ((stepIdx+1)*20) + "%";
+                            stepIdx++;
+                        }
+                    }, 800);
+
+                    try {
+                        const resizedBase64 = await resizeImage(state.base64);
+                        const parts = [
+                            { text: `${finalPrompt}. Negative prompt: ${negPrompt}. (deblur:1.5), (sharpen:1.5), (unblur:1.5)` },
+                            { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }
+                        ];
+                        if (state.refBase64) parts.push({ inlineData: { mimeType: "image/jpeg", data: state.refBase64.split(',')[1] } });
+
+                        const headers = { 'Content-Type': 'application/json' };
+                        if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+
+                        const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } })
+                        });
+
+                        const data = await response.json();
+                        
+                        // FIX: Explicit Error Handling for API Response
+                        if (data.error) {
+                            throw new Error(data.error.message || "Lỗi tạo ảnh từ AI (API Error)");
+                        }
+                        
+                        let base64Img = null;
+                        if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+                            for (const part of data.candidates[0].content.parts) {
+                                if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; }
+                            }
+                        }
+
+                        if(base64Img) {
+                            const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
+                            const restoredImg = new Image();
+                            restoredImg.onload = () => {
+                                state.restoredObj = restoredImg;
+                                const imgMod = document.getElementById('img-modified');
+                                if(imgMod) imgMod.src = finalImgSrc;
+                                if(magnifier) magnifier.style.backgroundImage = `url('${finalImgSrc}')`;
+                                
+                                const imgOrg = document.getElementById('img-original');
+                                const imgModWrap = document.getElementById('img-modified-wrapper');
+                                const handle = document.getElementById('slider-handle');
+                                if (imgOrg && imgMod && state.restoredObj) {
+                                    const width = imgOrg.offsetWidth;
+                                    const height = imgOrg.offsetHeight;
+                                    if(width > 0 && height > 0) {
+                                        imgMod.style.width = width + "px";
+                                        imgMod.style.height = height + "px";
+                                        imgMod.style.maxWidth = "none"; 
+                                    }
+                                }
+                                if(imgModWrap) imgModWrap.style.width = '50%'; 
+                                if(handle) handle.style.left = '50%';
+
+                                if(downloadTrigger) { downloadTrigger.disabled = false; downloadTrigger.classList.remove('opacity-50', 'cursor-not-allowed'); }
+                                if(btnMobDown) btnMobDown.disabled = false;
+                                if (window.innerWidth < 1024) document.getElementById('sidebar')?.classList.add('-translate-x-full');
+                                showToast("Phục chế thành công (V35.85)!", "flux");
+                            };
+                            restoredImg.src = finalImgSrc;
+                        } else { throw new Error("Không nhận được dữ liệu ảnh từ AI."); }
+                    } catch(e) { 
+                        console.error(e); 
+                        if (e.message.includes("API key")) {
+                            showToast("API Key không hợp lệ! Vui lòng kiểm tra lại.", "error");
+                            document.getElementById('user-api-key').focus();
+                            document.getElementById('user-api-key').parentElement.classList.add('animate-pulse');
+                        } else {
+                            showToast("Lỗi: " + e.message, "error"); 
+                        }
+                        UserSystem.addCredits(20); 
+                    } 
+                    finally {
+                        clearInterval(termInterval);
+                        processBtn.disabled = false;
+                        if(state.isFluxMode) {
+                             const wf = document.getElementById('kontext-workflow').value;
+                             if (wf === 'realvis_v5') processBtn.innerHTML = "TẠO ẢNH (REALVIS V5)";
+                             else if (wf === 'ancient_restore') processBtn.innerHTML = "TẠO ẢNH (ANCIENT RESTORE)";
+                             else if (wf === 'replica_pro') processBtn.innerHTML = "TẠO ẢNH (REPLICA PRO)";
+                             else processBtn.innerHTML = "TẠO ẢNH (FLUX KONTEXT)";
+                        } else {
+                             processBtn.innerHTML = "TẠO ẢNH (ENTER)";
+                        }
+                        document.getElementById('ai-terminal-overlay').classList.add('hidden');
+                        document.getElementById('scan-beam').classList.remove('active');
+                    }
                 });
             }
             // ... (Remaining helper functions) ...
