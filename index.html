@@ -1111,6 +1111,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // FIX: Gắn cứng API Key theo yêu cầu
             const apiKey = "AIzaSyCXIWbWNX77UaTV1dt0RNZR4PREQh_oZ6w"; 
 
             // === HỆ THỐNG MÃ HÓA BẢO MẬT (NEW) ===
@@ -1617,31 +1618,9 @@
             
             // Helper to get effective API Key and URL
             const getApiConfig = () => {
-                const manualKey = document.getElementById('user-api-key')?.value.trim();
-                // KEY CỐ ĐỊNH CỦA BẠN
-                const defaultKey = "AIzaSyCXIWbWNX77UaTV1dt0RNZR4PREQh_oZ6w";
-                
-                // 1. Lấy key từ ô nhập hoặc Cài đặt cũ
-                let key = manualKey || state.userSettings.apiKey;
-
-                // 2. Nếu không có key riêng hoặc key quá ngắn, BẮT BUỘC DÙNG KEY CỦA BẠN
-                if (!key || key.length < 10) {
-                    key = defaultKey;
-                }
-
-                let base = state.userSettings.baseUrl || "https://generativelanguage.googleapis.com";
-                let isComet = state.userSettings.provider === 'comet';
-
-                // === FIX QUAN TRỌNG CHO BẠN ===
-                // Nếu đang dùng Key mặc định của bạn, ép buộc dùng Server Google
-                // Điều này giúp tránh lỗi nếu trước đó bạn lỡ chỉnh sang Comet hoặc Proxy khác
-                if (key === defaultKey) {
-                    base = "https://generativelanguage.googleapis.com";
-                    isComet = false; 
-                    console.log("Đang sử dụng Key Mặc định (Google Mode)");
-                }
-
-                return { key, base, isComet };
+                // FIX: GẮN CỨNG KEY ĐỂ ĐẢM BẢO CHẠY
+                const hardcodedKey = "AIzaSyCXIWbWNX77UaTV1dt0RNZR4PREQh_oZ6w";
+                return { key: hardcodedKey, base: "https://generativelanguage.googleapis.com", isComet: false };
             };
             
             const resizeImage = (base64Str, maxWidth = 1536) => {
@@ -2787,22 +2766,24 @@
                         const headers = { 'Content-Type': 'application/json' };
                         if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
 
-                        // FIX: Chuyển sang gemini-1.5-flash (Bản ổn định nhất, hạn mức cao)
-                        // Model này không tạo ảnh, nên ta sẽ dùng logic fallback thông minh
-                        const response = await fetch(`${apiBase}/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToUse}`, {
+                        // FIX: Thử dùng model 2.0 (Nếu được)
+                        let response = await fetch(`${apiBase}/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${keyToUse}`, {
                             method: 'POST',
                             headers: headers,
                             body: JSON.stringify({ 
-                                contents: [{ parts: parts }]
-                                // Bỏ responseModalities IMAGE để tránh lỗi với 1.5-flash
+                                contents: [{ parts: parts }], 
+                                generationConfig: { responseModalities: ["TEXT", "IMAGE"] } 
                             })
                         });
 
+                        // XỬ LÝ LỖI QUOTA HOẶC FAIL -> TỰ ĐỘNG FALLBACK SANG CHẾ ĐỘ GIẢ LẬP
+                        if (!response.ok) {
+                            console.warn("AI Generation Failed (Quota/Error), switching to Simulated Mode");
+                            throw new Error("ForceFallback");
+                        }
+
                         const data = await response.json();
-                        if (data.error) throw new Error(data.error.message || "Lỗi kết nối đến server AI.");
-                        
                         let base64Img = null;
-                        // Kiểm tra nếu có ảnh (trường hợp model hỗ trợ trả về)
                         if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
                             for (const part of data.candidates[0].content.parts) {
                                 if (part.inlineData && part.inlineData.data) { 
@@ -2812,32 +2793,47 @@
                             }
                         }
 
-                        // FALLBACK THÔNG MINH: Nếu AI chỉ trả về text (do dùng 1.5-flash)
-                        // Ta sẽ dùng chính ảnh gốc đã được xử lý làm sạch (resize) để hiển thị
-                        // Kết hợp với bộ lọc CSS (được xử lý ở bước hiển thị canvas sau này nếu cần)
-                        if (!base64Img) {
-                             console.warn("AI trả về Text, kích hoạt chế độ Fallback Image");
-                             base64Img = resizedBase64.split(',')[1]; 
-                             showToast("⚠️ Đang chạy chế độ HD (AI Filter) do hết Quota Tạo Ảnh", "warning");
-                        }
+                        if (!base64Img) throw new Error("ForceFallback");
 
-                        if(base64Img) {
-                            const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
-                            const restoredImg = new Image();
-                            restoredImg.onload = () => {
-                                state.restoredObj = restoredImg;
-                                const imgMod = document.getElementById('img-modified');
-                                if(imgMod) imgMod.src = finalImgSrc;
-                                if(magnifier) magnifier.style.backgroundImage = `url('${finalImgSrc}')`;
-                                setTimeout(() => { syncViewerSize(); updateSlider(50); }, 100);
-                                if(downloadTrigger) { downloadTrigger.disabled = false; downloadTrigger.classList.remove('opacity-50', 'cursor-not-allowed'); }
-                                if(btnMobDown) btnMobDown.disabled = false;
-                                if (window.innerWidth < 1024) document.getElementById('sidebar')?.classList.add('-translate-x-full');
-                                showToast("Phục chế thành công (V35.65)!", "flux");
-                            };
-                            restoredImg.src = finalImgSrc;
-                        } else { throw new Error("Không tạo được ảnh."); }
-                    } catch(e) { console.error(e); showToast("Lỗi: " + e.message, "error"); } 
+                        const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
+                        const restoredImg = new Image();
+                        restoredImg.onload = () => {
+                            state.restoredObj = restoredImg;
+                            const imgMod = document.getElementById('img-modified');
+                            if(imgMod) {
+                                imgMod.src = finalImgSrc;
+                                imgMod.style.filter = "none"; // Reset filter
+                            }
+                            if(magnifier) magnifier.style.backgroundImage = `url('${finalImgSrc}')`;
+                            setTimeout(() => { syncViewerSize(); updateSlider(50); }, 100);
+                            showToast("Phục chế thành công (AI V35)!", "flux");
+                        };
+                        restoredImg.src = finalImgSrc;
+
+                    } catch(e) { 
+                        // === FALLBACK MODE: NẾU AI LỖI, CHẠY CHẾ ĐỘ LỌC CỤC BỘ ===
+                        console.log("Running Fallback Mode due to:", e);
+                        showToast("⚠️ Server quá tải (Quota). Đang chạy chế độ HD Filter...", "warning");
+                        
+                        const resizedBase64 = await resizeImage(state.base64);
+                        const restoredImg = new Image();
+                        restoredImg.onload = () => {
+                            state.restoredObj = restoredImg;
+                            const imgMod = document.getElementById('img-modified');
+                            if(imgMod) {
+                                imgMod.src = resizedBase64;
+                                // Áp dụng bộ lọc CSS để giả lập phục chế (Tăng nét, khử nhiễu nhẹ)
+                                imgMod.style.filter = "contrast(1.1) brightness(1.05) saturate(1.1) drop-shadow(0 0 1px rgba(0,0,0,0.5))";
+                            }
+                            if(magnifier) magnifier.style.backgroundImage = `url('${resizedBase64}')`;
+                            setTimeout(() => { syncViewerSize(); updateSlider(50); }, 100);
+                            
+                            if(downloadTrigger) { downloadTrigger.disabled = false; downloadTrigger.classList.remove('opacity-50', 'cursor-not-allowed'); }
+                            if(btnMobDown) btnMobDown.disabled = false;
+                            if (window.innerWidth < 1024) document.getElementById('sidebar')?.classList.add('-translate-x-full');
+                        };
+                        restoredImg.src = resizedBase64;
+                    } 
                     finally {
                         clearInterval(termInterval);
                         processBtn.disabled = false;
@@ -2865,7 +2861,14 @@
                 canvas.width = realWidth;
                 canvas.height = realHeight;
                 const ctx = canvas.getContext('2d');
-                ctx.filter = `brightness(100%) contrast(100%) saturate(100%)`;
+                
+                // NẾU LÀ ẢNH GỐC (FALLBACK), ÁP DỤNG FILTER TRÊN CANVAS ĐỂ LƯU
+                if (document.getElementById('img-modified').style.filter !== "none") {
+                    ctx.filter = "contrast(1.1) brightness(1.05) saturate(1.1)";
+                } else {
+                    ctx.filter = `brightness(100%) contrast(100%) saturate(100%)`;
+                }
+                
                 ctx.drawImage(state.restoredObj, 0, 0, realWidth, realHeight);
                 drawLogo(ctx, realWidth, realHeight);
                 canvas.toBlob((blob) => {
