@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZALO: 0352803379 - STUDIO V35.80 (AUTO-SAVE TOKEN)</title>
+    <title>ZALO: 0352803379 - STUDIO V35.80 (MOBILE FIX)</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -139,6 +139,7 @@
             background-image: radial-gradient(circle at top right, #0f172a, #050505);
             color: #e2e8f0;
             -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            height: 100dvh; /* Dynamic viewport height fix for mobile browsers */
         }
         input, textarea { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
 
@@ -217,7 +218,7 @@
     </style>
 </head>
 
-<body class="text-slate-300 font-sans h-screen flex overflow-hidden select-none relative" oncontextmenu="return false;">
+<body class="text-slate-300 font-sans h-full flex overflow-hidden select-none relative" oncontextmenu="return false;">
     
     <!-- SECURITY GATE (REDESIGNED: SOFTER & PROFESSIONAL) -->
     <div id="security-gate" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#050505]/90 backdrop-blur-3xl transition-opacity duration-500">
@@ -291,9 +292,10 @@
     <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
     
     <div class="flex w-full h-full relative z-10 backdrop-blur-[1px]" id="fullscreen-target">
-        <!-- Sidebar and Main Content (Same as before) -->
-
-<aside id="sidebar" class="w-[360px] flex-shrink-0 glass-panel mobile-sidebar-bg flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)] absolute z-50 h-full lg:relative lg:translate-x-0 -translate-x-full">
+        <!-- Sidebar and Main Content -->
+        
+        <!-- FIXED: SIDEBAR WIDTH for Mobile (w-full sm:w-[360px]) -->
+        <aside id="sidebar" class="w-full sm:w-[360px] flex-shrink-0 glass-panel mobile-sidebar-bg flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)] absolute z-50 h-full lg:relative lg:translate-x-0 -translate-x-full">
             <div class="h-14 px-4 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
                 <div class="flex flex-col">
                     <!-- EDITED: SIDEBAR TITLE -->
@@ -1515,6 +1517,29 @@
             };
 
             if(mobBtnReset) mobBtnReset.onclick = () => window.location.reload();
+
+            // FIXED SIDEBAR TOGGLE LOGIC
+            const sidebar = document.getElementById('sidebar');
+            const toggleSidebar = document.getElementById('toggle-sidebar-btn');
+            
+            if(toggleSidebar) {
+                toggleSidebar.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Ngăn sự kiện click truyền lên
+                    if(sidebar.classList.contains('-translate-x-full')) {
+                        sidebar.classList.remove('-translate-x-full');
+                    } else {
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                });
+            }
+            
+            const closeSidebar = document.getElementById('close-sidebar-mobile');
+            if(closeSidebar) {
+                closeSidebar.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.add('-translate-x-full');
+                });
+            }
 
             // ... (Process Image Logic, Download, etc.) ...
             if(processBtn) {
