@@ -327,6 +327,16 @@
                         <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider">CREDITS</span>
                         <span class="text-xs font-mono font-bold text-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.3)]" id="credit-count">---</span>
                     </div>
+					<div class="mt-2 w-full">
+  <input id="userKey"
+    class="pro-input w-full py-1.5 text-center"
+    placeholder="Nhập USER KEY">
+  <button onclick="useAI()"
+    class="mt-1 w-full btn-flux-modern py-2 text-[10px] font-bold">
+    DÙNG AI
+  </button>
+</div>
+
                     <!-- REMOVED ADMIN BUTTON AS REQUESTED -->
                     <button id="close-sidebar-mobile" class="lg:hidden text-slate-400 p-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                 </div>
@@ -2612,49 +2622,24 @@
         });
     </script>
 </body><script>
-const Sec={
- k:"V35_SEC",
- d:t=>[...atob(t)].map((c,i)=>
-   String.fromCharCode(c.charCodeAt(0)^Sec.k.charCodeAt(i%Sec.k.length))
- ).join("")
-};
+const API="https://YOUR-WORKER.workers.dev";
 
-const raw=localStorage.getItem("v35_active_user");
-if(!raw){
- alert("Chưa được cấp quyền / credit");
- location.href="admin.html";
- throw "";
-}
+async function useAI(){
+  const key=document.getElementById("userKey").value.trim();
+  if(!key) return alert("Nhập USER KEY");
 
-const data=JSON.parse(Sec.d(raw));
+  const r=await fetch(API+"/use",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ key })
+  });
 
-window.GEMINI_API_KEY=data.geminiKey;
-window.COMET_API_KEY=data.cometKey;
-window.API_PROVIDER=data.provider;
+  if(!r.ok){
+    alert("Hết credit hoặc KEY sai");
+    return;
+  }
 
-let credit=data.credit||0;
-const creditEl=document.getElementById("credit-count");
-creditEl.innerText=credit;
-
-function useAI(){
- if(credit<=0){
-   alert("Hết credit!");
-   return;
- }
-
- credit--;
- data.credit=credit;
- creditEl.innerText=credit;
-
- localStorage.setItem(
-   "v35_active_user",
-   btoa([...JSON.stringify(data)].map((c,i)=>
-     String.fromCharCode(
-       c.charCodeAt(0)^Sec.k.charCodeAt(i%Sec.k.length)
-     )
-   ).join(""))
- );
-
- alert("Đã dùng 1 credit (demo)");
+  const j=await r.json();
+  document.getElementById("credit-count").innerText = j.credit;
 }
 </script>

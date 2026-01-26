@@ -1,73 +1,33 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<title>V35 ADMIN</title>
-<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-black text-white flex items-center justify-center min-h-screen">
+<html>
+<body>
+<h3>ADMIN V35</h3>
 
-<div class="bg-zinc-900 p-6 rounded-xl w-full max-w-md space-y-4">
-<h1 class="text-center font-bold">ADMIN V35</h1>
+<button onclick="create()">TẠO USER KEY</button><br><br>
 
-<input id="pass" type="password" placeholder="Mật khẩu admin"
- class="w-full p-2 rounded bg-black border border-zinc-700">
+<input id="key" placeholder="USER KEY"><br>
+<input id="amount" type="number" placeholder="Credit cộng thêm"><br>
+<button onclick="add()">CỘNG CREDIT</button>
 
-<div id="panel" class="hidden space-y-3">
-
-<input id="gemini" placeholder="Gemini API Key"
- class="w-full p-2 rounded bg-black border border-zinc-700">
-
-<input id="comet" placeholder="Comet API Key"
- class="w-full p-2 rounded bg-black border border-zinc-700">
-
-<input id="credit" type="number" placeholder="Credit"
- class="w-full p-2 rounded bg-black border border-zinc-700">
-
-<select id="provider" class="w-full p-2 rounded bg-black border border-zinc-700">
-<option value="gemini">Gemini</option>
-<option value="comet">Comet</option>
-</select>
-
-<button onclick="save()" class="w-full py-2 bg-violet-600 rounded">
-LƯU & CẤP KEY
-</button>
-</div>
-
-<button onclick="login()" class="w-full py-2 bg-green-600 rounded">
-ĐĂNG NHẬP
-</button>
-
-<p id="msg" class="text-center text-sm text-red-400"></p>
-</div>
+<pre id="out"></pre>
 
 <script>
-const ADMIN_PASS = "admin123";
+const API="https://YOUR-WORKER.workers.dev";
 
-const Sec={
- k:"V35_SEC",
- e:t=>btoa([...t].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^Sec.k.charCodeAt(i%Sec.k.length))).join("")),
-};
-
-function login(){
- if(document.getElementById("pass").value!==ADMIN_PASS){
-   msg.innerText="Sai mật khẩu";return;
- }
- panel.classList.remove("hidden");
- msg.innerText="";
+async function create(){
+ const r=await fetch(API+"/admin/create");
+ const j=await r.json();
+ out.innerText="USER KEY: "+j.key;
+ key.value=j.key;
 }
 
-function save(){
- const data={
-   geminiKey:gemini.value.trim(),
-   cometKey:comet.value.trim(),
-   credit:parseInt(credit.value)||0,
-   provider:provider.value
- };
- localStorage.setItem("v35_active_user",Sec.e(JSON.stringify(data)));
- alert("Đã lưu cho khách ✔");
+async function add(){
+ const r=await fetch(API+"/admin/add",{
+  method:"POST",
+  body:JSON.stringify({ key:key.value, amount:amount.value })
+ });
+ out.innerText=JSON.stringify(await r.json(),null,2);
 }
 </script>
-
 </body>
 </html>
