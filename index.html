@@ -37,6 +37,26 @@
         })();
     </script>
 
+    <!-- AUTH CONFIG SCRIPT (NEW ADDITION) -->
+    <script>
+    const Sec = {
+     key:"V35_SEC",
+     dec(t){let s=atob(t);return [...s].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^this.key.charCodeAt(i%this.key.length))).join("")}
+    };
+
+    const saved = localStorage.getItem("v35_active_user");
+    if(saved){
+     try {
+         const data = JSON.parse(Sec.dec(saved));
+
+         // dùng cho API
+         window.GEMINI_API_KEY = data.geminiKey;
+         window.COMET_API_KEY  = data.cometKey;
+         window.API_PROVIDER   = data.provider;
+     } catch(e) { console.error("Auth Load Error", e); }
+    }
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -1245,10 +1265,20 @@
             // Helper to get effective API Key and URL
             const getApiConfig = () => {
                 const manualKey = document.getElementById('user-api-key')?.value.trim();
-                const key = manualKey || state.userSettings.apiKey || apiKey;
-                const base = state.userSettings.baseUrl || "https://generativelanguage.googleapis.com";
-                const isComet = state.userSettings.provider === 'comet';
-                return { key, base, isComet };
+                
+                // Priority: Manual Input > User Settings > Global Window Config > Default
+                const activeProvider = state.userSettings.provider || window.API_PROVIDER || 'google';
+                
+                let key = manualKey || state.userSettings.apiKey;
+                if (!key) {
+                    if (activeProvider === 'comet') key = window.COMET_API_KEY;
+                    else key = window.GEMINI_API_KEY || apiKey;
+                }
+
+                const base = state.userSettings.baseUrl || (activeProvider === 'comet' ? "https://api.cometapi.com" : "https://generativelanguage.googleapis.com");
+                const isComet = activeProvider === 'comet';
+                
+                return { key: key || "", base, isComet };
             };
             
             const resizeImage = (base64Str, maxWidth = 1536) => {
