@@ -64,6 +64,121 @@
         </div>
     </div>
 
-    <script src="js/admin.js"></script>
+    <script>
+        // === CẤU HÌNH ADMIN ===
+        const ADMIN_PASS_HASH = "YWRtaW4xMjM="; // Mật khẩu mặc định: admin123
+
+        // === HỆ THỐNG MÃ HÓA GIỐNG INDEX.HTML ===
+        const SimpleSec = {
+            _key: "V35_SECURE_KEY_SALT", 
+            encrypt: function(text) {
+                if(!text) return '';
+                try {
+                    let result = '';
+                    for(let i = 0; i < text.length; i++) {
+                        result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
+                    }
+                    return btoa(result);
+                } catch(e) { return text; }
+            },
+            decrypt: function(encoded) {
+                if(!encoded) return '';
+                try {
+                    let text = atob(encoded);
+                    let result = '';
+                    for(let i = 0; i < text.length; i++) {
+                        result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
+                    }
+                    return result;
+                } catch(e) { return encoded; }
+            }
+        };
+
+        window.onload = function() {
+            if (sessionStorage.getItem("v35_admin_logged_in") === "true") {
+                showDashboard();
+            }
+        };
+
+        function login() {
+            const passInput = document.getElementById("pass").value;
+            const status = document.getElementById("status");
+
+            // Check pass: admin123
+            if (btoa(passInput) === ADMIN_PASS_HASH) {
+                status.innerText = "Đang xác thực...";
+                status.className = "text-center text-xs h-4 font-bold text-green-500";
+                
+                sessionStorage.setItem("v35_admin_logged_in", "true");
+                
+                setTimeout(() => {
+                    showDashboard();
+                }, 800);
+            } else {
+                status.innerText = "Sai mật khẩu! (Mặc định: admin123)";
+                status.className = "text-center text-xs h-4 font-bold text-red-500 animate-pulse";
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById("login-box").style.display = "none";
+            document.getElementById("dashboard").classList.remove("hidden");
+            
+            // LOAD CẤU HÌNH TỪ LOCALSTORAGE (CHUNG VỚI INDEX)
+            try {
+                const savedData = localStorage.getItem('v35_user_settings');
+                if (savedData) {
+                    // Giải mã dữ liệu từ Index
+                    let settings = {};
+                    try {
+                        const decrypted = SimpleSec.decrypt(savedData);
+                        settings = JSON.parse(decrypted);
+                    } catch(e) {
+                        // Fallback nếu chưa mã hóa
+                        settings = JSON.parse(savedData);
+                    }
+                    
+                    if(settings.apiKey) {
+                        document.getElementById("apiKeyInput").value = settings.apiKey;
+                        document.getElementById("sync-status").innerText = "Đã tải Key từ hệ thống V35";
+                    }
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        function saveConfig() {
+            const apiKey = document.getElementById("apiKeyInput").value.trim();
+            
+            if (apiKey.length < 5) {
+                alert("API Key không hợp lệ!");
+                return;
+            }
+            
+            // Tạo object settings chuẩn V35
+            const settings = {
+                username: "Admin V35",
+                apiKey: apiKey,
+                provider: "comet", // Mặc định
+                baseUrl: "https://api.cometapi.com"
+            };
+
+            // Mã hóa và lưu để Index đọc được
+            try {
+                const dataStr = JSON.stringify(settings);
+                const encrypted = SimpleSec.encrypt(dataStr);
+                localStorage.setItem('v35_user_settings', encrypted);
+                alert("Đã lưu & Đồng bộ sang trang chủ thành công!");
+            } catch(e) {
+                alert("Lỗi lưu trữ: " + e.message);
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("v35_admin_logged_in");
+            location.reload();
+        }
+    </script>
 </body>
 </html>
