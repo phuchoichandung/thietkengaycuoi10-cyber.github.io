@@ -142,6 +142,11 @@
             border-color: #3b82f6;
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
         }
+        
+        /* Tab Styles */
+        .pay-tab { cursor: pointer; padding: 8px; border-bottom: 2px solid transparent; color: #64748b; transition: all 0.2s; }
+        .pay-tab:hover { color: #94a3b8; }
+        .pay-tab.active { border-bottom-color: #3b82f6; color: #fff; font-weight: 700; }
     </style>
 </head>
 
@@ -810,84 +815,101 @@
         </main>
     </div>
 
-    <!-- RECHARGE MODAL REDESIGNED -->
+    <!-- RECHARGE MODAL REDESIGNED (PRO PAYMENT) -->
     <div id="recharge-modal" class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-md hidden flex items-center justify-center modal-fade-in p-4">
-        <div class="w-full max-w-[350px] bg-[#0a0a0f] border border-red-500/30 rounded-2xl shadow-[0_0_50px_rgba(239,68,68,0.2)] p-6 text-center relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-red-500"></div>
+        <div class="w-full max-w-[350px] bg-[#0a0a0f] border border-slate-700/50 rounded-2xl shadow-[0_0_50px_rgba(59,130,246,0.1)] p-0 text-center relative overflow-hidden flex flex-col">
             
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-bold text-white uppercase flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                    HẾT CREDIT
-                </h3>
-                <button id="close-recharge" class="text-slate-500 hover:text-white transition-colors p-1"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-            </div>
-            
-            <p class="text-[11px] text-slate-400 mb-4 text-left">Tài khoản hết lượt tạo ảnh. Vui lòng nạp thêm để tiếp tục sử dụng tính năng cao cấp.</p>
-
-            <div class="bg-white/5 rounded-lg p-3 mb-4 border border-white/10 text-left">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-[9px] font-bold text-slate-500 uppercase">THÔNG TIN CHUYỂN KHOẢN</span>
-                    <span class="text-[9px] font-bold text-yellow-500 bg-yellow-500/10 px-1.5 py-0.5 rounded">MB BANK</span>
-                </div>
-                <div class="text-sm font-mono font-bold text-white tracking-wider break-all bg-black/30 p-2 rounded border border-white/5 mb-1">
-                    85543556868
-                </div>
-                <div class="text-[10px] text-slate-400 font-bold uppercase text-right">HOANG QUANG CUONG</div>
+            <!-- Professional Header -->
+            <div class="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
+                <span class="text-xs font-bold text-white uppercase tracking-widest">THANH TOÁN DỊCH VỤ</span>
+                <button id="close-recharge" class="text-slate-400 hover:text-white transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
 
-            <div class="space-y-2 mb-4">
-                <label class="text-[9px] font-bold text-slate-400 uppercase block text-left mb-1">CHỌN GÓI NẠP (CLICK ĐỂ CHỌN)</label>
+            <!-- Payment Tabs -->
+            <div class="flex border-b border-white/10 bg-black/20 text-[10px] font-bold">
+                <div class="pay-tab flex-1 active text-center text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" data-tab="transfer">CHUYỂN KHOẢN</div>
+                <div class="pay-tab flex-1 text-center text-slate-500 hover:text-slate-300 transition-colors" data-tab="visa">THẺ QUỐC TẾ</div>
+                <div class="pay-tab flex-1 text-center text-slate-500 hover:text-slate-300 transition-colors" data-tab="ewallet">VÍ ĐIỆN TỬ</div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-5 flex-1 overflow-y-auto">
                 
-                <!-- Package 1 -->
-                <button class="pkg-card w-full flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all group relative overflow-hidden text-left" data-amount="100k" data-credits="80">
-                    <div>
-                        <div class="text-xs font-bold text-white group-hover:text-blue-300 transition-colors">GÓI CƠ BẢN: 100.000Đ</div>
-                        <div class="text-[10px] text-slate-400 font-mono">Nhận ngay <span class="text-yellow-400 font-bold">80 CREDITS</span></div>
+                <!-- TAB 1: BANK TRANSFER (DEFAULT) -->
+                <div id="tab-content-transfer" class="tab-content">
+                    <div class="bg-gradient-to-br from-blue-900/40 to-slate-900/40 border border-blue-500/20 rounded-xl p-4 mb-4 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-2 opacity-50"><svg class="w-12 h-12 text-blue-500/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg></div>
+                        <div class="text-left relative z-10">
+                            <div class="text-[9px] font-bold text-blue-400 uppercase mb-1">NGÂN HÀNG THỤ HƯỞNG</div>
+                            <div class="text-lg font-bold text-white tracking-wide">MB BANK (QUÂN ĐỘI)</div>
+                            <div class="text-xl font-mono font-bold text-yellow-400 tracking-wider my-2">85543556868</div>
+                            <div class="text-[10px] font-bold text-slate-300 uppercase">HOANG QUANG CUONG</div>
+                        </div>
                     </div>
-                    <div class="w-5 h-5 rounded-full border border-white/20 flex items-center justify-center pkg-check">
-                        <div class="w-2.5 h-2.5 rounded-full bg-blue-500 opacity-0 transition-opacity"></div>
+                    
+                    <div class="space-y-2 mb-4">
+                        <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">CHỌN GÓI CREDITS</label>
+                        <!-- Packages (Same logic) -->
+                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group selected" data-amount="200k" data-credits="200">
+                            <div class="text-left">
+                                <div class="text-[11px] font-bold text-white">200.000Đ</div>
+                                <div class="text-[9px] text-slate-400">200 Credits <span class="text-red-400 text-[8px] font-bold bg-red-500/10 px-1 rounded ml-1">HOT</span></div>
+                            </div>
+                            <div class="pkg-check w-4 h-4 rounded-full border border-blue-500 bg-blue-500 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                        </button>
+                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="100k" data-credits="80">
+                            <div class="text-left">
+                                <div class="text-[11px] font-bold text-white">100.000Đ</div>
+                                <div class="text-[9px] text-slate-400">80 Credits</div>
+                            </div>
+                            <div class="pkg-check w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"><div class="w-2 h-2 bg-blue-500 rounded-full opacity-0"></div></div>
+                        </button>
+                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="500k" data-credits="500">
+                            <div class="text-left">
+                                <div class="text-[11px] font-bold text-white">500.000Đ</div>
+                                <div class="text-[9px] text-slate-400">500 Credits (VIP)</div>
+                            </div>
+                            <div class="pkg-check w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"><div class="w-2 h-2 bg-blue-500 rounded-full opacity-0"></div></div>
+                        </button>
                     </div>
-                </button>
 
-                <!-- Package 2 -->
-                <button class="pkg-card w-full flex items-center justify-between p-3 rounded-lg bg-violet-500/10 border border-violet-500/30 hover:bg-violet-500/20 transition-all group relative overflow-hidden text-left selected" data-amount="200k" data-credits="200">
-                    <div class="absolute top-0 right-0 bg-red-500 text-[6px] font-bold px-1.5 py-0.5 text-white rounded-bl">HOT</div>
-                    <div>
-                        <div class="text-xs font-bold text-white group-hover:text-violet-300 transition-colors">GÓI PHỔ BIẾN: 200.000Đ</div>
-                        <div class="text-[10px] text-slate-400 font-mono">Nhận ngay <span class="text-yellow-400 font-bold">200 CREDITS</span></div>
+                    <div class="mt-3">
+                         <textarea id="zalo-msg-content" class="hidden"></textarea>
+                         <a id="btn-send-zalo" href="#" target="_blank" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase tracking-widest">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                            XÁC NHẬN & GỬI ZALO
+                        </a>
+                        <p class="text-[9px] text-slate-500 mt-2">Hệ thống kích hoạt tự động sau khi nhận được tin nhắn.</p>
                     </div>
-                    <div class="w-5 h-5 rounded-full border border-violet-500 flex items-center justify-center pkg-check bg-violet-500">
-                        <div class="w-2.5 h-2.5 rounded-full bg-white opacity-100 transition-opacity"></div>
-                    </div>
-                </button>
-
-                <!-- Package 3 -->
-                <button class="pkg-card w-full flex items-center justify-between p-3 rounded-lg bg-blue-500/10 border border-blue-500/30 hover:bg-blue-500/20 transition-all group relative overflow-hidden text-left" data-amount="500k" data-credits="500">
-                    <div>
-                        <div class="text-xs font-bold text-white group-hover:text-blue-300 transition-colors">GÓI CAO CẤP: 500.000Đ</div>
-                        <div class="text-[10px] text-slate-400 font-mono">Nhận ngay <span class="text-yellow-400 font-bold">500 CREDITS</span></div>
-                    </div>
-                    <div class="w-5 h-5 rounded-full border border-white/20 flex items-center justify-center pkg-check">
-                        <div class="w-2.5 h-2.5 rounded-full bg-blue-500 opacity-0 transition-opacity"></div>
-                    </div>
-                </button>
-            </div>
-
-            <div class="relative group mb-4">
-                 <label class="text-[9px] font-bold text-slate-400 uppercase block text-left mb-1">NỘI DUNG GỬI ZALO (TỰ ĐỘNG)</label>
-                <textarea id="zalo-msg-content" class="pro-input w-full p-2 h-14 resize-none text-[10px] bg-black/20 border-blue-500/30 text-blue-200 font-mono" readonly></textarea>
-                <a id="btn-send-zalo" href="#" target="_blank" class="w-full mt-2 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-lg hover:shadow-blue-500/50 uppercase tracking-wide">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                    XÁC NHẬN & GỬI ZALO
-                </a>
-            </div>
-
-            <div class="pt-3 border-t border-white/10">
-                <div class="flex gap-2">
-                    <input type="text" id="recharge-input" class="pro-input w-full py-2 text-center font-mono uppercase text-violet-300 border-violet-500/30 bg-violet-500/10 placeholder-violet-500/30" placeholder="NHẬP MÃ KÍCH HOẠT">
-                    <button id="btn-submit-recharge" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded font-bold text-[10px] transition-all whitespace-nowrap">KÍCH HOẠT</button>
                 </div>
+
+                <!-- TAB 2: VISA (VISUAL ONLY) -->
+                <div id="tab-content-visa" class="tab-content hidden h-full flex flex-col items-center justify-center py-6">
+                    <div class="flex gap-2 mb-4 opacity-50 grayscale">
+                        <div class="w-10 h-6 bg-white/10 rounded"></div><div class="w-10 h-6 bg-white/10 rounded"></div>
+                    </div>
+                    <svg class="w-12 h-12 text-slate-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">CỔNG THANH TOÁN QUỐC TẾ</p>
+                    <p class="text-[9px] text-slate-500 px-4">Tính năng đang bảo trì nâng cấp hệ thống bảo mật.</p>
+                    <button class="mt-4 px-4 py-2 bg-white/5 border border-white/10 rounded text-[9px] text-slate-300 hover:bg-white/10" onclick="document.querySelector('.pay-tab[data-tab=\'transfer\']').click()">Quay lại Chuyển Khoản</button>
+                </div>
+
+                 <!-- TAB 3: WALLET (VISUAL ONLY) -->
+                <div id="tab-content-ewallet" class="tab-content hidden h-full flex flex-col items-center justify-center py-6">
+                    <div class="w-16 h-16 bg-pink-500/10 rounded-2xl flex items-center justify-center mb-3 border border-pink-500/20">
+                         <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <p class="text-[10px] font-bold text-pink-500 uppercase mb-1">VÍ ĐIỆN TỬ MOMO / ZALOPAY</p>
+                    <p class="text-[9px] text-slate-500 px-4">Vui lòng sử dụng tính năng Chuyển Khoản Ngân Hàng để được kích hoạt ngay lập tức (24/7).</p>
+                     <button class="mt-4 px-4 py-2 bg-blue-600/20 border border-blue-500/50 rounded text-[9px] text-blue-400 font-bold hover:bg-blue-600/30" onclick="document.querySelector('.pay-tab[data-tab=\'transfer\']').click()">Dùng Chuyển Khoản MB</button>
+                </div>
+            </div>
+            
+            <!-- Footer Security -->
+            <div class="bg-black/40 p-2 text-[8px] text-slate-600 font-mono border-t border-white/5 flex justify-center gap-3">
+                <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> SSL SECURED</span>
+                <span>•</span>
+                <span>PCI DSS COMPLIANT</span>
             </div>
         </div>
     </div>
@@ -1004,41 +1026,56 @@
             const pkgCards = document.querySelectorAll('.pkg-card');
             const zaloMsg = document.getElementById('zalo-msg-content');
             const zaloBtn = document.getElementById('btn-send-zalo');
+            const payTabs = document.querySelectorAll('.pay-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Tab Switching
+            payTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active from all tabs
+                    payTabs.forEach(t => {
+                        t.classList.remove('active', 'border-b-2', 'border-blue-500', 'text-blue-400', 'bg-blue-500/5');
+                        t.classList.add('text-slate-500');
+                    });
+                    // Hide all contents
+                    tabContents.forEach(c => c.classList.add('hidden'));
+
+                    // Active clicked tab
+                    tab.classList.remove('text-slate-500');
+                    tab.classList.add('active', 'border-b-2', 'border-blue-500', 'text-blue-400', 'bg-blue-500/5');
+                    
+                    // Show content
+                    document.getElementById(`tab-content-${tab.dataset.tab}`).classList.remove('hidden');
+                });
+            });
             
             const updateZalo = (amount, credits) => {
-                // Ensure deviceId is loaded
                 const devId = UserSystem.deviceId || "Checking...";
                 const text = `Chào Admin, mình đã chuyển khoản gói ${amount} (${credits} Credits). \n- Mã máy: ${devId}\n- Nội dung chuyển khoản: ${devId}`;
-                
                 if(zaloMsg) zaloMsg.value = text;
-                // Encode for URL
                 if(zaloBtn) zaloBtn.href = `https://zalo.me/0352803379?text=${encodeURIComponent(text)}`;
             };
 
             pkgCards.forEach(card => {
                 card.addEventListener('click', () => {
-                    // Remove selected from all
                     pkgCards.forEach(c => {
-                        c.classList.remove('selected');
-                        c.querySelector('.pkg-check').style.borderColor = 'rgba(255,255,255,0.2)';
-                        c.querySelector('.pkg-check').style.backgroundColor = 'transparent';
-                        c.querySelector('.pkg-check div').classList.remove('opacity-100');
+                        c.classList.remove('selected', 'bg-blue-600/10', 'border-blue-500');
+                        c.classList.add('border-white/10');
+                        c.querySelector('.pkg-check').classList.remove('bg-blue-500', 'border-blue-500');
+                        c.querySelector('.pkg-check').classList.add('border-white/20');
                         c.querySelector('.pkg-check div').classList.add('opacity-0');
                     });
                     
-                    // Add selected to clicked
-                    card.classList.add('selected');
-                    card.querySelector('.pkg-check').style.borderColor = card.dataset.amount === '200k' ? '#8b5cf6' : '#3b82f6';
-                    card.querySelector('.pkg-check').style.backgroundColor = card.dataset.amount === '200k' ? '#8b5cf6' : 'transparent';
+                    card.classList.add('selected', 'bg-blue-600/10', 'border-blue-500');
+                    card.classList.remove('border-white/10');
+                    card.querySelector('.pkg-check').classList.add('bg-blue-500', 'border-blue-500');
+                    card.querySelector('.pkg-check').classList.remove('border-white/20');
                     card.querySelector('.pkg-check div').classList.remove('opacity-0');
-                    card.querySelector('.pkg-check div').classList.add('opacity-100');
 
-                    // Update Zalo
                     updateZalo(card.dataset.amount, card.dataset.credits);
                 });
             });
 
-            // Init Zalo with default selected
             setTimeout(() => {
                 const defaultSel = document.querySelector('.pkg-card.selected');
                 if(defaultSel) updateZalo(defaultSel.dataset.amount, defaultSel.dataset.credits);
