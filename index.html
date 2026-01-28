@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" class="h-full antialiased">
+<html lang="en" class="h-full antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -165,7 +165,7 @@
                          <svg class="w-8 h-8 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                      </div>
                 </div>
-                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight mb-1 text-center">PHỤC CHẾ ẢNH</h1>
+                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight mb-1 text-center">PHOTO RESTORATION</h1>
                 <div class="flex items-center gap-2 opacity-70">
                     <div class="h-[1px] w-8 bg-gradient-to-r from-transparent to-violet-500"></div>
                     <p class="text-[10px] text-violet-300 font-mono tracking-[0.3em] uppercase">Professional AI</p>
@@ -175,18 +175,18 @@
             <div class="w-full space-y-4">
                 <div class="relative group w-full">
                     <div class="relative bg-black/40 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center transition-all group-hover:border-white/20">
-                        <span class="text-[9px] text-slate-500 uppercase tracking-widest font-bold mb-1.5">THIẾT BỊ TRUY CẬP</span>
+                        <span class="text-[9px] text-slate-500 uppercase tracking-widest font-bold mb-1.5">ACCESS DEVICE</span>
                         <div class="flex items-center justify-center gap-2 h-8 w-full">
-                            <span id="gate-ip-display" class="font-mono text-xs sm:text-sm font-bold text-white tracking-wider shimmer-text truncate max-w-full">Đang kết nối...</span>
+                            <span id="gate-ip-display" class="font-mono text-xs sm:text-sm font-bold text-white tracking-wider shimmer-text truncate max-w-full">Connecting...</span>
                             <div id="gate-loading-spinner" class="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin flex-shrink-0"></div>
                         </div>
                     </div>
                 </div>
                 <button id="gate-submit" class="w-full py-3.5 bg-gradient-to-r from-indigo-100 to-violet-100 text-slate-900 hover:to-white rounded-xl text-xs font-bold tracking-[0.15em] transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.1)] flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden relative" disabled>
-                    <span class="relative z-10">VÀO PHỤC CHẾ ẢNH</span>
+                    <span class="relative z-10">ENTER STUDIO</span>
                 </button>
             </div>
-            <div class="mt-6 h-4 flex items-center justify-center"><p id="gate-status" class="text-[10px] text-slate-500 transition-colors animate-pulse text-center">Đang quét thông tin thiết bị...</p></div>
+            <div class="mt-6 h-4 flex items-center justify-center"><p id="gate-status" class="text-[10px] text-slate-500 transition-colors animate-pulse text-center">Scanning device info...</p></div>
         </div>
     </div>
 
@@ -201,7 +201,7 @@
             <!-- Sidebar Header -->
             <div class="h-14 px-4 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
                 <div class="flex flex-col">
-                    <h1 class="text-xs font-bold tracking-widest text-violet-500">PHỤC CHẾ ẢNH</h1>
+                    <h1 class="text-xs font-bold tracking-widest text-violet-500">RESTORATION PRO</h1>
                     <div class="flex items-center gap-2">
                         <span id="top-bar-ip" class="text-[9px] text-slate-400 font-mono">IP: Loading...</span>
                         <span class="w-1 h-1 rounded-full bg-violet-500"></span>
@@ -221,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- Sidebar Content (Giữ nguyên toàn bộ) -->
+            <!-- Sidebar Content -->
             <div class="flex-1 overflow-y-auto p-4 scroll-smooth custom-scrollbar space-y-2">
                 <!-- 1. MAIN UPLOAD -->
                 <div class="relative group">
@@ -229,7 +229,7 @@
                     <label id="drop-zone" for="image-upload" class="flex flex-col items-center justify-center w-full h-24 sm:h-28 border border-dashed border-violet-500/50 rounded-lg cursor-pointer bg-white/[0.02] hover:bg-violet-900/[0.1] hover:border-violet-500 transition-all duration-200">
                         <div id="upload-placeholder" class="flex flex-col items-center pointer-events-none">
                             <svg class="w-5 h-5 text-violet-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Tải ảnh gốc (Bấm vào)</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Upload Original (Click)</span>
                         </div>
                     </label>
                 </div>
@@ -255,22 +255,22 @@
                     
                     <!-- WORKFLOW SELECTOR -->
                     <div class="pl-11 pr-1 border-t border-violet-500/20 pt-2" id="workflow-container">
-                        <label class="block text-[9px] font-bold text-violet-300 mb-1">CHỌN QUY TRÌNH (WORKFLOW PRESETS)</label>
+                        <label class="block text-[9px] font-bold text-violet-300 mb-1">WORKFLOW PRESETS</label>
                         <select id="kontext-workflow" class="pro-input w-full py-1.5 cursor-pointer bg-violet-900/20 border-violet-500/30 text-violet-200 transition-all duration-500">
-                            <option value="replica_pro" class="text-yellow-400 font-bold">🧬 SIÊU THỰC (REPLICA PRO) - KHÓA CẤU TRÚC SÂU</option>
-                            <option value="default">✨ Mặc định (Kontext Base + OldPhoto-2)</option>
-                            <option value="ancient_restore" class="text-purple-400 font-bold">🏯 Phục chế Tranh/Tượng Cổ (ReActor + ControlNet)</option>
-                            <option value="realvis_v5" class="text-orange-400 font-bold">🦁 RealVisXL V5 (Phục hồi cấu trúc sâu)</option>
-                            <option value="qwen_restore_full" class="text-cyan-400 font-bold">⚡ Qwen V2.5 Full Restore (Prompt Gốc JSON)</option>
+                            <option value="replica_pro" class="text-yellow-400 font-bold">🧬 HYPER REALISTIC (REPLICA PRO) - DEEP STRUCTURE LOCK</option>
+                            <option value="default">✨ Default (Kontext Base + OldPhoto-2)</option>
+                            <option value="ancient_restore" class="text-purple-400 font-bold">🏯 Ancient Art/Statue Restoration (ReActor + ControlNet)</option>
+                            <option value="realvis_v5" class="text-orange-400 font-bold">🦁 RealVisXL V5 (Deep Structure Restoration)</option>
+                            <option value="qwen_restore_full" class="text-cyan-400 font-bold">⚡ Qwen V2.5 Full Restore (Native JSON Prompt)</option>
                             <option value="qwen_lightning">⚡ Qwen V2.5-VL (Lightning Fast)</option>
                             <option value="wedding_kontext_v2" class="text-pink-400 font-bold">👰 Wedding Kontext V2 (Full JSON)</option>
-                            <option value="wedding_pro">💍 Wedding Pro + Upscale (Ảnh Cưới - Cơ bản)</option>
+                            <option value="wedding_pro">💍 Wedding Pro + Upscale (Wedding - Basic)</option>
                             <option value="old_photo_v1">📜 Kontext V1.0 Native (Ref-Latent Boost)</option>
-                            <option value="outdoor_mode">🏞️ Phục hồi Ngoại Cảnh (IC-Light + PowerPaint)</option>
-                            <option value="product_mode">🛍️ Ảnh Sản Phẩm / Thương Mại (Ecommerce)</option>
-                            <option value="white_bg">⬜ Tách Nền Trắng (BiRefNet + RMBG-2.0)</option>
+                            <option value="outdoor_mode">🏞️ Outdoor Restoration (IC-Light + PowerPaint)</option>
+                            <option value="product_mode">🛍️ Product/Commercial (Ecommerce)</option>
+                            <option value="white_bg">⬜ White Background (BiRefNet + RMBG-2.0)</option>
                         </select>
-                         <div class="text-[8px] text-violet-400/60 mt-1 italic" id="workflow-desc">Sử dụng OldPhoto-2.safetensors (0.87)</div>
+                         <div class="text-[8px] text-violet-400/60 mt-1 italic" id="workflow-desc">Using OldPhoto-2.safetensors (0.87)</div>
                     </div>
                 </div>
 
@@ -282,8 +282,8 @@
                             <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-yellow-500"></div>
                         </label>
                         <div class="flex-1">
-                            <span class="block text-[10px] font-bold text-yellow-500 tracking-wide">💎 CHẾ ĐỘ SAO Y BẢN CHÍNH (ALIGN LOCK)</span>
-                            <span class="block text-[9px] text-yellow-600/70">KHÓA GÓC MẶT - CHỐNG BỊ LẬT HÌNH</span>
+                            <span class="block text-[10px] font-bold text-yellow-500 tracking-wide">💎 REPLICA MODE (ALIGN LOCK)</span>
+                            <span class="block text-[9px] text-yellow-600/70">LOCK FACE ANGLE - SMART ANTI-FLIP</span>
                         </div>
                     </div>
                 </div>
@@ -291,85 +291,85 @@
                 <!-- MODULE: QUÂN SỬ VIỆT NAM -->
                 <div class="module-group border-yellow-500/30" id="module-military">
                     <button id="toggle-military" class="w-full flex justify-between items-center module-header bg-yellow-500/10 hover:bg-yellow-500/20">
-                        <span class="text-[10px] font-bold text-yellow-500 tracking-wide uppercase flex items-center gap-2">🇻🇳 QUÂN SỬ & KỶ VẬT (FULL UPGRADE)</span>
+                        <span class="text-[10px] font-bold text-yellow-500 tracking-wide uppercase flex items-center gap-2">🇻🇳 MILITARY HISTORY (FULL UPGRADE)</span>
                         <svg class="w-3 h-3 text-yellow-500 toggle-icon" id="icon-military" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-military" class="module-content">
                         <div class="module-inner space-y-2">
                              <div class="space-y-1">
-                                <label class="section-label text-yellow-600/80">Quân chủng / Lực lượng</label>
+                                <label class="section-label text-yellow-600/80">Branch / Force</label>
                                 <select id="mil-branch" class="pro-input w-full py-1.5 save-input">
-                                    <option value="">-- Tự động / Không chọn --</option>
-                                    <option value="vietnamese army ground force, red collar tabs">🟥 Lục quân (Hàm Đỏ)</option>
-                                    <option value="vietnamese air force, blue collar tabs">🟦 Phòng Không - Không Quân (Hàm Xanh Trời)</option>
-                                    <option value="vietnamese navy, navy blue uniform, white striped collar">⚓ Hải quân (Áo yếm/Hàm Tím than)</option>
-                                    <option value="vietnamese border guard, green collar tabs">🟩 Bộ đội Biên phòng (Hàm Xanh lá)</option>
-                                    <option value="vietnamese public security, green uniform, red collar tabs">👮 Công an Nhân dân (Cảnh phục)</option>
-                                    <option value="vietnamese youth volunteer force, dark green uniform">⭐ Thanh niên Xung phong</option>
+                                    <option value="">-- Auto / Default --</option>
+                                    <option value="vietnamese army ground force, red collar tabs">🟥 Ground Force (Red Tabs)</option>
+                                    <option value="vietnamese air force, blue collar tabs">🟦 Air Force (Blue Tabs)</option>
+                                    <option value="vietnamese navy, navy blue uniform, white striped collar">⚓ Navy (Dark Blue/Purple Tabs)</option>
+                                    <option value="vietnamese border guard, green collar tabs">🟩 Border Guard (Green Tabs)</option>
+                                    <option value="vietnamese public security, green uniform, red collar tabs">👮 Public Security (Green Uniform)</option>
+                                    <option value="vietnamese youth volunteer force, dark green uniform">⭐ Youth Volunteer Force</option>
                                 </select>
                              </div>
                              <div class="space-y-1">
-                                <label class="section-label text-yellow-600/80">Quân phục / Thời kỳ</label>
+                                <label class="section-label text-yellow-600/80">Uniform / Era</label>
                                 <select id="mil-uniform" class="pro-input w-full py-1.5 save-input">
-                                    <option value="">-- Tự động / Mặc định --</option>
-                                    <option value="wearing tran thu shirt, padded cotton jacket, viet minh era">Áo Trấn Thủ (Chống Pháp)</option>
-                                    <option value="wearing to chau uniform, plain green fatigue, vietnam war era">Quân phục Tô Châu (Chống Mỹ)</option>
-                                    <option value="wearing K82 uniform, formal military tunic">Quân phục K82 (Bao cấp/Biên giới)</option>
-                                    <option value="wearing K94 uniform, modern formal suit">Quân phục K94/K03 (Hiện đại)</option>
-                                    <option value="wearing camouflage special force uniform">Đặc công (Rằn ri/Ngụy trang)</option>
+                                    <option value="">-- Auto / Default --</option>
+                                    <option value="wearing tran thu shirt, padded cotton jacket, viet minh era">Tran Thu Jacket (Anti-French)</option>
+                                    <option value="wearing to chau uniform, plain green fatigue, vietnam war era">To Chau Uniform (Anti-US)</option>
+                                    <option value="wearing K82 uniform, formal military tunic">K82 Uniform (Subsidy Era)</option>
+                                    <option value="wearing K94 uniform, modern formal suit">K94/K03 Uniform (Modern)</option>
+                                    <option value="wearing camouflage special force uniform">Special Force (Camo)</option>
                                 </select>
                              </div>
                              <div class="space-y-1">
-                                <label class="section-label text-yellow-600/80">Mũ & Nón (Chính xác)</label>
+                                <label class="section-label text-yellow-600/80">Hat & Cap (Precise)</label>
                                 <select id="hat-select" class="pro-input w-full py-1.5 save-input" data-key="hatSelect">
-                                    <option value="">-- Không xử lý Mũ --</option>
-                                    <option value="wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star">Mũ Cối (Lính Bắc Việt) - Cứng & Tròn</option>
-                                    <option value="wear vietnamese soft cap, boonie hat, green fabric, red star badge">Mũ Tai Bèo (Mềm)</option>
-                                    <option value="wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star">Mũ Kepi (Sĩ quan - Sao nổi)</option>
-                                    <option value="wear vietnamese police kepi hat, green color, red band, gold badge">Mũ Kepi (Công an)</option>
-                                    <option value="wear vietnamese bamboo helmet, cloth covered">Mũ Nan (Bọc vải)</option>
+                                    <option value="">-- No Hat Processing --</option>
+                                    <option value="wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star">Pith Helmet (North Vietnamese) - Hard & Round</option>
+                                    <option value="wear vietnamese soft cap, boonie hat, green fabric, red star badge">Boonie Hat (Soft)</option>
+                                    <option value="wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star">Kepi Hat (Officer - Raised Star)</option>
+                                    <option value="wear vietnamese police kepi hat, green color, red band, gold badge">Kepi Hat (Police)</option>
+                                    <option value="wear vietnamese bamboo helmet, cloth covered">Bamboo Helmet (Cloth Covered)</option>
                                 </select>
                              </div>
                              <div class="space-y-1">
-                                <label class="section-label text-yellow-600/80">Cấp bậc / Quân hàm</label>
+                                <label class="section-label text-yellow-600/80">Rank / Insignia</label>
                                 <select id="rank-select" class="pro-input w-full py-1.5 save-input" data-key="rankSelect">
-                                    <option value="">-- Tự động / Không chọn --</option>
-                                    <option value="no_rank_insignia">🚫 KHÔNG ĐEO HÀM (ÁO TRƠN)</option>
-                                    <optgroup label="Hạ sĩ quan / Chiến sĩ">
-                                        <option value="plain red collar tabs, soldier rank">Chiến sĩ (Hàm trơn/Binh nhì-nhất)</option>
-                                        <option value="red collar tabs with one yellow stripe">Hạ sĩ (1 gạch)</option>
-                                        <option value="red collar tabs with two yellow stripes">Trung sĩ (2 gạch)</option>
-                                        <option value="red collar tabs with three yellow stripes">Thượng sĩ (3 gạch)</option>
+                                    <option value="">-- Auto / Default --</option>
+                                    <option value="no_rank_insignia">🚫 NO INSIGNIA (PLAIN)</option>
+                                    <optgroup label="Soldier / NCO">
+                                        <option value="plain red collar tabs, soldier rank">Soldier (Plain/Private)</option>
+                                        <option value="red collar tabs with one yellow stripe">Corporal (1 stripe)</option>
+                                        <option value="red collar tabs with two yellow stripes">Sergeant (2 stripes)</option>
+                                        <option value="red collar tabs with three yellow stripes">Master Sergeant (3 stripes)</option>
                                     </optgroup>
-                                    <optgroup label="Sĩ quan (Sao + Gạch)">
-                                        <option value="red collar tabs with one star, officer rank">Thiếu úy (1 sao)</option>
-                                        <option value="red collar tabs with two stars, officer rank">Trung úy (2 sao)</option>
-                                        <option value="red collar tabs with three stars, officer rank">Thượng úy (3 sao)</option>
-                                        <option value="red collar tabs with four stars, officer rank">Đại úy (4 sao)</option>
+                                    <optgroup label="Officer (Stars + Lines)">
+                                        <option value="red collar tabs with one star, officer rank">2nd Lieutenant (1 star)</option>
+                                        <option value="red collar tabs with two stars, officer rank">Lieutenant (2 stars)</option>
+                                        <option value="red collar tabs with three stars, officer rank">Captain (3 stars)</option>
+                                        <option value="red collar tabs with four stars, officer rank">Senior Captain (4 stars)</option>
                                     </optgroup>
                                 </select>
                              </div>
                              <div class="space-y-1">
-                                <label class="section-label text-yellow-600/80">Huân / Huy Chương</label>
+                                <label class="section-label text-yellow-600/80">Medals / Badges</label>
                                 <div class="grid grid-cols-2 gap-1.5">
-                                    <div class="flex items-center gap-2"><input id="check-sao-vang" type="checkbox" class="chk-pro save-input"><label for="check-sao-vang" class="text-[9px] text-yellow-400">Huân chương Sao Vàng</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-khang-chien" type="checkbox" class="chk-pro save-input"><label for="check-khang-chien" class="text-[9px] text-slate-300">HC Kháng Chiến</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-chien-si" type="checkbox" class="chk-pro save-input"><label for="check-chien-si" class="text-[9px] text-slate-300">Danh hiệu Chiến sĩ</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[9px] text-cyan-400">Huy hiệu Đoàn</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-sao-vang" type="checkbox" class="chk-pro save-input"><label for="check-sao-vang" class="text-[9px] text-yellow-400">Gold Star Medal</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-khang-chien" type="checkbox" class="chk-pro save-input"><label for="check-khang-chien" class="text-[9px] text-slate-300">Resistance Medal</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-chien-si" type="checkbox" class="chk-pro save-input"><label for="check-chien-si" class="text-[9px] text-slate-300">Soldier Title</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[9px] text-cyan-400">Youth Union Badge</label></div>
                                 </div>
                              </div>
                              <div class="flex items-center gap-2 p-1.5 rounded border border-yellow-500/20 bg-yellow-500/10 mt-1">
                                 <input id="check-insignia-boost" type="checkbox" class="chk-pro save-input">
                                 <label for="check-insignia-boost" class="cursor-pointer select-none flex-1">
-                                    <span class="block text-[10px] font-bold text-yellow-300">TĂNG NÉT QUÂN HÀM & LOGO</span>
-                                    <span class="block text-[8px] text-yellow-500/70">Xử lý riêng viền Sao Mũ & Chi tiết kim loại</span>
+                                    <span class="block text-[10px] font-bold text-yellow-300">BOOST RANK & LOGO SHARPNESS</span>
+                                    <span class="block text-[8px] text-yellow-500/70">Process Cap Stars & Metal Details Separately</span>
                                 </label>
                             </div>
                              <div class="flex items-center gap-2 p-1.5 rounded border border-red-500/20 bg-red-500/10 mt-1">
                                 <input id="block-rank" type="checkbox" class="chk-pro chk-red save-input">
                                 <label for="block-rank" class="cursor-pointer select-none flex-1">
-                                    <span class="block text-[10px] font-bold text-red-300">CHẶN VẼ QUÂN HÀM (GIỮ CỔ ÁO TRƠN)</span>
-                                    <span class="block text-[8px] text-red-500/70">Tick vào nếu ảnh gốc không có ve/hàm mà AI cứ vẽ thêm</span>
+                                    <span class="block text-[10px] font-bold text-red-300">BLOCK RANK GENERATION (PLAIN COLLAR)</span>
+                                    <span class="block text-[8px] text-red-500/70">Check if original photo has no collar tabs/insignia</span>
                                 </label>
                             </div>
                         </div>
@@ -379,31 +379,31 @@
                 <!-- MODULE: TEXTURE & LIGHTING -->
                 <div class="module-group border-pink-500/30" id="module-cinematic">
                     <button id="toggle-cinematic" class="w-full flex justify-between items-center module-header bg-pink-500/10 hover:bg-pink-500/20">
-                        <span class="text-[10px] font-bold text-pink-500 tracking-wide uppercase flex items-center gap-2">🎞️ LIGHTING & MÀU PHIM</span>
+                        <span class="text-[10px] font-bold text-pink-500 tracking-wide uppercase flex items-center gap-2">🎞️ LIGHTING & FILM TONE</span>
                         <svg class="w-3 h-3 text-pink-500 toggle-icon" id="icon-cinematic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-cinematic" class="module-content open" style="grid-template-rows: 1fr; opacity: 1;">
                         <div class="module-inner space-y-3">
                              <div>
                                 <div class="flex justify-between text-[10px] text-pink-400 font-bold mb-1">
-                                    <span>ĐỘ NHIỄU HẠT (FLUX GRAIN)</span>
+                                    <span>FLUX GRAIN</span>
                                     <span id="grain-val">3% (Kontext Default)</span>
                                 </div>
                                 <input type="range" id="grain-slider" min="0" max="100" value="3" class="slider-pink w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
                              </div>
                              <select id="color-grading" class="pro-input w-full py-1.5 save-input">
-                                 <option value="">-- Màu gốc (Standard) --</option>
-                                 <optgroup label="✨ Kontext Lighting (Từ JSON)">
-                                     <option value="rembrandt_lighting">🎬 Rembrandt (Điện ảnh/Kịch tính)</option>
-                                     <option value="golden_hour_backlight">🌅 Golden Hour (Nắng chiều ngược sáng)</option>
-                                     <option value="soft_diffused_light">☁️ Soft Diffused (Ánh sáng mềm)</option>
-                                     <option value="neon_cyberpunk">🌃 Neon Lights (Hiện đại/Tương phản)</option>
+                                 <option value="">-- Original Color (Standard) --</option>
+                                 <optgroup label="✨ Kontext Lighting (From JSON)">
+                                     <option value="rembrandt_lighting">🎬 Rembrandt (Cinematic/Dramatic)</option>
+                                     <option value="golden_hour_backlight">🌅 Golden Hour (Backlight)</option>
+                                     <option value="soft_diffused_light">☁️ Soft Diffused (Studio)</option>
+                                     <option value="neon_cyberpunk">🌃 Neon Lights (Modern/Contrast)</option>
                                  </optgroup>
-                                 <optgroup label="🎞️ Màu Phim Cổ Điển">
-                                     <option value="kodak gold 200 style, warm tone, vintage film look">Kodak Gold (Ấm áp)</option>
-                                     <option value="kodak portra 400 style, natural skin tone, fine grain" selected>Kodak Portra (Chuẩn JSON)</option>
-                                     <option value="fujifilm pro 400h style, cool tone, soft green tint">Fujifilm (Trong trẻo)</option>
-                                     <option value="sepia tone, antique photo style">Sepia (Màu xưa cũ)</option>
+                                 <optgroup label="🎞️ Vintage Film Stock">
+                                     <option value="kodak gold 200 style, warm tone, vintage film look">Kodak Gold (Warm)</option>
+                                     <option value="kodak portra 400 style, natural skin tone, fine grain" selected>Kodak Portra (JSON Std)</option>
+                                     <option value="fujifilm pro 400h style, cool tone, soft green tint">Fujifilm (Cool/Clear)</option>
+                                     <option value="sepia tone, antique photo style">Sepia (Antique)</option>
                                  </optgroup>
                              </select>
                         </div>
@@ -413,7 +413,7 @@
                 <!-- MODULE: EXPOSURE & RELIGHTING -->
                 <div class="module-group border-cyan-500/30" id="module-exposure">
                     <button id="toggle-exposure" class="w-full flex justify-between items-center module-header bg-cyan-500/10 hover:bg-cyan-500/20">
-                        <span class="text-[10px] font-bold text-cyan-400 tracking-wide uppercase flex items-center gap-2">☀️ XỬ LÝ CHÁY SÁNG (QWEN EDIT)</span>
+                        <span class="text-[10px] font-bold text-cyan-400 tracking-wide uppercase flex items-center gap-2">☀️ EXPOSURE FIX (QWEN EDIT)</span>
                         <svg class="w-3 h-3 text-cyan-400 toggle-icon" id="icon-exposure" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-exposure" class="module-content">
@@ -421,23 +421,23 @@
                              <div class="flex items-center gap-2 p-1.5 rounded border border-cyan-500/20 bg-cyan-500/10">
                                 <input id="check-qwen-exposure" type="checkbox" class="chk-pro save-input">
                                 <label for="check-qwen-exposure" class="cursor-pointer select-none flex-1">
-                                    <span class="block text-[10px] font-bold text-cyan-300">KÍCH HOẠT QWEN EDIT (V2511)</span>
-                                    <span class="block text-[8px] text-cyan-500/70">Core: Qwen-Image-Edit + LoRA 移除光影</span>
+                                    <span class="block text-[10px] font-bold text-cyan-300">ENABLE QWEN EDIT (V2511)</span>
+                                    <span class="block text-[8px] text-cyan-500/70">Core: Qwen-Image-Edit + LoRA Remove Shadow</span>
                                 </label>
                             </div>
                             <div class="space-y-1.5 pl-2 border-l border-cyan-500/10 ml-1">
                                 <div class="flex items-center gap-2">
                                     <input id="check-remove-shadow" type="checkbox" class="chk-pro save-input" checked>
-                                    <label for="check-remove-shadow" class="text-[10px] text-slate-300 cursor-pointer">LoRA: 移除光影 (Xóa bóng gắt)</label>
+                                    <label for="check-remove-shadow" class="text-[10px] text-slate-300 cursor-pointer">LoRA: Remove Harsh Shadows</label>
                                 </div>
                                  <div class="flex items-center gap-2">
                                     <input id="check-soft-light" type="checkbox" class="chk-pro save-input" checked>
-                                    <label for="check-soft-light" class="text-[10px] text-slate-300 cursor-pointer">Prompt: Soft Light (Ánh sáng mềm)</label>
+                                    <label for="check-soft-light" class="text-[10px] text-slate-300 cursor-pointer">Prompt: Soft Light</label>
                                 </div>
                             </div>
                             <div class="border border-white/10 rounded bg-black/20 p-2">
                                 <div class="flex justify-between text-[10px] text-cyan-400 font-bold mb-1">
-                                    <span>CƯỜNG ĐỘ XỬ LÝ (STRENGTH)</span>
+                                    <span>PROCESSING STRENGTH</span>
                                     <span id="exposure-val" class="text-slate-200">1.0</span>
                                 </div>
                                 <input type="range" id="exposure-slider" min="0.1" max="2.0" step="0.1" value="1.0" class="slider-cyan w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
@@ -452,7 +452,7 @@
                          <div id="ref-img-preview" class="w-8 h-8 rounded bg-black/40 border border-white/10 flex-shrink-0 bg-cover bg-center" style="display:none;"></div>
                          <input type="file" id="ref-upload" accept="image/*" class="hidden">
                          <label for="ref-upload" class="flex-1 h-8 border border-dashed border-slate-700 rounded flex items-center justify-center cursor-pointer hover:bg-white/5 transition-colors">
-                             <span id="ref-text" class="text-[10px] text-slate-500 font-medium">+ Ảnh tham chiếu (Tăng giống)</span>
+                             <span id="ref-text" class="text-[10px] text-slate-500 font-medium">+ Reference Photo (Boost Likeness)</span>
                          </label>
                          <button id="clear-ref" class="w-8 h-8 rounded bg-white/5 hover:bg-white/10 text-slate-400 flex items-center justify-center transition-colors" style="display:none;">
                              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -461,59 +461,59 @@
                      <div class="flex items-center gap-2 px-1">
                         <input id="check-reactor" type="checkbox" class="chk-pro save-input">
                         <label for="check-reactor" class="flex-1 cursor-pointer select-none">
-                            <span class="block text-[10px] font-bold text-purple-400">Kích hoạt Face Swap (ReActor)</span>
-                            <span class="block text-[8px] text-purple-500/70">Thay thế khuôn mặt thay vì trộn (InsightFace)</span>
+                            <span class="block text-[10px] font-bold text-purple-400">Enable Face Swap (ReActor)</span>
+                            <span class="block text-[8px] text-purple-500/70">Replace face instead of mixing (InsightFace)</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- MODULE 1: XỬ LÝ HÌNH ẢNH -->
+                <!-- MODULE 1: IMAGE PROCESSING -->
                 <div class="module-group" id="module-processing">
                     <button id="toggle-processing" class="w-full flex justify-between items-center module-header">
-                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">🛠️ XỬ LÝ HÌNH ẢNH (LZP DETAIL)</span>
+                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">🛠️ IMAGE PROCESSING (LZP DETAIL)</span>
                         <svg class="w-3 h-3 text-slate-600 toggle-icon" id="icon-processing" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-processing" class="module-content open" style="grid-template-rows: 1fr; opacity: 1;">
                         <div class="module-inner space-y-3">
                              <div class="border border-violet-500/30 rounded bg-violet-900/10 p-2 mb-2" id="creativity-container">
                                 <div class="flex justify-between text-[10px] text-violet-300 font-bold mb-1">
-                                    <span>TUÂN THỦ GỐC</span>
-                                    <span>CHI TIẾT FLUX</span>
+                                    <span>ORIGINAL FIDELITY</span>
+                                    <span>FLUX DETAIL</span>
                                 </div>
                                 <input type="range" id="creativity-slider" min="0" max="100" value="45" class="slider-flux w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-                                <div class="text-[9px] text-center text-violet-400 mt-1" id="creativity-val">Mức 45% (LZP Balanced)</div>
+                                <div class="text-[9px] text-center text-violet-400 mt-1" id="creativity-val">Level 45% (LZP Balanced)</div>
                              </div>
 
                              <div class="grid-compact">
-                                 <div class="flex items-center gap-2 p-1.5 rounded border border-white/5 bg-white/[0.02]" id="container-dehaze"><input id="check-dehaze" type="checkbox" class="chk-pro save-input"><label for="check-dehaze" class="cursor-pointer text-[10px] text-slate-300">Khử sương mù</label></div>
-                                 <div class="flex items-center gap-2 p-1.5 rounded border border-white/5 bg-white/[0.02]" id="container-contrast-fix"><input id="check-contrast-fix" type="checkbox" class="chk-pro save-input"><label for="check-contrast-fix" class="cursor-pointer text-[10px] font-bold text-violet-300">Kontext Contrast (Match)</label></div>
-                                 <div class="flex items-center gap-2 p-1.5 rounded border border-white/5 bg-white/[0.02]"><input id="check-uniform-skin" type="checkbox" class="chk-pro save-input" checked><label for="check-uniform-skin" class="cursor-pointer text-[10px] text-slate-300">Đều màu da</label></div>
+                                 <div class="flex items-center gap-2 p-1.5 rounded border border-white/5 bg-white/[0.02]" id="container-dehaze"><input id="check-dehaze" type="checkbox" class="chk-pro save-input"><label for="check-dehaze" class="cursor-pointer text-[10px] text-slate-300">Dehaze</label></div>
+                                 <div class="flex items-center gap-2 p-1.5 rounded border border-white/5 bg-white/[0.02]" id="container-contrast-fix"><input id="check-contrast-fix" type="checkbox" class="chk-pro save-input"><label for="check-contrast-fix" class="cursor-pointer text-[10px] font-bold text-violet-300">Kontext Contrast</label></div>
+                                 <div class="flex items-center gap-2 p-1.5 rounded border border-white/5 bg-white/[0.02]"><input id="check-uniform-skin" type="checkbox" class="chk-pro save-input" checked><label for="check-uniform-skin" class="cursor-pointer text-[10px] text-slate-300">Uniform Skin</label></div>
                                  <div class="flex items-center gap-2 p-1.5 rounded border border-white/5 bg-white/[0.02]"><input id="check-vibrant" type="checkbox" class="chk-pro save-input" checked><label for="check-vibrant" class="cursor-pointer text-[10px] font-bold text-violet-400">LZP COLOR</label></div>
                              </div>
                              
                              <div class="space-y-1">
-                                <label class="section-label text-slate-500">Chế độ Phóng to (Upscale)</label>
+                                <label class="section-label text-slate-500">Upscale Mode</label>
                                 <select id="upscale-mode" class="pro-input w-full py-1.5 save-input cursor-pointer">
-                                    <option value="supir" selected>🌟 SUPIR v0F (Chất lượng cao nhất - Chậm)</option>
-                                    <option value="pixel_perfect" class="text-yellow-400">💎 Pixel Perfect (Giữ nguyên hạt da)</option>
-                                    <option value="ultrasharp">⚡ 4x-UltraSharp (Tốc độ nhanh - Sắc nét)</option>
-                                    <option value="realesrgan">💍 RealESRGAN (Ảnh cưới/Mịn da)</option>
-                                    <option value="none">🚫 Không Upscale (Nhanh nhất)</option>
+                                    <option value="supir" selected>🌟 SUPIR v0F (Highest Quality - Slow)</option>
+                                    <option value="pixel_perfect" class="text-yellow-400">💎 Pixel Perfect (Preserve Skin Texture)</option>
+                                    <option value="ultrasharp">⚡ 4x-UltraSharp (Fast Speed - Sharp)</option>
+                                    <option value="realesrgan">💍 RealESRGAN (Wedding/Smooth Skin)</option>
+                                    <option value="none">🚫 No Upscale (Fastest)</option>
                                 </select>
                              </div>
 
                              <div class="space-y-1.5 pt-1 border-t border-white/5">
-                                 <div class="flex items-center gap-2"><input id="check-face" type="checkbox" class="chk-pro save-input" data-key="checkFace" checked><label for="check-face" class="text-[10px] text-slate-300 cursor-pointer">Chi tiết mặt (Face Detail)</label></div>
+                                 <div class="flex items-center gap-2"><input id="check-face" type="checkbox" class="chk-pro save-input" data-key="checkFace" checked><label for="check-face" class="text-[10px] text-slate-300 cursor-pointer">Face Detail</label></div>
                                  
                                  <div class="flex items-center gap-2 p-1.5 rounded bg-violet-500/10 border border-violet-500/20">
                                     <input id="check-background" type="checkbox" class="chk-pro save-input" checked>
                                     <label for="check-background" class="cursor-pointer select-none flex-1">
-                                        <span class="block text-[10px] font-bold text-violet-300">Làm nét Nền & Hoa Lá</span>
-                                        <span class="block text-[8px] text-violet-400/70">Chế độ: Botanical Detail (Baby.json)</span>
+                                        <span class="block text-[10px] font-bold text-violet-300">Sharpen Background & Flora</span>
+                                        <span class="block text-[8px] text-violet-400/70">Mode: Botanical Detail (Baby.json)</span>
                                     </label>
                                  </div>
 
-                                 <div class="flex items-center gap-2"><input id="check-hair" type="checkbox" class="chk-pro save-input" data-key="checkHair" checked><label for="check-hair" class="text-[10px] text-slate-300 cursor-pointer">Vẽ lại từng sợi tóc (LZP Hair)</label></div>
+                                 <div class="flex items-center gap-2"><input id="check-hair" type="checkbox" class="chk-pro save-input" data-key="checkHair" checked><label for="check-hair" class="text-[10px] text-slate-300 cursor-pointer">Redraw Hair Strands (LZP Hair)</label></div>
                              </div>
 
                              <div class="mt-2 border-t border-blue-500/20 pt-2 space-y-1.5">
@@ -521,22 +521,22 @@
                                 <div class="flex items-center gap-2 p-1.5 rounded border border-blue-500/20 bg-blue-500/10">
                                     <input id="check-group-mode" type="checkbox" class="chk-pro save-input">
                                     <label for="check-group-mode" class="cursor-pointer select-none flex-1">
-                                        <span class="block text-[10px] font-bold text-blue-300">GROUP PHOTO PRO (Đám đông)</span>
-                                        <span class="block text-[8px] text-blue-500/70">Core: GroundingDINO + SAM (Phân đoạn)</span>
+                                        <span class="block text-[10px] font-bold text-blue-300">GROUP PHOTO PRO (Crowd)</span>
+                                        <span class="block text-[8px] text-blue-500/70">Core: GroundingDINO + SAM (Segment)</span>
                                     </label>
                                  </div>
                                 <div class="flex items-center gap-2 p-1.5 rounded border border-orange-500/20 bg-orange-500/10 animate-real-pulse" id="container-blur-prepass">
                                     <input id="check-blur-prepass" type="checkbox" class="chk-pro chk-real save-input">
                                     <label for="check-blur-prepass" class="cursor-pointer select-none flex-1">
-                                        <span class="block text-[10px] font-bold text-orange-400">KHỬ NHIỄU SÂU (BLUR INPUT)</span>
-                                        <span class="block text-[8px] text-orange-500/70">Làm mờ ảnh gốc trước xử lý (Fix nhiễu hạt/Rỗ)</span>
+                                        <span class="block text-[10px] font-bold text-orange-400">DEEP DENOISE (BLUR INPUT)</span>
+                                        <span class="block text-[8px] text-orange-500/70">Blur original before processing (Fix Noise)</span>
                                     </label>
                                 </div>
                                 <div class="flex items-center gap-2 p-1.5 rounded border border-red-500/20 bg-red-500/10 animate-pulse-glow">
                                     <input id="check-extreme-mode" type="checkbox" class="chk-pro chk-red save-input">
                                     <label for="check-extreme-mode" class="cursor-pointer select-none flex-1">
-                                        <span class="block text-[10px] font-bold text-red-400">⚡ CƯỠNG ÉP PHỤC HỒI (Extreme Recovery)</span>
-                                        <span class="block text-[8px] text-red-500/70">Dùng cho ảnh quá nát/mờ mà chế độ thường bó tay</span>
+                                        <span class="block text-[10px] font-bold text-red-400">⚡ EXTREME RECOVERY</span>
+                                        <span class="block text-[8px] text-red-500/70">Use for extremely damaged/blurry photos</span>
                                     </label>
                                 </div>
                              </div>
@@ -544,44 +544,44 @@
                     </div>
                 </div>
 
-                <!-- MODULE 2: ĐỐI TƯỢNG & TRANG PHỤC -->
+                <!-- MODULE 2: SUBJECT & OUTFIT -->
                 <div class="module-group" id="module-subject">
                     <button id="toggle-subject" class="w-full flex justify-between items-center module-header">
-                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">👔 ĐỐI TƯỢNG & TRANG PHỤC</span>
+                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">👔 SUBJECT & OUTFIT</span>
                         <svg class="w-3 h-3 text-slate-600 toggle-icon" id="icon-subject" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-subject" class="module-content">
                         <div class="module-inner">
                             <div class="grid grid-cols-3 gap-1.5 mb-2">
-                                 <select id="gender-select" class="pro-input py-1.5 save-input" data-key="gender"><option value="">Giới tính</option><option value="male">Nam</option><option value="female">Nữ</option><option value="male and female">Nam & Nữ</option></select>
-                                 <input type="number" id="age-input" placeholder="Tuổi" class="pro-input py-1.5 save-input text-center" data-key="age">
-                                 <select id="damage-level" class="pro-input py-1.5 save-input cursor-pointer" data-key="damageLevel"><option value="">Độ hỏng</option><option value="fix slightly blurry" selected>Nhẹ</option><option value="fix scratches, mold">Vừa</option><option value="fix torn, missing details">Nặng</option></select>
+                                 <select id="gender-select" class="pro-input py-1.5 save-input" data-key="gender"><option value="">Gender</option><option value="male">Male</option><option value="female">Female</option><option value="male and female">Male & Female</option></select>
+                                 <input type="number" id="age-input" placeholder="Age" class="pro-input py-1.5 save-input text-center" data-key="age">
+                                 <select id="damage-level" class="pro-input py-1.5 save-input cursor-pointer" data-key="damageLevel"><option value="">Damage Level</option><option value="fix slightly blurry" selected>Light</option><option value="fix scratches, mold">Medium</option><option value="fix torn, missing details">Heavy</option></select>
                             </div>
                             <select id="texture-mode" class="pro-input w-full py-1.5 save-input cursor-pointer mb-2" data-key="textureMode">
-                                <option value="">-- Độ chân thực (Texture) --</option>
-                                <option value="true skin, natural pores, film grain, realistic skin:1.2, natural beauty:1.2" selected>🧬 TRUE SKIN (DA THẬT - LỖ CHÂN LÔNG)</option>
+                                <option value="">-- Texture/Realism --</option>
+                                <option value="true skin, natural pores, film grain, realistic skin:1.2, natural beauty:1.2" selected>🧬 TRUE SKIN (NATURAL PORES)</option>
                                 <option value="Canon EOS 5D Mark IV, 85mm lens, shallow depth of field, perfect lighting, raw photo, realistic skin texture">📸 Canon 5D + 85mm Lens (Studio Skin)</option>
-                                <option value="smooth skin, ai beauty">Mịn màng (AI Beauty)</option>
-                                <option value="high detail, film grain">Chi tiết cao (Film Grain)</option>
+                                <option value="smooth skin, ai beauty">Smooth Skin (AI Beauty)</option>
+                                <option value="high detail, film grain">High Detail (Film Grain)</option>
                             </select>
                             <div class="space-y-1.5">
                                 <div class="flex items-center gap-2 p-1.5 rounded border border-blue-500/20 bg-blue-500/10">
                                     <input id="check-id-photo" type="checkbox" class="chk-pro save-input">
                                     <label for="check-id-photo" class="cursor-pointer select-none flex-1">
-                                        <span class="block text-[10px] font-bold text-blue-300">CHế ĐỘ ẢNH THẺ (ID PHOTO)</span>
-                                        <span class="block text-[8px] text-blue-500/70">Phông xanh/trắng chuẩn (chuan.txt)</span>
+                                        <span class="block text-[10px] font-bold text-blue-300">ID PHOTO MODE</span>
+                                        <span class="block text-[8px] text-blue-500/70">Standard Blue/White BG (chuan.txt)</span>
                                     </label>
                                 </div>
                                 <select id="event-context" class="pro-input w-full py-1.5 cursor-pointer save-input" data-key="eventContext">
-                                    <option value="">-- (AUTO) Ngữ cảnh thông minh --</option>
-                                    <option value="original_enhanced" class="text-violet-400 font-bold">🛡️ Nền Gốc + MAX CHI TIẾT (LZP BOOST)</option>
-                                    <optgroup label="Thay Nền Màu">
-                                        <option value="blue_bg">🟦 Nền Xanh (Blue)</option>
-                                        <option value="white_bg">⬜ Nền Trắng (White)</option>
+                                    <option value="">-- (AUTO) Smart Context --</option>
+                                    <option value="original_enhanced" class="text-violet-400 font-bold">🛡️ Original BG + MAX DETAIL (LZP BOOST)</option>
+                                    <optgroup label="Color Background">
+                                        <option value="blue_bg">🟦 Blue BG</option>
+                                        <option value="white_bg">⬜ White BG</option>
                                     </optgroup>
-                                     <optgroup label="Flux Style (Theo JSON)">
-                                        <option value="outdoor_garden">🌿 Sân Vườn / Hoa Lá (Chuẩn JSON)</option>
-                                        <option value="luxury_interior">🕰️ Nội Thất Sang Trọng</option>
+                                     <optgroup label="Flux Style (JSON)">
+                                        <option value="outdoor_garden">🌿 Garden / Flora (Standard JSON)</option>
+                                        <option value="luxury_interior">🕰️ Luxury Interior</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -589,17 +589,17 @@
                     </div>
                 </div>
 
-                <!-- MODULE 3: KHÓA NÉT (IDENTITY) -->
+                <!-- MODULE 3: IDENTITY GUARD -->
                 <div class="module-group" id="module-identity">
                     <button id="toggle-identity" class="w-full flex justify-between items-center module-header">
-                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">🧬 KHÓA NÉT (IDENTITY GUARD)</span>
+                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">🧬 IDENTITY GUARD</span>
                         <svg class="w-3 h-3 text-slate-600 toggle-icon" id="icon-identity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-identity" class="module-content">
                         <div class="module-inner">
                             <div class="border border-white/10 rounded bg-black/20 p-2 mb-2" id="identity-slider-container">
                                 <div class="flex justify-between text-[10px] text-slate-400 font-bold mb-1">
-                                    <span>Mức độ khóa</span>
+                                    <span>Lock Strength</span>
                                     <span id="identity-weight-val" class="text-slate-200">300%</span>
                                 </div>
                                 <input type="range" id="identity-weight-slider" min="100" max="400" step="10" value="300" class="slider-red save-input" data-key="identityWeight">
@@ -607,52 +607,52 @@
                             <div class="flex items-start gap-2 p-1.5 rounded bg-red-500/10 border border-red-500/20 mb-2">
                                 <input id="check-anti-flip" type="checkbox" class="chk-pro chk-red save-input mt-0.5" checked>
                                 <label for="check-anti-flip" class="flex-1 cursor-pointer select-none">
-                                    <span class="block text-[10px] font-bold text-red-300">🚫 CHỐNG LẬT HÌNH (SMART ANTI-FLIP)</span>
-                                    <span class="block text-[9px] text-red-400/70">Tự động nhận diện Tỷ lệ ảnh & Góc mặt</span>
+                                    <span class="block text-[10px] font-bold text-red-300">🚫 SMART ANTI-FLIP</span>
+                                    <span class="block text-[9px] text-red-400/70">Auto-detect Aspect Ratio & Face Angle</span>
                                 </label>
                             </div>
                              <div class="border border-purple-500/30 rounded bg-purple-900/10 p-2 mb-2" id="structure-container" style="display:none;">
                                 <div class="flex justify-between text-[10px] text-purple-300 font-bold mb-1">
-                                    <span>KHÓA CẤU TRÚC (CONTROLNET)</span>
-                                    <span id="structure-val">Mạnh (0.8)</span>
+                                    <span>STRUCTURE LOCK (CONTROLNET)</span>
+                                    <span id="structure-val">Strong (0.8)</span>
                                 </div>
                                 <input type="range" id="structure-slider" min="0" max="100" value="80" class="slider-flux w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
                              </div>
                             <div class="flex items-start gap-2 p-1.5 rounded bg-white/[0.02] border border-white/5 mb-2">
                                 <input id="check-asian-identity" type="checkbox" class="chk-pro save-input mt-0.5" data-key="checkAsianIdentity" checked>
                                 <label for="check-asian-identity" class="flex-1 cursor-pointer select-none">
-                                    <span class="block text-[10px] font-bold text-slate-200">GIỮ NÉT Á ĐÔNG (Asian Identity)</span>
-                                    <span class="block text-[9px] text-slate-500">Chống "Tây hóa", giữ đặc điểm người Việt</span>
+                                    <span class="block text-[10px] font-bold text-slate-200">ASIAN IDENTITY PRESERVATION</span>
+                                    <span class="block text-[9px] text-slate-500">Prevent "Westernization", keep Vietnamese features</span>
                                 </label>
                             </div>
                             <div class="flex items-center gap-2 p-1.5 rounded border border-purple-500/20 bg-purple-500/10 mb-2">
                                 <input id="check-dual-controlnet" type="checkbox" class="chk-pro save-input">
                                 <label for="check-dual-controlnet" class="cursor-pointer select-none flex-1">
-                                    <span class="block text-[10px] font-bold text-purple-300">KHÓA CẤU TRÚC KÉP (DUAL CONTROLNET)</span>
-                                    <span class="block text-[8px] text-purple-500/70">Kết hợp Depth + LineArt (Dùng cho tranh/tượng cổ)</span>
+                                    <span class="block text-[10px] font-bold text-purple-300">DUAL STRUCTURE LOCK</span>
+                                    <span class="block text-[8px] text-purple-500/70">Depth + LineArt (For ancient art/statues)</span>
                                 </label>
                             </div>
                             <div class="grid-compact border-t border-white/5 pt-2 mb-2">
-                                <div class="flex items-center gap-2"><input id="lock-eyes" type="checkbox" class="chk-pro save-input" data-key="lockEyes" checked><label for="lock-eyes" class="text-[10px] text-slate-300">Khóa Mắt</label></div>
-                                <div class="flex items-center gap-2"><input id="lock-mouth" type="checkbox" class="chk-pro save-input" data-key="lockMouth" checked><label for="lock-mouth" class="text-[10px] text-slate-300">Khóa Miệng</label></div>
-                                <div class="flex items-center gap-2"><input id="lock-skin" type="checkbox" class="chk-pro save-input" data-key="lockSkin"><label for="lock-skin" class="text-[10px] text-slate-300">Nốt ruồi/Chàm</label></div>
-                                <div class="flex items-center gap-2" id="container-imperfection"><input id="lock-imperfection" type="checkbox" class="chk-pro chk-gold save-input" data-key="lockImperfection"><label for="lock-imperfection" class="text-[10px] text-yellow-500 font-bold">Giữ Khuyết Điểm</label></div>
+                                <div class="flex items-center gap-2"><input id="lock-eyes" type="checkbox" class="chk-pro save-input" data-key="lockEyes" checked><label for="lock-eyes" class="text-[10px] text-slate-300">Lock Eyes</label></div>
+                                <div class="flex items-center gap-2"><input id="lock-mouth" type="checkbox" class="chk-pro save-input" data-key="lockMouth" checked><label for="lock-mouth" class="text-[10px] text-slate-300">Lock Mouth</label></div>
+                                <div class="flex items-center gap-2"><input id="lock-skin" type="checkbox" class="chk-pro save-input" data-key="lockSkin"><label for="lock-skin" class="text-[10px] text-slate-300">Moles/Birthmarks</label></div>
+                                <div class="flex items-center gap-2" id="container-imperfection"><input id="lock-imperfection" type="checkbox" class="chk-pro chk-gold save-input" data-key="lockImperfection"><label for="lock-imperfection" class="text-[10px] text-yellow-500 font-bold">Keep Imperfections</label></div>
                             </div>
                             <div class="mt-2 border-t border-red-500/20 pt-2">
-                                <label class="section-label text-red-400/80 mb-2">🛡️ BẢO TỒN ĐẶC ĐIỂM (CHỐNG AI SỬA)</label>
+                                <label class="section-label text-red-400/80 mb-2">🛡️ FEATURE PRESERVATION</label>
                                 <div class="space-y-1.5">
-                                    <div class="flex items-center gap-2"><input id="check-cross-eyed" type="checkbox" class="chk-pro chk-red save-input"><label for="check-cross-eyed" class="text-[10px] text-slate-300 cursor-pointer">Mắt Lé / Lác (Cross-eyed)</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-cross-eyed" type="checkbox" class="chk-pro chk-red save-input"><label for="check-cross-eyed" class="text-[10px] text-slate-300 cursor-pointer">Cross-eyed</label></div>
                                     <div class="flex items-center gap-2" id="container-ptosis">
                                         <input id="check-ptosis" type="checkbox" class="chk-pro chk-red save-input">
-                                        <label for="check-ptosis" class="text-[10px] text-slate-300 cursor-pointer">Mắt Sụp Mí (Droopy/Ptosis)</label>
+                                        <label for="check-ptosis" class="text-[10px] text-slate-300 cursor-pointer">Ptosis/Droopy Eyes</label>
                                     </div>
                                     <div class="flex items-center gap-2" id="container-closed-eyes">
                                         <input id="check-closed-eyes" type="checkbox" class="chk-pro chk-red save-input">
-                                        <label for="check-closed-eyes" class="text-[10px] text-slate-300 cursor-pointer">Mắt Nhắm / Ngủ (Closed Eyes)</label>
+                                        <label for="check-closed-eyes" class="text-[10px] text-slate-300 cursor-pointer">Closed Eyes/Sleeping</label>
                                     </div>
-                                    <div class="flex items-center gap-2"><input id="check-monolid" type="checkbox" class="chk-pro chk-red save-input"><label for="check-monolid" class="text-[10px] text-slate-300 cursor-pointer">Mắt Một Mí (Monolid)</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-buck-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-buck-teeth" class="text-[10px] text-slate-300 cursor-pointer">Răng Hô (Buck Teeth)</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-black-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-black-teeth" class="text-[10px] text-slate-300 cursor-pointer">Răng Đen Truyền Thống</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-monolid" type="checkbox" class="chk-pro chk-red save-input"><label for="check-monolid" class="text-[10px] text-slate-300 cursor-pointer">Monolid</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-buck-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-buck-teeth" class="text-[10px] text-slate-300 cursor-pointer">Buck Teeth</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-black-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-black-teeth" class="text-[10px] text-slate-300 cursor-pointer">Traditional Black Teeth</label></div>
                                 </div>
                             </div>
                         </div>
@@ -667,17 +667,17 @@
                     </button>
                     <div id="content-prompt" class="module-content">
                         <div class="module-inner">
-                            <textarea id="prompt-main" rows="3" class="pro-input w-full p-2 resize-none text-[10px] font-mono save-input mb-2" data-key="promptMainValue" placeholder="Hệ thống sẽ tự động tối ưu theo chuẩn Flux..."></textarea>
-                            <input type="text" id="prompt-negative" placeholder="Loại trừ..." class="pro-input w-full py-1.5 save-input mb-2" data-key="promptNegative">
-                            <input type="password" id="user-api-key" placeholder="API Key riêng (Nếu cần)" class="pro-input w-full py-1.5 save-input" data-key="userApiKey">
+                            <textarea id="prompt-main" rows="3" class="pro-input w-full p-2 resize-none text-[10px] font-mono save-input mb-2" data-key="promptMainValue" placeholder="System will automatically optimize for Flux..."></textarea>
+                            <input type="text" id="prompt-negative" placeholder="Negative prompt..." class="pro-input w-full py-1.5 save-input mb-2" data-key="promptNegative">
+                            <input type="password" id="user-api-key" placeholder="Custom API Key (Optional)" class="pro-input w-full py-1.5 save-input" data-key="userApiKey">
                         </div>
                     </div>
                 </div>
 
-                <!-- MODULE 5: BẢN QUYỀN (LOGO) -->
+                <!-- MODULE 5: COPYRIGHT LOGO -->
                 <div class="module-group" id="module-logo">
                     <button id="toggle-logo" class="w-full flex justify-between items-center module-header">
-                        <span class="text-[10px] font-bold text-slate-200 uppercase">©️ CHÈN LOGO BẢN QUYỀN</span>
+                        <span class="text-[10px] font-bold text-slate-200 uppercase">©️ COPYRIGHT LOGO</span>
                         <svg class="w-3 h-3 text-slate-600 toggle-icon" id="icon-logo" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-logo" class="module-content">
@@ -685,11 +685,11 @@
                             <div class="flex items-center gap-2 mb-2">
                                 <input id="check-logo" type="checkbox" class="chk-pro save-input">
                                 <label for="check-logo" class="flex-1 cursor-pointer select-none">
-                                    <span class="block text-[10px] font-bold text-slate-300">Kích hoạt đóng dấu Logo</span>
-                                    <span class="block text-[9px] text-slate-500">Dạng lưới mờ 10% phủ ảnh</span>
+                                    <span class="block text-[10px] font-bold text-slate-300">Enable Watermark</span>
+                                    <span class="block text-[9px] text-slate-500">10% opacity grid overlay</span>
                                 </label>
                             </div>
-                            <input type="text" id="custom-logo-text" class="pro-input w-full py-2 bg-black/20 border-white/10 text-center font-bold text-yellow-400 placeholder-slate-600" placeholder="Nhập tên hoặc SĐT của bạn...">
+                            <input type="text" id="custom-logo-text" class="pro-input w-full py-2 bg-black/20 border-white/10 text-center font-bold text-yellow-400 placeholder-slate-600" placeholder="Enter name or phone number...">
                         </div>
                     </div>
                 </div>
@@ -700,9 +700,9 @@
             <div class="p-4 glass-panel border-t-0 space-y-2 z-20">
                 <button id="process-image" class="w-full py-3 btn-flux-modern text-white font-bold text-xs tracking-widest flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed bg-violet-600">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    TẠO ẢNH (FLUX KONTEXT)
+                    GENERATE (FLUX KONTEXT)
                 </button>
-                <button id="reset-button" class="w-full py-2 bg-white/5 hover:bg-white/10 text-slate-400 text-[10px] font-bold tracking-widest rounded transition-colors border border-white/5">LÀM MỚI (RESET)</button>
+                <button id="reset-button" class="w-full py-2 bg-white/5 hover:bg-white/10 text-slate-400 text-[10px] font-bold tracking-widest rounded transition-colors border border-white/5">RESET</button>
             </div>
         </aside>
 
@@ -727,7 +727,7 @@
                     <!-- 1. UPLOAD BUTTON -->
                     <button id="mob-btn-upload" class="flex-1 py-3.5 bg-slate-800/50 hover:bg-slate-700/50 border border-white/10 rounded-xl text-slate-200 font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 active:scale-95 transition-all shadow-inner group">
                         <svg class="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                        <span>TẢI ẢNH</span>
+                        <span>UPLOAD</span>
                     </button>
 
                     <!-- 2. SCAN BUTTON -->
@@ -739,11 +739,11 @@
                     <!-- 3. GENERATE BUTTON -->
                     <button id="mob-btn-run" class="hidden flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all">
                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        <span>CHẠY NGAY</span>
+                        <span>RUN NOW</span>
                     </button>
 
                     <!-- Reset Small Btn -->
-                    <button id="mob-btn-reset" class="w-12 flex flex-col items-center justify-center bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-400 rounded-xl border border-white/10 active:scale-95 transition-all" title="Làm mới">
+                    <button id="mob-btn-reset" class="w-12 flex flex-col items-center justify-center bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-400 rounded-xl border border-white/10 active:scale-95 transition-all" title="Reset">
                         <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         <span class="text-[8px] font-bold">RESET</span>
                     </button>
@@ -758,18 +758,18 @@
                 <div class="flex items-center gap-3">
                      <div class="hidden lg:flex items-center gap-1.5 mr-2 px-2 py-1 rounded border border-white/5 bg-white/5">
                         <span class="text-[9px] font-bold text-slate-400">TIP:</span>
-                        <span class="text-[9px] text-slate-300">Giữ phím SPACE để xem ảnh gốc</span>
+                        <span class="text-[9px] text-slate-300">Hold SPACE to view original</span>
                     </div>
                     <button id="toggle-magnifier" class="flex items-center gap-2 px-3 py-1.5 rounded bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 text-[10px] font-bold transition-colors">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
-                        <span>SOI DA</span>
+                        <span>INSPECT</span>
                     </button>
                     <div class="flex bg-black/20 rounded p-0.5 gap-0.5 border border-white/5">
                         <button id="zoom-out" class="p-1.5 hover:bg-white/10 rounded text-slate-400"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
                         <button id="zoom-reset" class="px-2 hover:bg-white/10 rounded text-slate-400 text-[10px] font-bold">FIT</button>
                         <button id="zoom-in" class="p-1.5 hover:bg-white/10 rounded text-slate-400"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg></button>
                     </div>
-                    <button id="download-trigger" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded text-xs font-bold transition-all opacity-50 cursor-not-allowed shadow-lg" disabled><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>LƯU ẢNH</span></button>
+                    <button id="download-trigger" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded text-xs font-bold transition-all opacity-50 cursor-not-allowed shadow-lg" disabled><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg><span>SAVE</span></button>
                 </div>
             </div>
             
@@ -807,8 +807,8 @@
                     <!-- PLACEHOLDER -->
                     <div id="placeholder-state" class="text-center p-10 sm:p-24 border border-dashed border-violet-500/50 rounded-2xl bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500 animate-float backdrop-blur-sm mx-4 sm:mx-0">
                         <div class="w-20 h-20 bg-gradient-to-tr from-slate-800 to-slate-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5"><svg class="w-10 h-10 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒI ẢNH</h3>
-                        <p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Kéo thả hoặc Dán ảnh vào đây</p>
+                        <h3 class="text-xl sm:text-2xl font-bold text-violet-500 tracking-tight mb-2">PHOTO RESTORATION</h3>
+                        <p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Drag & Drop or Paste Image Here</p>
                     </div>
                 </div>
             </div>
@@ -821,15 +821,15 @@
             
             <!-- Professional Header -->
             <div class="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
-                <span class="text-xs font-bold text-white uppercase tracking-widest">THANH TOÁN DỊCH VỤ</span>
+                <span class="text-xs font-bold text-white uppercase tracking-widest">SERVICE PAYMENT</span>
                 <button id="close-recharge" class="text-slate-400 hover:text-white transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
 
             <!-- Payment Tabs -->
             <div class="flex border-b border-white/10 bg-black/20 text-[10px] font-bold">
-                <div class="pay-tab flex-1 active text-center text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" data-tab="transfer">CHUYỂN KHOẢN</div>
-                <div class="pay-tab flex-1 text-center text-slate-500 hover:text-slate-300 transition-colors" data-tab="visa">THẺ QUỐC TẾ</div>
-                <div class="pay-tab flex-1 text-center text-slate-500 hover:text-slate-300 transition-colors" data-tab="ewallet">VÍ ĐIỆN TỬ</div>
+                <div class="pay-tab flex-1 active text-center text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" data-tab="transfer">TRANSFER</div>
+                <div class="pay-tab flex-1 text-center text-slate-500 hover:text-slate-300 transition-colors" data-tab="visa">INTL CARD</div>
+                <div class="pay-tab flex-1 text-center text-slate-500 hover:text-slate-300 transition-colors" data-tab="ewallet">E-WALLET</div>
             </div>
 
             <!-- Content Area -->
@@ -840,33 +840,33 @@
                     <div class="bg-gradient-to-br from-blue-900/40 to-slate-900/40 border border-blue-500/20 rounded-xl p-4 mb-4 relative overflow-hidden group">
                         <div class="absolute top-0 right-0 p-2 opacity-50"><svg class="w-12 h-12 text-blue-500/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg></div>
                         <div class="text-left relative z-10">
-                            <div class="text-[9px] font-bold text-blue-400 uppercase mb-1">NGÂN HÀNG THỤ HƯỞNG</div>
-                            <div class="text-lg font-bold text-white tracking-wide">MB BANK (QUÂN ĐỘI)</div>
+                            <div class="text-[9px] font-bold text-blue-400 uppercase mb-1">BENEFICIARY BANK</div>
+                            <div class="text-lg font-bold text-white tracking-wide">MB BANK (MILITARY)</div>
                             <div class="text-xl font-mono font-bold text-yellow-400 tracking-wider my-2">85543556868</div>
                             <div class="text-[10px] font-bold text-slate-300 uppercase">HOANG QUANG CUONG</div>
                         </div>
                     </div>
                     
                     <div class="space-y-2 mb-4">
-                        <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">CHỌN GÓI CREDITS</label>
+                        <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">SELECT CREDIT PACKAGE</label>
                         <!-- Packages (Same logic) -->
                         <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group selected" data-amount="200k" data-credits="200">
                             <div class="text-left">
-                                <div class="text-[11px] font-bold text-white">200.000Đ</div>
+                                <div class="text-[11px] font-bold text-white">200.000 VND</div>
                                 <div class="text-[9px] text-slate-400">200 Credits <span class="text-red-400 text-[8px] font-bold bg-red-500/10 px-1 rounded ml-1">HOT</span></div>
                             </div>
                             <div class="pkg-check w-4 h-4 rounded-full border border-blue-500 bg-blue-500 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
                         </button>
                         <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="100k" data-credits="80">
                             <div class="text-left">
-                                <div class="text-[11px] font-bold text-white">100.000Đ</div>
+                                <div class="text-[11px] font-bold text-white">100.000 VND</div>
                                 <div class="text-[9px] text-slate-400">80 Credits</div>
                             </div>
                             <div class="pkg-check w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"><div class="w-2 h-2 bg-blue-500 rounded-full opacity-0"></div></div>
                         </button>
                         <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="500k" data-credits="500">
                             <div class="text-left">
-                                <div class="text-[11px] font-bold text-white">500.000Đ</div>
+                                <div class="text-[11px] font-bold text-white">500.000 VND</div>
                                 <div class="text-[9px] text-slate-400">500 Credits (VIP)</div>
                             </div>
                             <div class="pkg-check w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"><div class="w-2 h-2 bg-blue-500 rounded-full opacity-0"></div></div>
@@ -877,9 +877,9 @@
                          <textarea id="zalo-msg-content" class="hidden"></textarea>
                          <a id="btn-send-zalo" href="#" target="_blank" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase tracking-widest">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                            XÁC NHẬN & GỬI ZALO
+                            CONFIRM & SEND ZALO
                         </a>
-                        <p class="text-[9px] text-slate-500 mt-2">Hệ thống kích hoạt tự động sau khi nhận được tin nhắn.</p>
+                        <p class="text-[9px] text-slate-500 mt-2">System activates automatically after receiving message.</p>
                     </div>
                 </div>
 
@@ -889,9 +889,9 @@
                         <div class="w-10 h-6 bg-white/10 rounded"></div><div class="w-10 h-6 bg-white/10 rounded"></div>
                     </div>
                     <svg class="w-12 h-12 text-slate-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">CỔNG THANH TOÁN QUỐC TẾ</p>
-                    <p class="text-[9px] text-slate-500 px-4">Tính năng đang bảo trì nâng cấp hệ thống bảo mật.</p>
-                    <button class="mt-4 px-4 py-2 bg-white/5 border border-white/10 rounded text-[9px] text-slate-300 hover:bg-white/10" onclick="document.querySelector('.pay-tab[data-tab=\'transfer\']').click()">Quay lại Chuyển Khoản</button>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">INTERNATIONAL PAYMENT GATEWAY</p>
+                    <p class="text-[9px] text-slate-500 px-4">Feature under maintenance for security upgrade.</p>
+                    <button class="mt-4 px-4 py-2 bg-white/5 border border-white/10 rounded text-[9px] text-slate-300 hover:bg-white/10" onclick="document.querySelector('.pay-tab[data-tab=\'transfer\']').click()">Back to Transfer</button>
                 </div>
 
                  <!-- TAB 3: WALLET (VISUAL ONLY) -->
@@ -899,9 +899,9 @@
                     <div class="w-16 h-16 bg-pink-500/10 rounded-2xl flex items-center justify-center mb-3 border border-pink-500/20">
                          <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <p class="text-[10px] font-bold text-pink-500 uppercase mb-1">VÍ ĐIỆN TỬ MOMO / ZALOPAY</p>
-                    <p class="text-[9px] text-slate-500 px-4">Vui lòng sử dụng tính năng Chuyển Khoản Ngân Hàng để được kích hoạt ngay lập tức (24/7).</p>
-                     <button class="mt-4 px-4 py-2 bg-blue-600/20 border border-blue-500/50 rounded text-[9px] text-blue-400 font-bold hover:bg-blue-600/30" onclick="document.querySelector('.pay-tab[data-tab=\'transfer\']').click()">Dùng Chuyển Khoản MB</button>
+                    <p class="text-[10px] font-bold text-pink-500 uppercase mb-1">MOMO / ZALOPAY WALLET</p>
+                    <p class="text-[9px] text-slate-500 px-4">Please use Bank Transfer for instant activation (24/7).</p>
+                     <button class="mt-4 px-4 py-2 bg-blue-600/20 border border-blue-500/50 rounded text-[9px] text-blue-400 font-bold hover:bg-blue-600/30" onclick="document.querySelector('.pay-tab[data-tab=\'transfer\']').click()">Use MB Bank Transfer</button>
                 </div>
             </div>
             
@@ -919,7 +919,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = "";
             const SimpleSec={_key:"V35_SECURE_KEY_SALT",encrypt:function(t){if(!t)return"";try{let e="";for(let r=0;r<t.length;r++)e+=String.fromCharCode(t.charCodeAt(r)^this._key.charCodeAt(r%this._key.length));return btoa(e)}catch(r){return t}},decrypt:function(t){if(!t)return"";try{let e=atob(t),r="";for(let n=0;n<e.length;n++)r+=String.fromCharCode(e.charCodeAt(n)^this._key.charCodeAt(n%this._key.length));return r}catch(e){return t}}};
-            const UserSystem={deviceId:null,credits:0,ipAddress:null,async init(){try{let e=localStorage.getItem("v35_unique_device_id");e||(e="ID-"+Math.random().toString(36).substring(2,8).toUpperCase(),localStorage.setItem("v35_unique_device_id",e)),this.deviceId=e}catch(e){console.warn("Storage access denied"),this.deviceId="GUEST-"+Math.floor(1e3*Math.random())}await this.fetchIP(),this.loadCredits(),this.updateUI()},async fetchIP(){try{const e=await fetch(`https://api.ipify.org?format=json&t=${Date.now()}`),t=await e.json();this.ipAddress=t.ip;const r=document.getElementById("gate-ip-display"),n=document.getElementById("gate-loading-spinner"),o=document.getElementById("gate-submit"),a=document.getElementById("gate-status"),s=document.getElementById("top-bar-ip");if(s&&(s.textContent=`IP: ${t.ip}`),r&&(r.innerHTML=`<span class="text-slate-400 text-xs">${t.ip}</span> <span class="text-white mx-1">|</span> <span class="text-yellow-400 font-bold">${this.deviceId}</span>`,r.classList.remove("shimmer-text"),n&&(n.style.display="none"),o&&(o.disabled=!1,o.classList.remove("opacity-50","cursor-not-allowed"),a.textContent=`Đã nhận diện thiết bị: ${this.deviceId}`,a.classList.add("text-green-500"))),t.ip)return t.ip}catch(e){return console.error("IP Fetch Error",e),this.ipAddress="Offline",null}},loadCredits(){const e=`v35_credits_${this.deviceId}`,t=localStorage.getItem(e);null===t?(this.credits=20,this.save()):this.credits=parseInt(t)},setCredits(e){this.credits=e,this.save()},addCredits(e){this.credits+=e,this.save()},deductCredits(e){return this.credits>=e&&(this.credits-=e,this.save(),!0)},save(){try{const e=`v35_credits_${this.deviceId}`;localStorage.setItem(e,this.credits)}catch(e){}this.updateUI()},updateUI(){const e=document.getElementById("credit-count");e&&(e.textContent=this.credits)}};UserSystem.init();
+            const UserSystem={deviceId:null,credits:0,ipAddress:null,async init(){try{let e=localStorage.getItem("v35_unique_device_id");e||(e="ID-"+Math.random().toString(36).substring(2,8).toUpperCase(),localStorage.setItem("v35_unique_device_id",e)),this.deviceId=e}catch(e){console.warn("Storage access denied"),this.deviceId="GUEST-"+Math.floor(1e3*Math.random())}await this.fetchIP(),this.loadCredits(),this.updateUI()},async fetchIP(){try{const e=await fetch(`https://api.ipify.org?format=json&t=${Date.now()}`),t=await e.json();this.ipAddress=t.ip;const r=document.getElementById("gate-ip-display"),n=document.getElementById("gate-loading-spinner"),o=document.getElementById("gate-submit"),a=document.getElementById("gate-status"),s=document.getElementById("top-bar-ip");if(s&&(s.textContent=`IP: ${t.ip}`),r&&(r.innerHTML=`<span class="text-slate-400 text-xs">${t.ip}</span> <span class="text-white mx-1">|</span> <span class="text-yellow-400 font-bold">${this.deviceId}</span>`,r.classList.remove("shimmer-text"),n&&(n.style.display="none"),o&&(o.disabled=!1,o.classList.remove("opacity-50","cursor-not-allowed"),a.textContent=`Device Verified: ${this.deviceId}`,a.classList.add("text-green-500"))),t.ip)return t.ip}catch(e){return console.error("IP Fetch Error",e),this.ipAddress="Offline",null}},loadCredits(){const e=`v35_credits_${this.deviceId}`,t=localStorage.getItem(e);null===t?(this.credits=20,this.save()):this.credits=parseInt(t)},setCredits(e){this.credits=e,this.save()},addCredits(e){this.credits+=e,this.save()},deductCredits(e){return this.credits>=e&&(this.credits-=e,this.save(),!0)},save(){try{const e=`v35_credits_${this.deviceId}`;localStorage.setItem(e,this.credits)}catch(e){}this.updateUI()},updateUI(){const e=document.getElementById("credit-count");e&&(e.textContent=this.credits)}};UserSystem.init();
             
             let state = { base64: null, refBase64: null, restoredObj: null, originalImg: null, zoom: 1, rotation: 0, defaultPrompt: "Restore this photo, remove scratches, high quality, 8k", isLoupeActive: false, isReplicaMode: false, isFluxMode: true, currentSliderVal: 50, isComparing: false, aspectRatioType: null, userSettings: { username: '', apiKey: '', provider: 'google', baseUrl: 'https://generativelanguage.googleapis.com' } };
             const showToast = (message, type = 'info') => {
@@ -933,7 +933,7 @@
             };
 
             const gateScreen = document.getElementById('security-gate'), gateSubmit = document.getElementById('gate-submit'), gateStatus = document.getElementById('gate-status');
-            gateSubmit.addEventListener('click', () => { if(!UserSystem.ipAddress) return showToast("Chưa tìm thấy IP, vui lòng đợi...", "error"); gateStatus.textContent = `Đang xác thực IP: ${UserSystem.ipAddress}...`; gateStatus.className = "mt-6 text-[10px] text-blue-400 font-bold animate-pulse text-center"; gateSubmit.disabled = true; gateSubmit.classList.add('opacity-70'); setTimeout(() => { gateStatus.textContent = "Đăng nhập thành công!"; gateStatus.className = "mt-6 text-[10px] text-green-400 font-bold text-center"; setTimeout(() => { gateScreen.classList.add('animate-fade-out'); setTimeout(() => { gateScreen.style.display = 'none'; }, 500); showToast(`IP Đã Xác Thực: ${UserSystem.ipAddress}`, "smart"); }, 500); }, 1500); });
+            gateSubmit.addEventListener('click', () => { if(!UserSystem.ipAddress) return showToast("IP not found, please wait...", "error"); gateStatus.textContent = `Verifying IP: ${UserSystem.ipAddress}...`; gateStatus.className = "mt-6 text-[10px] text-blue-400 font-bold animate-pulse text-center"; gateSubmit.disabled = true; gateSubmit.classList.add('opacity-70'); setTimeout(() => { gateStatus.textContent = "Login Successful!"; gateStatus.className = "mt-6 text-[10px] text-green-400 font-bold text-center"; setTimeout(() => { gateScreen.classList.add('animate-fade-out'); setTimeout(() => { gateScreen.style.display = 'none'; }, 500); showToast(`IP Verified: ${UserSystem.ipAddress}`, "smart"); }, 500); }, 1500); });
             
             const sidebar = document.getElementById('sidebar'), toggleSidebar = document.getElementById('toggle-sidebar-btn'), closeSidebar = document.getElementById('close-sidebar-mobile');
             if(toggleSidebar) toggleSidebar.onclick = () => sidebar.classList.remove('-translate-x-full');
@@ -941,22 +941,22 @@
             
             // Re-setup all basic interactions
             const fluxToggle = document.getElementById('mode-flux'), replicaToggle = document.getElementById('mode-replica');
-            if(fluxToggle) fluxToggle.addEventListener('change', (e) => { state.isFluxMode = e.target.checked; if(state.isFluxMode) { showToast("🚀 FLUX / REALVIS ENGINE: ĐÃ KÍCH HOẠT", "flux"); document.getElementById('workflow-container').style.display = 'block'; } else { showToast("Đã tắt AI Engine."); document.getElementById('workflow-container').style.display = 'none'; } });
-            if(replicaToggle) replicaToggle.addEventListener('change', (e) => { state.isReplicaMode = e.target.checked; if(state.isReplicaMode) { showToast("💎 ĐÃ BẬT CHẾ ĐỘ: SAO Y BẢN CHÍNH (V33)", "warning"); document.getElementById('module-identity')?.classList.add('open'); } else { showToast("Đã về chế độ Studio"); } });
+            if(fluxToggle) fluxToggle.addEventListener('change', (e) => { state.isFluxMode = e.target.checked; if(state.isFluxMode) { showToast("🚀 FLUX / REALVIS ENGINE: ENABLED", "flux"); document.getElementById('workflow-container').style.display = 'block'; } else { showToast("AI Engine Disabled."); document.getElementById('workflow-container').style.display = 'none'; } });
+            if(replicaToggle) replicaToggle.addEventListener('change', (e) => { state.isReplicaMode = e.target.checked; if(state.isReplicaMode) { showToast("💎 REPLICA MODE ENABLED (V33)", "warning"); document.getElementById('module-identity')?.classList.add('open'); } else { showToast("Reverted to Studio Mode"); } });
             
             const toggleModule = (btnId, contentId, iconId) => { const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId); if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); };
             ['processing','subject','identity','prompt','logo','military','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
 
             // File handling
-            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; document.getElementById('download-trigger').disabled = true; document.getElementById('download-mobile').disabled = true; document.getElementById('img-modified-wrapper').style.width = '0%'; document.getElementById('slider-handle').style.left = '0%'; showToast(`Đã tải ảnh: ${img.width}x${img.height}`, "success"); const mUpload = document.getElementById('mob-btn-upload'), mScan = document.getElementById('mob-btn-scan'), mStatus = document.getElementById('mobile-status-text'); if(mUpload && mScan) { mUpload.classList.add('hidden'); mScan.classList.remove('hidden'); mStatus.textContent = "ẢNH ĐÃ SẴN SÀNG - BẤM SCAN"; mStatus.classList.remove('text-violet-400'); mStatus.classList.add('text-violet-400', 'font-bold', 'animate-pulse'); } }; img.src = e.target.result; }; reader.readAsDataURL(file); };
+            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Image files only!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; document.getElementById('download-trigger').disabled = true; document.getElementById('download-mobile').disabled = true; document.getElementById('img-modified-wrapper').style.width = '0%'; document.getElementById('slider-handle').style.left = '0%'; showToast(`Image loaded: ${img.width}x${img.height}`, "success"); const mUpload = document.getElementById('mob-btn-upload'), mScan = document.getElementById('mob-btn-scan'), mStatus = document.getElementById('mobile-status-text'); if(mUpload && mScan) { mUpload.classList.add('hidden'); mScan.classList.remove('hidden'); mStatus.textContent = "IMAGE READY - PRESS SCAN"; mStatus.classList.remove('text-violet-400'); mStatus.classList.add('text-violet-400', 'font-bold', 'animate-pulse'); } }; img.src = e.target.result; }; reader.readAsDataURL(file); };
             const fileInput = document.getElementById('image-upload'); if(fileInput) fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) { loadImg(e.target.files[0]); e.target.value = ''; } });
             
             // Auto-Pilot & Process
             const btnAutoPilot = document.getElementById('btn-auto-pilot'), processBtn = document.getElementById('process-image');
-            if(btnAutoPilot) btnAutoPilot.addEventListener('click', async () => { if(!state.base64) return showToast("Vui lòng tải ảnh trước!", "error"); const originalText = btnAutoPilot.innerHTML; btnAutoPilot.disabled = true; btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCANNING...</span>`; try { /* Scan Logic here (mock) */ setTimeout(() => { showToast("Auto Scan Complete!", "success"); document.getElementById('content-prompt').classList.add('open'); btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }, 1500); } catch(e) { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; } });
+            if(btnAutoPilot) btnAutoPilot.addEventListener('click', async () => { if(!state.base64) return showToast("Please upload an image first!", "error"); const originalText = btnAutoPilot.innerHTML; btnAutoPilot.disabled = true; btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCANNING...</span>`; try { /* Scan Logic here (mock) */ setTimeout(() => { showToast("Auto Scan Complete!", "success"); document.getElementById('content-prompt').classList.add('open'); btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }, 1500); } catch(e) { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; } });
 
             if(processBtn) processBtn.addEventListener('click', async () => {
-                if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
+                if(!state.base64) return showToast("Please upload an image!", "error");
                 if (!UserSystem.deductCredits(20)) { document.getElementById('recharge-modal').classList.remove('hidden'); return; }
                 processBtn.disabled = true; processBtn.innerHTML = "PROCESSING..."; document.getElementById('ai-terminal-overlay').classList.remove('hidden'); document.getElementById('scan-beam').classList.add('active');
                 
@@ -971,11 +971,11 @@
                     document.getElementById('download-mobile').disabled = false;
                     document.getElementById('ai-terminal-overlay').classList.add('hidden');
                     document.getElementById('scan-beam').classList.remove('active');
-                    processBtn.disabled = false; processBtn.innerHTML = "TẠO ẢNH (FLUX KONTEXT)";
+                    processBtn.disabled = false; processBtn.innerHTML = "GENERATE (FLUX KONTEXT)";
                     
                     // Auto close sidebar on mobile
                     if(window.innerWidth < 1024) sidebar.classList.add('-translate-x-full');
-                    showToast("Phục chế thành công!", "flux");
+                    showToast("Restoration Successful!", "flux");
                 }, 3000);
             });
             
@@ -997,7 +997,7 @@
                 // Reset Buttons
                 document.getElementById('download-trigger').disabled = true;
                 document.getElementById('download-mobile').disabled = true;
-                if(processBtn) { processBtn.disabled = false; processBtn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> TẠO ẢNH (FLUX KONTEXT)`; }
+                if(processBtn) { processBtn.disabled = false; processBtn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> GENERATE (FLUX KONTEXT)`; }
                 
                 // Reset Mobile View
                 const mUpload = document.getElementById('mob-btn-upload'), mScan = document.getElementById('mob-btn-scan'), mRun = document.getElementById('mob-btn-run'), mStatus = document.getElementById('mobile-status-text');
@@ -1014,7 +1014,7 @@
                 const fileInput = document.getElementById('image-upload');
                 if(fileInput) fileInput.value = '';
 
-                showToast("Đã làm mới ứng dụng", "info");
+                showToast("App reset", "info");
             };
 
             const resetBtnSidebar = document.getElementById('reset-button');
@@ -1051,7 +1051,7 @@
             
             const updateZalo = (amount, credits) => {
                 const devId = UserSystem.deviceId || "Checking...";
-                const text = `Chào Admin, mình đã chuyển khoản gói ${amount} (${credits} Credits). \n- Mã máy: ${devId}\n- Nội dung chuyển khoản: ${devId}`;
+                const text = `Hi Admin, I transferred package ${amount} (${credits} Credits). \n- Device ID: ${devId}\n- Memo: ${devId}`;
                 if(zaloMsg) zaloMsg.value = text;
                 if(zaloBtn) zaloBtn.href = `https://zalo.me/0352803379?text=${encodeURIComponent(text)}`;
             };
