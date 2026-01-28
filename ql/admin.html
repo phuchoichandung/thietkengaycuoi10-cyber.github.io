@@ -42,17 +42,14 @@
         background: rgba(139, 92, 246, 0.1); 
         box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.1);
     }
-    /* Select styling fix */
     select.pro-input option { background: #141419; color: #fff; padding: 10px; }
     
-    /* Animation cho mã code mới */
     @keyframes highlight {
         0% { background-color: rgba(139, 92, 246, 0.5); transform: scale(1.02); }
         100% { background-color: rgba(0, 0, 0, 0.3); transform: scale(1); }
     }
     .new-code { animation: highlight 1s ease-out; }
     
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
@@ -63,7 +60,7 @@
 <body class="min-h-screen flex items-center justify-center p-4">
 
 <!-- Mở rộng chiều rộng container để chứa 2 cột -->
-<div class="w-full max-w-5xl rounded-3xl glass relative overflow-hidden">
+<div class="w-full max-w-6xl rounded-3xl glass relative overflow-hidden">
     
     <!-- Background Glow -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-violet-600/20 blur-[80px] rounded-full pointer-events-none"></div>
@@ -101,7 +98,7 @@
             <div class="flex items-center justify-between pb-4 border-b border-white/5">
                 <div>
                     <h2 class="font-bold text-lg text-white">Bảng Điều Khiển Admin</h2>
-                    <p class="text-xs text-gray-400">Quản lý API Key & Tạo Mã Nạp Tiền</p>
+                    <p class="text-xs text-gray-400">Quản lý Credit & Voucher Code</p>
                 </div>
                 <div class="text-right">
                     <button onclick="logout()" class="px-3 py-1 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 text-xs font-bold text-red-400">
@@ -111,69 +108,75 @@
             </div>
 
             <!-- MAIN GRID -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
                 <!-- CỘT 1: QUẢN LÝ KHÁCH HÀNG (SỬA TRỰC TIẾP ID) -->
                 <div class="space-y-4">
-                    <div class="flex items-center gap-2 text-sm font-semibold text-gray-300 uppercase tracking-wide">
-                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        1. Quản Lý Khách Hàng (Sửa Trực Tiếp ID)
+                    <div class="flex items-center gap-2 text-sm font-semibold text-blue-400 uppercase tracking-wide bg-blue-500/10 p-2 rounded-lg border border-blue-500/20">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        1. SỬA CREDIT TRỰC TIẾP (CẦN NHẬP ID)
                     </div>
 
-                    <div class="card-section p-5 rounded-2xl glass space-y-4 h-full relative">
-                        <!-- Label chú thích rõ ràng -->
-                        <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[9px] text-blue-400 font-bold">Chỉ Sửa ID Đang Chọn</div>
+                    <div class="card-section p-6 rounded-2xl glass space-y-6 h-full relative border-t-4 border-t-blue-500">
                         
-                        <!-- User Key Manager -->
-                        <div class="space-y-1.5">
-                            <label class="text-[11px] text-yellow-500 font-bold ml-1 uppercase tracking-wider">▼ Nhập ID khách gửi vào đây (Search/Edit)</label>
+                        <!-- BƯỚC 1: NHẬP ID -->
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-blue-300 font-bold uppercase tracking-wider flex items-center gap-1">
+                                <span class="bg-blue-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-[9px]">1</span> 
+                                Nhập ID Khách Hàng (User Key)
+                            </label>
                             <div class="flex gap-2">
-                                <input id="userKey" class="pro-input flex-1 px-3 py-2.5 rounded-xl text-xs font-mono text-yellow-300 font-bold border-yellow-500/30 focus:border-yellow-500" placeholder="Ví dụ: ID-V0HE9F">
-                                
-                                <button onclick="searchUserKey()" class="px-3 py-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 rounded-xl text-blue-400 transition-colors group relative" title="Tải dữ liệu ID này">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <input id="userKey" class="pro-input flex-1 px-4 py-3 rounded-xl text-xs font-mono text-yellow-300 font-bold border-yellow-500/30 focus:border-yellow-500" placeholder="Ví dụ: ID-V0HE9F">
+                                <button onclick="searchUserKey()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-bold transition-colors shadow-lg shadow-blue-500/20 whitespace-nowrap text-xs">
+                                    TÌM & TẢI DL
                                 </button>
-
-                                <button onclick="createUserKey()" class="px-3 py-2 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 rounded-xl text-green-400 transition-colors" title="Tạo ID ngẫu nhiên mới">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                <button onclick="createUserKey()" class="px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-gray-400 transition-colors" title="Tạo ID mới">
+                                    +
                                 </button>
                             </div>
-                            <p id="searchMsg" class="text-[10px] h-3 text-blue-400 pl-1 italic"></p>
+                            <p id="searchMsg" class="text-[10px] h-4 text-blue-400 pl-1 italic flex items-center gap-1"></p>
                         </div>
 
-                        <!-- Manual Credit Input (Cột 1) -->
-                        <div class="space-y-1.5 pt-2 border-t border-white/5">
-                            <label class="text-[11px] text-gray-400 font-medium ml-1">SET CREDIT TRỰC TIẾP CHO ID NÀY</label>
+                        <!-- BƯỚC 2: ĐIỀU CHỈNH CREDIT -->
+                        <div class="space-y-2 pt-4 border-t border-white/10">
+                            <label class="text-[10px] text-gray-400 font-bold uppercase tracking-wider flex items-center gap-1">
+                                <span class="bg-gray-600 text-white w-4 h-4 rounded-full flex items-center justify-center text-[9px]">2</span> 
+                                Điều chỉnh số dư (Cộng / Trừ)
+                            </label>
+                            
                             <div class="relative">
-                                <input id="manualCredit" type="number" class="pro-input w-full px-3 py-2.5 rounded-xl text-xs font-mono text-white font-bold pl-10" placeholder="0">
-                                <span class="absolute left-3 top-2.5 text-gray-500 font-bold text-xs">CR:</span>
+                                <input id="manualCredit" type="number" class="pro-input w-full px-4 py-3 rounded-xl text-sm font-mono text-white font-bold pl-12 bg-black/20" placeholder="0">
+                                <span class="absolute left-4 top-3.5 text-gray-500 font-bold text-xs">CR:</span>
+                            </div>
+                            
+                            <!-- Quick Adjust Buttons -->
+                            <div class="grid grid-cols-4 gap-2 mt-2">
+                                <button onclick="quickAdjust(-100)" class="py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-[10px] font-bold text-red-400 border border-red-500/20 transition-all active:scale-95">-100 (TRỪ)</button>
+                                <button onclick="quickAdjust(-50)" class="py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-[10px] font-bold text-red-400 border border-red-500/20 transition-all active:scale-95">-50</button>
+                                <button onclick="quickAdjust(50)" class="py-2 rounded-lg bg-green-500/10 hover:bg-green-500/20 text-[10px] font-bold text-green-400 border border-green-500/20 transition-all active:scale-95">+50</button>
+                                <button onclick="quickAdjust(100)" class="py-2 rounded-lg bg-green-500/10 hover:bg-green-500/20 text-[10px] font-bold text-green-400 border border-green-500/20 transition-all active:scale-95">+100 (CỘNG)</button>
                             </div>
                         </div>
 
-                        <div class="space-y-1.5">
-                            <label class="text-[11px] text-gray-400 font-medium ml-1">NHÀ CUNG CẤP API</label>
-                            <select id="provider" class="pro-input w-full px-3 py-2.5 rounded-xl text-xs font-mono text-gray-300 cursor-pointer">
-                                <option value="gemini">Google Gemini AI</option>
-                                <option value="comet">Comet Service</option>
-                            </select>
-                        </div>
-
-                        <div class="space-y-3">
-                            <div class="space-y-1.5">
-                                <label class="text-[11px] text-blue-400 font-bold ml-1">GEMINI KEY</label>
-                                <input id="geminiKey" class="pro-input w-full px-3 py-2.5 rounded-xl text-xs font-mono text-blue-300 border-blue-500/20 focus:border-blue-500/50 focus:bg-blue-500/10" placeholder="AIzaSy...">
-                            </div>
-
-                            <div class="space-y-1.5">
-                                <label class="text-[11px] text-emerald-400 font-bold ml-1">COMET KEY</label>
-                                <input id="cometKey" class="pro-input w-full px-3 py-2.5 rounded-xl text-xs font-mono text-emerald-300 border-emerald-500/20 focus:border-emerald-500/50 focus:bg-emerald-500/10" placeholder="sk-...">
+                        <!-- CẤU HÌNH KHÁC (ẨN BỚT CHO GỌN) -->
+                        <div class="space-y-2 pt-2">
+                            <label class="text-[9px] text-gray-500 font-bold uppercase">Cấu hình API (Tùy chọn)</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <select id="provider" class="pro-input px-2 py-2 rounded-lg text-[10px] font-mono text-gray-400 cursor-pointer">
+                                    <option value="gemini">Google Gemini</option>
+                                    <option value="comet">Comet AI</option>
+                                </select>
+                                <input id="geminiKey" class="pro-input px-2 py-2 rounded-lg text-[10px] font-mono text-gray-400" placeholder="API Key...">
+                                <input id="cometKey" type="hidden">
                             </div>
                         </div>
 
+                        <!-- BƯỚC 3: LƯU -->
                         <div class="pt-2">
                              <p id="saveStatus" class="text-center text-xs font-medium min-h-[16px] mb-2"></p>
-                             <button onclick="saveUser()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold text-white shadow-lg active:scale-[0.98] transition-all text-xs">
-                                LƯU CẤU HÌNH & CẤP CREDIT CHO ID TRÊN
+                             <button onclick="saveUser()" class="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl font-bold text-white shadow-lg active:scale-[0.98] transition-all text-xs flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                                LƯU THAY ĐỔI CHO ID TRÊN
                             </button>
                         </div>
                     </div>
@@ -181,57 +184,59 @@
 
                 <!-- CỘT 2: TẠO MÃ VOUCHER (ĐỘC LẬP) -->
                 <div class="space-y-4">
-                     <div class="flex items-center gap-2 text-sm font-semibold text-gray-300 uppercase tracking-wide">
-                        <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        2. Tạo Mã Nạp Tiền (Voucher Code)
+                     <div class="flex items-center gap-2 text-sm font-semibold text-purple-400 uppercase tracking-wide bg-purple-500/10 p-2 rounded-lg border border-purple-500/20">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                        2. TẠO MÃ CODE (ĐỂ GỬI CHO KHÁCH)
                     </div>
 
-                    <div class="card-section p-5 rounded-2xl glass space-y-4 border border-white/5 bg-white/[0.02] relative">
-                        <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/20 text-[9px] text-yellow-400 font-bold">Mã Dùng Cho Mọi Khách</div>
+                    <div class="card-section p-6 rounded-2xl glass space-y-6 border-t-4 border-t-purple-500 bg-white/[0.02] relative">
+                        <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-purple-500/10 border border-purple-500/20 text-[9px] text-purple-400 font-bold">Không Cần ID Khách</div>
 
-                        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">Chọn Mệnh Giá (Sẽ tạo code)</label>
-                        
-                        <!-- Nút bấm chọn mệnh giá - Đã kiểm tra kỹ onclick -->
-                        <div class="grid grid-cols-3 gap-2">
-                            <button onclick="setAmount(80)" class="py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 transition-all hover:border-violet-500/50">80 CR (100K)</button>
-                            <button onclick="setAmount(200)" class="py-2 rounded-xl bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/50 text-xs font-bold text-violet-200 transition-all">200 CR (200K)</button>
-                            <button onclick="setAmount(500)" class="py-2 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 text-xs font-bold text-blue-200 transition-all">500 CR (500K)</button>
+                        <!-- 1. MỆNH GIÁ CỘNG (+) -->
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2">Chọn Mệnh Giá Code</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="setAmount(80)" class="py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 transition-all hover:border-purple-500/50">80 CR (100K)</button>
+                                <button onclick="setAmount(200)" class="py-3 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/50 text-xs font-bold text-purple-200 transition-all">200 CR (200K)</button>
+                                <button onclick="setAmount(500)" class="py-3 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 text-xs font-bold text-blue-200 transition-all">500 CR (500K)</button>
+                            </div>
                         </div>
 
                         <!-- Ô nhập mệnh giá tùy chỉnh (Cột 2) -->
-                        <div class="relative">
-                            <input id="customAmount" type="number" placeholder="Hoặc nhập số tùy ý..." 
-                                class="pro-input w-full px-4 py-3 rounded-xl font-mono text-sm border-2 focus:border-violet-500 transition-colors">
-                            <span class="absolute right-4 top-3 text-xs text-gray-500 font-bold">CREDITS</span>
+                        <div class="relative pt-4 border-t border-white/5">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase block mb-2">Hoặc Nhập Số Tùy Ý (Có thể nhập số âm để trừ)</label>
+                            <input id="customAmount" type="number" placeholder="Ví dụ: 1000 hoặc -100" 
+                                class="pro-input w-full px-4 py-3 rounded-xl font-mono text-sm border-2 focus:border-purple-500 transition-colors">
+                            <span class="absolute right-4 top-11 text-xs text-gray-500 font-bold">CREDITS</span>
                         </div>
 
                         <button onclick="generateCode()" 
-                            class="w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl font-bold text-white shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-xs">
+                            class="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-xl font-bold text-white shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-xs">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                             TẠO MÃ CODE NGAY
                         </button>
 
                         <!-- KẾT QUẢ VÀ XÁC NHẬN MỆNH GIÁ -->
-                        <div id="resultBox" class="hidden animate-fade-in pt-2 border-t border-white/5">
-                            <label class="text-[10px] font-bold text-green-400 uppercase tracking-wider ml-1">Mã vừa tạo:</label>
-                            <div class="relative mt-1 group">
+                        <div id="resultBox" class="hidden animate-fade-in pt-4 border-t border-white/10">
+                            <label class="text-[10px] font-bold text-green-400 uppercase tracking-wider ml-1">Mã Code Vừa Tạo:</label>
+                            <div class="relative mt-2 group">
                                 <input id="generatedCode" readonly 
-                                    class="w-full bg-black/50 border border-green-500/50 rounded-xl py-3 px-4 text-center font-mono text-sm font-bold text-white tracking-widest cursor-pointer hover:bg-green-500/10 transition-colors"
+                                    class="w-full bg-black/50 border border-green-500/50 rounded-xl py-4 px-4 text-center font-mono text-sm font-bold text-white tracking-widest cursor-pointer hover:bg-green-500/10 transition-colors shadow-[0_0_15px_rgba(34,197,94,0.1)]"
                                     onclick="copyCode()">
                                 <div class="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-1 bg-green-500 rounded text-[9px] font-bold text-black pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">COPY</div>
                             </div>
                             <p id="copyStatus" class="text-center text-[10px] text-green-400 mt-1 h-3"></p>
                             <!-- DÒNG XÁC NHẬN QUAN TRỌNG -->
-                            <p id="codeValueConfirm" class="text-center text-[11px] text-yellow-300 font-mono font-bold mt-2 bg-yellow-500/10 py-1 rounded border border-yellow-500/20"></p>
+                            <p id="codeValueConfirm" class="text-center text-[11px] text-yellow-300 font-mono font-bold mt-2 bg-yellow-500/10 py-2 rounded-lg border border-yellow-500/20"></p>
                         </div>
 
                         <!-- Lịch sử -->
                          <div class="pt-2">
                             <div class="flex justify-between items-center mb-2">
-                                <label class="text-[10px] font-bold text-gray-500 uppercase">Lịch sử gần đây</label>
+                                <label class="text-[10px] font-bold text-gray-500 uppercase">Lịch sử tạo code</label>
                                 <button onclick="clearHistory()" class="text-[9px] text-red-400 hover:text-red-300">Xóa</button>
                             </div>
-                            <div id="historyList" class="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scrollbar max-h-[150px]"></div>
+                            <div id="historyList" class="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scrollbar max-h-[120px]"></div>
                         </div>
                     </div>
                 </div>
@@ -300,7 +305,7 @@ function logout() {
     location.reload();
 }
 
-// ===== CONFIG LOGIC (COL 1) =====
+// ===== CONFIG LOGIC (COL 1: TRỰC TIẾP ID) =====
 
 function createUserKey() {
     els.userKey.value = "V35-USER-" + Math.random().toString(36).substr(2, 8).toUpperCase();
@@ -318,6 +323,7 @@ function searchUserKey() {
     els.geminiKey.value = "";
     els.cometKey.value = "";
     els.manualCredit.value = 0;
+    els.saveStatus.innerText = "";
 
     const storageKey = "v35_user_" + id;
     const savedData = localStorage.getItem(storageKey);
@@ -330,15 +336,14 @@ function searchUserKey() {
                 els.cometKey.value = data.cometKey || "";
                 els.provider.value = data.provider || "gemini";
                 els.manualCredit.value = data.credit || 0;
-                els.searchMsg.innerHTML = `<span class="text-green-400">Đã tìm thấy: Credit hiện tại ${data.credit || 0}</span>`;
-                els.saveStatus.innerHTML = "";
+                els.searchMsg.innerHTML = `<span class="text-green-400 font-bold">✓ Đã tải: Credit hiện tại là ${data.credit || 0}</span>`;
             }
         } catch(e) { 
             console.error(e);
             els.searchMsg.innerText = "Lỗi đọc dữ liệu.";
         }
     } else {
-        els.searchMsg.innerText = "ID mới (Chưa có dữ liệu), hãy nhập và Lưu.";
+        els.searchMsg.innerText = "ID mới (Chưa có trên hệ thống). Hãy thiết lập.";
     }
 }
 
@@ -355,10 +360,21 @@ function loadActiveUser() {
     }
 }
 
+function quickAdjust(amount) {
+    let currentVal = parseInt(els.manualCredit.value) || 0;
+    let newVal = currentVal + amount;
+    if(newVal < 0) newVal = 0; 
+    els.manualCredit.value = newVal;
+    
+    // Highlight animation
+    els.manualCredit.classList.add('bg-blue-500/20', 'text-yellow-300');
+    setTimeout(() => els.manualCredit.classList.remove('bg-blue-500/20', 'text-yellow-300'), 300);
+}
+
 function saveUser() {
     const targetId = els.userKey.value.trim();
     if (!targetId) {
-        els.saveStatus.innerHTML = "<span class='text-red-400'>❌ Lỗi: Chưa nhập ID Khách Hàng</span>";
+        els.saveStatus.innerHTML = "<span class='text-red-400 font-bold'>❌ Lỗi: Chưa nhập ID Khách Hàng (Bước 1)</span>";
         return;
     }
 
@@ -376,22 +392,29 @@ function saveUser() {
     localStorage.setItem("v35_user_" + targetId, encryptedData);
     localStorage.setItem("v35_active_user", encryptedData);
 
-    els.saveStatus.innerHTML = "<span class='text-green-400'>✅ Đã lưu cấu hình & Credit cho " + targetId + "</span>";
+    els.saveStatus.innerHTML = "<span class='text-green-400 font-bold'>✅ THÀNH CÔNG: Đã lưu " + data.credit + " Credit cho ID " + targetId + "</span>";
     els.searchMsg.innerText = "";
-    setTimeout(() => els.saveStatus.innerHTML = "", 3000);
+    
+    // Clear status after 3s
+    setTimeout(() => els.saveStatus.innerHTML = "", 4000);
 }
 
-// ===== VOUCHER LOGIC (COL 2) =====
+// ===== VOUCHER LOGIC (COL 2: TẠO CODE) =====
 function setAmount(val) { 
     els.customAmount.value = val;
-    // Highlight effect on customAmount to show it changed
-    els.customAmount.classList.add('border-violet-500', 'bg-violet-500/10');
-    setTimeout(() => els.customAmount.classList.remove('border-violet-500', 'bg-violet-500/10'), 300);
+    // Highlight effect
+    const colorClass = val < 0 ? 'border-red-500' : 'border-purple-500';
+    const bgClass = val < 0 ? 'bg-red-500/10' : 'bg-purple-500/10';
+    
+    els.customAmount.classList.remove('border-purple-500', 'bg-purple-500/10', 'border-red-500', 'bg-red-500/10');
+    els.customAmount.classList.add(colorClass, bgClass);
+    
+    setTimeout(() => els.customAmount.classList.remove(colorClass, bgClass), 300);
 }
 
 function generateCode() {
     const amount = parseInt(els.customAmount.value);
-    if (!amount || amount <= 0) return alert("Vui lòng chọn hoặc nhập số Credit ở Cột 2!");
+    if (!amount || amount === 0) return alert("Vui lòng chọn hoặc nhập số Credit ở Cột 2!");
 
     const prefix = "V35";
     const creditPart = amount.toString();
@@ -407,7 +430,11 @@ function generateCode() {
     els.generatedCode.classList.add('new-code');
 
     // HIỂN THỊ XÁC NHẬN MỆNH GIÁ (QUAN TRỌNG)
-    els.codeValueConfirm.innerText = `XÁC NHẬN: Mã này có giá trị ${amount} CREDITS`;
+    const typeText = amount < 0 ? "⚠️ LƯU Ý: CODE TRỪ TIỀN (THU HỒI)" : "✅ CODE NẠP TIỀN";
+    const colorClass = amount < 0 ? "text-red-400 bg-red-500/10 border-red-500/20" : "text-yellow-300 bg-yellow-500/10 border-yellow-500/20";
+    
+    els.codeValueConfirm.className = `text-center text-[11px] font-mono font-bold mt-2 py-2 rounded-lg border ${colorClass}`;
+    els.codeValueConfirm.innerText = `${typeText}: ${amount} CREDITS`;
 
     saveToHistory(finalCode, amount);
 }
@@ -443,8 +470,8 @@ function renderHistory() {
     els.historyList.innerHTML = history.length ? history.map(item => `
         <div class="flex items-center justify-between p-2 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition-colors group">
             <div class="text-[10px] text-gray-400">${item.time}</div>
-            <div class="text-[10px] font-mono font-bold text-violet-300 select-all">${item.code}</div>
-            <div class="text-[10px] font-bold text-yellow-400">+${item.amount}</div>
+            <div class="text-[10px] font-mono font-bold ${item.amount < 0 ? 'text-red-300' : 'text-purple-300'} select-all">${item.code}</div>
+            <div class="text-[10px] font-bold ${item.amount < 0 ? 'text-red-400' : 'text-yellow-400'}">${item.amount > 0 ? '+' : ''}${item.amount}</div>
         </div>
     `).join('') : '<div class="text-center text-gray-600 text-[10px] py-4">Trống</div>';
 }
