@@ -840,34 +840,34 @@
                     <div class="bg-gradient-to-br from-blue-900/40 to-slate-900/40 border border-blue-500/20 rounded-xl p-4 mb-4 relative overflow-hidden group">
                         <div class="absolute top-0 right-0 p-2 opacity-50"><svg class="w-12 h-12 text-blue-500/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg></div>
                         <div class="text-left relative z-10">
-                            <div class="text-[9px] font-bold text-blue-400 uppercase mb-1">BENEFICIARY BANK</div>
-                            <div class="text-lg font-bold text-white tracking-wide">MB BANK (MILITARY)</div>
+                            <div class="text-[9px] font-bold text-blue-400 uppercase mb-1">NGÂN HÀNG THỤ HƯỞNG</div>
+                            <div class="text-lg font-bold text-white tracking-wide">MB BANK (QUÂN ĐỘI)</div>
                             <div class="text-xl font-mono font-bold text-yellow-400 tracking-wider my-2">85543556868</div>
                             <div class="text-[10px] font-bold text-slate-300 uppercase">HOANG QUANG CUONG</div>
                         </div>
                     </div>
                     
                     <div class="space-y-2 mb-4">
-                        <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">SELECT CREDIT PACKAGE</label>
-                        <!-- Packages (Same logic) -->
-                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group selected" data-amount="$7.70" data-credits="200">
+                        <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">CHỌN GÓI NẠP (CREDIT)</label>
+                        <!-- Packages (Vietnamese) -->
+                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group selected" data-amount="200.000đ" data-credits="200">
                             <div class="text-left">
-                                <div class="text-[11px] font-bold text-white">$7.70</div>
-                                <div class="text-[9px] text-slate-400">200 Credits <span class="text-red-400 text-[8px] font-bold bg-red-500/10 px-1 rounded ml-1">HOT</span></div>
+                                <div class="text-[11px] font-bold text-white">200.000đ</div>
+                                <div class="text-[9px] text-slate-400">200 Lượt Tạo <span class="text-red-400 text-[8px] font-bold bg-red-500/10 px-1 rounded ml-1">HOT</span></div>
                             </div>
                             <div class="pkg-check w-4 h-4 rounded-full border border-blue-500 bg-blue-500 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
                         </button>
-                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="$3.84" data-credits="80">
+                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="100.000đ" data-credits="80">
                             <div class="text-left">
-                                <div class="text-[11px] font-bold text-white">$3.84</div>
-                                <div class="text-[9px] text-slate-400">80 Credits</div>
+                                <div class="text-[11px] font-bold text-white">100.000đ</div>
+                                <div class="text-[9px] text-slate-400">80 Lượt Tạo</div>
                             </div>
                             <div class="pkg-check w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"><div class="w-2 h-2 bg-blue-500 rounded-full opacity-0"></div></div>
                         </button>
-                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="$19.20" data-credits="500">
+                        <button class="pkg-card w-full flex items-center justify-between p-2.5 rounded border border-white/10 hover:bg-white/5 transition-all group" data-amount="500.000đ" data-credits="500">
                             <div class="text-left">
-                                <div class="text-[11px] font-bold text-white">$19.20</div>
-                                <div class="text-[9px] text-slate-400">500 Credits (VIP)</div>
+                                <div class="text-[11px] font-bold text-white">500.000đ</div>
+                                <div class="text-[9px] text-slate-400">500 Lượt Tạo (VIP)</div>
                             </div>
                             <div class="pkg-check w-4 h-4 rounded-full border border-white/20 flex items-center justify-center"><div class="w-2 h-2 bg-blue-500 rounded-full opacity-0"></div></div>
                         </button>
@@ -875,19 +875,19 @@
 
                     <!-- CREDIT CODE INPUT -->
                     <div class="mt-4 border-t border-white/10 pt-3">
-                        <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">ENTER GIFT/TRANSACTION CODE</label>
+                        <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">NHẬP MÃ GIAO DỊCH / GIFTCODE</label>
                         <div class="flex gap-2">
-                            <input type="text" id="gift-code-input-transfer" class="pro-input flex-1 py-2 uppercase font-mono text-yellow-400" placeholder="CODE-XXXX-XXXX">
-                            <button class="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-bold rounded border border-white/10">APPLY</button>
+                            <input type="text" id="gift-code-input-transfer" class="pro-input flex-1 py-2 uppercase font-mono text-yellow-400" placeholder="MÃ GD (VD: V35-...)">
+                            <button id="btn-apply-transfer" class="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-bold rounded border border-white/10">ÁP DỤNG</button>
                         </div>
                     </div>
 
                     <div class="mt-3">
                          <a id="btn-send-zalo-transfer" href="#" target="_blank" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-500/20 uppercase tracking-widest btn-send-zalo">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            CONFIRM & SEND EMAIL
+                            XÁC NHẬN & GỬI EMAIL
                         </a>
-                        <p class="text-[9px] text-slate-500 mt-2">Send receipt to email for activation.</p>
+                        <p class="text-[9px] text-slate-500 mt-2">Gửi biên lai qua email để kích hoạt.</p>
                     </div>
                 </div>
 
@@ -935,7 +935,7 @@
                         <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">ENTER GIFT/TRANSACTION CODE</label>
                         <div class="flex gap-2">
                             <input type="text" id="gift-code-input-visa" class="pro-input flex-1 py-2 uppercase font-mono text-yellow-400" placeholder="CODE-XXXX-XXXX">
-                            <button class="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-bold rounded border border-white/10">APPLY</button>
+                            <button id="btn-apply-visa" class="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-bold rounded border border-white/10">APPLY</button>
                         </div>
                     </div>
 
@@ -993,7 +993,7 @@
                         <label class="text-[9px] font-bold text-slate-500 uppercase block text-left mb-1">ENTER GIFT/TRANSACTION CODE</label>
                         <div class="flex gap-2">
                             <input type="text" id="gift-code-input-momo" class="pro-input flex-1 py-2 uppercase font-mono text-yellow-400" placeholder="CODE-XXXX-XXXX">
-                            <button class="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-bold rounded border border-white/10">APPLY</button>
+                            <button id="btn-apply-momo" class="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-[10px] font-bold rounded border border-white/10">APPLY</button>
                         </div>
                     </div>
 
@@ -1155,11 +1155,12 @@
                 const subject = `Hỗ trợ nạp Credit - ${devId}`;
                 const body = `Xin chào Admin,\nTôi đã chuyển khoản gói ${amount} (${credits} Credits).\n- Device ID: ${devId}\n- Nội dung chuyển khoản: ${devId}\n\nVui lòng kiểm tra và kích hoạt giúp tôi.`;
                 
-                const mailtoLink = `mailto:thietkengaycuoi@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                // Updated to GMAIL WEB COMPOSE LINK for reliability
+                const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=thietkengaycuoi@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
                 // Update all buttons
                 zaloBtns.forEach(btn => {
-                    btn.href = mailtoLink;
+                    btn.href = gmailLink;
                 });
             };
 
@@ -1187,6 +1188,33 @@
                 const defaultSel = document.querySelector('.pkg-card.selected');
                 if(defaultSel) updateContact(defaultSel.dataset.amount, defaultSel.dataset.credits);
             }, 1000);
+
+            // --- GIFT CODE LOGIC ---
+            const handleApplyCode = (inputId) => {
+                const input = document.getElementById(inputId);
+                if(!input) return;
+                const val = input.value.trim().toUpperCase();
+                
+                if(!val) return showToast("Vui lòng nhập mã code!", "warning");
+
+                // Check for V35- prefix
+                if (val.startsWith('V35-')) {
+                    UserSystem.addCredits(5000); // Demo: Add 5000 credits
+                    showToast(`Kích hoạt thành công! +5000 Lượt Tạo`, "smart");
+                    input.value = "";
+                } else {
+                    showToast("Mã không hợp lệ hoặc đã hết hạn!", "error");
+                }
+            };
+
+            const btnApplyTransfer = document.getElementById('btn-apply-transfer');
+            const btnApplyVisa = document.getElementById('btn-apply-visa');
+            const btnApplyMomo = document.getElementById('btn-apply-momo');
+
+            if(btnApplyTransfer) btnApplyTransfer.onclick = () => handleApplyCode('gift-code-input-transfer');
+            if(btnApplyVisa) btnApplyVisa.onclick = () => handleApplyCode('gift-code-input-visa');
+            if(btnApplyMomo) btnApplyMomo.onclick = () => handleApplyCode('gift-code-input-momo');
+
 
             // Mobile specific Logic
             const mobBtnUpload = document.getElementById('mob-btn-upload'), mobBtnScan = document.getElementById('mob-btn-scan'), mobBtnRun = document.getElementById('mob-btn-run'), mobBar = document.getElementById('mobile-action-bar');
