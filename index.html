@@ -2,7 +2,7 @@
 <html lang="vi" class="h-full antialiased">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ZALO: 0352803379 - STUDIO V35.75 (LINKED ADMIN)</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
@@ -12,29 +12,38 @@
     <script>
         // HỆ THỐNG BẢO VỆ BẢN QUYỀN - ANTI-THEFT SYSTEM
         (function() {
-            // 1. Chặn chuột phải
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-
-            // 2. Chặn các phím tắt xem code
+            document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
             document.onkeydown = function(e) {
-                if (e.keyCode == 123) return false; // F12
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
-                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
-                if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { // Ctrl+S
-                    e.preventDefault();
-                    alert("Hệ thống được bảo vệ bản quyền. Không thể lưu trang.");
-                    return false;
-                }
+                if (e.keyCode == 123) return false;
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+                if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { e.preventDefault(); return false; }
             };
-
             console.log("%cDỪNG LẠI!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px #000;");
             console.log("%cĐây là phần mềm có bản quyền của ZALO: 0352803379.", "color: white; background: red; font-size: 16px; padding: 10px; border-radius: 5px;");
         })();
+
+        // ADMIN SYNC LOGIC
+        const Sec = {
+            key: "V35_SEC",
+            dec(t) { try { let s = atob(t); return [...s].map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ this.key.charCodeAt(i % this.key.length))).join("") } catch (e) { return null } }
+        };
+
+        // Load API Key immediately
+        try {
+            const saved = localStorage.getItem("v35_active_user");
+            if (saved) {
+                const data = JSON.parse(Sec.dec(saved));
+                if (data) {
+                    window.GEMINI_API_KEY = data.geminiKey || "";
+                    window.COMET_API_KEY = data.cometKey || "";
+                    window.API_PROVIDER = data.provider || "google";
+                    console.log("Admin Key Linked:", window.API_PROVIDER);
+                }
+            }
+        } catch (e) { console.error("Admin Link Error", e); }
     </script>
 
     <script>
@@ -48,82 +57,24 @@
                         serif: ['"Playfair Display"', 'serif']
                     },
                     colors: {
-                        glass: {
-                            100: 'rgba(255, 255, 255, 0.05)',
-                            200: 'rgba(255, 255, 255, 0.1)',
-                            300: 'rgba(255, 255, 255, 0.15)',
-                            border: 'rgba(255, 255, 255, 0.1)',
-                        },
-                        pro: {
-                            500: '#3b82f6', // Pro Blue
-                            600: '#2563eb',
-                            gold: '#f59e0b', // Replica Gold
-                            cine: '#ec4899', // Cinematic Pink
-                            smart: '#10b981', // Smart Green
-                            flux: '#8b5cf6', // Flux Purple
-                            danger: '#f43f5e', // Danger Red
-                            cyan: '#06b6d4', // Qwen Cyan
-                            real: '#f97316', // RealVis Orange
-                            ancient: '#8b4513', // Ancient Brown
-                        }
+                        glass: { 100: 'rgba(255, 255, 255, 0.05)', 200: 'rgba(255, 255, 255, 0.1)', 300: 'rgba(255, 255, 255, 0.15)', border: 'rgba(255, 255, 255, 0.1)' },
+                        pro: { 500: '#3b82f6', 600: '#2563eb', gold: '#f59e0b', cine: '#ec4899', smart: '#10b981', flux: '#8b5cf6', danger: '#f43f5e', cyan: '#06b6d4', real: '#f97316', ancient: '#8b4513' }
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'blob': 'blob 7s infinite',
-                        'scan': 'scan 2s linear infinite',
-                        'toast-in': 'toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', 
-                        'pulse-glow': 'pulseGlow 2s infinite',
-                        'flux-pulse': 'fluxPulse 3s infinite',
-                        'real-pulse': 'realPulse 3s infinite',
-                        'fade-out': 'fadeOut 0.5s ease-out forwards',
-                        'fade-in': 'fadeIn 0.3s ease-out forwards',
-                        'enter-up': 'enterUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite', 'blob': 'blob 7s infinite', 'scan': 'scan 2s linear infinite', 'toast-in': 'toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', 
+                        'pulse-glow': 'pulseGlow 2s infinite', 'flux-pulse': 'fluxPulse 3s infinite', 'real-pulse': 'realPulse 3s infinite', 'fade-out': 'fadeOut 0.5s ease-out forwards', 'fade-in': 'fadeIn 0.3s ease-out forwards', 'enter-up': 'enterUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards',
                     },
                     keyframes: {
-                        enterUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
-                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        },
-                        scan: {
-                            '0%': { top: '0%', opacity: '0' },
-                            '10%': { opacity: '1' },
-                            '90%': { opacity: '1' },
-                            '100%': { top: '100%', opacity: '0' },
-                        },
-                        toastIn: {
-                            '0%': { transform: 'translateY(20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(5px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: '1', boxShadow: '0 0 10px #10b981' },
-                            '50%': { opacity: '0.8', boxShadow: '0 0 20px #10b981' },
-                        },
-                        fluxPulse: {
-                            '0%, 100%': { boxShadow: '0 0 5px #8b5cf6' },
-                            '50%': { boxShadow: '0 0 15px #8b5cf6' },
-                        },
-                        realPulse: {
-                            '0%, 100%': { boxShadow: '0 0 5px #f97316' },
-                            '50%': { boxShadow: '0 0 15px #f97316' },
-                        },
-                        fadeOut: {
-                            '0%': { opacity: '1', visibility: 'visible' },
-                            '100%': { opacity: '0', visibility: 'hidden' },
-                        }
+                        enterUp: { '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' }, '100%': { opacity: '1', transform: 'translateY(0) scale(1)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        blob: { '0%': { transform: 'translate(0px, 0px) scale(1)' }, '33%': { transform: 'translate(30px, -50px) scale(1.1)' }, '66%': { transform: 'translate(-20px, 20px) scale(0.9)' }, '100%': { transform: 'translate(0px, 0px) scale(1)' } },
+                        scan: { '0%': { top: '0%', opacity: '0' }, '10%': { opacity: '1' }, '90%': { opacity: '1' }, '100%': { top: '100%', opacity: '0' } },
+                        toastIn: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(5px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        pulseGlow: { '0%, 100%': { opacity: '1', boxShadow: '0 0 10px #10b981' }, '50%': { opacity: '0.8', boxShadow: '0 0 20px #10b981' } },
+                        fluxPulse: { '0%, 100%': { boxShadow: '0 0 5px #8b5cf6' }, '50%': { boxShadow: '0 0 15px #8b5cf6' } },
+                        realPulse: { '0%, 100%': { boxShadow: '0 0 5px #f97316' }, '50%': { boxShadow: '0 0 15px #f97316' } },
+                        fadeOut: { '0%': { opacity: '1', visibility: 'visible' }, '100%': { opacity: '0', visibility: 'hidden' } }
                     }
                 }
             }
@@ -131,32 +82,26 @@
     </script>
 
     <style>
-        /* THEME STYLES - PRO MASTER */
         :root { --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
         body { 
             background-color: #050505; 
             background-image: radial-gradient(circle at top right, #0f172a, #050505);
             color: #e2e8f0;
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            -webkit-user-select: none; user-select: none;
+            position: fixed; inset: 0; width: 100vw; height: 100dvh;
         }
-        input, textarea { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; }
-
-        /* Background blobs */
+        input, textarea { -webkit-user-select: text; user-select: text; }
         .bg-blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15; z-index: 0; animation: blob 15s infinite; }
         .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #8b5cf6; } 
         .blob-2 { bottom: -10%; right: -10%; width: 500px; height: 500px; background: #3b82f6; animation-delay: 2s; }
-        
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 20px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-
         .glass-panel { background: rgba(10, 11, 15, 0.95); backdrop-filter: blur(20px); border-right: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); }
         .pro-input { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: #cbd5e1; transition: all 0.2s; font-size: 11px; border-radius: 6px; padding-left: 10px; }
         .pro-input:focus { background: rgba(255, 255, 255, 0.06); border-color: #8b5cf6; outline: none; }
         select { color-scheme: dark; } select option { background-color: #0f172a; color: #e2e8f0; padding: 12px; } select optgroup { background-color: #020617; color: #94a3b8; font-weight: 700; }
-
         .module-group { border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(255, 255, 255, 0.01); border-radius: 8px; margin-bottom: 6px; overflow: hidden; }
         .module-header { background: rgba(255, 255, 255, 0.02); transition: background 0.2s; padding: 10px 12px; }
         .module-header:hover { background: rgba(255, 255, 255, 0.04); }
@@ -164,7 +109,6 @@
         .module-content.open { grid-template-rows: 1fr; opacity: 1; }
         .module-content.open .module-inner { padding: 10px 12px; }
         .module-inner { min-height: 0; overflow: hidden; }
-        
         .chk-pro { appearance: none; width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(148, 163, 184, 0.4); background: transparent; display: grid; place-content: center; cursor: pointer; transition: all 0.2s; }
         .chk-pro::before { content: ""; width: 8px; height: 8px; transform: scale(0); background: #e2e8f0; border-radius: 2px; transition: transform 0.2s; }
         .chk-pro:checked::before { transform: scale(1); }
@@ -172,132 +116,78 @@
         .chk-gold:checked { border-color: #f59e0b; background: #f59e0b; }
         .chk-red:checked { border-color: #ef4444; background: #ef4444; }
         .chk-real:checked { border-color: #f97316; background: #f97316; }
-
         .slider-red::-webkit-slider-thumb { background: #e2e8f0; }
-        .slider-blue::-webkit-slider-thumb { background: #3b82f6; }
-        .slider-gold::-webkit-slider-thumb { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
-        .slider-pink::-webkit-slider-thumb { background: #ec4899; box-shadow: 0 0 10px #ec4899; }
-        .slider-green::-webkit-slider-thumb { background: #10b981; box-shadow: 0 0 10px #10b981; }
         .slider-flux::-webkit-slider-thumb { background: #8b5cf6; box-shadow: 0 0 10px #8b5cf6; }
-        .slider-cyan::-webkit-slider-thumb { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; }
-        .slider-real::-webkit-slider-thumb { background: #f97316; box-shadow: 0 0 10px #f97316; }
-
-        .btn-primary-modern { background: #3b82f6; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .btn-primary-modern:hover { background: #2563eb; transform: translateY(-1px); }
-        .btn-gold-modern { background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%); border: 1px solid rgba(255,215,0,0.3); color: white; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
-        .btn-gold-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(245, 158, 11, 0.5); }
-        .btn-smart-modern { background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: 1px solid rgba(16, 185, 129, 0.3); color: white; box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
-        .btn-smart-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
-        .btn-flux-modern { background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%); border: 1px solid rgba(139, 92, 246, 0.3); color: white; box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
-        .btn-flux-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(139, 92, 246, 0.5); }
-        .btn-real-modern { background: linear-gradient(135deg, #c2410c 0%, #f97316 100%); border: 1px solid rgba(249, 115, 22, 0.3); color: white; box-shadow: 0 0 15px rgba(249, 115, 22, 0.3); }
-        .btn-real-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(249, 115, 22, 0.5); }
-        .btn-ancient-modern { background: linear-gradient(135deg, #6b21a8 0%, #a855f7 100%); border: 1px solid rgba(168, 85, 247, 0.3); color: white; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
-        .btn-ancient-modern:hover { transform: translateY(-1px); box-shadow: 0 0 25px rgba(168, 85, 247, 0.5); }
-
         .modal-fade-in { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        
-        /* SECURITY GATE STYLES (UPDATED FOR IP LOGIN) */
-        .gate-backdrop {
-            position: fixed; inset: 0; z-index: 9999;
-            background: rgba(5, 5, 8, 0.85); /* Fallback */
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.5s ease;
-        }
-        
-        .shimmer-text {
-            background: linear-gradient(90deg, #fff 0%, #a78bfa 50%, #fff 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-        }
+        .shimmer-text { background: linear-gradient(90deg, #fff 0%, #a78bfa 50%, #fff 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
+        
+        @media (max-width: 1024px) {
+            #sidebar { width: 100% !important; max-width: 100% !important; border-right: none; }
+        }
+        .pkg-card.selected { background-color: rgba(59, 130, 246, 0.2); border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .pay-tab { cursor: pointer; padding: 8px; border-bottom: 2px solid transparent; color: #64748b; transition: all 0.2s; }
+        .pay-tab:hover { color: #94a3b8; }
+        .pay-tab.active { border-bottom-color: #3b82f6; color: #fff; font-weight: 700; }
     </style>
 </head>
 
-<body class="text-slate-300 font-sans h-screen flex overflow-hidden select-none relative" oncontextmenu="return false;">
+<body class="text-slate-300 font-sans flex overflow-hidden select-none relative" oncontextmenu="return false;">
     
-    <!-- SECURITY GATE (REDESIGNED: SOFTER & PROFESSIONAL) -->
-    <div id="security-gate" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#050505]/90 backdrop-blur-3xl transition-opacity duration-500">
-        <!-- Ambient Background Glow (Subtle) -->
+    <!-- SECURITY GATE -->
+    <div id="security-gate" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#050505]/90 backdrop-blur-3xl transition-opacity duration-500 p-4">
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] animate-pulse"></div>
-            <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px]"></div>
         </div>
-        
-        <!-- Main Card Container -->
-        <div class="relative z-10 w-full max-w-[400px] bg-white/[0.02] border border-white/5 rounded-3xl p-8 shadow-2xl animate-enter-up flex flex-col items-center">
-            
-            <!-- Logo / Brand Section -->
+        <div class="relative z-10 w-[90%] max-w-[400px] bg-white/[0.02] border border-white/5 rounded-3xl p-6 sm:p-8 shadow-2xl animate-enter-up flex flex-col items-center">
             <div class="flex flex-col items-center mb-8">
-                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-violet-600 to-blue-600 p-[1px] mb-4 shadow-lg shadow-violet-500/20 rotate-3 hover:rotate-0 transition-transform duration-500 cursor-pointer group">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-violet-600 to-blue-600 p-[1px] mb-4 shadow-lg shadow-violet-500/20 rotate-3 group">
                      <div class="w-full h-full rounded-2xl bg-[#0a0a0f] flex items-center justify-center relative overflow-hidden group-hover:bg-opacity-80 transition-all">
                          <div class="absolute inset-0 bg-violet-500/20 animate-pulse"></div>
                          <svg class="w-8 h-8 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                      </div>
                 </div>
-                
-                <!-- EDITED: TITLE GATE -->
-                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight mb-1">PHỤC CHẾ ẢNH</h1>
+                <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight mb-1 text-center">PHỤC CHẾ ẢNH</h1>
                 <div class="flex items-center gap-2 opacity-70">
                     <div class="h-[1px] w-8 bg-gradient-to-r from-transparent to-violet-500"></div>
                     <p class="text-[10px] text-violet-300 font-mono tracking-[0.3em] uppercase">Professional AI</p>
                     <div class="h-[1px] w-8 bg-gradient-to-l from-transparent to-violet-500"></div>
                 </div>
             </div>
-            
-            <!-- IP & Login Section -->
             <div class="w-full space-y-4">
-                <!-- IP Display Box -->
                 <div class="relative group w-full">
-                    <div class="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-blue-600 rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500"></div>
                     <div class="relative bg-black/40 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center transition-all group-hover:border-white/20">
                         <span class="text-[9px] text-slate-500 uppercase tracking-widest font-bold mb-1.5">THIẾT BỊ TRUY CẬP</span>
-                        <div class="flex items-center gap-2 h-8">
-                            <!-- IP Display with Shimmer Effect -->
-                            <span id="gate-ip-display" class="font-mono text-sm font-bold text-white tracking-wider shimmer-text">Đang kết nối...</span>
-                            <div id="gate-loading-spinner" class="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                        <div class="flex items-center justify-center gap-2 h-8 w-full">
+                            <span id="gate-ip-display" class="font-mono text-xs sm:text-sm font-bold text-white tracking-wider shimmer-text truncate max-w-full">Đang kết nối...</span>
+                            <div id="gate-loading-spinner" class="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin flex-shrink-0"></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Submit Button - EDITED: TEXT and BACKGROUND -->
                 <button id="gate-submit" class="w-full py-3.5 bg-gradient-to-r from-indigo-100 to-violet-100 text-slate-900 hover:to-white rounded-xl text-xs font-bold tracking-[0.15em] transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.1)] flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden relative" disabled>
                     <span class="relative z-10">VÀO PHỤC CHẾ ẢNH</span>
-                    <svg class="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </button>
             </div>
-            
-            <!-- Status Text -->
-            <div class="mt-6 h-4 flex items-center justify-center">
-                <p id="gate-status" class="text-[10px] text-slate-500 transition-colors animate-pulse">Đang quét thông tin thiết bị...</p>
-            </div>
-
-            <!-- Footer Info -->
-            <div class="absolute bottom-4 left-0 right-0 text-center opacity-30 pointer-events-none">
-                <p class="text-[8px] font-mono">SECURE GATEWAY • IP VERIFICATION</p>
-            </div>
+            <div class="mt-6 h-4 flex items-center justify-center"><p id="gate-status" class="text-[10px] text-slate-500 transition-colors animate-pulse text-center">Đang quét thông tin thiết bị...</p></div>
         </div>
     </div>
 
     <div class="bg-blob blob-1"></div><div class="bg-blob blob-2"></div>
-    <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
+    <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none w-[90%] sm:w-auto"></div>
     
     <div class="flex w-full h-full relative z-10 backdrop-blur-[1px]" id="fullscreen-target">
-        <!-- Sidebar and Main Content (Same as before) -->
-
-<aside id="sidebar" class="w-[360px] flex-shrink-0 glass-panel mobile-sidebar-bg flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)] absolute z-50 h-full lg:relative lg:translate-x-0 -translate-x-full">
+        
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-[60] w-full sm:w-[360px] flex-shrink-0 glass-panel mobile-sidebar-bg flex flex-col transition-transform duration-300 ease-out lg:static lg:translate-x-0 -translate-x-full shadow-2xl lg:shadow-none border-r border-white/5 bg-[#050505] lg:bg-transparent">
+            
             <div class="h-14 px-4 flex items-center justify-between border-b border-white/5 bg-white/[0.02]">
                 <div class="flex flex-col">
-                    <!-- EDITED: SIDEBAR TITLE -->
                     <h1 class="text-xs font-bold tracking-widest text-violet-500">PHỤC CHẾ ẢNH</h1>
                     <div class="flex items-center gap-2">
-                        <!-- EDITED: REPLACE ZALO WITH IP -->
                         <span id="top-bar-ip" class="text-[9px] text-slate-400 font-mono">IP: Loading...</span>
                         <span class="w-1 h-1 rounded-full bg-violet-500"></span>
-                        <span class="text-[9px] text-violet-400 font-bold">V35.75 (IP LOGIN)</span>
+                        <span class="text-[9px] text-violet-400 font-bold">V35.75</span>
                     </div>
                 </div>
                 
@@ -306,8 +196,9 @@
                         <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider">CREDITS</span>
                         <span class="text-xs font-mono font-bold text-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.3)]" id="credit-count">---</span>
                     </div>
-                    <!-- REMOVED ADMIN BUTTON AS REQUESTED -->
-                    <button id="close-sidebar-mobile" class="lg:hidden text-slate-400 p-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                    <button id="close-sidebar-mobile" class="lg:hidden p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
                 </div>
             </div>
 
@@ -315,20 +206,21 @@
                 <!-- 1. MAIN UPLOAD -->
                 <div class="relative group">
                     <input type="file" id="image-upload" accept="image/*" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;">
-                    <label id="drop-zone" for="image-upload" class="flex flex-col items-center justify-center w-full h-28 border border-dashed border-violet-500/50 rounded-lg cursor-pointer bg-white/[0.02] hover:bg-violet-900/[0.1] hover:border-violet-500 transition-all duration-200">
+                    <label id="drop-zone" for="image-upload" class="flex flex-col items-center justify-center w-full h-24 sm:h-28 border border-dashed border-violet-500/50 rounded-lg cursor-pointer bg-white/[0.02] hover:bg-violet-900/[0.1] hover:border-violet-500 transition-all duration-200">
                         <div id="upload-placeholder" class="flex flex-col items-center pointer-events-none">
                             <svg class="w-5 h-5 text-violet-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Tải ảnh gốc (Kéo thả hoặc Bấm vào)</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Tải ảnh gốc (Kéo thả/Click)</span>
                         </div>
                     </label>
                 </div>
 
                 <!-- 2. AUTO-PILOT BUTTON -->
-                <button id="btn-auto-pilot" class="w-full py-2.5 mb-3 btn-flux-modern text-white rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(139,92,246,0.2)]">
+                <button id="btn-auto-pilot" class="w-full py-2.5 mb-3 btn-flux-modern text-white rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(139,92,246,0.2)] bg-violet-600">
                     <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     <span class="text-[10px] font-bold tracking-widest">AUTO SCAN V35.60 (AUTO-SIZE)</span>
                 </button>
 
+                <!-- MODULES (KEPT ORIGINAL AS REQUESTED) -->
                 <!-- FLUX KONTEXT (LZP) -->
                 <div class="relative group p-2 rounded-lg border border-violet-500/30 bg-violet-500/5 mb-3 animate-flux-pulse" id="kontext-module-container">
                     <div class="flex items-center gap-2 mb-2">
@@ -341,8 +233,6 @@
                             <span class="block text-[9px] text-violet-500/70">Core: Kontext, SUPIR, ReActor, UltraSharp</span>
                         </div>
                     </div>
-                    
-                    <!-- WORKFLOW SELECTOR -->
                     <div class="pl-11 pr-1 border-t border-violet-500/20 pt-2" id="workflow-container">
                         <label class="block text-[9px] font-bold text-violet-300 mb-1">CHỌN QUY TRÌNH (WORKFLOW PRESETS)</label>
                         <select id="kontext-workflow" class="pro-input w-full py-1.5 cursor-pointer bg-violet-900/20 border-violet-500/30 text-violet-200 transition-all duration-500">
@@ -633,7 +523,122 @@
                     </div>
                 </div>
 
-                <!-- MODULE 4: PROMPT & API -->
+                <!-- MODULE 2: ĐỐI TƯỢNG & TRANG PHỤC -->
+                <div class="module-group" id="module-subject">
+                    <button id="toggle-subject" class="w-full flex justify-between items-center module-header">
+                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">👔 ĐỐI TƯỢNG & TRANG PHỤC</span>
+                        <svg class="w-3 h-3 text-slate-600 toggle-icon" id="icon-subject" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-subject" class="module-content">
+                        <div class="module-inner">
+                            <div class="grid grid-cols-3 gap-1.5 mb-2">
+                                 <select id="gender-select" class="pro-input py-1.5 save-input" data-key="gender"><option value="">Giới tính</option><option value="male">Nam</option><option value="female">Nữ</option><option value="male and female">Nam & Nữ</option></select>
+                                 <input type="number" id="age-input" placeholder="Tuổi" class="pro-input py-1.5 save-input text-center" data-key="age">
+                                 <select id="damage-level" class="pro-input py-1.5 save-input cursor-pointer" data-key="damageLevel"><option value="">Độ hỏng</option><option value="fix slightly blurry" selected>Nhẹ</option><option value="fix scratches, mold">Vừa</option><option value="fix torn, missing details">Nặng</option></select>
+                            </div>
+                            <select id="texture-mode" class="pro-input w-full py-1.5 save-input cursor-pointer mb-2" data-key="textureMode">
+                                <option value="">-- Độ chân thực (Texture) --</option>
+                                <option value="true skin, natural pores, film grain, realistic skin:1.2, natural beauty:1.2" selected>🧬 TRUE SKIN (DA THẬT - LỖ CHÂN LÔNG)</option>
+                                <option value="Canon EOS 5D Mark IV, 85mm lens, shallow depth of field, perfect lighting, raw photo, realistic skin texture">📸 Canon 5D + 85mm Lens (Studio Skin)</option>
+                                <option value="smooth skin, ai beauty">Mịn màng (AI Beauty)</option>
+                                <option value="high detail, film grain">Chi tiết cao (Film Grain)</option>
+                            </select>
+                            <div class="space-y-1.5">
+                                <div class="flex items-center gap-2 p-1.5 rounded border border-blue-500/20 bg-blue-500/10">
+                                    <input id="check-id-photo" type="checkbox" class="chk-pro save-input">
+                                    <label for="check-id-photo" class="cursor-pointer select-none flex-1">
+                                        <span class="block text-[10px] font-bold text-blue-300">CHế ĐỘ ẢNH THẺ (ID PHOTO)</span>
+                                        <span class="block text-[8px] text-blue-500/70">Phông xanh/trắng chuẩn (chuan.txt)</span>
+                                    </label>
+                                </div>
+                                <select id="event-context" class="pro-input w-full py-1.5 cursor-pointer save-input" data-key="eventContext">
+                                    <option value="">-- (AUTO) Ngữ cảnh thông minh --</option>
+                                    <option value="original_enhanced" class="text-violet-400 font-bold">🛡️ Nền Gốc + MAX CHI TIẾT (LZP BOOST)</option>
+                                    <optgroup label="Thay Nền Màu">
+                                        <option value="blue_bg">🟦 Nền Xanh (Blue)</option>
+                                        <option value="white_bg">⬜ Nền Trắng (White)</option>
+                                    </optgroup>
+                                     <optgroup label="Flux Style (Theo JSON)">
+                                        <option value="outdoor_garden">🌿 Sân Vườn / Hoa Lá (Chuẩn JSON)</option>
+                                        <option value="luxury_interior">🕰️ Nội Thất Sang Trọng</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODULE 3: KHÓA NÉT (IDENTITY) -->
+                <div class="module-group" id="module-identity">
+                    <button id="toggle-identity" class="w-full flex justify-between items-center module-header">
+                        <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">🧬 KHÓA NÉT (IDENTITY GUARD)</span>
+                        <svg class="w-3 h-3 text-slate-600 toggle-icon" id="icon-identity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-identity" class="module-content">
+                        <div class="module-inner">
+                            <div class="border border-white/10 rounded bg-black/20 p-2 mb-2" id="identity-slider-container">
+                                <div class="flex justify-between text-[10px] text-slate-400 font-bold mb-1">
+                                    <span>Mức độ khóa</span>
+                                    <span id="identity-weight-val" class="text-slate-200">300%</span>
+                                </div>
+                                <input type="range" id="identity-weight-slider" min="100" max="400" step="10" value="300" class="slider-red save-input" data-key="identityWeight">
+                            </div>
+                            <div class="flex items-start gap-2 p-1.5 rounded bg-red-500/10 border border-red-500/20 mb-2">
+                                <input id="check-anti-flip" type="checkbox" class="chk-pro chk-red save-input mt-0.5" checked>
+                                <label for="check-anti-flip" class="flex-1 cursor-pointer select-none">
+                                    <span class="block text-[10px] font-bold text-red-300">🚫 CHỐNG LẬT HÌNH (SMART ANTI-FLIP)</span>
+                                    <span class="block text-[9px] text-red-400/70">Tự động nhận diện Tỷ lệ ảnh & Góc mặt</span>
+                                </label>
+                            </div>
+                             <div class="border border-purple-500/30 rounded bg-purple-900/10 p-2 mb-2" id="structure-container" style="display:none;">
+                                <div class="flex justify-between text-[10px] text-purple-300 font-bold mb-1">
+                                    <span>KHÓA CẤU TRÚC (CONTROLNET)</span>
+                                    <span id="structure-val">Mạnh (0.8)</span>
+                                </div>
+                                <input type="range" id="structure-slider" min="0" max="100" value="80" class="slider-flux w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                             </div>
+                            <div class="flex items-start gap-2 p-1.5 rounded bg-white/[0.02] border border-white/5 mb-2">
+                                <input id="check-asian-identity" type="checkbox" class="chk-pro save-input mt-0.5" data-key="checkAsianIdentity" checked>
+                                <label for="check-asian-identity" class="flex-1 cursor-pointer select-none">
+                                    <span class="block text-[10px] font-bold text-slate-200">GIỮ NÉT Á ĐÔNG (Asian Identity)</span>
+                                    <span class="block text-[9px] text-slate-500">Chống "Tây hóa", giữ đặc điểm người Việt</span>
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-2 p-1.5 rounded border border-purple-500/20 bg-purple-500/10 mb-2">
+                                <input id="check-dual-controlnet" type="checkbox" class="chk-pro save-input">
+                                <label for="check-dual-controlnet" class="cursor-pointer select-none flex-1">
+                                    <span class="block text-[10px] font-bold text-purple-300">KHÓA CẤU TRÚC KÉP (DUAL CONTROLNET)</span>
+                                    <span class="block text-[8px] text-purple-500/70">Kết hợp Depth + LineArt (Dùng cho tranh/tượng cổ)</span>
+                                </label>
+                            </div>
+                            <div class="grid-compact border-t border-white/5 pt-2 mb-2">
+                                <div class="flex items-center gap-2"><input id="lock-eyes" type="checkbox" class="chk-pro save-input" data-key="lockEyes" checked><label for="lock-eyes" class="text-[10px] text-slate-300">Khóa Mắt</label></div>
+                                <div class="flex items-center gap-2"><input id="lock-mouth" type="checkbox" class="chk-pro save-input" data-key="lockMouth" checked><label for="lock-mouth" class="text-[10px] text-slate-300">Khóa Miệng</label></div>
+                                <div class="flex items-center gap-2"><input id="lock-skin" type="checkbox" class="chk-pro save-input" data-key="lockSkin"><label for="lock-skin" class="text-[10px] text-slate-300">Nốt ruồi/Chàm</label></div>
+                                <div class="flex items-center gap-2" id="container-imperfection"><input id="lock-imperfection" type="checkbox" class="chk-pro chk-gold save-input" data-key="lockImperfection"><label for="lock-imperfection" class="text-[10px] text-yellow-500 font-bold">Giữ Khuyết Điểm</label></div>
+                            </div>
+                            <div class="mt-2 border-t border-red-500/20 pt-2">
+                                <label class="section-label text-red-400/80 mb-2">🛡️ BẢO TỒN ĐẶC ĐIỂM (CHỐNG AI SỬA)</label>
+                                <div class="space-y-1.5">
+                                    <div class="flex items-center gap-2"><input id="check-cross-eyed" type="checkbox" class="chk-pro chk-red save-input"><label for="check-cross-eyed" class="text-[10px] text-slate-300 cursor-pointer">Mắt Lé / Lác (Cross-eyed)</label></div>
+                                    <div class="flex items-center gap-2" id="container-ptosis">
+                                        <input id="check-ptosis" type="checkbox" class="chk-pro chk-red save-input">
+                                        <label for="check-ptosis" class="text-[10px] text-slate-300 cursor-pointer">Mắt Sụp Mí (Droopy/Ptosis)</label>
+                                    </div>
+                                    <div class="flex items-center gap-2" id="container-closed-eyes">
+                                        <input id="check-closed-eyes" type="checkbox" class="chk-pro chk-red save-input">
+                                        <label for="check-closed-eyes" class="text-[10px] text-slate-300 cursor-pointer">Mắt Nhắm / Ngủ (Closed Eyes)</label>
+                                    </div>
+                                    <div class="flex items-center gap-2"><input id="check-monolid" type="checkbox" class="chk-pro chk-red save-input"><label for="check-monolid" class="text-[10px] text-slate-300 cursor-pointer">Mắt Một Mí (Monolid)</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-buck-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-buck-teeth" class="text-[10px] text-slate-300 cursor-pointer">Răng Hô (Buck Teeth)</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-black-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-black-teeth" class="text-[10px] text-slate-300 cursor-pointer">Răng Đen Truyền Thống</label></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODULE 4: PROMPT & API (REMOVED KEY INPUT) -->
                 <div class="module-group" id="module-prompt">
                     <button id="toggle-prompt" class="w-full flex justify-between items-center module-header">
                         <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">📝 PROMPT & API</span>
@@ -643,7 +648,7 @@
                         <div class="module-inner">
                             <textarea id="prompt-main" rows="3" class="pro-input w-full p-2 resize-none text-[10px] font-mono save-input mb-2" data-key="promptMainValue" placeholder="Hệ thống sẽ tự động tối ưu theo chuẩn Flux..."></textarea>
                             <input type="text" id="prompt-negative" placeholder="Loại trừ..." class="pro-input w-full py-1.5 save-input mb-2" data-key="promptNegative">
-                            <input type="password" id="user-api-key" placeholder="API Key riêng (Nếu cần)" class="pro-input w-full py-1.5 save-input" data-key="userApiKey">
+                            <!-- REMOVED API INPUT HERE -->
                         </div>
                     </div>
                 </div>
@@ -686,7 +691,6 @@
             <div class="lg:hidden h-14 glass-panel border-b border-white/5 flex items-center px-4 justify-between z-30 relative bg-[#0a0a0f]/90 backdrop-blur-xl">
                 <button id="toggle-sidebar-btn" class="text-slate-400 p-2 border border-white/10 rounded-lg hover:bg-white/5"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
                 <div class="flex flex-col items-center">
-                     <!-- EDITED: CHANGED TO PHOTO RESTORATION AS REQUESTED -->
                      <span class="font-bold text-violet-500 text-xs tracking-wider">PHOTO RESTORATION</span>
                      <span class="text-[8px] text-slate-500 font-mono tracking-widest" id="mobile-status-text">WAITING FOR IMAGE</span>
                 </div>
@@ -695,7 +699,7 @@
                 </button>
             </div>
             
-            <!-- SMART MOBILE ACTION BAR (REDESIGNED PROFESSIONAL DOCK) -->
+            <!-- SMART MOBILE ACTION BAR -->
             <div id="mobile-action-bar" class="lg:hidden fixed bottom-6 left-4 right-4 z-40 flex items-center justify-center pointer-events-none transition-all duration-500 translate-y-24 opacity-0">
                 <div class="bg-[#0f1016]/90 backdrop-blur-2xl border border-white/10 p-2 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] flex gap-3 w-full max-w-sm pointer-events-auto ring-1 ring-white/5">
                     
@@ -784,7 +788,6 @@
                     
                     <div id="placeholder-state" class="text-center p-24 border border-dashed border-violet-500/50 rounded-2xl bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500 animate-float backdrop-blur-sm">
                         <div class="w-20 h-20 bg-gradient-to-tr from-slate-800 to-slate-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5"><svg class="w-10 h-10 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
-                        <!-- EDITED: CHANGE TEXT HERE -->
                         <h3 class="text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒI ẢNH</h3>
                         <p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Kéo thả hoặc Dán ảnh vào đây</p>
                     </div>
@@ -793,7 +796,7 @@
         </main>
     </div>
 
-    <!-- NEW: REDESIGNED RECHARGE MODAL (PROFESSIONAL QR & PACKAGE SELECTOR) -->
+    <!-- RECHARGE MODAL REDESIGNED (PRO PAYMENT) -->
     <div id="recharge-modal" class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-2xl hidden flex items-center justify-center modal-fade-in p-2 md:p-4 overflow-y-auto">
         <div class="w-full max-w-[850px] bg-[#0f1016] border border-violet-500/20 rounded-2xl md:rounded-3xl shadow-[0_0_100px_rgba(139,92,246,0.1)] flex flex-col md:flex-row relative overflow-hidden ring-1 ring-white/5 my-auto">
             <!-- Close Button -->
@@ -923,131 +926,39 @@
         </div>
     </div>
 
-    <!-- REMOVED ADMIN MODAL TO AVOID CLUTTER, AS REQUESTED -->
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const apiKey = ""; 
-
-            // === HỆ THỐNG MÃ HÓA BẢO MẬT (NEW) ===
-            const SimpleSec = {
-                _key: "V35_SECURE_KEY_SALT", 
-                // Mã hóa chuỗi (Simple Obfuscation)
-                encrypt: function(text) {
-                    if(!text) return '';
-                    try {
-                        let result = '';
-                        for(let i = 0; i < text.length; i++) {
-                            result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
-                        }
-                        return btoa(result); // Chuyển sang Base64
-                    } catch(e) { return text; }
-                },
-                // Giải mã chuỗi
-                decrypt: function(encoded) {
-                    if(!encoded) return '';
-                    try {
-                        let text = atob(encoded); // Giải Base64
-                        let result = '';
-                        for(let i = 0; i < text.length; i++) {
-                            result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
-                        }
-                        return result;
-                    } catch(e) { return encoded; }
-                }
-            };
-
-            // === ADMIN SYNC SECURITY (LINKED FROM ADMIN.HTML) ===
-            const AdminSync = {
-                key: "V35_SEC", // Must match the key in admin.html
-                dec(t) {
-                    try {
-                        return [...atob(t)].map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ this.key.charCodeAt(i % this.key.length))).join("")
-                    } catch (e) { return null }
-                }
-            };
-            
-            // === USER & CREDIT SYSTEM (DEVICE ID BASED - KHÔNG TRÙNG WIFI) ===
+            // === USER & CREDIT SYSTEM ===
             const UserSystem = {
-                deviceId: null,
-                credits: 0,
-                ipAddress: null, 
-                
+                deviceId: null, credits: 0, ipAddress: null, 
                 async init() {
-                    // 1. TẠO ID MÁY DUY NHẤT (DEVICE SIGNATURE)
                     try {
                         let storedId = localStorage.getItem('v35_unique_device_id');
-                        if (!storedId) {
-                            const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
-                            storedId = `ID-${randomPart}`;
-                            localStorage.setItem('v35_unique_device_id', storedId);
-                        }
+                        if (!storedId) { storedId = `ID-${Math.random().toString(36).substring(2, 8).toUpperCase()}`; localStorage.setItem('v35_unique_device_id', storedId); }
                         this.deviceId = storedId;
-                    } catch (e) {
-                        this.deviceId = "GUEST-" + Math.floor(Math.random()*1000);
-                    }
-                    
-                    // 2. Lấy IP Mạng
+                    } catch (e) { this.deviceId = "GUEST-" + Math.floor(Math.random()*1000); }
                     await this.fetchIP();
-                    
-                    // 3. Load Credits
                     this.loadCredits();
-
-                    // 4. SYNC WITH ADMIN CONFIG IF EXISTS
-                    try {
-                        const adminData = localStorage.getItem("v35_active_user");
-                        if (adminData) {
-                            const config = JSON.parse(AdminSync.dec(adminData));
-                            if (config && (config.geminiKey || config.cometKey)) {
-                                // AUTO LINK FROM ADMIN
-                                state.userSettings.username = "Linked: " + config.userKey;
-                                if (config.provider === 'comet') {
-                                    state.userSettings.provider = 'comet';
-                                    state.userSettings.apiKey = config.cometKey;
-                                    state.userSettings.baseUrl = "https://api.cometapi.com";
-                                } else {
-                                    state.userSettings.provider = 'google';
-                                    state.userSettings.apiKey = config.geminiKey;
-                                    state.userSettings.baseUrl = "https://generativelanguage.googleapis.com";
-                                }
-                                // Sync credits from admin if available to override default
-                                if(config.credit) this.credits = config.credit;
-                                
-                                console.log("🔗 Admin Config Linked Successfully:", config.userKey);
-                                showToast(`🔗 Đã đồng bộ cấu hình từ Admin: ${config.userKey}`, "success");
-                            }
-                        }
-                    } catch(e) { console.log("No admin sync found or error", e); }
-
                     this.updateUI();
                     initRechargeSystem(this.deviceId);
-                    updateMobileBtnState('upload'); // Set Initial State
+                    updateMobileBtnState('upload');
                 },
-
                 async fetchIP() {
                     try {
                         const response = await fetch(`https://api.ipify.org?format=json&t=${Date.now()}`);
                         const data = await response.json();
                         this.ipAddress = data.ip;
-                        
                         const gateIpDisplay = document.getElementById('gate-ip-display');
                         const gateLoader = document.getElementById('gate-loading-spinner');
                         const gateBtn = document.getElementById('gate-submit');
                         const gateStatus = document.getElementById('gate-status');
-                        
                         const topBarIp = document.getElementById('top-bar-ip');
                         if (topBarIp) topBarIp.textContent = `IP: ${data.ip}`;
-
                         if (gateIpDisplay) {
                             gateIpDisplay.innerHTML = `<span class="text-slate-400 text-xs">${data.ip}</span> <span class="text-white mx-1">|</span> <span class="text-yellow-400 font-bold">${this.deviceId}</span>`; 
                             gateIpDisplay.classList.remove('shimmer-text');
                             if(gateLoader) gateLoader.style.display = 'none';
-                            if(gateBtn) {
-                                gateBtn.disabled = false;
-                                gateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                                gateStatus.textContent = `Đã nhận diện thiết bị: ${this.deviceId}`;
-                                gateStatus.classList.add('text-green-500');
-                            }
+                            if(gateBtn) { gateBtn.disabled = false; gateBtn.classList.remove('opacity-50', 'cursor-not-allowed'); gateStatus.textContent = `Đã nhận diện thiết bị: ${this.deviceId}`; gateStatus.classList.add('text-green-500'); }
                         }
                         return data.ip;
                     } catch (e) {
@@ -1057,790 +968,201 @@
                         return null;
                     }
                 },
-
                 loadCredits() {
                     const key = `v35_credits_${this.deviceId}`;
                     const savedCredits = localStorage.getItem(key);
-                    if (savedCredits === null) {
-                        this.credits = 20; 
-                        this.save();
-                    } else {
-                        this.credits = parseInt(savedCredits);
-                    }
+                    if (savedCredits === null) { this.credits = 20; this.save(); } else { this.credits = parseInt(savedCredits); }
                 },
-
-                setCredits(amount) {
-                    this.credits = amount;
-                    this.save();
-                },
-
-                addCredits(amount) {
-                    this.credits += amount;
-                    this.save();
-                },
-
-                deductCredits(amount) {
-                    if (this.credits >= amount) {
-                        this.credits -= amount;
-                        this.save();
-                        return true;
-                    }
-                    return false;
-                },
-
-                save() {
-                    try {
-                        const key = `v35_credits_${this.deviceId}`;
-                        localStorage.setItem(key, this.credits);
-                    } catch(e) {}
-                    this.updateUI();
-                },
-
-                updateUI() {
-                    const el = document.getElementById('credit-count');
-                    if (el) el.textContent = this.credits;
-                }
+                addCredits(amount) { this.credits += amount; this.save(); },
+                deductCredits(amount) { if (this.credits >= amount) { this.credits -= amount; this.save(); return true; } return false; },
+                save() { try { localStorage.setItem(`v35_credits_${this.deviceId}`, this.credits); } catch(e) {} this.updateUI(); },
+                updateUI() { const el = document.getElementById('credit-count'); if (el) el.textContent = this.credits; }
             };
 
-            // === NEW: PROFESSIONAL RECHARGE LOGIC ===
+            // === RECHARGE LOGIC ===
             function initRechargeSystem(deviceId) {
-                const pkgCards = document.querySelectorAll('.recharge-pkg-card');
-                const qrImage = document.getElementById('vietqr-image');
-                const contentDisplay = document.getElementById('qr-content-display');
-
+                const pkgCards = document.querySelectorAll('.recharge-pkg-card'), qrImage = document.getElementById('vietqr-image'), contentDisplay = document.getElementById('qr-content-display');
                 if(!qrImage) return;
-
-                const bankId = 'mbbank';
-                const accNo = '85543556868';
-                const accName = 'HOANG QUANG CUONG';
-                const template = 'compact'; 
-
                 const updateQR = (amount) => {
                     const content = `V35 ${deviceId}`; 
-                    const url = `https://img.vietqr.io/image/${bankId}-${accNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(accName)}`;
-                    qrImage.src = url;
+                    qrImage.src = `https://img.vietqr.io/image/mbbank-85543556868-compact.png?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent('HOANG QUANG CUONG')}`;
                     if(contentDisplay) contentDisplay.textContent = content;
                 };
-
                 updateQR(200000);
-
                 pkgCards.forEach(card => {
                     card.addEventListener('click', () => {
-                        pkgCards.forEach(c => {
-                            c.classList.remove('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50');
-                            c.classList.add('border-white/10', 'bg-white/5');
-                            c.querySelector('.pkg-border').classList.remove('opacity-100', 'scale-100');
-                            c.querySelector('.pkg-border').classList.add('opacity-0', 'scale-95');
-                        });
-                        
-                        card.classList.remove('border-white/10', 'bg-white/5');
-                        card.classList.add('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50');
-                        card.querySelector('.pkg-border').classList.remove('opacity-0', 'scale-95');
-                        card.querySelector('.pkg-border').classList.add('opacity-100', 'scale-100');
-
-                        const amount = card.dataset.amount;
-                        updateQR(amount);
+                        pkgCards.forEach(c => { c.classList.remove('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50'); c.classList.add('border-white/10', 'bg-white/5'); c.querySelector('.pkg-border').classList.remove('opacity-100', 'scale-100'); c.querySelector('.pkg-border').classList.add('opacity-0', 'scale-95'); });
+                        card.classList.remove('border-white/10', 'bg-white/5'); card.classList.add('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50'); card.querySelector('.pkg-border').classList.remove('opacity-0', 'scale-95'); card.querySelector('.pkg-border').classList.add('opacity-100', 'scale-100');
+                        updateQR(card.dataset.amount);
                     });
                 });
             }
 
-            // === NEW: MOBILE BUTTON STATE MANAGER ===
+            // === MOBILE BUTTON STATE ===
             const updateMobileBtnState = (state) => {
-                const upload = document.getElementById('mob-btn-upload');
-                const scan = document.getElementById('mob-btn-scan');
-                const run = document.getElementById('mob-btn-run');
-                const status = document.getElementById('mobile-status-text');
-                
-                // Reset all first
-                if(upload) upload.classList.add('hidden');
-                if(scan) scan.classList.add('hidden');
-                if(run) run.classList.add('hidden');
+                const upload = document.getElementById('mob-btn-upload'), scan = document.getElementById('mob-btn-scan'), run = document.getElementById('mob-btn-run'), status = document.getElementById('mobile-status-text');
+                if(upload) upload.classList.add('hidden'); if(scan) scan.classList.add('hidden'); if(run) run.classList.add('hidden');
                 
                 if (state === 'upload') {
                     if(upload) upload.classList.remove('hidden');
-                    if(status) status.textContent = "WAITING FOR IMAGE";
+                    if(status) { status.textContent = "WAITING FOR IMAGE"; status.className = "text-[8px] text-slate-500 font-mono tracking-widest"; }
                 } else if (state === 'scan') {
-                    if(scan) {
-                        scan.classList.remove('hidden');
-                        scan.disabled = false;
-                        scan.innerHTML = `<svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span>AUTO SCAN</span>`;
-                        scan.className = "flex-1 py-3.5 bg-gradient-to-b from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 border border-violet-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(124,58,237,0.3)] animate-pulse active:scale-95 transition-all";
-                    }
-                    if(status) {
-                        status.textContent = "IMAGE LOADED - PRESS SCAN";
-                        status.className = "text-[8px] font-mono tracking-widest text-violet-400 font-bold animate-pulse";
-                    }
+                    if(scan) { scan.classList.remove('hidden'); scan.disabled = false; scan.innerHTML = `<svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span>AUTO SCAN</span>`; scan.className = "flex-1 py-3.5 bg-gradient-to-b from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 border border-violet-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(124,58,237,0.3)] animate-pulse active:scale-95 transition-all"; }
+                    if(status) { status.textContent = "IMAGE LOADED - PRESS SCAN"; status.className = "text-[8px] font-mono tracking-widest text-violet-400 font-bold animate-pulse"; }
                 } else if (state === 'scanning') {
-                    if(scan) {
-                        scan.classList.remove('hidden');
-                        scan.disabled = true;
-                        scan.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> SCANNING...`;
-                    }
+                    if(scan) { scan.classList.remove('hidden'); scan.disabled = true; scan.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> SCANNING...`; }
                     if(status) status.textContent = "AI ANALYZING...";
                 } else if (state === 'run') {
-                    if(run) {
-                        run.classList.remove('hidden');
-                        run.disabled = false;
-                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>CHẠY NGAY</span>`;
-                        run.className = "flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all";
-                    }
-                    if(status) {
-                        status.textContent = "READY TO GENERATE";
-                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
-                    }
+                    if(run) { run.classList.remove('hidden'); run.disabled = false; run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>CHẠY NGAY</span>`; run.className = "flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all"; }
+                    if(status) { status.textContent = "READY TO GENERATE"; status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold"; }
                 } else if (state === 'running') {
-                    if(run) {
-                        run.classList.remove('hidden');
-                        run.disabled = true;
-                        run.innerHTML = `<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>PROCESSING...</span>`;
-                        run.className = "flex-1 py-3.5 bg-amber-600 border border-amber-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse transition-all cursor-not-allowed";
-                    }
-                    if(status) {
-                        status.textContent = "AI RESTORING...";
-                        status.className = "text-[8px] font-mono tracking-widest text-amber-400 font-bold animate-pulse";
-                    }
+                    if(run) { run.classList.remove('hidden'); run.disabled = true; run.innerHTML = `<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>PROCESSING...</span>`; run.className = "flex-1 py-3.5 bg-amber-600 border border-amber-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse transition-all cursor-not-allowed"; }
+                    if(status) { status.textContent = "AI RESTORING..."; status.className = "text-[8px] font-mono tracking-widest text-amber-400 font-bold animate-pulse"; }
                 } else if (state === 'done') {
-                    if(run) {
-                        run.classList.remove('hidden');
-                        run.disabled = false;
-                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg><span>LÀM LẠI</span>`;
-                    }
-                    if(status) {
-                        status.textContent = "COMPLETED";
-                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
-                    }
+                    if(run) { run.classList.remove('hidden'); run.disabled = false; run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg><span>LÀM LẠI</span>`; }
+                    if(status) { status.textContent = "COMPLETED"; status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold"; }
                 }
             }
 
             UserSystem.init();
 
-            let state = { 
-                base64: null, 
-                refBase64: null, 
-                restoredObj: null, 
-                originalImg: null, 
-                zoom: 1, 
-                rotation: 0, 
-                defaultPrompt: "Restore this photo, remove scratches, high quality, 8k",
-                isLoupeActive: false,
-                isReplicaMode: false,
-                isFluxMode: true,
-                currentSliderVal: 50,
-                isComparing: false,
-                aspectRatioType: null, // 'portrait', 'landscape', 'square'
-                userSettings: {
-                    username: '',
-                    apiKey: '',
-                    provider: 'google', 
-                    baseUrl: 'https://generativelanguage.googleapis.com'
-                }
-            };
-
+            let state = { base64: null, refBase64: null, restoredObj: null, originalImg: null, zoom: 1, rotation: 0, defaultPrompt: "Restore this photo, remove scratches, high quality, 8k", isLoupeActive: false, isReplicaMode: false, isFluxMode: true, currentSliderVal: 50, isComparing: false, aspectRatioType: null, userSettings: { username: '', apiKey: '', provider: 'google', baseUrl: 'https://generativelanguage.googleapis.com' } };
             const showToast = (message, type = 'info') => {
-                const container = document.getElementById('toast-container');
-                if(!container) return;
+                const container = document.getElementById('toast-container'); if(!container) return;
                 const toast = document.createElement('div');
-                const colors = type === 'error' ? 'bg-red-900/90 border-red-500/30 text-red-100' : 
-                               type === 'warning' ? 'bg-yellow-900/90 border-yellow-500/30 text-yellow-100' :
-                               type === 'smart' ? 'bg-emerald-900/90 border-emerald-500/30 text-emerald-100' :
-                               type === 'flux' ? 'bg-violet-900/90 border-violet-500/30 text-violet-100' :
-                               type === 'cyan' ? 'bg-cyan-900/90 border-cyan-500/30 text-cyan-100' :
-                               type === 'real' ? 'bg-orange-900/90 border-orange-500/30 text-orange-100' :
-                               type === 'ancient' ? 'bg-purple-900/90 border-purple-500/30 text-purple-100' :
-                               type === 'success' ? 'bg-green-900/90 border-green-500/30 text-green-100' :
-                               'bg-slate-800/90 border-slate-600/30 text-white';
+                const colors = type === 'error' ? 'bg-red-900/90 border-red-500/30 text-red-100' : type === 'warning' ? 'bg-yellow-900/90 border-yellow-500/30 text-yellow-100' : type === 'smart' ? 'bg-emerald-900/90 border-emerald-500/30 text-emerald-100' : type === 'flux' ? 'bg-violet-900/90 border-violet-500/30 text-violet-100' : type === 'cyan' ? 'bg-cyan-900/90 border-cyan-500/30 text-cyan-100' : type === 'real' ? 'bg-orange-900/90 border-orange-500/30 text-orange-100' : type === 'ancient' ? 'bg-purple-900/90 border-purple-500/30 text-purple-100' : type === 'success' ? 'bg-green-900/90 border-green-500/30 text-green-100' : 'bg-slate-800/90 border-slate-600/30 text-white';
                 toast.className = `flex items-center gap-4 px-5 py-4 rounded-xl border backdrop-blur-md shadow-2xl animate-toast-in ${colors}`;
                 toast.innerHTML = `<span class="text-xs font-bold tracking-wide">${message}</span>`;
                 container.appendChild(toast);
-                setTimeout(() => {
-                    toast.classList.add('animate-fade-out');
-                    setTimeout(() => toast.remove(), 500);
-                }, 3000);
+                setTimeout(() => { toast.classList.add('animate-fade-out'); setTimeout(() => toast.remove(), 500); }, 3000);
             };
 
-            // === LOCK SCREEN LOGIC ===
-            const gateScreen = document.getElementById('security-gate');
-            const gateSubmit = document.getElementById('gate-submit');
-            const gateStatus = document.getElementById('gate-status');
-            
-            try {
-                // Keep local settings load in case admin sync failed or no admin config
-                const savedSettings = localStorage.getItem('v35_user_settings');
-                if(savedSettings && !state.userSettings.apiKey) {
-                    try {
-                        const decrypted = SimpleSec.decrypt(savedSettings);
-                        if(decrypted && decrypted.startsWith('{')) {
-                            state.userSettings = JSON.parse(decrypted);
-                        } else {
-                            state.userSettings = JSON.parse(savedSettings);
-                        }
-                    } catch(e) {
-                         state.userSettings = JSON.parse(savedSettings);
-                    }
-                }
-            } catch(e) {}
-
-            async function loginByIP() {
+            const gateScreen = document.getElementById('security-gate'), gateSubmit = document.getElementById('gate-submit'), gateStatus = document.getElementById('gate-status');
+            gateSubmit.addEventListener('click', async () => {
                 if(!UserSystem.ipAddress) return showToast("Chưa tìm thấy IP, vui lòng đợi...", "error");
-                
-                gateStatus.textContent = `Đang xác thực IP: ${UserSystem.ipAddress}...`;
-                gateStatus.className = "mt-6 text-[10px] text-blue-400 font-bold animate-pulse";
-                gateSubmit.disabled = true;
-                gateSubmit.classList.add('opacity-70');
-
-                setTimeout(() => {
-                    gateStatus.textContent = "Đăng nhập thành công!";
-                    gateStatus.className = "mt-6 text-[10px] text-green-400 font-bold";
-                    
-                    setTimeout(() => {
-                        gateScreen.classList.add('animate-fade-out');
-                        setTimeout(() => { gateScreen.style.display = 'none'; }, 500);
-                        showToast(`IP Đã Xác Thực: ${UserSystem.ipAddress}`, "smart");
-                    }, 500);
-                }, 1500);
-            }
-
-            gateSubmit.addEventListener('click', loginByIP);
+                gateStatus.textContent = `Đang xác thực IP: ${UserSystem.ipAddress}...`; gateStatus.className = "mt-6 text-[10px] text-blue-400 font-bold animate-pulse"; gateSubmit.disabled = true; gateSubmit.classList.add('opacity-70');
+                setTimeout(() => { gateStatus.textContent = "Đăng nhập thành công!"; gateStatus.className = "mt-6 text-[10px] text-green-400 font-bold"; setTimeout(() => { gateScreen.classList.add('animate-fade-out'); setTimeout(() => { gateScreen.style.display = 'none'; }, 500); showToast(`IP Đã Xác Thực: ${UserSystem.ipAddress}`, "smart"); }, 500); }, 1500);
+            });
             
-            // Helper to get effective API Key and URL
             const getApiConfig = () => {
-                const manualKey = document.getElementById('user-api-key')?.value.trim();
-                const key = manualKey || state.userSettings.apiKey || apiKey;
-                const base = state.userSettings.baseUrl || "https://generativelanguage.googleapis.com";
-                const isComet = state.userSettings.provider === 'comet';
+                const key = window.GEMINI_API_KEY || window.COMET_API_KEY || "";
+                const base = window.API_PROVIDER === 'comet' ? "https://api.cometapi.com" : "https://generativelanguage.googleapis.com";
+                const isComet = window.API_PROVIDER === 'comet';
                 return { key, base, isComet };
             };
             
             const resizeImage = (base64Str, maxWidth = 1536) => {
-                return new Promise((resolve, reject) => { // Added reject
-                    const img = new Image();
-                    img.src = base64Str;
-                    img.onload = () => {
-                        let width = img.width;
-                        let height = img.height;
-                        if (width > maxWidth || height > maxWidth) {
-                            if (width > height) { height *= maxWidth / width; width = maxWidth; } 
-                            else { width *= maxWidth / height; height = maxWidth; }
-                        } else { resolve(base64Str); return; }
-                        const canvas = document.createElement('canvas'); canvas.width = width; canvas.height = height;
-                        const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-                        resolve(canvas.toDataURL('image/jpeg', 0.9));
-                    };
-                    img.onerror = (err) => reject(new Error("Lỗi tải ảnh để Scan")); // Added handler
-                });
+                return new Promise((resolve, reject) => { const img = new Image(); img.src = base64Str; img.onload = () => { let width = img.width; let height = img.height; if (width > maxWidth || height > maxWidth) { if (width > height) { height *= maxWidth / width; width = maxWidth; } else { width *= maxWidth / height; height = maxWidth; } } else { resolve(base64Str); return; } const canvas = document.createElement('canvas'); canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height); resolve(canvas.toDataURL('image/jpeg', 0.9)); }; img.onerror = (err) => reject(new Error("Lỗi tải ảnh để Scan")); });
             };
 
-            const fluxToggle = document.getElementById('mode-flux');
-            const workflowSelect = document.getElementById('kontext-workflow');
-            const workflowDesc = document.getElementById('workflow-desc');
-            const kontextContainer = document.getElementById('kontext-module-container');
-            const replicaToggle = document.getElementById('mode-replica');
-            const processBtn = document.getElementById('process-image');
-            const creativitySlider = document.getElementById('creativity-slider');
-            const creativityVal = document.getElementById('creativity-val');
-            const idSlider = document.getElementById('identity-weight-slider');
-            const idVal = document.getElementById('identity-weight-val');
-            const textureMode = document.getElementById('texture-mode');
-            const promptMain = document.getElementById('prompt-main');
-            const compContainer = document.getElementById('comp-inner');
-            const imgModWrapper = document.getElementById('img-modified-wrapper');
-            const sliderHandle = document.getElementById('slider-handle');
-            const magnifier = document.getElementById('magnifier');
-            const toggleMagnifierBtn = document.getElementById('toggle-magnifier');
-            const logoCheck = document.getElementById('check-logo');
-            const logoOverlay = document.getElementById('logo-overlay');
-            const btnAutoPilot = document.getElementById('btn-auto-pilot');
-            const downloadTrigger = document.getElementById('download-trigger');
-            const btnMobDown = document.getElementById('download-mobile');
-            const btnReset = document.getElementById('reset-button');
-            const grainSlider = document.getElementById('grain-slider');
-            const grainVal = document.getElementById('grain-val');
-            const colorGrading = document.getElementById('color-grading');
-            const exposureSlider = document.getElementById('exposure-slider');
-            const exposureVal = document.getElementById('exposure-val');
-            const upscaleSelect = document.getElementById('upscale-mode');
-            const structureSlider = document.getElementById('structure-slider');
-            const structureVal = document.getElementById('structure-val');
-            const structureContainer = document.getElementById('structure-container');
+            const toggleModule = (btnId, contentId, iconId) => { const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId); if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); };
+            ['processing','subject','identity','prompt','logo','military','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
+
+            // REAL LOGIC RESTORATION
+            const btnAutoPilot = document.getElementById('btn-auto-pilot'), processBtn = document.getElementById('process-image');
             
-            const rechargeModal = document.getElementById('recharge-modal');
-            const closeRechargeBtn = document.getElementById('close-recharge');
-            
-            if(closeRechargeBtn) closeRechargeBtn.onclick = () => rechargeModal.classList.add('hidden');
-            
-            // === REDEEM CODE LOGIC ===
-            const redeemBtn = document.getElementById('btn-submit-recharge');
-            const redeemInput = document.getElementById('recharge-input');
-            
-            if(redeemBtn && redeemInput) {
-                redeemBtn.addEventListener('click', () => {
-                     const code = redeemInput.value.trim();
-                     if(!code) return showToast("Vui lòng nhập mã!", "error");
-                     
-                     const parts = code.split('-');
-                     if(parts.length !== 5 || parts[0] !== 'V35') return showToast("Mã không hợp lệ!", "error");
-                     
-                     const usedCodes = JSON.parse(localStorage.getItem('v35_used_codes') || '[]');
-                     if(usedCodes.includes(code)) return showToast("Mã này đã được sử dụng!", "error");
-                     
-                     const credits = parseInt(parts[1]);
-                     if(isNaN(credits)) return showToast("Lỗi định dạng tín dụng!", "error");
-                     
-                     UserSystem.addCredits(credits);
-                     usedCodes.push(code);
-                     localStorage.setItem('v35_used_codes', JSON.stringify(usedCodes));
-                     
-                     showToast(`Nạp thành công +${credits} Credits!`, "success");
-                     rechargeModal.classList.add('hidden');
-                     redeemInput.value = '';
-                });
-            }
+            if(btnAutoPilot) btnAutoPilot.addEventListener('click', async () => {
+                if(!state.base64) return showToast("Vui lòng tải ảnh trước!", "error");
+                const originalText = btnAutoPilot.innerHTML;
+                btnAutoPilot.disabled = true;
+                btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCAN V35.60 (AUTO-SIZE)...</span>`;
+                updateMobileBtnState('scanning');
+                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+                if (!keyToUse) { showToast("Chưa có API Key! Vui lòng liên hệ Admin.", "error"); btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; updateMobileBtnState('scan'); return; }
 
-            if(fluxToggle) {
-                fluxToggle.addEventListener('change', (e) => {
-                    state.isFluxMode = e.target.checked;
-                    if(state.isFluxMode) {
-                        showToast("🚀 FLUX / REALVIS ENGINE: ĐÃ KÍCH HOẠT", "flux");
-                        document.getElementById('creativity-slider')?.classList.add('slider-flux');
-                        if(processBtn) {
-                            processBtn.classList.remove('btn-primary-modern');
-                            processBtn.classList.add('btn-flux-modern');
-                            processBtn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> TẠO ẢNH (FLUX KONTEXT V2)`;
-                        }
-                        if(colorGrading) colorGrading.value = "kodak portra 400 style, natural skin tone, fine grain";
-                        document.getElementById('workflow-container').style.display = 'block';
-                    } else {
-                        showToast("Đã tắt AI Engine.");
-                        document.getElementById('creativity-slider')?.classList.remove('slider-flux');
-                        if(processBtn) {
-                            processBtn.classList.remove('btn-flux-modern');
-                            processBtn.classList.add('btn-primary-modern');
-                            processBtn.innerHTML = "TẠO ẢNH (ENTER)";
-                        }
-                        document.getElementById('workflow-container').style.display = 'none';
-                    }
-                });
-            }
-
-            if(workflowSelect) {
-                workflowSelect.addEventListener('change', (e) => {
-                    // (Workflow change logic same as previous version)
-                    // ... (omitted for brevity, keep existing logic)
-                });
-            }
-
-            if(replicaToggle) {
-                replicaToggle.addEventListener('change', (e) => {
-                    state.isReplicaMode = e.target.checked;
-                    if(state.isReplicaMode) {
-                        showToast("💎 ĐÃ BẬT CHẾ ĐỘ: SAO Y BẢN CHÍNH (V33)", "warning");
-                        if(processBtn) {
-                            processBtn.classList.remove('btn-flux-modern', 'btn-real-modern', 'btn-ancient-modern');
-                            processBtn.classList.add('btn-gold-modern');
-                            processBtn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg> TẠO ẢNH (REPLICA)`;
-                        }
-                        document.getElementById('module-identity')?.classList.add('open', 'replica-active');
-                        if(creativitySlider) { creativitySlider.value = 10; creativitySlider.disabled = true; }
-                        if(creativityVal) creativityVal.textContent = "Mức 10% (Tối đa tuân thủ gốc)";
-                        if(idSlider) idSlider.value = 400; 
-                        if(idVal) idVal.textContent = "400% (Khóa cứng)";
-                        document.getElementById('check-asian-identity').checked = true;
-                    } else {
-                        // ...
-                    }
-                });
-            }
-
-            const toggleModule = (btnId, contentId, iconId) => {
-                const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId);
-                if(btn) btn.addEventListener('click', () => {
-                    if(content) content.classList.toggle('open');
-                    if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
-                });
-            };
-
-            toggleModule('toggle-processing', 'content-processing', 'icon-processing');
-            toggleModule('toggle-subject', 'content-subject', 'icon-subject');
-            toggleModule('toggle-identity', 'content-identity', 'icon-identity');
-            toggleModule('toggle-prompt', 'content-prompt', 'icon-prompt');
-            toggleModule('toggle-logo', 'content-logo', 'icon-logo');
-            toggleModule('toggle-military', 'content-military', 'icon-military');
-            toggleModule('toggle-cinematic', 'content-cinematic', 'icon-cinematic');
-            toggleModule('toggle-exposure', 'content-exposure', 'icon-exposure');
-
-            // ... (Drag/Zoom/Download logic same as previous version) ...
-
-            if(btnAutoPilot) {
-                btnAutoPilot.addEventListener('click', async () => {
-                    if(!state.base64) return showToast("Vui lòng tải ảnh trước!", "error");
-                    const originalText = btnAutoPilot.innerHTML;
-                    btnAutoPilot.disabled = true;
-                    btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCAN V35.60 (AUTO-SIZE)...</span>`;
-                    
-                    updateMobileBtnState('scanning'); // Update mobile UI
-
-                    const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
-                    
-                    // Added Check
-                    if (!keyToUse) {
-                        showToast("Chưa có API Key! Vui lòng liên hệ Admin.", "error");
-                        btnAutoPilot.disabled = false;
-                        btnAutoPilot.innerHTML = originalText;
-                        updateMobileBtnState('scan'); // Revert UI
-                        return;
-                    }
-
-                    try {
-                        const resizedBase64 = await resizeImage(state.base64);
+                try {
+                    const resizedBase64 = await resizeImage(state.base64);
+                    const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 40000);
+                    const promptText = "Analyze this image for restoration. DETECT VIETNAMESE MILITARY DETAILS SPECIFICALLY. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\", \"lightingCondition\": \"rembrandt\"|\"golden_hour\"|\"neon\"|\"soft_diffused\"|\"flat\"|\"overexposed\"|\"harsh_sun\", \"backgroundType\": \"plain\"|\"complex_outdoor\"|\"complex_indoor\", \"faceAngle\": \"front\"|\"side_left\"|\"side_right\"|\"tilted_up\"|\"tilted_down\", \"jawStructure\": \"defined\"|\"soft\"|\"round\"|\"square\", \"noseAngle\": \"straight\"|\"tilted\", \"mouthAngle\": \"straight\"|\"tilted\", \"eyeSymmetry\": \"even\"|\"uneven\", \"hasAsymmetry\": boolean, \"isNature\": boolean, \"isMilitary\": boolean, \"isGroupPhoto\": boolean, \"hasVisibleRankInsignia\": boolean, \"rankColor\": \"red\"|\"green\"|\"blue\"|\"none\", \"specificHat\": \"pith_helmet\"|\"soft_cap\"|\"kepi\"|\"bamboo_helmet\"|\"none\", \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\", \"isOldPhoto\": boolean, \"isLowContrast\": boolean, \"isNoisy\": boolean, \"hasStrabismus\": boolean, \"hasDroopyEyelids\": boolean, \"hasClosedEyes\": boolean, \"hasDistinctiveImperfections\": boolean, \"hasMonolids\": boolean, \"hasBuckTeeth\": boolean, \"hasBlackenedTeeth\": boolean, \"needsBackgroundRestoration\": boolean, \"militaryBranch\": \"army\"|\"air_force\"|\"navy\"|\"border_guard\"|\"police\"|\"youth_volunteer\"|\"unknown\", \"uniformEra\": \"tran_thu\"|\"to_chau\"|\"k82\"|\"k94\"|\"camouflage\"|\"unknown\", \"rankLevel\": \"soldier\"|\"officer\"|\"unknown\", \"hasMedalSaoVang\": boolean, \"hasMedalKhangChien\": boolean, \"hasBadgeDoan\": boolean, \"isIDPhoto\": boolean, \"isHazy\": boolean }";
+                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, signal: controller.signal, body: JSON.stringify({ contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }] }] }) });
+                    clearTimeout(timeoutId);
+                    const data = await response.json();
+                    let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if(text) {
+                        text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+                        const result = JSON.parse(text);
+                        // Apply Auto Settings
+                        if(document.getElementById('gender-select')) document.getElementById('gender-select').value = result.gender === 'male' ? 'male' : (result.gender === 'female' ? 'female' : '');
+                        if(document.getElementById('age-input')) document.getElementById('age-input').value = result.age || 30;
+                        if(result.isMilitary) { document.getElementById('content-military').classList.add('open'); showToast("🇻🇳 AUTO SCAN: Đã phát hiện Ảnh Quân Đội", "warning"); }
+                        if(result.hasStrabismus) { document.getElementById('check-cross-eyed').checked = true; document.getElementById('module-identity').classList.add('open'); showToast("👁️ Mắt Lé detected", "warning"); }
+                        if(result.hasDroopyEyelids) { document.getElementById('check-ptosis').checked = true; document.getElementById('module-identity').classList.add('open'); }
+                        if(result.hasClosedEyes) { document.getElementById('check-closed-eyes').checked = true; document.getElementById('module-identity').classList.add('open'); }
+                        if (!state.isReplicaMode) { document.getElementById('mode-replica').click(); showToast("💎 Auto Scan: Đã kích hoạt Chế độ Sao Y Bản Chính (Replica)", "warning"); }
                         
-                        // Added Timeout
-                        const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 40000); // 40s timeout
-
-                        // Keep the prompt exactly as it was in the full version
-                        const promptText = "Analyze this image for restoration. DETECT VIETNAMESE MILITARY DETAILS SPECIFICALLY. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\", \"lightingCondition\": \"rembrandt\"|\"golden_hour\"|\"neon\"|\"soft_diffused\"|\"flat\"|\"overexposed\"|\"harsh_sun\", \"backgroundType\": \"plain\"|\"complex_outdoor\"|\"complex_indoor\", \"faceAngle\": \"front\"|\"side_left\"|\"side_right\"|\"tilted_up\"|\"tilted_down\", \"jawStructure\": \"defined\"|\"soft\"|\"round\"|\"square\", \"noseAngle\": \"straight\"|\"tilted\", \"mouthAngle\": \"straight\"|\"tilted\", \"eyeSymmetry\": \"even\"|\"uneven\", \"hasAsymmetry\": boolean, \"isNature\": boolean, \"isMilitary\": boolean, \"isGroupPhoto\": boolean, \"hasVisibleRankInsignia\": boolean, \"rankColor\": \"red\"|\"green\"|\"blue\"|\"none\", \"specificHat\": \"pith_helmet\"|\"soft_cap\"|\"kepi\"|\"bamboo_helmet\"|\"none\", \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\", \"isOldPhoto\": boolean, \"isLowContrast\": boolean, \"isNoisy\": boolean, \"hasStrabismus\": boolean, \"hasDroopyEyelids\": boolean, \"hasClosedEyes\": boolean, \"hasDistinctiveImperfections\": boolean, \"hasMonolids\": boolean, \"hasBuckTeeth\": boolean, \"hasBlackenedTeeth\": boolean, \"needsBackgroundRestoration\": boolean, \"militaryBranch\": \"army\"|\"air_force\"|\"navy\"|\"border_guard\"|\"police\"|\"youth_volunteer\"|\"unknown\", \"uniformEra\": \"tran_thu\"|\"to_chau\"|\"k82\"|\"k94\"|\"camouflage\"|\"unknown\", \"rankLevel\": \"soldier\"|\"officer\"|\"unknown\", \"hasMedalSaoVang\": boolean, \"hasMedalKhangChien\": boolean, \"hasBadgeDoan\": boolean, \"isIDPhoto\": boolean, \"isHazy\": boolean }";
-
-                        const headers = { 'Content-Type': 'application/json' };
-                        if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
-
-                        const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, {
-                            method: 'POST',
-                            headers: headers,
-                            signal: controller.signal, // Link signal
-                            body: JSON.stringify({
-                                contents: [{
-                                    parts: [
-                                        { text: promptText },
-                                        { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }
-                                    ]
-                                }]
-                            })
-                        });
-                        clearTimeout(timeoutId); // Clear timeout on response
-                        const data = await response.json();
-                        let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                        if(text) {
-                            text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-                            const result = JSON.parse(text);
-                            
-                            // --- AUTO-FILL UI LOGIC ---
-
-                            // 1. Gender & Age
-                            const genderSelect = document.getElementById('gender-select');
-                            if(genderSelect) {
-                                if(result.gender === 'male') genderSelect.value = 'male';
-                                else if(result.gender === 'female') genderSelect.value = 'female';
-                            }
-                            const ageInput = document.getElementById('age-input');
-                            if(ageInput) ageInput.value = result.age || 30;
-
-                            // 2. Military Logic (Re-implemented full logic)
-                            if (result.isMilitary) {
-                                const milContent = document.getElementById('content-military');
-                                const insigEl = document.getElementById('check-insignia-boost');
-                                if(milContent) milContent.classList.add('open');
-                                if(insigEl) insigEl.checked = true;
-                                
-                                const branchSelect = document.getElementById('mil-branch');
-                                const uniformSelect = document.getElementById('mil-uniform');
-                                const hatSelect = document.getElementById('hat-select');
-                                const rankSelect = document.getElementById('rank-select');
-
-                                showToast("🇻🇳 AUTO SCAN: Đã phát hiện Ảnh Quân Đội", "warning");
-                                document.getElementById('module-military').classList.add('military-highlight');
-                                setTimeout(() => document.getElementById('module-military').classList.remove('military-highlight'), 3000);
-
-                                if(branchSelect) {
-                                    if(result.militaryBranch === 'air_force') branchSelect.value = "vietnamese air force, blue collar tabs";
-                                    else if(result.militaryBranch === 'navy') branchSelect.value = "vietnamese navy, navy blue uniform, white striped collar";
-                                    else if(result.militaryBranch === 'border_guard') branchSelect.value = "vietnamese border guard, green collar tabs";
-                                    else if(result.militaryBranch === 'police') branchSelect.value = "vietnamese public security, green uniform, red collar tabs";
-                                    else if(result.militaryBranch === 'youth_volunteer') branchSelect.value = "vietnamese youth volunteer force, dark green uniform";
-                                    else branchSelect.value = "vietnamese army ground force, red collar tabs"; 
-                                }
-
-                                if(uniformSelect) {
-                                    if(result.uniformEra === 'tran_thu') uniformSelect.value = "wearing tran thu shirt, padded cotton jacket, viet minh era";
-                                    else if(result.uniformEra === 'to_chau') uniformSelect.value = "wearing to chau uniform, plain green fatigue, vietnam war era";
-                                    else if(result.uniformEra === 'k82') uniformSelect.value = "wearing K82 uniform, formal military tunic";
-                                    else if(result.uniformEra === 'camouflage') uniformSelect.value = "wearing camouflage special force uniform";
-                                }
-
-                                if(hatSelect) {
-                                    if(result.specificHat === 'pith_helmet') hatSelect.value = "wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star";
-                                    else if(result.specificHat === 'soft_cap') hatSelect.value = "wear vietnamese soft cap, boonie hat, green fabric, red star badge";
-                                    else if(result.specificHat === 'kepi') hatSelect.value = "wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star";
-                                    else if(result.specificHat === 'bamboo_helmet') hatSelect.value = "wear vietnamese bamboo helmet, cloth covered";
-                                }
-
-                                if(rankSelect) {
-                                    if(result.rankLevel === 'soldier') rankSelect.value = "plain red collar tabs, soldier rank";
-                                    else if(result.rankLevel === 'officer') rankSelect.value = "red collar tabs with one star, officer rank";
-                                    else if(!result.hasVisibleRankInsignia) rankSelect.value = "no_rank_insignia";
-                                }
-
-                                if(result.hasMedalSaoVang) document.getElementById('check-sao-vang').checked = true;
-                                if(result.hasMedalKhangChien) document.getElementById('check-khang-chien').checked = true;
-                                if(result.hasBadgeDoan) document.getElementById('check-doan').checked = true;
-                            }
-
-                            // 3. Lighting & Exposure
-                            const colorGrading = document.getElementById('color-grading');
-                            if(colorGrading && result.lightingCondition) {
-                                if(result.lightingCondition === 'rembrandt') { colorGrading.value = "rembrandt_lighting"; }
-                                else if(result.lightingCondition === 'golden_hour') { colorGrading.value = "golden_hour_backlight"; }
-                                else if(result.lightingCondition === 'neon') { colorGrading.value = "neon_cyberpunk"; }
-                                else if(result.lightingCondition === 'overexposed' || result.lightingCondition === 'harsh_sun') {
-                                    document.getElementById('content-exposure').classList.add('open');
-                                    document.getElementById('check-qwen-exposure').checked = true;
-                                    showToast("☀️ Phát hiện CHÁY SÁNG: Auto kích hoạt Qwen Edit", "cyan");
-                                }
-                            }
-
-                            // 4. Group Mode
-                            if(result.isGroupPhoto) {
-                                const groupEl = document.getElementById('check-group-mode');
-                                if(groupEl) { groupEl.checked = true; showToast("👥 Auto bật: Group Photo Pro (GroundingDINO)", "warning"); }
-                            }
-
-                            // 5. ID Photo
-                            if (result.isIDPhoto) {
-                                document.getElementById('check-id-photo').checked = true;
-                                showToast("📸 Auto bật: Chế độ Ảnh thẻ (ID Photo)", "blue");
-                            }
-
-                            // 6. Hazy / Dehaze
-                            if (result.isHazy) {
-                                document.getElementById('check-dehaze').checked = true;
-                                showToast("🌫️ Phát hiện Sương mù: Auto bật Khử sương", "info");
-                                document.getElementById('container-dehaze')?.classList.add('contrast-highlight');
-                            }
-
-                            // 7. Damage Level
-                            const dmgSelect = document.getElementById('damage-level');
-                            if (dmgSelect) {
-                                if (result.damageType === 'severe_damage') dmgSelect.value = "fix torn, missing details";
-                                else if (result.damageType === 'scratches') dmgSelect.value = "fix scratches, mold";
-                                else dmgSelect.value = "fix slightly blurry";
-                            }
-
-                            // 8. Workflow Selection
-                            const workflowSelect = document.getElementById('kontext-workflow');
-                            const workflowDesc = document.getElementById('workflow-desc');
-                            
-                            if(workflowSelect) {
-                                workflowSelect.value = 'default'; // reset
-                                
-                                if (result.sceneContext === 'ancient_portrait' || result.sceneContext === 'painting') {
-                                    workflowSelect.value = "ancient_restore";
-                                    if(workflowDesc) workflowDesc.textContent = "🏯 Auto: ReActor + Dual ControlNet + 4x-UltraSharp";
-                                    showToast("🏯 Auto Detect: Tranh Cổ / Tượng -> Kích hoạt Ancient Restore Mode", "ancient");
-                                    document.getElementById('check-reactor').checked = true;
-                                    document.getElementById('check-dual-controlnet').checked = true;
-                                }
-                                else if (result.sceneContext === 'wedding') {
-                                    workflowSelect.value = "wedding_kontext_v2"; 
-                                    if(workflowDesc) workflowDesc.textContent = "👰 Auto: Wedding Kontext Full JSON (Trong trẻo)";
-                                    showToast("👰 Auto Detect: Ảnh Cưới -> Kích hoạt Wedding Kontext V2", "smart");
-                                } 
-                                else if (result.sceneContext === 'product') {
-                                    workflowSelect.value = "product_mode";
-                                    if(workflowDesc) workflowDesc.textContent = "🛍️ Auto: BiRefNet + IC-Light + ZenProduct LoRA";
-                                    showToast("🛍️ Auto Detect: Ảnh Sản Phẩm -> Kích hoạt E-commerce Mode", "smart");
-                                }
-                                else if (result.sceneContext === 'outdoor' || result.backgroundType === 'complex_outdoor') {
-                                    workflowSelect.value = "outdoor_mode";
-                                    if(workflowDesc) workflowDesc.textContent = "🏞️ Auto: IC-Light + PowerPaint + Florence2";
-                                    showToast("🏞️ Auto Detect: Nền Ngoài Cảnh -> Kích hoạt Outdoor Mode", "smart");
-                                }
-                                else if (result.damageType === 'severe_damage' || result.isNoisy) {
-                                    workflowSelect.value = "replica_pro";
-                                    if(workflowDesc) workflowDesc.textContent = "🧬 Auto: Replica Pro - Khóa cấu trúc cực đoan";
-                                    showToast("🧬 Auto Detect: Ảnh rất mờ/hỏng -> Kích hoạt REPLICA PRO", "warning");
-                                }
-                            }
-
-                            // 9. Noise / Blur Prepass
-                            if (result.isNoisy || result.damageType === 'severe_damage') {
-                                const blurCheck = document.getElementById('check-blur-prepass');
-                                if (blurCheck) {
-                                    blurCheck.checked = true;
-                                    showToast("💧 Phát hiện Nhiễu hạt: Auto bật Khử Nhiễu Sâu", "real");
-                                }
-                            }
-
-                            // 10. Contrast Fix
-                            if(result.isLowContrast || result.damageType === 'faded' || result.damageType === 'sepia') {
-                                const contrastCheck = document.getElementById('check-contrast-fix');
-                                if(contrastCheck) {
-                                    contrastCheck.checked = true;
-                                    showToast("🌓 Phát hiện ảnh mờ/nhạt: Auto bật Kontext Contrast", "flux");
-                                }
-                            }
-
-                            // 11. EYES & TEETH (Specific User Request)
-                            if(result.hasStrabismus) {
-                                document.getElementById('check-cross-eyed').checked = true;
-                                showToast("👁️ Phát hiện Mắt Lé: Auto tích 'Mắt Lé/Lác'", "warning");
-                                document.getElementById('module-identity').classList.add('open');
-                            }
-                            
-                            if(result.hasDroopyEyelids) {
-                                document.getElementById('check-ptosis').checked = true;
-                                showToast("👁️ Phát hiện Sụp Mí: Auto tích 'Mắt Sụp Mí'", "warning");
-                                document.getElementById('module-identity').classList.add('open');
-                            }
-                            
-                            if(result.hasClosedEyes) {
-                                document.getElementById('check-closed-eyes').checked = true;
-                                showToast("💤 Phát hiện Mắt Nhắm: Auto tích 'Mắt Nhắm'", "warning");
-                                document.getElementById('module-identity').classList.add('open');
-                            }
-
-                            if(result.hasMonolids) {
-                                document.getElementById('check-monolid').checked = true;
-                                document.getElementById('module-identity').classList.add('open');
-                            }
-
-                            if(result.hasDistinctiveImperfections) {
-                                document.getElementById('lock-imperfection').checked = true;
-                                showToast("🧬 Phát hiện nốt ruồi/sẹo: Auto bật Giữ Khuyết Điểm", "warning");
-                            }
-
-                            if(result.hasBuckTeeth) document.getElementById('check-buck-teeth').checked = true;
-                            if(result.hasBlackenedTeeth) document.getElementById('check-black-teeth').checked = true;
-
-                            // 12. FORCE REPLICA MODE (Required)
-                            if (!state.isReplicaMode) {
-                                document.getElementById('mode-replica').click();
-                                showToast("💎 Auto Scan: Đã kích hoạt Chế độ Sao Y Bản Chính (Replica)", "warning");
-                            }
-                            
-                            // 13. GENERATE PROMPT
-                            let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed background:1.3). `;
-                            smartPrompt += "(hyper-realistic skin texture:1.6), (detailed skin pores:1.5), (rosy undertone:1.3), (natural beauty:1.2). ";
-                            
-                            // ... (Angle logic)
-                            if (result.faceAngle === 'side_left' || result.faceAngle === 'side_right' || result.faceAngle === 'tilted_up' || result.faceAngle === 'tilted_down') {
-                                smartPrompt += "(side profile:1.5), (looking away:1.2), (tilted head:1.3). ";
-                                if(result.faceAngle === 'side_left') smartPrompt += "(looking left:1.5), ";
-                                if(result.faceAngle === 'side_right') smartPrompt += "(looking right:1.5), ";
-                            }
-
-                            if (result.noseAngle === 'tilted' || result.faceAngle.includes('side')) smartPrompt += "(preserve nose angle:1.4), (tilted nose:1.2). ";
-                            if (result.mouthAngle === 'tilted') smartPrompt += "(preserve mouth angle:1.3). ";
-                            if (result.jawStructure) smartPrompt += `(preserve ${result.jawStructure} jawline:1.3). `;
-                            if (state.isFluxMode) smartPrompt += "(flux generation style:1.5), (controlnet union style:1.2), (high fidelity:1.5), (kontext lighting:1.4). ";
-
-                            if(promptMain) promptMain.value = smartPrompt;
-                            document.getElementById('content-prompt').classList.add('open');
-                            btnAutoPilot.classList.remove('btn-smart-modern');
-                            btnAutoPilot.classList.add('bg-violet-600');
-                            
-                            updateMobileBtnState('run'); // Switch UI to Run
-                        }
-                    } catch(e) { 
-                        console.error(e); 
-                        showToast("Lỗi Smart Scan: " + e.message, "error"); 
-                        updateMobileBtnState('scan'); // Revert UI
-                    } 
-                    finally { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }
-                });
-            }
-
-            const loadImg = (file) => {
-                if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error");
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        state.base64 = e.target.result;
-                        state.originalImg = img; state.restoredObj = null; 
+                        let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed background:1.3). `;
+                        smartPrompt += "(hyper-realistic skin texture:1.6), (detailed skin pores:1.5), (rosy undertone:1.3), (natural beauty:1.2). ";
+                        if(result.isMilitary) smartPrompt += ", (Vietnamese military uniform:1.5), (historic details:1.4)";
+                        document.getElementById('prompt-main').value = smartPrompt;
+                        document.getElementById('content-prompt').classList.add('open');
                         
-                        const ar = img.width / img.height;
-                        if(ar > 1.1) state.aspectRatioType = 'landscape';
-                        else if(ar < 0.9) state.aspectRatioType = 'portrait';
-                        else state.aspectRatioType = 'square';
-                        
-                        document.getElementById('img-original').src = state.base64;
-                        document.getElementById('comparison-view').style.display = 'flex';
-                        document.getElementById('placeholder-state').style.display = 'none';
-                        downloadTrigger.disabled = true;
-                        if(btnMobDown) btnMobDown.disabled = true;
-                        imgModWrapper.style.width = '0%'; sliderHandle.style.left = '0%';
-                        showToast(`Đã tải ảnh: ${img.width}x${img.height} (${state.aspectRatioType.toUpperCase()})`, "success");
-
-                        updateMobileBtnState('scan'); // Show Scan Button
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            };
-
-            const fileInput = document.getElementById('image-upload');
-            if(fileInput) fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) { loadImg(e.target.files[0]); e.target.value = ''; } });
-            
-            const dropZone = document.getElementById('drop-zone');
-            if(dropZone && fileInput) {
-                dropZone.addEventListener('click', (e) => { if(e.target !== fileInput) {} });
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    dropZone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
-                    document.body.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
-                });
-                ['dragenter', 'dragover'].forEach(eventName => { dropZone.addEventListener(eventName, () => dropZone.classList.add('bg-violet-900/20', 'border-violet-400'), false); });
-                ['dragleave', 'drop'].forEach(eventName => { dropZone.addEventListener(eventName, () => dropZone.classList.remove('bg-violet-900/20', 'border-violet-400'), false); });
-                dropZone.addEventListener('drop', (e) => { const dt = e.dataTransfer; const files = dt.files; if (files.length > 0) loadImg(files[0]); }, false);
-            }
-
-            // ... (Rest of existing UI handlers: Zoom, Rotate, Download, Mobile Logic) ...
-            // (Keeping everything intact)
-
-            if(processBtn) {
-                processBtn.addEventListener('click', async () => {
-                    if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
-                    if (!UserSystem.deductCredits(20)) {
-                        rechargeModal.classList.remove('hidden');
-                        return; 
+                        updateMobileBtnState('run');
                     }
-                    
-                    updateMobileBtnState('running'); // Mobile UI Processing
+                } catch(e) { console.error(e); showToast("Lỗi Smart Scan: " + e.message, "error"); updateMobileBtnState('scan'); } 
+                finally { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }
+            });
 
-                    processBtn.disabled = true;
-                    processBtn.innerHTML = "FLUX/KONTEXT PROCESSING...";
-                    document.getElementById('ai-terminal-overlay').classList.remove('hidden');
-                    document.getElementById('scan-beam').classList.add('active');
-                    
-                    // ... (Collect prompt parameters as before) ...
-                    
-                    // Use getApiConfig() to get the linked key
-                    const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+            if(processBtn) processBtn.addEventListener('click', async () => {
+                if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
+                if (!UserSystem.deductCredits(20)) { document.getElementById('recharge-modal').classList.remove('hidden'); return; }
+                updateMobileBtnState('running');
+                processBtn.disabled = true; processBtn.innerHTML = "FLUX/KONTEXT PROCESSING..."; document.getElementById('ai-terminal-overlay').classList.remove('hidden'); document.getElementById('scan-beam').classList.add('active');
+                
+                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+                try {
+                    const resizedBase64 = await resizeImage(state.base64);
+                    const prompt = document.getElementById('prompt-main').value + ", (best quality, 8k, hyper detailed)";
+                    const parts = [{ text: prompt }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }];
+                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } }) });
+                    const data = await response.json();
+                    let base64Img = null;
+                    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+                        for (const part of data.candidates[0].content.parts) { if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; } }
+                    }
+                    if(base64Img) {
+                        const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
+                        const restoredImg = new Image();
+                        restoredImg.onload = () => {
+                            state.restoredObj = restoredImg;
+                            document.getElementById('img-modified').src = finalImgSrc;
+                            document.getElementById('comparison-view').style.display = 'flex';
+                            document.getElementById('placeholder-state').style.display = 'none';
+                            document.getElementById('download-trigger').disabled = false;
+                            document.getElementById('download-mobile').disabled = false;
+                            updateMobileBtnState('done');
+                            showToast("Phục chế thành công!", "flux");
+                        };
+                        restoredImg.src = finalImgSrc;
+                    } else { throw new Error("Không tạo được ảnh."); }
+                } catch(e) { console.error(e); showToast("Lỗi: " + e.message, "error"); updateMobileBtnState('run'); }
+                finally { processBtn.disabled = false; processBtn.innerHTML = "TẠO ẢNH (FLUX KONTEXT)"; document.getElementById('ai-terminal-overlay').classList.add('hidden'); document.getElementById('scan-beam').classList.remove('active'); }
+            });
 
-                    // ... (API Fetch Logic) ...
-                    
-                    // Error handling and cleanup
-                    // ... (Inside fetch success)
-                    // if(base64Img) {
-                    //    ...
-                    //    updateMobileBtnState('done'); // Mobile UI Done
-                    // }
-                });
-            }
-
-            // ... (Rest of mobile logic) ...
+            // File Load & Mobile Logic
+            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; document.getElementById('download-trigger').disabled = true; document.getElementById('download-mobile').disabled = true; document.getElementById('img-modified-wrapper').style.width = '0%'; document.getElementById('slider-handle').style.left = '0%'; showToast(`Đã tải ảnh: ${img.width}x${img.height}`, "success"); updateMobileBtnState('scan'); }; img.src = e.target.result; }; reader.readAsDataURL(file); };
+            const fileInput = document.getElementById('image-upload'); if(fileInput) fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) { loadImg(e.target.files[0]); e.target.value = ''; } });
             
-            const mobBtnScan = document.getElementById('mob-btn-scan');
-            if(mobBtnScan) mobBtnScan.onclick = () => {
-                document.getElementById('btn-auto-pilot').click();
-                // ... UI updates are now inside btnAutoPilot ...
-            };
-
-            const mobBtnRun = document.getElementById('mob-btn-run');
-            if(mobBtnRun) mobBtnRun.onclick = () => {
-                document.getElementById('process-image').click();
-                // ... UI updates are now inside processBtn ...
-            };
-
-            // ... (Sliders inputs) ...
+            // Mobile Proxies
+            const mobBtnUpload = document.getElementById('mob-btn-upload'), mobBtnScan = document.getElementById('mob-btn-scan'), mobBtnRun = document.getElementById('mob-btn-run');
+            if(mobBtnUpload) mobBtnUpload.onclick = () => document.getElementById('image-upload').click();
+            if(mobBtnScan) mobBtnScan.onclick = () => document.getElementById('btn-auto-pilot').click();
+            if(mobBtnRun) mobBtnRun.onclick = () => document.getElementById('process-image').click();
+            document.getElementById('mob-btn-reset').onclick = () => location.reload();
+            
+            // Redeem Code
+            const redeemBtn = document.getElementById('btn-submit-recharge'), redeemInput = document.getElementById('recharge-input');
+            if(redeemBtn) redeemBtn.addEventListener('click', () => { const code = redeemInput.value.trim(); if(!code) return showToast("Vui lòng nhập mã!", "error"); const parts = code.split('-'); if(parts.length !== 5 || parts[0] !== 'V35') return showToast("Mã không hợp lệ!", "error"); const credits = parseInt(parts[1]); if(isNaN(credits)) return showToast("Lỗi định dạng tín dụng!", "error"); UserSystem.addCredits(credits); showToast(`Nạp thành công +${credits} Credits!`, "success"); document.getElementById('recharge-modal').classList.add('hidden'); redeemInput.value = ''; });
+            document.getElementById('close-recharge').onclick = () => document.getElementById('recharge-modal').classList.add('hidden');
+            
+            // Sliders Display
+            const sliders = document.querySelectorAll('input[type="range"]');
+            sliders.forEach(s => s.addEventListener('input', (e) => { const label = document.getElementById(e.target.id.replace('slider', 'val') || e.target.id.replace('weight-slider', 'weight-val')); if(label) label.textContent = e.target.value + (e.target.max > 10 ? '%' : ''); }));
+            
+            // Drag Logic
+            const compContainer = document.getElementById('comp-inner'), imgModWrapper = document.getElementById('img-modified-wrapper'), sliderHandle = document.getElementById('slider-handle');
+            if(compContainer) { let isDragging = false; const updateSlider = (percent) => { if(!imgModWrapper || !sliderHandle) return; percent = Math.max(0, Math.min(100, percent)); imgModWrapper.style.width = percent + '%'; sliderHandle.style.left = percent + '%'; }; compContainer.addEventListener('mousedown', () => isDragging = true); compContainer.addEventListener('touchstart', () => isDragging = true); window.addEventListener('mouseup', () => isDragging = false); window.addEventListener('touchend', () => isDragging = false); compContainer.addEventListener('mousemove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.clientX - rect.left)/rect.width)*100); } }); compContainer.addEventListener('touchmove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.touches[0].clientX - rect.left)/rect.width)*100); } }); }
         });
     </script>
 </body>
