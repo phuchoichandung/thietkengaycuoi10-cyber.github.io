@@ -23,26 +23,6 @@
             console.log("%cDỪNG LẠI!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px #000;");
             console.log("%cĐây là phần mềm có bản quyền của ZALO: 0352803379.", "color: white; background: red; font-size: 16px; padding: 10px; border-radius: 5px;");
         })();
-
-        // ADMIN SYNC LOGIC
-        const Sec = {
-            key: "V35_SEC",
-            dec(t) { try { let s = atob(t); return [...s].map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ this.key.charCodeAt(i % this.key.length))).join("") } catch (e) { return null } }
-        };
-
-        // Load API Key immediately
-        try {
-            const saved = localStorage.getItem("v35_active_user");
-            if (saved) {
-                const data = JSON.parse(Sec.dec(saved));
-                if (data) {
-                    window.GEMINI_API_KEY = data.geminiKey || "";
-                    window.COMET_API_KEY = data.cometKey || "";
-                    window.API_PROVIDER = data.provider || "google";
-                    console.log("Admin Key Linked:", window.API_PROVIDER);
-                }
-            }
-        } catch (e) { console.error("Admin Link Error", e); }
     </script>
 
     <script>
@@ -172,7 +152,7 @@
         </div>
     </div>
     
-    <!-- SMART MOBILE ACTION BAR (Moved to Body for Stacking Context Safety) -->
+    <!-- SMART MOBILE ACTION BAR -->
     <div id="mobile-action-bar" class="lg:hidden fixed bottom-8 left-4 right-4 z-[90] flex items-center justify-center pointer-events-none transition-all duration-500 translate-y-24 opacity-0">
         <div class="bg-[#0f1016]/90 backdrop-blur-2xl border border-white/10 p-2 rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] flex gap-3 w-full max-w-sm pointer-events-auto ring-1 ring-white/5">
             
@@ -956,47 +936,29 @@
     </div>
 
     <script>
+        // === DÁN MÃ NHÚNG TỪ ADMIN VÀO ĐÂY ===
+        // Ví dụ: const DEFAULT_ENCRYPTED_CONFIG = "eyJ1c2VybmFtZSI6IkFkbWluIFNldCIsImFwaUtleSI6IkFJemFTeS4uLiIsInByb3ZpZGVyIjoiZ29vZ2xlIiwiYmFzZVVybCI6Imh0dHBzOi8vZ2VuZXJhdGl2ZWxhbmd1YWdlLmdvb2dsZWFwaXMuY29tIn0=";
+        const DEFAULT_ENCRYPTED_CONFIG = "LRFALDY3LTQ/IH1xZxg7PigidAVWQX1/ZyIlOw46MmdjfRIINjUFSnYHGhIhAhwdaHwQOAsFcCggZmF7BQFxEwcXFDcUKgNpJGNgdiZBWik6ISYncH99KCo0OidjYHY0UkY6Bjcvd2hnNz8xKSxpbmM1JlobPDwoJiEzNTZlJjYycTw="; 
+
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; 
 
-            // === HỆ THỐNG MÃ HÓA BẢO MẬT (NEW) ===
-            const SimpleSec = {
-                _key: "V35_SECURE_KEY_SALT", 
-                // Mã hóa chuỗi (Simple Obfuscation)
-                encrypt: function(text) {
-                    if(!text) return '';
+            // === HỆ THỐNG MÃ HÓA BẢO MẬT (ĐỒNG BỘ ADMIN) ===
+            const Sec = {
+                key: "V35_SECURE_KEY_SALT", 
+                dec(t){
                     try {
+                        if(!t) return null;
+                        let text = atob(t);
                         let result = '';
                         for(let i = 0; i < text.length; i++) {
-                            result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
-                        }
-                        return btoa(result); // Chuyển sang Base64
-                    } catch(e) { return text; }
-                },
-                // Giải mã chuỗi
-                decrypt: function(encoded) {
-                    if(!encoded) return '';
-                    try {
-                        let text = atob(encoded); // Giải Base64
-                        let result = '';
-                        for(let i = 0; i < text.length; i++) {
-                            result += String.fromCharCode(text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length));
+                            result += String.fromCharCode(text.charCodeAt(i) ^ this.key.charCodeAt(i % this.key.length));
                         }
                         return result;
-                    } catch(e) { return encoded; }
+                    } catch(e) { return null; }
                 }
             };
 
-            // === ADMIN SYNC SECURITY (LINKED FROM ADMIN.HTML) ===
-            const AdminSync = {
-                key: "V35_SEC", // Must match the key in admin.html
-                dec(t) {
-                    try {
-                        return [...atob(t)].map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ this.key.charCodeAt(i % this.key.length))).join("")
-                    } catch (e) { return null }
-                }
-            };
-            
             // === USER & CREDIT SYSTEM (DEVICE ID BASED - KHÔNG TRÙNG WIFI) ===
             const UserSystem = {
                 deviceId: null,
@@ -1023,31 +985,34 @@
                     // 3. Load Credits
                     this.loadCredits();
 
-                    // 4. SYNC WITH ADMIN CONFIG IF EXISTS
+                    // 4. LOAD CẤU HÌNH API (ƯU TIÊN LOCAL, NẾU KHÔNG CÓ THÌ DÙNG MÃ NHÚNG)
                     try {
-                        const adminData = localStorage.getItem("v35_active_user");
-                        if (adminData) {
-                            const config = JSON.parse(AdminSync.dec(adminData));
-                            if (config && (config.geminiKey || config.cometKey)) {
-                                // AUTO LINK FROM ADMIN
-                                state.userSettings.username = "Linked: " + config.userKey;
-                                if (config.provider === 'comet') {
-                                    state.userSettings.provider = 'comet';
-                                    state.userSettings.apiKey = config.cometKey;
-                                    state.userSettings.baseUrl = "https://api.cometapi.com";
-                                } else {
-                                    state.userSettings.provider = 'google';
-                                    state.userSettings.apiKey = config.geminiKey;
-                                    state.userSettings.baseUrl = "https://generativelanguage.googleapis.com";
-                                }
-                                // Sync credits from admin if available to override default
-                                if(config.credit) this.credits = config.credit;
-                                
-                                console.log("🔗 Admin Config Linked Successfully:", config.userKey);
-                                showToast(`🔗 Đã đồng bộ cấu hình từ Admin: ${config.userKey}`, "success");
-                            }
+                        let configStr = localStorage.getItem("v35_user_settings"); // Ưu tiên 1
+                        
+                        // Nếu máy này chưa có config, dùng mã nhúng mặc định (Ưu tiên 2)
+                        if (!configStr && DEFAULT_ENCRYPTED_CONFIG) {
+                            configStr = DEFAULT_ENCRYPTED_CONFIG;
+                            console.log("Using Embedded Config");
                         }
-                    } catch(e) { console.log("No admin sync found or error", e); }
+
+                        if (configStr) {
+                            const jsonStr = Sec.dec(configStr);
+                            if (jsonStr) {
+                                const config = JSON.parse(jsonStr);
+                                if (config && config.apiKey) {
+                                    window.GEMINI_API_KEY = config.apiKey || "";
+                                    window.API_PROVIDER = config.provider || "google";
+                                    window.API_BASE_URL = config.baseUrl || "https://generativelanguage.googleapis.com";
+                                    
+                                    console.log("API Config Loaded:", window.API_PROVIDER);
+                                    showToast("✅ Đã tải cấu hình API", "success");
+                                }
+                            }
+                        } else {
+                            console.log("No API Config Found (Local or Embedded)");
+                            // Không hiện lỗi ngay để tránh spam, chỉ hiện khi user cố dùng tính năng
+                        }
+                    } catch(e) { console.error("Config Load Error", e); }
 
                     this.updateUI();
                     initRechargeSystem(this.deviceId);
@@ -1264,7 +1229,7 @@
             
             const getApiConfig = () => {
                 const key = window.GEMINI_API_KEY || window.COMET_API_KEY || "";
-                const base = window.API_PROVIDER === 'comet' ? "https://api.cometapi.com" : "https://generativelanguage.googleapis.com";
+                const base = window.API_BASE_URL || "https://generativelanguage.googleapis.com";
                 const isComet = window.API_PROVIDER === 'comet';
                 return { key, base, isComet };
             };
