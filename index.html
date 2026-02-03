@@ -1085,7 +1085,7 @@
 
                 const originalText = btnAutoPilot.innerHTML; 
                 btnAutoPilot.disabled = true; 
-                btnAutoPilot.innerHTML = `<span class="animate-pulse">SCANNING FEATURES...</span>`;
+                btnAutoPilot.innerHTML = `<span class="animate-pulse">ĐANG QUÉT CHI TIẾT ẢNH...</span>`; // Updated text for clarity
                 
                 try {
                     // Open UI Modules for visual effect
@@ -1096,27 +1096,28 @@
                         if(icon) icon.style.transform = 'rotate(180deg)'; 
                     });
 
-                    // Resize Image for Analysis
-                    const resizedBase64 = await resizeImage(state.base64, 800); // 800px is enough for analysis
+                    // Resize Image for Analysis (Optimized size)
+                    const resizedBase64 = await resizeImage(state.base64, 768); 
 
-                    // Prepare Analysis Prompt
-                    const analysisPrompt = `You are a professional photo restoration expert. Analyze this image carefully.
-                    Return ONLY a JSON object with these boolean/string fields:
+                    // Prepare Analysis Prompt - Improved for detail detection
+                    const analysisPrompt = `Analyze this image for photo restoration purposes. Look for specific defects and features.
+                    Return valid JSON only (no markdown formatting):
                     {
-                        "isMilitary": boolean, // Is this a military uniform?
-                        "militaryBranch": "vietnamese army"|"police"|"unknown",
-                        "hasStrabismus": boolean, // Cross-eyed / eyes not aligned?
-                        "hasPtosis": boolean, // Droopy eyelids?
-                        "isClosedEyes": boolean, // Eyes closed?
-                        "isIDPhoto": boolean, // Passport/ID style?
-                        "isOldDamaged": boolean, // Sepia, scratches, blur?
+                        "isMilitary": boolean, // Is the person wearing a military or police uniform?
+                        "militaryBranch": "army"|"police"|"unknown",
+                        "hasStrabismus": boolean, // Is the person cross-eyed (mat le)?
+                        "hasPtosis": boolean, // Does the person have droopy eyelids (sup mi)?
+                        "isClosedEyes": boolean, // Are eyes closed/sleeping?
+                        "isIDPhoto": boolean, // Is it a passport/ID photo style?
+                        "isOldDamaged": boolean, // Is the photo old, scratched, blurry, or sepia?
                         "gender": "male"|"female",
                         "age": number
                     }`;
 
-                    // Call API for Analysis
+                    // Call API for Analysis - Using gemini-1.5-flash for reliable vision
                     const baseUrl = isComet ? 'https://api.cometapi.com' : 'https://generativelanguage.googleapis.com';
-                    const url = `${baseUrl}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKeyToUse}`;
+                    // Use 1.5 flash for analysis
+                    const url = `${baseUrl}/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKeyToUse}`;
                     
                     const response = await fetch(url, {
                         method: 'POST',
@@ -1127,65 +1128,94 @@
                     });
 
                     const data = await response.json();
+                    
+                    if (data.error) throw new Error(data.error.message);
+
                     const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
                     
                     if(resultText) {
                         const cleanText = resultText.replace(/```json|```/g, '').trim();
-                        const analysis = JSON.parse(cleanText);
+                        let analysis;
+                        try {
+                             analysis = JSON.parse(cleanText);
+                        } catch(e) {
+                             // Fallback cleanup if JSON is dirty
+                             const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+                             if (jsonMatch) analysis = JSON.parse(jsonMatch[0]);
+                        }
                         
-                        console.log("Analysis Result:", analysis);
+                        if (analysis) {
+                            console.log("Analysis Result:", analysis);
+                            showToast("Đã quét xong: Đang áp dụng cấu hình...", "success");
 
-                        // APPLY TO UI
-                        if (analysis.isMilitary) {
-                            showToast("Detected: Military Uniform", "warning");
-                            document.getElementById('content-military')?.classList.add('open');
-                            // Select basic defaults if generic
-                            const branchSel = document.getElementById('mil-branch');
-                            if(branchSel && analysis.militaryBranch === 'police') branchSel.value = 'vietnamese public security, green uniform, red collar tabs';
-                            else if(branchSel) branchSel.value = 'vietnamese army ground force, red collar tabs';
-                        }
+                            // 1. MILITARY
+                            if (analysis.isMilitary) {
+                                document.getElementById('content-military')?.classList.add('open');
+                                showToast("Phát hiện: Trang phục Quân đội/Công an", "warning");
+                                const branchSel = document.getElementById('mil-branch');
+                                if(branchSel) {
+                                    if (analysis.militaryBranch === 'police') branchSel.value = 'vietnamese public security, green uniform, red collar tabs';
+                                    else branchSel.value = 'vietnamese army ground force, red collar tabs';
+                                }
+                            }
 
-                        if (analysis.hasStrabismus) {
-                            document.getElementById('check-cross-eyed').checked = true;
-                            showToast("Detected: Cross-eyed (Preserved)", "smart");
-                        } else {
-                            document.getElementById('check-cross-eyed').checked = false;
-                        }
+                            // 2. EYES / DEFECTS
+                            if (analysis.hasStrabismus) {
+                                document.getElementById('check-cross-eyed').checked = true;
+                                showToast("Phát hiện: Mắt lé -> Đã giữ nguyên (Cross-eyed)", "smart");
+                            } else {
+                                document.getElementById('check-cross-eyed').checked = false;
+                            }
 
-                        if (analysis.hasPtosis) {
-                            document.getElementById('check-ptosis').checked = true;
-                            showToast("Detected: Ptosis (Preserved)", "smart");
-                        }
+                            if (analysis.hasPtosis) {
+                                document.getElementById('check-ptosis').checked = true;
+                                showToast("Phát hiện: Sụp mí -> Đã giữ nguyên (Ptosis)", "smart");
+                            }
 
-                        if (analysis.isIDPhoto) {
-                            document.getElementById('check-id-photo').checked = true;
-                            showToast("Detected: ID Photo Mode", "smart");
-                        }
+                            if (analysis.isClosedEyes) {
+                                document.getElementById('container-closed-eyes').checked = true;
+                                showToast("Phát hiện: Mắt nhắm -> Đã giữ nguyên", "smart");
+                            }
 
-                        if (analysis.isOldDamaged) {
-                            // Turn on Replica if very damaged
-                            if(!state.isReplicaMode) document.getElementById('mode-replica').click();
-                            showToast("Detected: Old/Damaged -> Replica Mode ON", "warning");
-                        }
+                            // 3. ID PHOTO
+                            if (analysis.isIDPhoto) {
+                                document.getElementById('check-id-photo').checked = true;
+                                showToast("Phát hiện: Ảnh thẻ -> Bật ID Mode", "smart");
+                            }
 
-                        // Set Gender/Age
-                        const genderSel = document.getElementById('gender-select');
-                        if(genderSel && analysis.gender) genderSel.value = analysis.gender;
-                        const ageInput = document.getElementById('age-input');
-                        if(ageInput && analysis.age) ageInput.value = analysis.age;
+                            // 4. DAMAGE / REPLICA
+                            if (analysis.isOldDamaged) {
+                                if(!state.isReplicaMode) document.getElementById('mode-replica').click(); // Turn on Replica
+                                showToast("Phát hiện: Ảnh cũ/mờ -> Bật Replica Mode", "warning");
+                            }
 
-                        // Update Prompt Box with insights
-                        const promptBox = document.getElementById('prompt-main');
-                        if(promptBox) {
-                            promptBox.value = `Restoration of ${analysis.gender}, age ${analysis.age}. ${analysis.isMilitary ? 'Military uniform context.' : ''} ${analysis.isOldDamaged ? 'Repair damages, remove scratches.' : ''} High fidelity, 8k resolution.`;
-                            promptBox.classList.add('ring-2', 'ring-violet-500'); 
-                            setTimeout(() => promptBox.classList.remove('ring-2', 'ring-violet-500'), 1000);
+                            // 5. GENDER / AGE
+                            const genderSel = document.getElementById('gender-select');
+                            if(genderSel && analysis.gender) genderSel.value = analysis.gender;
+                            
+                            const ageInput = document.getElementById('age-input');
+                            if(ageInput && analysis.age) ageInput.value = analysis.age;
+
+                            // 6. UPDATE PROMPT
+                            const promptBox = document.getElementById('prompt-main');
+                            if(promptBox) {
+                                let newPrompt = `Restoration of ${analysis.gender}, age ${analysis.age} years old.`;
+                                if (analysis.isMilitary) newPrompt += ` wearing ${analysis.militaryBranch} uniform.`;
+                                if (analysis.hasStrabismus) newPrompt += ` (cross-eyed:1.5), strabismus.`;
+                                if (analysis.hasPtosis) newPrompt += ` (ptosis:1.5), droopy eyelid.`;
+                                if (analysis.isOldDamaged) newPrompt += ` Remove scratches, fix blur, restore details.`;
+                                newPrompt += ` High fidelity, 8k resolution, hyper-realistic skin texture.`;
+                                
+                                promptBox.value = newPrompt;
+                                promptBox.classList.add('ring-2', 'ring-violet-500'); 
+                                setTimeout(() => promptBox.classList.remove('ring-2', 'ring-violet-500'), 1000);
+                            }
                         }
                     }
 
                 } catch(e) { 
                     console.error(e); 
-                    showToast("Scan Error: " + e.message, "error"); 
+                    showToast("Lỗi Scan: " + e.message, "error"); 
                 } finally {
                     btnAutoPilot.disabled = false; 
                     btnAutoPilot.innerHTML = originalText; 
