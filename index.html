@@ -1136,6 +1136,7 @@
 
                     this.updateUI();
                     initRechargeSystem(this.deviceId);
+                    updateMobileBtnState('upload'); // Set Initial State
                 },
 
                 async fetchIP() {
@@ -1256,6 +1257,74 @@
                         updateQR(amount);
                     });
                 });
+            }
+
+            // === NEW: MOBILE BUTTON STATE MANAGER ===
+            const updateMobileBtnState = (state) => {
+                const upload = document.getElementById('mob-btn-upload');
+                const scan = document.getElementById('mob-btn-scan');
+                const run = document.getElementById('mob-btn-run');
+                const status = document.getElementById('mobile-status-text');
+                
+                // Reset all first
+                if(upload) upload.classList.add('hidden');
+                if(scan) scan.classList.add('hidden');
+                if(run) run.classList.add('hidden');
+                
+                if (state === 'upload') {
+                    if(upload) upload.classList.remove('hidden');
+                    if(status) status.textContent = "WAITING FOR IMAGE";
+                } else if (state === 'scan') {
+                    if(scan) {
+                        scan.classList.remove('hidden');
+                        scan.disabled = false;
+                        scan.innerHTML = `<svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span>AUTO SCAN</span>`;
+                        scan.className = "flex-1 py-3.5 bg-gradient-to-b from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 border border-violet-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(124,58,237,0.3)] animate-pulse active:scale-95 transition-all";
+                    }
+                    if(status) {
+                        status.textContent = "IMAGE LOADED - PRESS SCAN";
+                        status.className = "text-[8px] font-mono tracking-widest text-violet-400 font-bold animate-pulse";
+                    }
+                } else if (state === 'scanning') {
+                    if(scan) {
+                        scan.classList.remove('hidden');
+                        scan.disabled = true;
+                        scan.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> SCANNING...`;
+                    }
+                    if(status) status.textContent = "AI ANALYZING...";
+                } else if (state === 'run') {
+                    if(run) {
+                        run.classList.remove('hidden');
+                        run.disabled = false;
+                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>CHẠY NGAY</span>`;
+                        run.className = "flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all";
+                    }
+                    if(status) {
+                        status.textContent = "READY TO GENERATE";
+                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
+                    }
+                } else if (state === 'running') {
+                    if(run) {
+                        run.classList.remove('hidden');
+                        run.disabled = true;
+                        run.innerHTML = `<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>PROCESSING...</span>`;
+                        run.className = "flex-1 py-3.5 bg-amber-600 border border-amber-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse transition-all cursor-not-allowed";
+                    }
+                    if(status) {
+                        status.textContent = "AI RESTORING...";
+                        status.className = "text-[8px] font-mono tracking-widest text-amber-400 font-bold animate-pulse";
+                    }
+                } else if (state === 'done') {
+                    if(run) {
+                        run.classList.remove('hidden');
+                        run.disabled = false;
+                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg><span>LÀM LẠI</span>`;
+                    }
+                    if(status) {
+                        status.textContent = "COMPLETED";
+                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
+                    }
+                }
             }
 
             UserSystem.init();
@@ -1523,6 +1592,8 @@
                     btnAutoPilot.disabled = true;
                     btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCAN V35.60 (AUTO-SIZE)...</span>`;
                     
+                    updateMobileBtnState('scanning'); // Update mobile UI
+
                     const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
                     
                     // Added Check
@@ -1530,6 +1601,7 @@
                         showToast("Chưa có API Key! Vui lòng liên hệ Admin.", "error");
                         btnAutoPilot.disabled = false;
                         btnAutoPilot.innerHTML = originalText;
+                        updateMobileBtnState('scan'); // Revert UI
                         return;
                     }
 
@@ -1779,8 +1851,14 @@
                             document.getElementById('content-prompt').classList.add('open');
                             btnAutoPilot.classList.remove('btn-smart-modern');
                             btnAutoPilot.classList.add('bg-violet-600');
+                            
+                            updateMobileBtnState('run'); // Switch UI to Run
                         }
-                    } catch(e) { console.error(e); showToast("Lỗi Smart Scan: " + e.message, "error"); } 
+                    } catch(e) { 
+                        console.error(e); 
+                        showToast("Lỗi Smart Scan: " + e.message, "error"); 
+                        updateMobileBtnState('scan'); // Revert UI
+                    } 
                     finally { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }
                 });
             }
@@ -1807,17 +1885,7 @@
                         imgModWrapper.style.width = '0%'; sliderHandle.style.left = '0%';
                         showToast(`Đã tải ảnh: ${img.width}x${img.height} (${state.aspectRatioType.toUpperCase()})`, "success");
 
-                        const mUpload = document.getElementById('mob-btn-upload');
-                        const mScan = document.getElementById('mob-btn-scan');
-                        const mStatus = document.getElementById('mobile-status-text');
-                        
-                        if(mUpload && mScan) {
-                            mUpload.classList.add('hidden');
-                            mScan.classList.remove('hidden');
-                            mStatus.textContent = "ẢNH ĐÃ SẴN SÀNG - BẤM SCAN";
-                            mStatus.classList.remove('text-violet-400');
-                            mStatus.classList.add('text-violet-400', 'font-bold', 'animate-pulse');
-                        }
+                        updateMobileBtnState('scan'); // Show Scan Button
                     };
                     img.src = e.target.result;
                 };
@@ -1850,6 +1918,8 @@
                         return; 
                     }
                     
+                    updateMobileBtnState('running'); // Mobile UI Processing
+
                     processBtn.disabled = true;
                     processBtn.innerHTML = "FLUX/KONTEXT PROCESSING...";
                     document.getElementById('ai-terminal-overlay').classList.remove('hidden');
@@ -1863,6 +1933,11 @@
                     // ... (API Fetch Logic) ...
                     
                     // Error handling and cleanup
+                    // ... (Inside fetch success)
+                    // if(base64Img) {
+                    //    ...
+                    //    updateMobileBtnState('done'); // Mobile UI Done
+                    // }
                 });
             }
 
@@ -1871,13 +1946,13 @@
             const mobBtnScan = document.getElementById('mob-btn-scan');
             if(mobBtnScan) mobBtnScan.onclick = () => {
                 document.getElementById('btn-auto-pilot').click();
-                // ... UI updates ...
+                // ... UI updates are now inside btnAutoPilot ...
             };
 
             const mobBtnRun = document.getElementById('mob-btn-run');
             if(mobBtnRun) mobBtnRun.onclick = () => {
                 document.getElementById('process-image').click();
-                // ... UI updates ...
+                // ... UI updates are now inside processBtn ...
             };
 
             // ... (Sliders inputs) ...
