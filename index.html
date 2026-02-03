@@ -42,6 +42,7 @@
                     animation: {
                         'float': 'float 6s ease-in-out infinite', 'blob': 'blob 7s infinite', 'scan': 'scan 2s linear infinite', 'toast-in': 'toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', 
                         'pulse-glow': 'pulseGlow 2s infinite', 'flux-pulse': 'fluxPulse 3s infinite', 'real-pulse': 'realPulse 3s infinite', 'fade-out': 'fadeOut 0.5s ease-out forwards', 'fade-in': 'fadeIn 0.3s ease-out forwards', 'enter-up': 'enterUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+                        'highlight-pulse': 'highlightPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         enterUp: { '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' }, '100%': { opacity: '1', transform: 'translateY(0) scale(1)' } },
@@ -53,7 +54,8 @@
                         pulseGlow: { '0%, 100%': { opacity: '1', boxShadow: '0 0 10px #10b981' }, '50%': { opacity: '0.8', boxShadow: '0 0 20px #10b981' } },
                         fluxPulse: { '0%, 100%': { boxShadow: '0 0 5px #8b5cf6' }, '50%': { boxShadow: '0 0 15px #8b5cf6' } },
                         realPulse: { '0%, 100%': { boxShadow: '0 0 5px #f97316' }, '50%': { boxShadow: '0 0 15px #f97316' } },
-                        fadeOut: { '0%': { opacity: '1', visibility: 'visible' }, '100%': { opacity: '0', visibility: 'hidden' } }
+                        fadeOut: { '0%': { opacity: '1', visibility: 'visible' }, '100%': { opacity: '0', visibility: 'hidden' } },
+                        highlightPulse: { '0%, 100%': { borderColor: 'rgba(234, 179, 8, 0.5)', backgroundColor: 'rgba(234, 179, 8, 0.1)' }, '50%': { borderColor: 'rgba(234, 179, 8, 1)', backgroundColor: 'rgba(234, 179, 8, 0.2)' } }
                     }
                 }
             }
@@ -123,7 +125,7 @@
             border-radius: 16px;
             overflow: hidden;
             max-width: 90vw; /* Giới hạn chiều rộng 90% màn hình */
-            max-height: 65vh; /* Giới hạn chiều cao */
+            max-height: 60vh; /* Giảm chiều cao để tránh đè nút */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -688,7 +690,7 @@
         </aside>
 
         <!-- WORKSPACE -->
-        <main class="flex-1 flex flex-col relative overflow-hidden" id="main-workspace">
+        <main class="flex-1 flex flex-col relative overflow-hidden bg-black/50" id="main-workspace">
             <!-- MOBILE HEADER -->
             <div class="lg:hidden h-14 glass-panel border-b border-white/5 flex items-center px-4 justify-between z-30 relative bg-[#0a0a0f]/90 backdrop-blur-xl">
                 <button id="toggle-sidebar-btn" class="text-slate-400 p-2 border border-white/10 rounded-lg hover:bg-white/5"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
@@ -724,7 +726,7 @@
                 </div>
             </div>
             
-            <div class="flex-1 relative flex items-center justify-center overflow-hidden perspective-1000">
+            <div class="flex-1 relative flex items-center justify-center overflow-hidden perspective-1000 pb-32 lg:pb-0"> <!-- Added padding bottom for mobile bar -->
                 <div id="canvas-scale-container" class="relative transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] origin-center will-change-transform" style="transform: scale(1);">
                     <div id="scan-beam" class="scan-beam"></div>
                     
@@ -1151,6 +1153,110 @@
             const closeSidebarMobileBtn = document.getElementById('close-sidebar-mobile');
             if(closeSidebarMobileBtn) closeSidebarMobileBtn.onclick = closeSidebar;
 
+            // --- FUNCTION DOWNLOAD IMAGE ---
+            const downloadImage = () => {
+                if (!state.restoredObj) return showToast("Chưa có ảnh kết quả!", "error");
+                const link = document.createElement('a');
+                link.download = `V35-Restored-${Date.now()}.jpg`;
+                link.href = document.getElementById('img-modified').src;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+            
+            // Assign events for download buttons (Desktop & Mobile)
+            const btnDownloadMobile = document.getElementById('download-mobile');
+            if(btnDownloadMobile) btnDownloadMobile.onclick = downloadImage;
+            
+            const btnDownloadDesktop = document.getElementById('download-trigger');
+            if(btnDownloadDesktop) btnDownloadDesktop.onclick = downloadImage;
+
+            // --- FUNCTION RESET APP ---
+            const resetApp = () => {
+                if(confirm("Làm mới toàn bộ?")) location.reload();
+            };
+            
+            // Assign events for reset buttons
+            const btnResetSidebar = document.getElementById('reset-button');
+            if(btnResetSidebar) btnResetSidebar.onclick = resetApp;
+            
+            const btnResetMobile = document.getElementById('mob-btn-reset');
+            if(btnResetMobile) btnResetMobile.onclick = resetApp;
+
+            // --- MAIN FUNCTION: PROCESS IMAGE ---
+            const runImageProcessing = async () => {
+                if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
+                if (!UserSystem.deductCredits(20)) { document.getElementById('recharge-modal').classList.remove('hidden'); return; }
+                
+                updateMobileBtnState('running');
+                // Sync sidebar button state if visible
+                if(processBtn) {
+                    processBtn.disabled = true; 
+                    processBtn.innerHTML = "FLUX/KONTEXT PROCESSING..."; 
+                }
+                
+                document.getElementById('ai-terminal-overlay').classList.remove('hidden'); 
+                document.getElementById('scan-beam').classList.add('active');
+                
+                // AUTO CLOSE SIDEBAR TO SHOW PROCESS
+                closeSidebar();
+
+                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+                try {
+                    const resizedBase64 = await resizeImage(state.base64);
+                    // Build prompt from inputs
+                    let finalPrompt = document.getElementById('prompt-main').value;
+                    if(!finalPrompt) finalPrompt = "Restore this photo, remove scratches, high quality, 8k";
+                    
+                    // Add extra modifiers
+                    finalPrompt += ", (best quality, 8k, hyper detailed)";
+
+                    const parts = [{ text: finalPrompt }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }];
+                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } }) });
+                    const data = await response.json();
+                    let base64Img = null;
+                    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+                        for (const part of data.candidates[0].content.parts) { if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; } }
+                    }
+                    if(base64Img) {
+                        const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
+                        const restoredImg = new Image();
+                        restoredImg.onload = () => {
+                            state.restoredObj = restoredImg;
+                            document.getElementById('img-modified').src = finalImgSrc;
+                            document.getElementById('comparison-view').style.display = 'flex';
+                            document.getElementById('placeholder-state').style.display = 'none';
+                            
+                            // Enable download buttons
+                            if(btnDownloadDesktop) btnDownloadDesktop.disabled = false;
+                            if(btnDownloadMobile) {
+                                btnDownloadMobile.disabled = false;
+                                btnDownloadMobile.classList.remove('opacity-30'); // Visual enable
+                            }
+                            
+                            // === FIX: RESET SLIDER TO 50% FOR CLARITY ===
+                            document.getElementById('img-modified-wrapper').style.width = '50%';
+                            document.getElementById('slider-handle').style.left = '50%';
+                            document.getElementById('slider-handle').style.display = 'flex'; 
+                            document.querySelector('.comp-label.after').style.display = 'block';
+                            
+                            updateMobileBtnState('done');
+                            showToast("Phục chế thành công!", "flux");
+                        };
+                        restoredImg.src = finalImgSrc;
+                    } else { throw new Error("Không tạo được ảnh."); }
+                } catch(e) { console.error(e); showToast("Lỗi: " + e.message, "error"); updateMobileBtnState('run'); }
+                finally { 
+                    if(processBtn) {
+                        processBtn.disabled = false; 
+                        processBtn.innerHTML = "TẠO ẢNH (FLUX KONTEXT)"; 
+                    }
+                    document.getElementById('ai-terminal-overlay').classList.add('hidden'); 
+                    document.getElementById('scan-beam').classList.remove('active'); 
+                }
+            };
+
             // REAL LOGIC RESTORATION
             const btnAutoPilot = document.getElementById('btn-auto-pilot'), processBtn = document.getElementById('process-image');
             
@@ -1230,17 +1336,44 @@
                         document.getElementById('prompt-main').value = smartPrompt;
                         document.getElementById('content-prompt').classList.add('open');
                         
-                        // AUTO MAPPING WORKFLOW (FIXED)
+                        // AUTO MAPPING WORKFLOW (FIXED & IMPROVED)
                         const workflowSelect = document.getElementById('kontext-workflow');
-                        if (workflowSelect) {
-                            if(result.sceneContext === 'wedding') workflowSelect.value = 'wedding_kontext_v2';
-                            else if(result.sceneContext === 'ancient_portrait' || result.isOldPhoto) workflowSelect.value = 'ancient_restore';
-                            else if(result.sceneContext === 'outdoor') workflowSelect.value = 'outdoor_mode';
-                            else if(result.sceneContext === 'product') workflowSelect.value = 'product_mode';
-                            
-                            // Open workflow module to show selection
-                            document.getElementById('kontext-module-container').classList.add('ring-2', 'ring-violet-500');
-                            setTimeout(() => document.getElementById('kontext-module-container').classList.remove('ring-2', 'ring-violet-500'), 2000);
+                        const moduleContainer = document.getElementById('kontext-module-container');
+                        if (workflowSelect && moduleContainer) {
+                            let newWorkflow = 'default';
+                            let toastMsg = "";
+
+                            if(result.sceneContext === 'wedding') { 
+                                newWorkflow = 'wedding_kontext_v2'; 
+                                toastMsg = "Đã chọn: Ảnh Cưới";
+                            }
+                            else if(result.sceneContext === 'ancient_portrait' || result.isOldPhoto) { 
+                                newWorkflow = 'ancient_restore'; 
+                                toastMsg = "Đã chọn: Phục chế Tranh/Ảnh Cũ";
+                            }
+                            else if(result.sceneContext === 'outdoor') {
+                                newWorkflow = 'outdoor_mode';
+                                toastMsg = "Đã chọn: Ngoại cảnh";
+                            }
+                            else if(result.sceneContext === 'product') {
+                                newWorkflow = 'product_mode';
+                                toastMsg = "Đã chọn: Ảnh Sản phẩm";
+                            } else if (result.isIDPhoto) {
+                                newWorkflow = 'white_bg'; // Or relevant ID mode
+                                toastMsg = "Đã chọn: Ảnh Thẻ";
+                            }
+
+                            if(newWorkflow !== 'default') {
+                                workflowSelect.value = newWorkflow;
+                                showToast("⚙️ Auto Workflow: " + toastMsg, "flux");
+                                
+                                // Visual Feedback: Highlight the workflow section
+                                moduleContainer.classList.add('animate-highlight-pulse', 'ring-2', 'ring-yellow-500');
+                                // Remove highlight after 3 seconds
+                                setTimeout(() => {
+                                    moduleContainer.classList.remove('animate-highlight-pulse', 'ring-2', 'ring-yellow-500');
+                                }, 3000);
+                            }
                         }
 
                         // AUTO OPEN SIDEBAR TO SHOW RESULTS (MOBILE UX)
@@ -1251,55 +1384,27 @@
                 finally { btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; }
             });
 
-            if(processBtn) processBtn.addEventListener('click', async () => {
-                if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
-                if (!UserSystem.deductCredits(20)) { document.getElementById('recharge-modal').classList.remove('hidden'); return; }
-                updateMobileBtnState('running');
-                processBtn.disabled = true; processBtn.innerHTML = "FLUX/KONTEXT PROCESSING..."; document.getElementById('ai-terminal-overlay').classList.remove('hidden'); document.getElementById('scan-beam').classList.add('active');
-                
-                // AUTO CLOSE SIDEBAR TO SHOW PROCESS
-                closeSidebar();
-
-                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
-                try {
-                    const resizedBase64 = await resizeImage(state.base64);
-                    const prompt = document.getElementById('prompt-main').value + ", (best quality, 8k, hyper detailed)";
-                    const parts = [{ text: prompt }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }];
-                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
-                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } }) });
-                    const data = await response.json();
-                    let base64Img = null;
-                    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
-                        for (const part of data.candidates[0].content.parts) { if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; } }
-                    }
-                    if(base64Img) {
-                        const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
-                        const restoredImg = new Image();
-                        restoredImg.onload = () => {
-                            state.restoredObj = restoredImg;
-                            document.getElementById('img-modified').src = finalImgSrc;
-                            document.getElementById('comparison-view').style.display = 'flex';
-                            document.getElementById('placeholder-state').style.display = 'none';
-                            document.getElementById('download-trigger').disabled = false;
-                            document.getElementById('download-mobile').disabled = false;
-                            
-                            // === FIX: RESET SLIDER TO 50% FOR CLARITY ===
-                            document.getElementById('img-modified-wrapper').style.width = '50%';
-                            document.getElementById('slider-handle').style.left = '50%';
-                            document.getElementById('slider-handle').style.display = 'flex'; 
-                            document.querySelector('.comp-label.after').style.display = 'block';
-                            
-                            updateMobileBtnState('done');
-                            showToast("Phục chế thành công!", "flux");
-                        };
-                        restoredImg.src = finalImgSrc;
-                    } else { throw new Error("Không tạo được ảnh."); }
-                } catch(e) { console.error(e); showToast("Lỗi: " + e.message, "error"); updateMobileBtnState('run'); }
-                finally { processBtn.disabled = false; processBtn.innerHTML = "TẠO ẢNH (FLUX KONTEXT)"; document.getElementById('ai-terminal-overlay').classList.add('hidden'); document.getElementById('scan-beam').classList.remove('active'); }
-            });
+            // Assign Run Logic to both buttons
+            if(processBtn) processBtn.addEventListener('click', runImageProcessing);
+            
+            // Assign mobile run button to same function (via updateMobileBtnState logic or direct click)
+            // Note: In updateMobileBtnState 'run', we set innerHTML but need onclick.
+            // Let's redefine the mobile button click handler dynamically or statically here.
+            // Better to attach a static listener that checks state or just runs.
+            const mobRunBtn = document.getElementById('mob-btn-run');
+            if(mobRunBtn) {
+                mobRunBtn.onclick = runImageProcessing;
+            }
 
             // File Load & Mobile Logic
-            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; document.getElementById('download-trigger').disabled = true; document.getElementById('download-mobile').disabled = true; 
+            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; 
+            
+            // Reset Download Buttons
+            if(btnDownloadDesktop) btnDownloadDesktop.disabled = true;
+            if(btnDownloadMobile) {
+                btnDownloadMobile.disabled = true;
+                btnDownloadMobile.classList.add('opacity-30');
+            }
             
             // RESET TO PREVIEW MODE (HIDE SLIDER)
             document.getElementById('img-modified-wrapper').style.width = '0%'; 
@@ -1311,15 +1416,12 @@
             const fileInput = document.getElementById('image-upload'); if(fileInput) fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) { loadImg(e.target.files[0]); e.target.value = ''; } });
             
             // Mobile Proxies
-            const mobBtnUpload = document.getElementById('mob-btn-upload'), mobBtnScan = document.getElementById('mob-btn-scan'), mobBtnRun = document.getElementById('mob-btn-run'), mobBar = document.getElementById('mobile-action-bar');
+            const mobBtnUpload = document.getElementById('mob-btn-upload'), mobBtnScan = document.getElementById('mob-btn-scan'), mobBar = document.getElementById('mobile-action-bar');
             if(mobBar) setTimeout(() => mobBar.classList.remove('translate-y-24', 'opacity-0'), 1000);
             if(mobBtnUpload) mobBtnUpload.onclick = () => document.getElementById('image-upload').click();
             if(mobBtnScan) mobBtnScan.onclick = () => document.getElementById('btn-auto-pilot').click();
-            if(mobBtnRun) mobBtnRun.onclick = () => document.getElementById('process-image').click();
             
-            // FIX NULL ERROR: CHECK IF RESET BTN EXISTS
-            const mobBtnReset = document.getElementById('mob-btn-reset');
-            if (mobBtnReset) mobBtnReset.onclick = () => location.reload();
+            // Note: mob-btn-run is handled via updateMobileBtnState logic usually, but we attached a direct listener above too for safety.
             
             // Redeem Code
             const redeemBtn = document.getElementById('btn-submit-recharge'), redeemInput = document.getElementById('recharge-input');
