@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V35 ADMIN SYSTEM</title>
+<title>V35 ADMIN SYSTEM (FIXED)</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -87,7 +87,7 @@
             <div class="w-16 h-16 bg-gradient-to-br from-white/10 to-transparent rounded-2xl border border-white/10 flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
             </div>
-            <h1 class="text-xl font-bold tracking-tight text-white">V35 ADMIN</h1>
+            <h1 class="text-xl font-bold tracking-tight text-white">V35 ADMIN (FIXED)</h1>
             <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest">System Access</p>
         </div>
 
@@ -130,10 +130,10 @@
                 <div class="p-6 space-y-6 flex-1 flex flex-col">
                     <!-- ID Search -->
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Bước 1: Tìm ID Khách</label>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Bước 1: Tìm ID Khách / Cài đặt Active</label>
                         <div class="flex gap-2">
                             <div class="relative flex-1">
-                                <input id="userKey" class="input-field w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono text-white placeholder-gray-600 focus:bg-blue-900/10" placeholder="Nhập ID (VD: ID-ABC123)">
+                                <input id="userKey" class="input-field w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono text-white placeholder-gray-600 focus:bg-blue-900/10" placeholder="Nhập ID hoặc để trống để tìm Active">
                                 <svg class="w-4 h-4 text-gray-500 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
                             <button onclick="searchUserKey()" class="btn-action bg-blue-600 hover:bg-blue-500 text-white px-5 rounded-xl font-bold text-sm shadow-lg shadow-blue-500/20 whitespace-nowrap">
@@ -151,7 +151,7 @@
                             <label class="text-[10px] font-bold text-gray-400">PROVIDER</label>
                             <div class="relative">
                                 <select id="provider" class="input-field w-full px-4 py-3 rounded-xl text-xs font-medium text-white appearance-none cursor-pointer">
-                                    <option value="gemini">Google Gemini AI</option>
+                                    <option value="google">Google Gemini AI</option>
                                     <option value="comet">Comet Service</option>
                                 </select>
                                 <svg class="w-4 h-4 text-gray-500 absolute right-3 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -159,19 +159,24 @@
                         </div>
 
                         <div class="space-y-1.5">
-                            <label class="text-[10px] font-bold text-blue-400">GEMINI API KEY</label>
+                            <label class="text-[10px] font-bold text-blue-400">GEMINI API KEY (Default)</label>
                             <input id="geminiKey" class="input-field w-full px-4 py-3 rounded-xl text-xs font-mono text-gray-300" placeholder="AIzaSy...">
                         </div>
 
                         <div class="space-y-1.5">
-                            <label class="text-[10px] font-bold text-emerald-400">COMET API KEY</label>
+                            <label class="text-[10px] font-bold text-emerald-400">COMET API KEY (Proxy)</label>
                             <input id="cometKey" class="input-field w-full px-4 py-3 rounded-xl text-xs font-mono text-gray-300" placeholder="sk-...">
                         </div>
                     </div>
 
-                    <div class="pt-4">
+                    <div class="pt-4 space-y-3">
                         <button onclick="saveUser()" class="btn-action w-full py-4 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/25 border border-white/10">
                             LƯU CẤU HÌNH API
+                        </button>
+                        <!-- NÚT MỚI: TẠO MÃ NHÚNG -->
+                        <button onclick="exportEmbedCode()" class="btn-action w-full py-3 rounded-xl font-bold text-[11px] text-white bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 flex items-center justify-center gap-2">
+                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                           LẤY MÃ NHÚNG (CHO INDEX)
                         </button>
                         <p id="saveStatus" class="text-center text-[11px] mt-2 h-4"></p>
                     </div>
@@ -190,7 +195,6 @@
                     <div class="space-y-2">
                         <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Chọn Mệnh Giá Nạp</label>
                         <div class="grid grid-cols-3 gap-3">
-                            <!-- UPDATED TO 100 CR -->
                             <button onclick="setAmount(100)" class="btn-action py-3 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 hover:bg-purple-500/10 text-xs font-bold text-gray-300 transition-colors group">
                                 <span class="block text-white group-hover:text-purple-300">100 CR</span>
                                 <span class="text-[9px] opacity-50">100K</span>
@@ -244,9 +248,35 @@
     </div>
 
 <script>
-// ===== CONFIG =====
+// ===== CONFIG & SECURITY FIX =====
 const ADMIN_PASS = "admin123";
-const Sec={key:"V35_SEC",enc(t){return btoa([...t].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^this.key.charCodeAt(i%this.key.length))).join(""))},dec(t){try{return[...atob(t)].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^this.key.charCodeAt(i%this.key.length))).join("")}catch(e){return null}}};
+
+// FIX 1: DÙNG KEY MÃ HÓA GIỐNG VỚI MAIN APP (V35_SECURE_KEY_SALT)
+// Nếu dùng key khác, Web chính sẽ không giải mã được
+const Sec = {
+    key: "V35_SECURE_KEY_SALT", 
+    enc(t){
+        try {
+            if(!t) return '';
+            let result = '';
+            for(let i = 0; i < t.length; i++) {
+                result += String.fromCharCode(t.charCodeAt(i) ^ this.key.charCodeAt(i % this.key.length));
+            }
+            return btoa(result);
+        } catch(e) { console.error(e); return ''; }
+    },
+    dec(t){
+        try {
+            if(!t) return null;
+            let text = atob(t);
+            let result = '';
+            for(let i = 0; i < text.length; i++) {
+                result += String.fromCharCode(text.charCodeAt(i) ^ this.key.charCodeAt(i % this.key.length));
+            }
+            return result;
+        } catch(e) { return null; }
+    }
+};
 
 // ===== DOM ELEMENTS =====
 const els = {
@@ -288,57 +318,124 @@ if (sessionStorage.getItem("v35_admin_logged") === "true") showDash();
 
 function logout() { sessionStorage.removeItem("v35_admin_logged"); location.reload(); }
 
-// --- CONFIG API LOGIC ---
+// --- CONFIG API LOGIC (FIXED) ---
 function searchUserKey() {
     const id = els.userKey.value.trim();
-    if(!id) return showError(els.searchMsg, "Vui lòng nhập ID!", true);
-
+    // Nếu để trống, tìm cấu hình đang Active
+    const storageKey = id ? ("v35_user_" + id) : "v35_user_settings";
+    
     els.geminiKey.value = ""; els.cometKey.value = ""; els.saveStatus.innerText = "";
     
-    const savedData = localStorage.getItem("v35_user_" + id);
+    const savedData = localStorage.getItem(storageKey);
+    
     if (savedData) {
         try {
-            const data = JSON.parse(Sec.dec(savedData));
+            const jsonStr = Sec.dec(savedData);
+            if(!jsonStr) throw new Error("Decrypt failed");
+            
+            const data = JSON.parse(jsonStr);
             if(data) {
-                els.geminiKey.value = data.geminiKey || "";
-                els.cometKey.value = data.cometKey || "";
-                els.provider.value = data.provider || "gemini";
-                showSuccess(els.searchMsg, `Đã tải Config: ${id}`, true);
+                // Map dữ liệu đúng chuẩn
+                if(data.provider === 'comet') {
+                    els.cometKey.value = data.apiKey || "";
+                    els.provider.value = "comet";
+                } else {
+                    els.geminiKey.value = data.apiKey || "";
+                    els.provider.value = "google";
+                }
+                showSuccess(els.searchMsg, `Đã tải Config: ${id || "ACTIVE SETTINGS"}`, true);
             }
-        } catch(e) { showError(els.searchMsg, "Lỗi dữ liệu", true); }
+        } catch(e) { 
+            console.error(e);
+            showError(els.searchMsg, "Lỗi giải mã (Key sai?)", true); 
+        }
     } else {
-        els.searchMsg.innerHTML = `<span class="text-blue-400 font-medium">✨ ID mới. Hãy nhập Key và Lưu.</span>`;
+        els.searchMsg.innerHTML = `<span class="text-blue-400 font-medium">✨ Chưa có dữ liệu. Hãy nhập và Lưu.</span>`;
     }
 }
 
 function loadActiveUser() {
-    const saved = localStorage.getItem("v35_active_user");
-    if(saved) { try { const d = JSON.parse(Sec.dec(saved)); if(d && d.userKey) { els.userKey.value = d.userKey; searchUserKey(); } } catch(e){} }
+    searchUserKey();
 }
 
 function saveUser() {
     const id = els.userKey.value.trim();
-    if (!id) return showError(els.saveStatus, "Chưa nhập ID Khách Hàng!");
-
-    // Preserve existing credit
-    let credit = 0;
-    const crRaw = localStorage.getItem("v35_credits_" + id);
-    if(crRaw !== null) credit = parseInt(crRaw);
-    else {
-        const old = localStorage.getItem("v35_user_" + id);
-        if(old) { try { credit = JSON.parse(Sec.dec(old)).credit || 0; } catch(e){} }
+    
+    const prov = els.provider.value;
+    const gKey = els.geminiKey.value.trim();
+    const cKey = els.cometKey.value.trim();
+    
+    let finalApiKey = "";
+    let finalBaseUrl = "https://generativelanguage.googleapis.com";
+    
+    if(prov === 'comet') {
+        finalApiKey = cKey;
+        finalBaseUrl = "https://api.cometapi.com";
+    } else {
+        finalApiKey = gKey;
     }
-
-    const data = { deviceId: "ADMIN", userKey: id, geminiKey: els.geminiKey.value, cometKey: els.cometKey.value, provider: els.provider.value, credit: credit, updatedAt: new Date().toISOString() };
-    const enc = Sec.enc(JSON.stringify(data));
     
-    localStorage.setItem("v35_user_" + id, enc);
-    localStorage.setItem("v35_active_user", enc); // Auto save active
+    // Tạo cấu trúc dữ liệu giống hệt Main App mong đợi
+    const dataToSave = {
+        username: "Admin Set",
+        apiKey: finalApiKey,
+        provider: prov,
+        baseUrl: finalBaseUrl
+    };
     
-    showSuccess(els.saveStatus, "Đã lưu cấu hình API thành công!");
+    // Mã hóa
+    const enc = Sec.enc(JSON.stringify(dataToSave));
+    
+    // Lưu vào Key chính (v35_user_settings)
+    localStorage.setItem("v35_user_settings", enc);
+    
+    // Lưu thêm bản backup nếu có ID
+    if(id) {
+        localStorage.setItem("v35_user_" + id, enc);
+    }
+    
+    showSuccess(els.saveStatus, "Đã lưu & Áp dụng cho trình duyệt này!");
 }
 
-// --- VOUCHER LOGIC ---
+// --- NEW FUNCTION: EXPORT EMBED CODE ---
+function exportEmbedCode() {
+    // Lấy thông tin hiện tại trên form để tạo mã nhúng
+    const prov = els.provider.value;
+    const gKey = els.geminiKey.value.trim();
+    const cKey = els.cometKey.value.trim();
+    
+    let finalApiKey = "";
+    let finalBaseUrl = "https://generativelanguage.googleapis.com";
+    
+    if(prov === 'comet') {
+        finalApiKey = cKey;
+        finalBaseUrl = "https://api.cometapi.com";
+    } else {
+        finalApiKey = gKey;
+    }
+
+    if (!finalApiKey) return alert("Chưa nhập API Key!");
+    
+    const dataToSave = {
+        username: "Admin Set",
+        apiKey: finalApiKey,
+        provider: prov,
+        baseUrl: finalBaseUrl
+    };
+
+    // Mã hóa
+    const enc = Sec.enc(JSON.stringify(dataToSave));
+    
+    // Copy vào clipboard
+    navigator.clipboard.writeText(enc).then(() => {
+        const msg = "ĐÃ COPY MÃ NHÚNG!\n\nBước tiếp theo:\n1. Mở file index.html\n2. Tìm dòng: const DEFAULT_ENCRYPTED_CONFIG = \"\";\n3. Dán mã này vào giữa dấu ngoặc kép.";
+        alert(msg);
+    }).catch(err => {
+        prompt("Copy mã dưới đây và dán vào index.html:", enc);
+    });
+}
+
+// --- VOUCHER LOGIC (FIXED LENGTH) ---
 function setAmount(val) { 
     els.customAmount.value = val;
     els.customAmount.focus();
@@ -348,7 +445,9 @@ function generateCode() {
     const amount = parseInt(els.customAmount.value);
     if (!amount || amount === 0) return alert("Nhập số Credit hợp lệ!");
 
-    const code = `V35-${amount}-${Math.random().toString(36).substr(2, 6).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+    // SỬA Ở ĐÂY: Thêm phần tử 'PRO' vào để đủ 5 phần (V35-100-PRO-ABCD-1234)
+    // index.html kiểm tra: if(parts.length !== 5)
+    const code = `V35-${amount}-PRO-${Math.random().toString(36).substr(2, 6).toUpperCase()}-${Date.now().toString().slice(-4)}`;
     
     els.resultBox.classList.remove("hidden");
     els.generatedCode.value = code;
