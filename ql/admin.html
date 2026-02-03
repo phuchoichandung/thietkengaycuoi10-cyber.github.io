@@ -55,6 +55,12 @@
     initAuth();
 
     window.saveVoucherToCloud = async (code, amount) => {
+        // Kiểm tra config
+        if (Object.keys(firebaseConfig).length === 0) {
+            alert("Lỗi: Không tìm thấy cấu hình Firebase. Vui lòng tải lại trang!");
+            return false;
+        }
+
         try {
             // Đảm bảo đã login trước khi truy vấn
             if (!auth.currentUser) {
@@ -70,13 +76,19 @@
             // Guard operation final check
             if (!auth.currentUser) {
                 console.error("Mất kết nối Auth, không thể lưu.");
-                alert("Lỗi kết nối Server! Vui lòng tải lại trang.");
+                alert("Lỗi kết nối Server (Auth)! Vui lòng tải lại trang.");
                 return false;
             }
 
+            // Tạo timeout 10 giây để tránh bị treo nút bấm
+            const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error("Quá thời gian kết nối (Timeout). Mạng yếu hoặc Server bận.")), 10000)
+            );
+
             // Lưu vào đường dẫn public tuân thủ RULE 1
             const voucherRef = doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code);
-            await setDoc(voucherRef, {
+            
+            const savePromise = setDoc(voucherRef, {
                 code: code,
                 amount: amount,
                 isUsed: false,
@@ -84,6 +96,10 @@
                 usedAt: null,
                 usedBy: null
             });
+
+            // Đua tốc độ: Nếu lưu lâu hơn 10s sẽ báo lỗi
+            await Promise.race([savePromise, timeoutPromise]);
+            
             return true;
         } catch (e) {
             console.error("Lỗi lưu Cloud chi tiết:", e);
