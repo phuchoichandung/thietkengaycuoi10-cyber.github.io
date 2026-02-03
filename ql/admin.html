@@ -245,8 +245,23 @@ function renderHistory() {
 
 function copyCode() {
     const el = document.getElementById('generatedCode');
-    navigator.clipboard.writeText(el.value);
-    const old = el.value; el.value = "ĐÃ COPY!"; setTimeout(()=>el.value=old, 1000);
+    
+    // Sử dụng execCommand thay vì navigator.clipboard
+    el.select();
+    el.setSelectionRange(0, 99999); // Cho mobile
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            const old = el.value; 
+            el.value = "ĐÃ COPY!"; 
+            setTimeout(()=>el.value=old, 1000);
+        } else {
+            alert("Không thể copy tự động, vui lòng copy thủ công.");
+        }
+    } catch (err) {
+        alert("Lỗi copy: " + err);
+    }
 }
 
 function saveUser() {
@@ -260,8 +275,22 @@ function saveUser() {
 function exportEmbedCode() {
     const s = localStorage.getItem("v35_user_settings");
     if(!s) return alert("Hãy lưu API trước!");
-    navigator.clipboard.writeText(s);
-    alert("Đã copy mã nhúng! Hãy dán vào index.html");
+    
+    // Tạo textarea tạm thời để copy
+    const tempInput = document.createElement("textarea");
+    tempInput.value = s;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999);
+    
+    try {
+        document.execCommand("copy");
+        alert("Đã copy mã nhúng! Hãy dán vào index.html");
+    } catch (err) {
+        alert("Không thể copy: " + err);
+    }
+    
+    document.body.removeChild(tempInput);
 }
 
 document.getElementById('adminPass').addEventListener('keypress', (e) => { if(e.key === 'Enter') adminLogin(); });
