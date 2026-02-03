@@ -109,6 +109,11 @@
         .pay-tab { cursor: pointer; padding: 8px; border-bottom: 2px solid transparent; color: #64748b; transition: all 0.2s; }
         .pay-tab:hover { color: #94a3b8; }
         .pay-tab.active { border-bottom-color: #3b82f6; color: #fff; font-weight: 700; }
+        
+        /* NEW: COMPARISON LABELS */
+        .comp-label { position: absolute; bottom: 10px; padding: 4px 8px; background: rgba(0,0,0,0.6); color: white; font-size: 10px; font-weight: bold; border-radius: 4px; pointer-events: none; z-index: 25; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.1); }
+        .comp-label.before { right: 10px; } /* Gốc nằm dưới, hiển thị bên phải khi thanh gạt sang trái hoặc khi chưa gạt hết */
+        .comp-label.after { left: 10px; } /* Kết quả nằm trên (trong wrapper), hiển thị bên trái */
     </style>
 </head>
 
@@ -152,36 +157,6 @@
         </div>
     </div>
     
-    <!-- SMART MOBILE ACTION BAR -->
-    <div id="mobile-action-bar" class="lg:hidden fixed bottom-8 left-4 right-4 z-[90] flex items-center justify-center pointer-events-none transition-all duration-500 translate-y-24 opacity-0">
-        <div class="bg-[#0f1016]/90 backdrop-blur-2xl border border-white/10 p-2 rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] flex gap-3 w-full max-w-sm pointer-events-auto ring-1 ring-white/5">
-            
-            <!-- 1. UPLOAD BUTTON -->
-            <button id="mob-btn-upload" class="flex-1 py-3.5 bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 rounded-xl text-slate-200 font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 active:scale-95 transition-all shadow-inner group">
-                <svg class="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                <span>TẢI ẢNH</span>
-            </button>
-
-            <!-- 2. SCAN BUTTON -->
-            <button id="mob-btn-scan" class="hidden flex-1 py-3.5 bg-gradient-to-b from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 border border-violet-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_20px_rgba(124,58,237,0.4)] animate-pulse active:scale-95 transition-all">
-                <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <span>AUTO SCAN</span>
-            </button>
-
-            <!-- 3. GENERATE BUTTON -->
-            <button id="mob-btn-run" class="hidden flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_20px_rgba(16,185,129,0.4)] active:scale-95 transition-all">
-                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <span>CHẠY NGAY</span>
-            </button>
-
-            <!-- Reset Small Btn -->
-            <button id="mob-btn-reset" class="w-12 flex flex-col items-center justify-center bg-white/10 hover:bg-red-500/20 text-slate-400 hover:text-red-400 rounded-xl border border-white/10 active:scale-95 transition-all" title="Làm mới">
-                <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                <span class="text-[8px] font-bold">RESET</span>
-            </button>
-        </div>
-    </div>
-
     <div class="bg-blob blob-1"></div><div class="bg-blob blob-2"></div>
     <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none w-[90%] sm:w-auto"></div>
     
@@ -738,9 +713,15 @@
                     <div id="comparison-view" class="relative max-w-[95vw] max-h-[80vh] flex justify-center items-center" style="display:none;">
                          <div id="comp-inner" class="relative shadow-2xl rounded overflow-hidden cursor-ew-resize group select-none border border-white/10 bg-black">
                               <img id="img-original" class="block max-h-[75vh] w-auto pointer-events-none select-none">
+                              <!-- Modified Wrapper (Left Side) -->
                               <div id="img-modified-wrapper" class="absolute top-0 left-0 h-full w-[50%] overflow-hidden border-r border-white/50 bg-black/5">
                                   <img id="img-modified" class="absolute top-0 left-0 max-h-[75vh] w-auto pointer-events-none select-none" style="max-width: none;">
                               </div>
+                              
+                              <!-- LABELS -->
+                              <div class="comp-label before">GỐC (BEFORE)</div>
+                              <div class="comp-label after">KẾT QUẢ (AFTER)</div>
+
                               <div id="logo-overlay" class="logo-overlay"></div>
                               <div id="magnifier" class="magnifier"></div>
                               <div id="slider-handle" class="absolute top-0 bottom-0 left-[50%] w-0.5 bg-white/80 z-20 pointer-events-none shadow-[0_0_10px_rgba(0,0,0,0.5)]">
@@ -939,6 +920,11 @@
         // === DÁN MÃ NHÚNG TỪ ADMIN VÀO ĐÂY ===
         // Ví dụ: const DEFAULT_ENCRYPTED_CONFIG = "eyJ1c2VybmFtZSI6IkFkbWluIFNldCIsImFwaUtleSI6IkFJemFTeS4uLiIsInByb3ZpZGVyIjoiZ29vZ2xlIiwiYmFzZVVybCI6Imh0dHBzOi8vZ2VuZXJhdGl2ZWxhbmd1YWdlLmdvb2dsZWFwaXMuY29tIn0=";
         const DEFAULT_ENCRYPTED_CONFIG = "LRFALDY3LTQ/IH1xZxg7PigidAVWQX1/ZyIlOw46MmdjfSAqYSUjW3QnGQd0ZAU1DngybTckJQEfP1hSNgspJzAbIgofNW4bMRIfBBoCbxkrNBtkF2dzaTUrMCUoKDEkEQ99MCouMCZnc2knOCw2FD44dAkXNycxMyZoanAqNTBxMC4hMSJSRTZ9Jiw4cDg="; 
+        
+        // === KHÓA TÊN MIỀN (DOMAIN LOCK) - CHỐNG COPY ===
+        // Nếu để trống [], web chạy mọi nơi.
+        // Nếu điền tên miền, ví dụ: ["nhiepanh.com", "localhost"], web chỉ chạy trên các trang này.
+        const ALLOWED_DOMAINS = []; 
 
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; 
@@ -987,6 +973,21 @@
 
                     // 4. LOAD CẤU HÌNH API (ƯU TIÊN LOCAL, NẾU KHÔNG CÓ THÌ DÙNG MÃ NHÚNG)
                     try {
+                        // --- KIỂM TRA DOMAIN LOCK ---
+                        const currentHost = window.location.hostname;
+                        // Chỉ kiểm tra nếu danh sách ALLOWED_DOMAINS có dữ liệu
+                        if (ALLOWED_DOMAINS.length > 0) {
+                            // Luôn cho phép chạy file local hoặc localhost để test
+                            const isLocal = currentHost === "" || currentHost === "localhost" || currentHost === "127.0.0.1";
+                            if (!isLocal && !ALLOWED_DOMAINS.includes(currentHost)) {
+                                console.error("DOMAIN NOT ALLOWED: " + currentHost);
+                                showToast("⛔ TÊN MIỀN KHÔNG HỢP LỆ! Vui lòng liên hệ Admin.", "error");
+                                // Phá hủy giao diện để không dùng được
+                                document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:red;font-family:monospace;text-align:center;"><h1>⛔ ACCESS DENIED<br>DOMAIN: ${currentHost}</h1></div>`;
+                                return; // Dừng chạy tiếp
+                            }
+                        }
+
                         let configStr = localStorage.getItem("v35_user_settings"); // Ưu tiên 1
                         
                         // Nếu máy này chưa có config, dùng mã nhúng mặc định (Ưu tiên 2)
@@ -1256,7 +1257,8 @@
                 try {
                     const resizedBase64 = await resizeImage(state.base64);
                     const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 40000);
-                    const promptText = "Analyze this image for restoration. DETECT VIETNAMESE MILITARY DETAILS SPECIFICALLY. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\", \"lightingCondition\": \"rembrandt\"|\"golden_hour\"|\"neon\"|\"soft_diffused\"|\"flat\"|\"overexposed\"|\"harsh_sun\", \"backgroundType\": \"plain\"|\"complex_outdoor\"|\"complex_indoor\", \"faceAngle\": \"front\"|\"side_left\"|\"side_right\"|\"tilted_up\"|\"tilted_down\", \"jawStructure\": \"defined\"|\"soft\"|\"round\"|\"square\", \"noseAngle\": \"straight\"|\"tilted\", \"mouthAngle\": \"straight\"|\"tilted\", \"eyeSymmetry\": \"even\"|\"uneven\", \"hasAsymmetry\": boolean, \"isNature\": boolean, \"isMilitary\": boolean, \"isGroupPhoto\": boolean, \"hasVisibleRankInsignia\": boolean, \"rankColor\": \"red\"|\"green\"|\"blue\"|\"none\", \"specificHat\": \"pith_helmet\"|\"soft_cap\"|\"kepi\"|\"bamboo_helmet\"|\"none\", \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\", \"isOldPhoto\": boolean, \"isLowContrast\": boolean, \"isNoisy\": boolean, \"hasStrabismus\": boolean, \"hasDroopyEyelids\": boolean, \"hasClosedEyes\": boolean, \"hasDistinctiveImperfections\": boolean, \"hasMonolids\": boolean, \"hasBuckTeeth\": boolean, \"hasBlackenedTeeth\": boolean, \"needsBackgroundRestoration\": boolean, \"militaryBranch\": \"army\"|\"air_force\"|\"navy\"|\"border_guard\"|\"police\"|\"youth_volunteer\"|\"unknown\", \"uniformEra\": \"tran_thu\"|\"to_chau\"|\"k82\"|\"k94\"|\"camouflage\"|\"unknown\", \"rankLevel\": \"soldier\"|\"officer\"|\"unknown\", \"hasMedalSaoVang\": boolean, \"hasMedalKhangChien\": boolean, \"hasBadgeDoan\": boolean, \"isIDPhoto\": boolean, \"isHazy\": boolean }";
+                    // UPDATED PROMPT FOR DETAILED FEATURE DETECTION
+                    const promptText = "Analyze this image for photo restoration. Look closely at facial features and imperfections. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\", \"lightingCondition\": \"rembrandt\"|\"golden_hour\"|\"neon\"|\"soft_diffused\"|\"flat\"|\"overexposed\"|\"harsh_sun\", \"backgroundType\": \"plain\"|\"complex_outdoor\"|\"complex_indoor\", \"faceAngle\": \"front\"|\"side_left\"|\"side_right\"|\"tilted_up\"|\"tilted_down\", \"jawStructure\": \"defined\"|\"soft\"|\"round\"|\"square\", \"noseAngle\": \"straight\"|\"tilted\", \"mouthAngle\": \"straight\"|\"tilted\", \"eyeSymmetry\": \"even\"|\"uneven\", \"hasAsymmetry\": boolean, \"isNature\": boolean, \"isMilitary\": boolean, \"isGroupPhoto\": boolean, \"hasVisibleRankInsignia\": boolean, \"rankColor\": \"red\"|\"green\"|\"blue\"|\"none\", \"specificHat\": \"pith_helmet\"|\"soft_cap\"|\"kepi\"|\"bamboo_helmet\"|\"none\", \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\", \"isOldPhoto\": boolean, \"isLowContrast\": boolean, \"isNoisy\": boolean, \"hasStrabismus\": boolean, \"hasDroopyEyelids\": boolean, \"hasClosedEyes\": boolean, \"hasDistinctiveImperfections\": boolean, \"hasMonolids\": boolean, \"hasBuckTeeth\": boolean, \"hasBlackenedTeeth\": boolean, \"needsBackgroundRestoration\": boolean, \"militaryBranch\": \"army\"|\"air_force\"|\"navy\"|\"border_guard\"|\"police\"|\"youth_volunteer\"|\"unknown\", \"uniformEra\": \"tran_thu\"|\"to_chau\"|\"k82\"|\"k94\"|\"camouflage\"|\"unknown\", \"rankLevel\": \"soldier\"|\"officer\"|\"unknown\", \"hasMedalSaoVang\": boolean, \"hasMedalKhangChien\": boolean, \"hasBadgeDoan\": boolean, \"isIDPhoto\": boolean, \"isHazy\": boolean }";
                     const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
                     const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, signal: controller.signal, body: JSON.stringify({ contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }] }] }) });
                     clearTimeout(timeoutId);
@@ -1265,13 +1267,51 @@
                     if(text) {
                         text = text.replace(/```json/g, '').replace(/```/g, '').trim();
                         const result = JSON.parse(text);
-                        // Apply Auto Settings
+                        
+                        // === APPLY AUTO SETTINGS TO UI ===
                         if(document.getElementById('gender-select')) document.getElementById('gender-select').value = result.gender === 'male' ? 'male' : (result.gender === 'female' ? 'female' : '');
                         if(document.getElementById('age-input')) document.getElementById('age-input').value = result.age || 30;
-                        if(result.isMilitary) { document.getElementById('content-military').classList.add('open'); showToast("🇻🇳 AUTO SCAN: Đã phát hiện Ảnh Quân Đội", "warning"); }
-                        if(result.hasStrabismus) { document.getElementById('check-cross-eyed').checked = true; document.getElementById('module-identity').classList.add('open'); showToast("👁️ Mắt Lé detected", "warning"); }
-                        if(result.hasDroopyEyelids) { document.getElementById('check-ptosis').checked = true; document.getElementById('module-identity').classList.add('open'); }
-                        if(result.hasClosedEyes) { document.getElementById('check-closed-eyes').checked = true; document.getElementById('module-identity').classList.add('open'); }
+                        
+                        // Military Logic
+                        if(result.isMilitary) { 
+                            document.getElementById('content-military').classList.add('open'); 
+                            showToast("🇻🇳 AUTO SCAN: Đã phát hiện Ảnh Quân Đội", "warning"); 
+                        }
+
+                        // Identity / Features Logic (AUTO TICK)
+                        let identityFeaturesFound = false;
+                        if(result.hasStrabismus) { 
+                            document.getElementById('check-cross-eyed').checked = true; 
+                            identityFeaturesFound = true;
+                            showToast("👁️ Phát hiện: Mắt Lé (Đã tích)", "warning"); 
+                        }
+                        if(result.hasDroopyEyelids) { 
+                            document.getElementById('check-ptosis').checked = true; 
+                            identityFeaturesFound = true;
+                        }
+                        if(result.hasClosedEyes) { 
+                            document.getElementById('check-closed-eyes').checked = true; 
+                            identityFeaturesFound = true;
+                        }
+                        if(result.hasMonolids) {
+                            document.getElementById('check-monolid').checked = true;
+                            identityFeaturesFound = true;
+                        }
+                        if(result.hasBuckTeeth) {
+                            document.getElementById('check-buck-teeth').checked = true;
+                            identityFeaturesFound = true;
+                        }
+                        if(result.hasBlackenedTeeth) {
+                            document.getElementById('check-black-teeth').checked = true;
+                            identityFeaturesFound = true;
+                        }
+
+                        // Auto open Identity Module if features found
+                        if(identityFeaturesFound) {
+                            document.getElementById('content-identity').classList.add('open');
+                            document.getElementById('icon-identity').style.transform = 'rotate(180deg)';
+                        }
+
                         if (!state.isReplicaMode) { document.getElementById('mode-replica').click(); showToast("💎 Auto Scan: Đã kích hoạt Chế độ Sao Y Bản Chính (Replica)", "warning"); }
                         
                         let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed background:1.3). `;
@@ -1314,6 +1354,11 @@
                             document.getElementById('placeholder-state').style.display = 'none';
                             document.getElementById('download-trigger').disabled = false;
                             document.getElementById('download-mobile').disabled = false;
+                            
+                            // === FIX: RESET SLIDER TO 50% FOR CLARITY ===
+                            document.getElementById('img-modified-wrapper').style.width = '50%';
+                            document.getElementById('slider-handle').style.left = '50%';
+                            
                             updateMobileBtnState('done');
                             showToast("Phục chế thành công!", "flux");
                         };
@@ -1333,12 +1378,18 @@
             if(mobBtnUpload) mobBtnUpload.onclick = () => document.getElementById('image-upload').click();
             if(mobBtnScan) mobBtnScan.onclick = () => document.getElementById('btn-auto-pilot').click();
             if(mobBtnRun) mobBtnRun.onclick = () => document.getElementById('process-image').click();
-            document.getElementById('mob-btn-reset').onclick = () => location.reload();
+            
+            // FIX NULL ERROR: CHECK IF RESET BTN EXISTS
+            const mobBtnReset = document.getElementById('mob-btn-reset');
+            if (mobBtnReset) mobBtnReset.onclick = () => location.reload();
             
             // Redeem Code
             const redeemBtn = document.getElementById('btn-submit-recharge'), redeemInput = document.getElementById('recharge-input');
             if(redeemBtn) redeemBtn.addEventListener('click', () => { const code = redeemInput.value.trim(); if(!code) return showToast("Vui lòng nhập mã!", "error"); const parts = code.split('-'); if(parts.length !== 5 || parts[0] !== 'V35') return showToast("Mã không hợp lệ!", "error"); const credits = parseInt(parts[1]); if(isNaN(credits)) return showToast("Lỗi định dạng tín dụng!", "error"); UserSystem.addCredits(credits); showToast(`Nạp thành công +${credits} Credits!`, "success"); document.getElementById('recharge-modal').classList.add('hidden'); redeemInput.value = ''; });
-            document.getElementById('close-recharge').onclick = () => document.getElementById('recharge-modal').classList.add('hidden');
+            
+            // FIX NULL ERROR: CHECK IF CLOSE BTN EXISTS
+            const closeRechargeBtn = document.getElementById('close-recharge');
+            if (closeRechargeBtn) closeRechargeBtn.onclick = () => document.getElementById('recharge-modal').classList.add('hidden');
             
             // Sliders Display
             const sliders = document.querySelectorAll('input[type="range"]');
