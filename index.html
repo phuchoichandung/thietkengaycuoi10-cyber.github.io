@@ -1058,7 +1058,7 @@
                     const key = `v35_credits_${this.deviceId}`;
                     const savedCredits = localStorage.getItem(key);
                     if (savedCredits === null) {
-                        this.credits = 20; 
+                        this.credits = 0; 
                         this.save();
                     } else {
                         this.credits = parseInt(savedCredits);
