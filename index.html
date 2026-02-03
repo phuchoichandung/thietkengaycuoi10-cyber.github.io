@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-4 scroll-smooth custom-scrollbar space-y-2">
+            <div class="flex-1 overflow-y-auto p-4 scroll-smooth custom-scrollbar space-y-2 pb-24 lg:pb-4"> <!-- Added bottom padding for mobile safe area -->
                 <!-- 1. MAIN UPLOAD -->
                 <div class="relative group">
                     <input type="file" id="image-upload" accept="image/*" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;">
@@ -204,7 +204,7 @@
                     <span class="text-[10px] font-bold tracking-widest">AUTO SCAN V35.60 (AUTO-SIZE)</span>
                 </button>
 
-                <!-- MODULES (KEPT ORIGINAL AS REQUESTED) -->
+                <!-- MODULES -->
                 <!-- FLUX KONTEXT (LZP) -->
                 <div class="relative group p-2 rounded-lg border border-violet-500/30 bg-violet-500/5 mb-3 animate-flux-pulse" id="kontext-module-container">
                     <div class="flex items-center gap-2 mb-2">
@@ -786,136 +786,6 @@
         </div>
     </div>
 
-    <!-- RECHARGE MODAL REDESIGNED (PRO PAYMENT) -->
-    <div id="recharge-modal" class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-2xl hidden flex items-center justify-center modal-fade-in p-2 md:p-4 overflow-y-auto">
-        <div class="w-full max-w-[850px] bg-[#0f1016] border border-violet-500/20 rounded-2xl md:rounded-3xl shadow-[0_0_100px_rgba(139,92,246,0.1)] flex flex-col md:flex-row relative overflow-hidden ring-1 ring-white/5 my-auto">
-            <!-- Close Button -->
-            <button id="close-recharge" class="absolute top-3 right-3 z-50 p-2 bg-black/40 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-
-            <!-- LEFT COLUMN: PACKAGE SELECTOR -->
-            <div class="w-full md:w-5/12 bg-white/[0.02] border-t md:border-t-0 md:border-r border-white/5 p-5 md:p-8 flex flex-col order-2 md:order-1">
-                <div class="mb-3 md:mb-6">
-                    <h3 class="text-sm md:text-lg font-bold text-white tracking-wide flex items-center gap-2">
-                        <span class="w-1.5 h-4 md:h-6 bg-gradient-to-b from-violet-500 to-blue-500 rounded-full"></span>
-                        CHỌN GÓI CREDIT
-                    </h3>
-                    <p class="text-[9px] md:text-[10px] text-slate-500 mt-1 pl-3.5">Chọn gói phù hợp để hiện mã QR thanh toán</p>
-                </div>
-
-                <div class="space-y-2 md:space-y-3 flex-1">
-                    <!-- Package 1 -->
-                    <div class="recharge-pkg-card group relative p-3 md:p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 cursor-pointer transition-all hover:-translate-y-1 hover:border-violet-500/50" data-amount="100000" data-credits="80">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="block text-base md:text-xl font-bold text-slate-200">100.000đ</span>
-                                <span class="text-[9px] md:text-[10px] text-slate-500 font-mono tracking-wider">GÓI CƠ BẢN</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="block text-sm md:text-lg font-bold text-yellow-400 font-mono">80 CR</span>
-                                <span class="text-[8px] md:text-[9px] text-slate-500">~1.2k/lượt</span>
-                            </div>
-                        </div>
-                        <div class="absolute inset-0 border-2 border-violet-500 rounded-xl opacity-0 scale-95 transition-all group-hover:opacity-100 group-hover:scale-100 pointer-events-none pkg-border"></div>
-                    </div>
-
-                    <!-- Package 2 (HOT) -->
-                    <div class="recharge-pkg-card group relative p-3 md:p-4 rounded-xl border border-violet-500/50 bg-violet-900/10 hover:bg-violet-900/20 cursor-pointer transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(139,92,246,0.15)] ring-1 ring-violet-500/50 active" data-amount="200000" data-credits="200">
-                        <div class="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-[8px] md:text-[9px] font-bold px-2 py-0.5 rounded shadow-lg animate-pulse">KHUYÊN DÙNG</div>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="block text-lg md:text-2xl font-bold text-white text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200">200.000đ</span>
-                                <span class="text-[9px] md:text-[10px] text-violet-300 font-mono tracking-wider font-bold">GÓI PHỔ BIẾN</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="block text-base md:text-xl font-bold text-yellow-400 font-mono">200 CR</span>
-                                <span class="text-[8px] md:text-[9px] text-green-400 font-bold">Tặng thêm 20%</span>
-                            </div>
-                        </div>
-                        <div class="absolute inset-0 border-2 border-violet-500 rounded-xl opacity-100 scale-100 transition-all pointer-events-none pkg-border"></div>
-                    </div>
-
-                    <!-- Package 3 -->
-                    <div class="recharge-pkg-card group relative p-3 md:p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 cursor-pointer transition-all hover:-translate-y-1 hover:border-blue-500/50" data-amount="500000" data-credits="500">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="block text-base md:text-xl font-bold text-slate-200">500.000đ</span>
-                                <span class="text-[9px] md:text-[10px] text-slate-500 font-mono tracking-wider">GÓI PRO STUDIO</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="block text-sm md:text-lg font-bold text-yellow-400 font-mono">500 CR</span>
-                                <span class="text-[8px] md:text-[9px] text-green-400 font-bold">Siêu tiết kiệm</span>
-                            </div>
-                        </div>
-                        <div class="absolute inset-0 border-2 border-blue-500 rounded-xl opacity-0 scale-95 transition-all group-hover:opacity-100 group-hover:scale-100 pointer-events-none pkg-border"></div>
-                    </div>
-                </div>
-
-                <div class="mt-4 md:mt-6 pt-4 border-t border-white/5">
-                    <div class="flex items-center gap-2 mb-2">
-                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase">HỖ TRỢ</span>
-                    </div>
-                    <a href="https://zalo.me/0352803379" target="_blank" class="flex items-center justify-center gap-2 w-full py-2 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-lg text-xs font-bold transition-all group">
-                        <span>Chat Zalo Admin (035.280.3379)</span>
-                        <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                    </a>
-                </div>
-            </div>
-
-            <!-- RIGHT COLUMN: QR DISPLAY -->
-            <div class="w-full md:w-7/12 p-5 md:p-8 bg-[#0a0a0f] flex flex-col items-center justify-center relative order-1 md:order-2">
-                <!-- Decorative Glow -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-violet-600/20 rounded-full blur-[80px] pointer-events-none"></div>
-
-                <h3 class="text-xs md:text-sm font-bold text-white tracking-widest mb-4 md:mb-6 uppercase flex items-center gap-2 relative z-10">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-                    QUÉT MÃ QR ĐỂ THANH TOÁN
-                </h3>
-
-                <!-- QR Code Container -->
-                <div class="relative group mb-4 md:mb-6 z-10">
-                    <div class="absolute -inset-1 bg-gradient-to-tr from-violet-600 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-500"></div>
-                    <div class="bg-white p-2 rounded-xl shadow-2xl relative">
-                        <!-- Dynamic VietQR Image -->
-                        <img id="vietqr-image" src="" alt="VietQR Payment" class="w-40 h-40 md:w-56 md:h-56 object-contain rounded-lg">
-                        
-                        <!-- Scanning Animation Line -->
-                        <div class="absolute top-2 left-2 right-2 h-0.5 bg-red-500 shadow-[0_0_10px_red] animate-scan opacity-50 pointer-events-none"></div>
-                    </div>
-                </div>
-
-                <!-- Payment Details -->
-                <div class="w-full max-w-xs space-y-2 md:space-y-3 z-10 text-center">
-                    <div class="bg-white/5 rounded-lg p-2 md:p-3 border border-white/10 hidden md:block">
-                        <p class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">CHỦ TÀI KHOẢN</p>
-                        <p class="text-sm font-bold text-white font-mono">HOANG QUANG CUONG</p>
-                        <p class="text-[10px] text-slate-400 font-mono tracking-widest mt-0.5">MB BANK • 85543556868</p>
-                    </div>
-
-                    <div class="bg-violet-900/20 rounded-lg p-2 md:p-3 border border-violet-500/30 relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-violet-500"></div>
-                        <p class="text-[8px] md:text-[9px] text-violet-300 font-bold uppercase tracking-wider mb-1">NỘI DUNG CHUYỂN KHOẢN (AUTO)</p>
-                        <p id="qr-content-display" class="text-base md:text-lg font-bold text-yellow-400 font-mono tracking-wide">V35 LOADING...</p>
-                        <p class="text-[8px] text-slate-400 italic mt-1">*Nội dung đã được điền tự động trong mã QR</p>
-                    </div>
-                </div>
-
-                <!-- Activation Section -->
-                <div class="w-full max-w-xs mt-4 md:mt-6 pt-4 md:pt-6 border-t border-white/5 z-10">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block text-center">NHẬP MÃ KÍCH HOẠT (SAU KHI THANH TOÁN)</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="recharge-input" class="pro-input flex-1 py-2 md:py-2.5 text-center font-mono uppercase text-violet-300 border-violet-500/30 bg-violet-500/5 placeholder-slate-600 text-xs md:text-sm" placeholder="NHẬP MÃ V35-...">
-                        <button id="btn-submit-recharge" class="px-3 md:px-4 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-lg active:scale-95 whitespace-nowrap">
-                            KÍCH HOẠT
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         // === DÁN MÃ NHÚNG TỪ ADMIN VÀO ĐÂY ===
         // Ví dụ: const DEFAULT_ENCRYPTED_CONFIG = "eyJ1c2VybmFtZSI6IkFkbWluIFNldCIsImFwaUtleSI6IkFJemFTeS4uLiIsInByb3ZpZGVyIjoiZ29vZ2xlIiwiYmFzZVVybCI6Imh0dHBzOi8vZ2VuZXJhdGl2ZWxhbmd1YWdlLmdvb2dsZWFwaXMuY29tIn0=";
@@ -1242,6 +1112,26 @@
             const toggleModule = (btnId, contentId, iconId) => { const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId); if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); };
             ['processing','subject','identity','prompt','logo','military','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
 
+            // SIDEBAR TOGGLE & MOBILE BAR INTERACTION
+            const sidebar = document.getElementById('sidebar');
+            const mobileBar = document.getElementById('mobile-action-bar');
+
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                if(mobileBar) mobileBar.classList.add('translate-y-24', 'opacity-0'); // Hide floating bar
+            }
+
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                if(mobileBar) mobileBar.classList.remove('translate-y-24', 'opacity-0'); // Show floating bar
+            }
+
+            const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+            if(toggleSidebarBtn) toggleSidebarBtn.onclick = openSidebar;
+            
+            const closeSidebarMobileBtn = document.getElementById('close-sidebar-mobile');
+            if(closeSidebarMobileBtn) closeSidebarMobileBtn.onclick = closeSidebar;
+
             // REAL LOGIC RESTORATION
             const btnAutoPilot = document.getElementById('btn-auto-pilot'), processBtn = document.getElementById('process-image');
             
@@ -1271,6 +1161,7 @@
                         // === APPLY AUTO SETTINGS TO UI ===
                         if(document.getElementById('gender-select')) document.getElementById('gender-select').value = result.gender === 'male' ? 'male' : (result.gender === 'female' ? 'female' : '');
                         if(document.getElementById('age-input')) document.getElementById('age-input').value = result.age || 30;
+                        if(result.isIDPhoto) { document.getElementById('check-id-photo').checked = true; document.getElementById('module-subject').classList.add('open'); }
                         
                         // Military Logic
                         if(result.isMilitary) { 
@@ -1320,6 +1211,8 @@
                         document.getElementById('prompt-main').value = smartPrompt;
                         document.getElementById('content-prompt').classList.add('open');
                         
+                        // AUTO OPEN SIDEBAR TO SHOW RESULTS (MOBILE UX)
+                        openSidebar();
                         updateMobileBtnState('run');
                     }
                 } catch(e) { console.error(e); showToast("Lỗi Smart Scan: " + e.message, "error"); updateMobileBtnState('scan'); } 
@@ -1332,6 +1225,9 @@
                 updateMobileBtnState('running');
                 processBtn.disabled = true; processBtn.innerHTML = "FLUX/KONTEXT PROCESSING..."; document.getElementById('ai-terminal-overlay').classList.remove('hidden'); document.getElementById('scan-beam').classList.add('active');
                 
+                // AUTO CLOSE SIDEBAR TO SHOW PROCESS
+                closeSidebar();
+
                 const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
                 try {
                     const resizedBase64 = await resizeImage(state.base64);
