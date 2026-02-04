@@ -960,9 +960,9 @@
     </div>
 
     <script>
-        // === DÁN MÃ NHÚNG TỪ ADMIN VÀO ĐÂY (SẼ BỊ GHI ĐÈ BỞI LOCALSTORAGE TỪ ADMIN) ===
+        // === DÁN MÃ NHÚNG TỪ ADMIN VÀO ĐÂY ===
         // Ví dụ: const DEFAULT_ENCRYPTED_CONFIG = "eyJ1c2VybmFtZSI6IkFkbWluIFNldCIsImFwaUtleSI6IkFJemFTeS4uLiIsInByb3ZpZGVyIjoiZ29vZ2xlIiwiYmFzZVVybCI6Imh0dHBzOi8vZ2VuZXJhdGl2ZWxhbmd1YWdlLmdvb2dsZWFwaXMuY29tIn0=";
-        const DEFAULT_ENCRYPTED_CONFIG = "cwR3emF3Ii8/eTNKEG1hYHAecwBkQF5yIjArHi54FAQECCMUcChiWiFXeBQ6LiQ2Dl4yVnw4BhEzaBJQBWBlE2IfBScnamd2EG1hYHEccwBkQ0cwJSwnOiQXZAEQbBJgcW01XTtWQXphd2ZtFRdkAVc+ICAWLToXZAEQbBJgcW0+RiJDRnpgBGZtEBdkdVI6PSAxPiJbIFZZPj0iNj4xV3hUWjA0KSY+JlslHVYwPmBxbXMAFRYHbTQgLTokUyJWUR4nYHFtcwEXAgJoY3R6Zm8FZQoDbHZyBw=="; 
+        const DEFAULT_ENCRYPTED_CONFIG = "LRFALDY3LTQ/IH1xZxg7PigidAVWQX1/ZyIlOw46MmdjfSAqYSUjW3QnGQd0ZAU1DngybTckJQEfP1hSNgspJzAbIgofNW4bMRIfBBoCbxkrNBtkF2dzaTUrMCUoKDEkEQ99MCouMCZnc2knOCw2FD44dAkXNycxMyZoanAqNTBxMC4hMSJSRTZ9Jiw4cDg="; 
         
         // === KHÓA TÊN MIỀN (DOMAIN LOCK) - CHỐNG COPY ===
         // Nếu để trống [], web chạy mọi nơi.
@@ -1010,7 +1010,7 @@
                     // 3. Load Credits
                     this.loadCredits();
 
-                    // 4. LOAD CẤU HÌNH API (AUTO SYNC TỪ ADMIN)
+                    // 4. LOAD CẤU HÌNH API (ƯU TIÊN LOCAL, NẾU KHÔNG CÓ THÌ DÙNG MÃ NHÚNG)
                     try {
                         // --- KIỂM TRA DOMAIN LOCK ---
                         const currentHost = window.location.hostname;
@@ -1027,25 +1027,36 @@
                             }
                         }
 
-                        // === ƯU TIÊN 1: KEY TOÀN CỤC DO ADMIN KÍCH HOẠT (v35_global_config) ===
-                        let configStr = localStorage.getItem("v35_global_config");
-                        let source = "Global Admin Config";
-
-                        // Nếu không có, thử tìm Config riêng của User này
-                        if (!configStr) {
-                             // Logic cũ: tìm user settings
-                             configStr = localStorage.getItem("v35_user_settings"); 
-                             source = "User Settings";
-                        }
-
-                        // Nếu không có gì hết, dùng mã nhúng
+                        let configStr = localStorage.getItem("v35_user_settings"); // Ưu tiên 1
+                        
+                        // Nếu máy này chưa có config, dùng mã nhúng mặc định (Ưu tiên 2)
                         if (!configStr && DEFAULT_ENCRYPTED_CONFIG) {
-                            configStr = DEFAULT_ENCRYPTED_CONFIG; // Phải giải mã khác nếu Admin dùng logic cũ, nhưng ở đây ta đồng bộ V35_SEC_V2
-                            source = "Embedded Code";
+                            configStr = DEFAULT_ENCRYPTED_CONFIG;
+                            console.log("Using Embedded Config");
                         }
 
                         if (configStr) {
-                            const jsonStr = Sec.dec(configStr); // Giải mã bằng V35_SEC_V2
+                            // Dùng hàm giải mã cũ cho config string nếu cần, hoặc giả định config string dùng key cũ/riêng
+                            // Ở đây ta tạm dùng hàm giải mã đơn giản tương tự Sec cũ nếu config encrypt bằng key cũ
+                            // Tuy nhiên để an toàn, ta dùng logic giải mã riêng cho config nếu nó khác
+                            // Trong trường hợp này, ta giả định Sec.dec mới tương thích nếu admin dùng cùng key V35_SEC_V2 để mã hóa config
+                            // Nếu mã nhúng dùng key cũ "V35_SECURE_KEY_SALT", ta cần logic giải mã riêng ở đây.
+                            
+                            // TẠM THỜI: Dùng logic giải mã config riêng để không ảnh hưởng Sec chính
+                            const decryptConfig = (t) => {
+                                const k = "V35_SECURE_KEY_SALT"; // Key cũ từ file gốc để giải mã config cũ
+                                try {
+                                    if(!t) return null;
+                                    let text = atob(t);
+                                    let result = '';
+                                    for(let i = 0; i < text.length; i++) {
+                                        result += String.fromCharCode(text.charCodeAt(i) ^ k.charCodeAt(i % k.length));
+                                    }
+                                    return result;
+                                } catch(e) { return null; }
+                            };
+
+                            const jsonStr = decryptConfig(configStr);
                             if (jsonStr) {
                                 const config = JSON.parse(jsonStr);
                                 if (config && config.apiKey) {
@@ -1053,12 +1064,13 @@
                                     window.API_PROVIDER = config.provider || "google";
                                     window.API_BASE_URL = config.baseUrl || "https://generativelanguage.googleapis.com";
                                     
-                                    console.log(`API Config Loaded from [${source}]:`, window.API_PROVIDER);
-                                    showToast("✅ Đã kết nối máy chủ AI", "success");
+                                    console.log("API Config Loaded:", window.API_PROVIDER);
+                                    showToast("✅ Đã tải cấu hình API", "success");
                                 }
                             }
                         } else {
-                            console.log("Chưa có cấu hình API. Vui lòng vào Admin lưu cấu hình.");
+                            console.log("No API Config Found (Local or Embedded)");
+                            // Không hiện lỗi ngay để tránh spam, chỉ hiện khi user cố dùng tính năng
                         }
                     } catch(e) { console.error("Config Load Error", e); }
 
