@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V35 ADMIN - CLOUD & API CONFIG</title>
+    <title>V35 ADMIN - STUDIO V35.75 SYNC</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,70 +13,53 @@
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, query, onSnapshot, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // CONFIG HỆ THỐNG CLOUD
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'v35-studio-pro';
+        // CONFIG CLOUD (Dùng cho lưu trữ mã 1 lần nếu cần nâng cấp sau này)
+        try {
+            const firebaseConfig = JSON.parse(__firebase_config);
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'v35-studio-pro';
 
-        // AUTHENTICATION
-        const initAuth = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
-        };
-        initAuth();
+            const initAuth = async () => {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            };
+            initAuth();
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                window.currentUser = user;
-                loadVouchersFromCloud();
-            }
-        });
-
-        // VOUCHER CLOUD LOGIC
-        window.generateVoucherCloud = async (amt) => {
-            if (!window.currentUser) return alert("Chưa kết nối Cloud!");
-            const code = `V35-${amt}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Date.now().toString().slice(-4)}`;
-            try {
-                const voucherRef = doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code);
-                await setDoc(voucherRef, { code, amount: parseInt(amt), status: 'active', createdAt: serverTimestamp() });
-                return code;
-            } catch (e) { return null; }
-        };
-
-        function loadVouchersFromCloud() {
-            const q = collection(db, 'artifacts', appId, 'public', 'data', 'vouchers');
-            onSnapshot(q, (snapshot) => {
-                const logs = [];
-                snapshot.forEach(doc => logs.push(doc.data()));
-                renderCloudLogs(logs);
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    window.currentUser = user;
+                    loadVouchersFromCloud();
+                }
             });
-        }
 
-        function renderCloudLogs(logs) {
-            const list = document.getElementById('logList');
-            if (!list) return;
-            logs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-            list.innerHTML = logs.map(l => `
-                <div class="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col gap-1">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[9px] font-bold text-emerald-500 uppercase">SẴN SÀNG</span>
-                        <span class="font-bold text-xs text-yellow-400">${l.amount} CR</span>
-                    </div>
-                    <code class="text-[10px] text-gray-300 font-mono break-all bg-black/40 p-1.5 rounded">${l.code}</code>
-                    <button onclick="window.deleteVoucher('${l.code}')" class="text-[9px] text-red-500 text-right mt-1 hover:underline">Hủy mã</button>
-                </div>
-            `).join('');
-            if(logs.length === 0) list.innerHTML = '<p class="text-[10px] text-gray-600 text-center py-10">Trống.</p>';
-        }
+            window.generateVoucherCloud = async (amt) => {
+                if (!window.currentUser) return null;
+                const code = `V35-${amt}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+                try {
+                    const voucherRef = doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code);
+                    await setDoc(voucherRef, { code, amount: parseInt(amt), status: 'active', createdAt: serverTimestamp() });
+                    return code;
+                } catch (e) { return null; }
+            };
 
-        window.deleteVoucher = async (code) => {
-            if(confirm("Xóa mã này?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code));
-        };
+            function loadVouchersFromCloud() {
+                const q = collection(db, 'artifacts', appId, 'public', 'data', 'vouchers');
+                onSnapshot(q, (snapshot) => {
+                    const logs = [];
+                    snapshot.forEach(doc => logs.push(doc.data()));
+                    window.renderCloudLogs(logs);
+                });
+            }
+
+            window.deleteVoucher = async (code) => {
+                if(confirm("Xóa mã này?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code));
+            };
+        } catch(e) { console.log("Cloud not initialized - Running local mode"); }
     </script>
 
     <script>
@@ -131,6 +114,8 @@
         #notification { position: fixed; top: 2rem; right: 2rem; z-index: 100; transition: 0.3s; transform: translateX(120%); }
         #notification.show { transform: translateX(0); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     </style>
 </head>
 
@@ -140,50 +125,51 @@
         <div class="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
         </div>
-        <div><p class="font-bold text-sm">Thông báo</p><p id="notifMsg" class="text-xs text-gray-400"></p></div>
+        <div><p class="font-bold text-sm">Hệ thống</p><p id="notifMsg" class="text-xs text-gray-400"></p></div>
     </div>
 
     <!-- LOGIN -->
     <div id="loginSection" class="w-full max-w-md glass-panel rounded-3xl p-10 text-center">
-        <h1 class="text-3xl font-black text-white mb-2">V35 <span class="text-brand-500">PRO</span></h1>
-        <p class="text-gray-400 text-sm mb-8 uppercase tracking-widest">Hệ Thống Quản Trị</p>
+        <h1 class="text-3xl font-black text-white mb-2">V35 <span class="text-brand-500">ADMIN</span></h1>
+        <p class="text-gray-400 text-sm mb-8 uppercase tracking-widest">Quản Lý Web Tĩnh & Cloud</p>
         <div class="space-y-4">
             <input id="adminKey" type="password" placeholder="Mật khẩu Admin..." class="w-full bg-black/40 border border-white/10 rounded-2xl px-6 py-4 text-center text-sm focus:border-brand-500 outline-none">
-            <button onclick="handleLogin()" class="w-full bg-brand-500 py-4 rounded-2xl font-bold text-white shadow-lg">VÀO HỆ THỐNG</button>
+            <button onclick="handleLogin()" class="w-full bg-brand-500 py-4 rounded-2xl font-bold text-white shadow-lg">TRUY CẬP</button>
         </div>
     </div>
 
     <!-- DASHBOARD -->
-    <div id="mainDashboard" class="hidden w-full max-w-6xl">
+    <div id="mainDashboard" class="hidden w-full max-w-6xl animate-fade-in">
         <header class="flex justify-between items-center mb-8 px-2">
             <div>
                 <h2 class="text-2xl font-bold text-white">V35 Studio Management</h2>
-                <p class="text-xs text-brand-500 font-mono">Đồng bộ hóa V35.75</p>
+                <p class="text-xs text-brand-500 font-mono">Phiên bản đồng bộ 75.0</p>
             </div>
             <button onclick="location.reload()" class="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-400 hover:text-white transition-all">THOÁT</button>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <!-- CỘT TRÁI: CẤU HÌNH API -->
+            <!-- CẤU HÌNH API & USER -->
             <section class="lg:col-span-2 space-y-6">
+                <!-- API CONFIG -->
                 <div class="glass-panel rounded-3xl p-8">
                     <h3 class="font-bold text-lg mb-6 flex items-center gap-3 text-brand-500">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
-                        Cấu Hình API Cloud
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
+                        Cấu Hình API Key (Gemini/Comet)
                     </h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-1">Tìm ID Khách</label>
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-1">ID Khách / Thiết Bị</label>
                             <div class="flex gap-2">
                                 <input id="lookupId" type="text" placeholder="ID-ABC123" class="flex-1 bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-sm font-mono focus:border-brand-500 outline-none">
-                                <button onclick="lookupUser()" class="px-5 py-3 bg-brand-500 hover:bg-brand-600 rounded-xl text-xs font-bold transition-all shadow-lg">LOAD</button>
+                                <button onclick="lookupUser()" class="px-5 py-3 bg-brand-500/20 border border-brand-500/40 text-brand-500 rounded-xl text-xs font-bold transition-all">TẢI</button>
                             </div>
                         </div>
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-1">Provider</label>
-                            <select id="apiProvider" class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-sm focus:border-brand-500 outline-none appearance-none cursor-pointer">
+                            <select id="apiProvider" class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-sm focus:border-brand-500 outline-none appearance-none">
                                 <option value="google">Google Gemini Pro (Ultra)</option>
                                 <option value="comet">Comet AI Engine</option>
                             </select>
@@ -192,35 +178,53 @@
 
                     <div class="space-y-4 mb-8">
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-brand-500 uppercase tracking-widest px-1">Gemini API Key</label>
-                            <input id="keyGemini" type="password" placeholder="AIzaSy..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-sm font-mono focus:border-brand-500 outline-none">
+                            <label class="text-[10px] font-bold text-brand-500 uppercase tracking-widest px-1">API Token</label>
+                            <input id="keyGemini" type="password" placeholder="Nhập Key vào đây..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-sm font-mono focus:border-brand-500 outline-none">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-1">Base URL</label>
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-1">Endpoint (Mặc định)</label>
                             <input id="baseUrl" type="text" placeholder="https://generativelanguage.googleapis.com" class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-xs font-mono outline-none">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <button onclick="commitConfig()" class="py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs tracking-widest transition-all">
-                            LƯU VÀO LOCAL STORAGE
+                            LƯU CỤC BỘ (LOCAL STORAGE)
                         </button>
                         <button id="btnCopyConfig" onclick="copyEncryptedConfig()" class="py-4 rounded-xl bg-brand-500/10 border border-brand-500/30 hover:bg-brand-500/20 text-brand-500 font-black text-xs tracking-widest transition-all">
-                            COPY MÃ HÓA (DÁN VÀO INDEX)
+                            COPY MÃ HÓA (DÁN VÀO INDEX.HTML)
                         </button>
                     </div>
                 </div>
 
-                <!-- TABLE DANH SÁCH USER -->
+                <!-- DIRECT RECHARGE (NẠP NHANH CHO WEB TĨNH) -->
+                <div class="glass-panel rounded-3xl p-8 border-l-4 border-yellow-500">
+                    <h3 class="font-bold text-lg mb-6 flex items-center gap-3 text-yellow-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Nạp Credit Trực Tiếp (Dùng cho Web Tĩnh)
+                    </h3>
+                    <div class="flex flex-col sm:flex-row gap-4 items-end">
+                        <div class="flex-1 space-y-2 w-full">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-1">Số Credit Muốn Nạp</label>
+                            <input id="directAmount" type="number" value="100" class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-lg font-bold text-yellow-400 outline-none focus:border-yellow-500">
+                        </div>
+                        <button onclick="directRecharge()" class="w-full sm:w-auto py-4 px-8 bg-yellow-600 hover:bg-yellow-500 text-white rounded-xl font-bold text-xs tracking-widest shadow-lg shadow-yellow-500/20 transition-all">
+                            NẠP NGAY VÀO ID TRÊN
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-gray-500 mt-4 italic">*Lưu ý: Tính năng này chỉ hoạt động khi bạn mở Admin trên cùng trình duyệt/domain với trang phục chế.</p>
+                </div>
+
+                <!-- USER DIRECTORY -->
                 <div class="glass-panel rounded-3xl p-8">
                     <h3 class="font-bold text-lg mb-6 flex items-center gap-2">
                         <span class="w-1.5 h-4 bg-brand-500 rounded-full"></span>
-                        Người dùng đã lưu
+                        Danh Sách ID Khách Hàng
                     </h3>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left text-xs">
                             <thead class="text-gray-500 border-b border-white/5">
-                                <tr><th class="pb-3 px-2">DEVICE ID</th><th class="pb-3 px-2">CREDIT</th><th class="pb-3 px-2 text-right">ACTION</th></tr>
+                                <tr><th class="pb-3 px-2">DEVICE ID</th><th class="pb-3 px-2">SỐ DƯ HIỆN TẠI</th><th class="pb-3 px-2 text-right">HÀNH ĐỘNG</th></tr>
                             </thead>
                             <tbody id="userTableBody" class="text-gray-300"></tbody>
                         </table>
@@ -228,26 +232,37 @@
                 </div>
             </section>
 
-            <!-- CỘT PHẢI: VOUCHER & LOGS -->
+            <!-- CỘT PHẢI: VOUCHER GENERATOR -->
             <section class="space-y-6">
                 <div class="glass-panel rounded-3xl p-8 border-t-4 border-emerald-500/50">
-                    <h3 class="font-bold text-lg mb-6">Tạo Mã Nạp 1 Lần</h3>
+                    <h3 class="font-bold text-lg mb-1">Tạo Mã Code (Voucher)</h3>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-6">Chuẩn 5 phần cho index.html</p>
+
                     <div class="grid grid-cols-3 gap-3 mb-4">
                         <button onclick="setVal(100)" class="py-3 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500 text-xs font-bold transition-all">100</button>
                         <button onclick="setVal(200)" class="py-3 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500 text-xs font-bold transition-all">200</button>
                         <button onclick="setVal(500)" class="py-3 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500 text-xs font-bold transition-all">500</button>
                     </div>
                     <input id="customVal" type="number" placeholder="Số Credit..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-sm mb-4 outline-none focus:border-emerald-500">
-                    <button onclick="handleGenerate()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 rounded-2xl font-black text-xs tracking-widest shadow-lg shadow-emerald-500/20 transition-all">TẠO MÃ CLOUD</button>
+                    
+                    <div class="space-y-2">
+                        <button onclick="handleGenerateLocal()" class="w-full py-4 bg-white/10 hover:bg-white/20 text-white rounded-2xl font-bold text-[10px] tracking-widest transition-all">
+                            TẠO MÃ OFFLINE (WEB TĨNH)
+                        </button>
+                        <button onclick="handleGenerateCloud()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-[10px] tracking-widest shadow-lg shadow-emerald-500/20 transition-all">
+                            TẠO MÃ CLOUD (MÃ 1 LẦN)
+                        </button>
+                    </div>
                     
                     <div id="voucherBox" class="hidden mt-6 p-6 border border-emerald-500/30 bg-emerald-500/5 rounded-2xl text-center">
-                        <p class="text-[9px] text-emerald-500 font-bold mb-2">MÃ NẠP (CHỈ DÙNG 1 LẦN):</p>
-                        <input id="tokenResult" readonly onclick="copyVoucherText()" class="w-full bg-transparent text-lg font-mono font-black text-white text-center outline-none cursor-pointer">
+                        <p id="voucherType" class="text-[9px] text-emerald-500 font-bold mb-2 uppercase"></p>
+                        <input id="tokenResult" readonly onclick="copyVoucherText()" class="w-full bg-transparent text-lg font-mono font-black text-white text-center outline-none cursor-pointer tracking-tighter">
+                        <p class="text-[8px] text-gray-500 mt-2 italic">Click vào mã để copy</p>
                     </div>
                 </div>
 
                 <div class="glass-panel rounded-3xl p-8 flex flex-col h-[400px]">
-                    <h3 class="font-bold text-xs uppercase tracking-widest text-gray-500 mb-6">Mã Cloud Đang Active</h3>
+                    <h3 class="font-bold text-xs uppercase tracking-widest text-gray-500 mb-6">Mã Đang Hoạt Động</h3>
                     <div id="logList" class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar"></div>
                 </div>
             </section>
@@ -260,28 +275,30 @@
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('mainDashboard').classList.remove('hidden');
                 refreshUserList();
+            } else {
+                notify("Sai mật khẩu Admin!");
             }
         }
 
-        // --- API CONFIG FUNCTIONS ---
+        // --- USER & API FUNCTIONS ---
         function lookupUser() {
             const id = document.getElementById('lookupId').value.trim();
-            if(!id) return notify("Chưa nhập ID!");
+            if(!id) return notify("Vui lòng nhập ID!");
             const saved = localStorage.getItem("v35_user_" + id) || localStorage.getItem("v35_user_settings");
             if (saved) {
                 const data = JSON.parse(SEC.decrypt(saved));
                 document.getElementById('keyGemini').value = data.apiKey || "";
                 document.getElementById('apiProvider').value = data.provider || "google";
                 document.getElementById('baseUrl').value = data.baseUrl || "https://generativelanguage.googleapis.com";
-                notify("Đã tải config cho: " + id);
+                notify("Đã tải dữ liệu của " + id);
             } else {
-                notify("Không tìm thấy dữ liệu cục bộ.");
+                notify("ID mới, chưa có dữ liệu.");
             }
         }
 
         function commitConfig() {
             const id = document.getElementById('lookupId').value.trim();
-            if(!id) return notify("Vui lòng nhập ID!");
+            if(!id) return notify("Chưa nhập ID!");
             const data = {
                 apiKey: document.getElementById('keyGemini').value.trim(),
                 provider: document.getElementById('apiProvider').value,
@@ -291,7 +308,7 @@
             const encrypted = SEC.encrypt(JSON.stringify(data));
             localStorage.setItem("v35_user_" + id, encrypted);
             localStorage.setItem("v35_user_settings", encrypted);
-            notify("Đã lưu vào bộ nhớ trình duyệt!");
+            notify("Đã lưu config vào Local Storage!");
             refreshUserList();
         }
 
@@ -301,13 +318,94 @@
                 provider: document.getElementById('apiProvider').value,
                 baseUrl: document.getElementById('baseUrl').value.trim() || "https://generativelanguage.googleapis.com"
             };
-            if(!data.apiKey) return notify("Chưa có API Key!");
+            if(!data.apiKey) return notify("Vui lòng nhập API Key!");
             const encrypted = SEC.encrypt(JSON.stringify(data));
             navigator.clipboard.writeText(encrypted);
-            notify("Đã Copy chuỗi mã hóa!");
+            notify("Đã copy mã hóa. Dán vào index.html!");
         }
 
-        // --- USER TABLE ---
+        // --- DIRECT RECHARGE ---
+        function directRecharge() {
+            const id = document.getElementById('lookupId').value.trim();
+            const amount = parseInt(document.getElementById('directAmount').value);
+            if(!id) return notify("Cần ID để nạp trực tiếp!");
+            if(isNaN(amount)) return notify("Số tiền không hợp lệ!");
+
+            const key = "v35_credits_" + id;
+            const current = parseInt(localStorage.getItem(key) || "0");
+            const final = current + amount;
+            
+            localStorage.setItem(key, final);
+            notify(`Đã nạp thành công ${amount} CR cho ID ${id}`);
+            refreshUserList();
+        }
+
+        // --- VOUCHER LOGIC ---
+        function setVal(v) { document.getElementById('customVal').value = v; }
+
+        function handleGenerateLocal() {
+            const amt = document.getElementById('customVal').value;
+            if(!amt) return notify("Nhập số Credit!");
+            
+            // Format 5 phần: V35 - AMOUNT - RAND - RAND - TIME
+            const code = `V35-${amt}-${Math.random().toString(36).substring(2,6).toUpperCase()}-${Math.random().toString(36).substring(2,6).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+            
+            document.getElementById('tokenResult').value = code;
+            document.getElementById('voucherType').innerText = "Mã Offline (Web Tĩnh)";
+            document.getElementById('voucherBox').classList.remove('hidden');
+            
+            // Save to local logs
+            let logs = JSON.parse(localStorage.getItem("v35_local_codes") || "[]");
+            logs.unshift({ code, amount: amt, time: new Date().toLocaleTimeString() });
+            localStorage.setItem("v35_local_codes", JSON.stringify(logs));
+            renderLocalLogs();
+            notify("Đã tạo mã nạp Offline!");
+        }
+
+        async function handleGenerateCloud() {
+            if(!window.generateVoucherCloud) return notify("Cloud chưa khởi tạo!");
+            const amt = document.getElementById('customVal').value;
+            if(!amt) return notify("Nhập số Credit!");
+            
+            const code = await window.generateVoucherCloud(amt);
+            if(code) {
+                document.getElementById('tokenResult').value = code;
+                document.getElementById('voucherType').innerText = "Mã Cloud (1 Lần)";
+                document.getElementById('voucherBox').classList.remove('hidden');
+                notify("Đã tạo mã nạp Cloud!");
+            }
+        }
+
+        function renderLocalLogs() {
+            const logs = JSON.parse(localStorage.getItem("v35_local_codes") || "[]");
+            const list = document.getElementById('logList');
+            if(list && !window.currentUser) { // Chỉ render local nếu không có cloud snapshot
+                list.innerHTML = logs.map(l => `
+                    <div class="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col gap-1">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[9px] font-bold text-gray-500 uppercase">OFFLINE</span>
+                            <span class="font-bold text-xs text-yellow-400">${l.amount} CR</span>
+                        </div>
+                        <code class="text-[10px] text-gray-400 font-mono break-all bg-black/40 p-1.5 rounded">${l.code}</code>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        window.renderCloudLogs = (logs) => {
+            const list = document.getElementById('logList');
+            list.innerHTML = logs.map(l => `
+                <div class="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col gap-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[9px] font-bold text-emerald-500 uppercase">CLOUD ACTIVE</span>
+                        <span class="font-bold text-xs text-yellow-400">${l.amount} CR</span>
+                    </div>
+                    <code class="text-[10px] text-gray-300 font-mono break-all bg-black/40 p-1.5 rounded">${l.code}</code>
+                    <button onclick="window.deleteVoucher('${l.code}')" class="text-[8px] text-red-500 text-right hover:underline">Hủy mã</button>
+                </div>
+            `).join('');
+        };
+
         function refreshUserList() {
             const tbody = document.getElementById('userTableBody');
             tbody.innerHTML = "";
@@ -328,18 +426,6 @@
             }
         }
         function selectUser(id) { document.getElementById('lookupId').value = id; lookupUser(); }
-
-        // --- VOUCHER FUNCTIONS ---
-        function setVal(v) { document.getElementById('customVal').value = v; }
-        async function handleGenerate() {
-            const amt = document.getElementById('customVal').value;
-            const code = await window.generateVoucherCloud(amt);
-            if(code) {
-                document.getElementById('tokenResult').value = code;
-                document.getElementById('voucherBox').classList.remove('hidden');
-                notify("Đã tạo mã Cloud!");
-            }
-        }
         function copyVoucherText() {
             const el = document.getElementById('tokenResult');
             el.select(); document.execCommand('copy');
