@@ -8,43 +8,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Firebase SDK (Cloud Sync Fix) -->
+    <!-- Firebase SDK (Configured for Web Tĩnh v10.7.1 - CLEAN FIX) -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // Import thêm getApps, deleteApp để xử lý xung đột
+        import { initializeApp, getApps, deleteApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Lấy cấu hình giống Admin
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        // ✅ CẤU HÌNH V35-CREDIT CHÍNH XÁC
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcP99VUnNLOk8KB63W_tMNQZD116Y88jc",
+            authDomain: "v35-credit.firebaseapp.com",
+            projectId: "v35-credit",
+            storageBucket: "v35-credit.firebasestorage.app",
+            messagingSenderId: "172593145019",
+            appId: "1:172593145019:web:23c4001b0a56e31b15f59e"
+        };
+
+        // --- CLEAN SLATE: Xóa app cũ nếu có (Fix lỗi configuration-not-found) ---
+        const existingApps = getApps();
+        if (existingApps.length > 0) {
+            existingApps.forEach(app => deleteApp(app));
+        }
+
+        // Khởi tạo App
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // ID định danh ứng dụng trong Firestore
+        const appStorageId = 'default-app-id';
 
         let currentUser = null;
 
-        // RULE 3: Đăng nhập ẩn danh để đọc/ghi Cloud
+        // RULE 3: Đăng nhập ẩn danh (LUÔN LUÔN - Bỏ qua Custom Token để tránh lỗi)
         const initAuth = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
+            try {
+                // Chỉ dùng signInAnonymously cho Web Tỉnh
                 await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Lỗi đăng nhập Firebase:", error);
             }
         };
 
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
-            if (user) console.log("Cloud Connected:", user.uid);
+            if (user) console.log("Cloud Connected (v10.7.1):", user.uid);
         });
 
         // HÀM KIỂM TRA MÃ CHẶT CHẼ (ONE-TIME ONLY)
         window.redeemVoucherCloud = async (code) => {
             if (!currentUser) await initAuth();
-            if (!currentUser) return { success: false, msg: "Lỗi kết nối máy chủ!" };
+            if (!currentUser) return { success: false, msg: "Lỗi kết nối máy chủ! Vui lòng tải lại trang." };
 
             try {
                 // RULE 1: Truy vấn đúng đường dẫn Admin đã lưu
-                const voucherRef = doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code);
+                const voucherRef = doc(db, 'artifacts', appStorageId, 'public', 'data', 'vouchers', code);
                 const snap = await getDoc(voucherRef);
 
                 // 1. Kiểm tra mã tồn tại
@@ -71,10 +90,11 @@
                 return { success: true, amount: data.amount };
             } catch (e) {
                 console.error("Cloud Error:", e);
-                return { success: false, msg: "Lỗi xử lý giao dịch!" };
+                return { success: false, msg: "Lỗi xử lý giao dịch: " + e.message };
             }
         };
 
+        // Chạy khởi tạo ngay lập tức
         initAuth();
     </script>
 
@@ -733,7 +753,7 @@
                     </div>
                 </div>
 
-                <!-- MODULE 4: PROMPT & API (REMOVED KEY INPUT) -->
+                <!-- MODULE 4: PROMPT & API -->
                 <div class="module-group" id="module-prompt">
                     <button id="toggle-prompt" class="w-full flex justify-between items-center module-header">
                         <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">📝 PROMPT & API</span>
@@ -743,7 +763,7 @@
                         <div class="module-inner">
                             <textarea id="prompt-main" rows="3" class="pro-input w-full p-2 resize-none text-[10px] font-mono save-input mb-2" data-key="promptMainValue" placeholder="Hệ thống sẽ tự động tối ưu theo chuẩn Flux..."></textarea>
                             <input type="text" id="prompt-negative" placeholder="Loại trừ..." class="pro-input w-full py-1.5 save-input mb-2" data-key="promptNegative">
-                            <!-- REMOVED API INPUT HERE -->
+                            <input type="password" id="user-api-key" placeholder="API Key riêng (Nếu cần)" class="pro-input w-full py-1.5 save-input" data-key="userApiKey">
                         </div>
                     </div>
                 </div>
