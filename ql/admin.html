@@ -20,7 +20,8 @@
         const initFirebase = async () => {
             try {
                 if (typeof __firebase_config === 'undefined') {
-                    document.getElementById('cloudStatus').innerHTML = '<span class="text-red-500 font-bold">❌ CHƯA CÓ CẤU HÌNH CLOUD</span>';
+                    const statusEl = document.getElementById('cloudStatus');
+                    if(statusEl) statusEl.innerHTML = '<span class="text-red-500 font-bold">❌ CHƯA CÓ CẤU HÌNH CLOUD</span>';
                     return;
                 }
                 const firebaseConfig = JSON.parse(__firebase_config);
@@ -34,7 +35,8 @@
                     await signInAnonymously(auth);
                 }
             } catch (e) {
-                document.getElementById('cloudStatus').innerHTML = '<span class="text-red-500 font-bold">❌ LỖI KẾT NỐI SERVER</span>';
+                const statusEl = document.getElementById('cloudStatus');
+                if(statusEl) statusEl.innerHTML = '<span class="text-red-500 font-bold">❌ LỖI KẾT NỐI SERVER</span>';
             }
         };
 
@@ -43,8 +45,10 @@
         onAuthStateChanged(getAuth(), (user) => {
             if (user) {
                 window.isCloudReady = true;
-                document.getElementById('cloudStatus').innerHTML = '<span class="text-emerald-500 animate-pulse font-bold">● CLOUD ONLINE (V35.75)</span>';
+                const statusEl = document.getElementById('cloudStatus');
+                if(statusEl) statusEl.innerHTML = '<span class="text-emerald-500 animate-pulse font-bold">● CLOUD ONLINE (V35.75)</span>';
                 loadActiveVouchers();
+                generateClientScript();
             }
         });
 
@@ -71,14 +75,93 @@
                 const list = [];
                 snapshot.forEach(doc => list.push(doc.data()));
                 window.updateVoucherUI(list);
-            });
+            }, (err) => console.error("Cloud lookup error:", err));
         }
 
         window.deleteVoucher = async (code) => {
             if(confirm("Hủy mã nạp này? Khách sẽ không nạp được nữa.")) {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code));
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code));
+                } catch(e) { notify("Lỗi khi xóa mã!", "error"); }
             }
         };
+
+        // TỰ ĐỘNG TẠO SCRIPT CHO INDEX.HTML
+        function generateClientScript() {
+            const config = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+            const script = `
+<!-- V35 CLOUD SYNC SCRIPT -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = ${config};
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const appId = "${appId}";
+
+    // Ghi đè hàm nạp tiền cũ
+    window.addEventListener('load', () => {
+        const redeemBtn = document.getElementById('btn-submit-recharge');
+        const redeemInput = document.getElementById('recharge-input');
+
+        if(redeemBtn) {
+            // Xóa sự kiện cũ bằng cách clone button
+            const newBtn = redeemBtn.cloneNode(true);
+            redeemBtn.parentNode.replaceChild(newBtn, redeemBtn);
+
+            newBtn.addEventListener('click', async () => {
+                const code = redeemInput.value.trim();
+                if(!code) return window.showToast("Vui lòng nhập mã!", "error");
+
+                newBtn.disabled = true;
+                newBtn.innerText = "ĐANG KIỂM TRA...";
+
+                try {
+                    await signInAnonymously(auth);
+                    const vRef = doc(db, 'artifacts', appId, 'public', 'data', 'vouchers', code);
+                    const vSnap = await getDoc(vRef);
+
+                    if (vSnap.exists()) {
+                        const data = vSnap.data();
+                        const myId = localStorage.getItem('v35_unique_device_id');
+
+                        // Kiểm tra khóa ID máy
+                        if(data.targetId && data.targetId !== myId) {
+                            throw new Error("Mã này được cấp riêng cho máy khác!");
+                        }
+
+                        // Cộng tiền local nếu UserSystem tồn tại
+                        if(window.UserSystem) {
+                            window.UserSystem.addCredits(data.amount);
+                            // Xóa mã trên cloud để không ai nạp lại được (Mã 1 lần)
+                            await deleteDoc(vRef);
+                            
+                            window.showToast("Nạp thành công +" + data.amount + " Credits!", "success");
+                            document.getElementById('recharge-modal').classList.add('hidden');
+                            redeemInput.value = '';
+                        } else {
+                            throw new Error("Lỗi hệ thống UserSystem!");
+                        }
+                    } else {
+                        throw new Error("Mã không tồn tại hoặc đã bị sử dụng!");
+                    }
+                } catch (e) {
+                    if(window.showToast) window.showToast(e.message, "error");
+                    else alert(e.message);
+                } finally {
+                    newBtn.disabled = false;
+                    newBtn.innerText = "KÍCH HOẠT";
+                }
+            });
+        }
+    });
+<\/script>`;
+            const scriptArea = document.getElementById('clientScriptArea');
+            if(scriptArea) scriptArea.value = script;
+        }
     </script>
 
     <script>
@@ -115,7 +198,10 @@
 
         function notify(msg, type = 'success') {
             const n = document.getElementById('notification');
-            document.getElementById('notifMsg').innerText = msg;
+            const msgEl = document.getElementById('notifMsg');
+            if(!n || !msgEl) return;
+            
+            msgEl.innerText = msg;
             n.className = "glass-panel px-6 py-4 rounded-2xl flex items-center gap-4 border-l-4 show " + 
                          (type === 'success' ? 'border-emerald-500' : 'border-red-500');
             n.classList.add('show');
@@ -171,15 +257,12 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <!-- CỘT 1: API CONFIG & USER LIST -->
             <section class="lg:col-span-2 space-y-6">
                 <!-- API KEY CONFIG -->
                 <div class="glass-panel rounded-3xl p-8 border-l-4 border-brand-500">
                     <h3 class="font-bold text-sm mb-6 flex items-center gap-3 text-brand-500 uppercase tracking-widest">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
                         Cấu Hình API Key & Mã Hóa
                     </h3>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-gray-500 uppercase px-1">ID Thiết Bị Khách</label>
@@ -196,65 +279,61 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="space-y-4 mb-8">
                         <label class="text-[10px] font-bold text-brand-500 uppercase px-1">API Token Key</label>
-                        <input id="keyGemini" type="password" placeholder="AIzaSy..." class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm font-mono outline-none focus:border-brand-500">
+                        <input id="keyGemini" type="password" placeholder="AIzaSy..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-sm font-mono outline-none focus:border-brand-500">
                     </div>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <button onclick="commitConfig()" class="py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs tracking-widest transition-all btn-hover">LƯU LOCAL TRÌNH DUYỆT</button>
                         <button onclick="copyEncryptedConfig()" class="py-4 rounded-xl bg-brand-500/20 border border-brand-500/40 text-brand-500 font-black text-xs tracking-widest transition-all hover:bg-brand-500 hover:text-white btn-hover">COPY MÃ HÓA CHO INDEX.HTML</button>
                     </div>
                 </div>
 
-                <!-- USER DIRECTORY -->
+                <!-- GET CLIENT SCRIPT -->
+                <div class="glass-panel rounded-3xl p-8 border-l-4 border-blue-500">
+                    <h3 class="font-bold text-sm mb-2 text-blue-400 uppercase tracking-widest">Lấy mã Script cho Index.html</h3>
+                    <p class="text-[10px] text-gray-500 mb-6 uppercase tracking-widest">Dán đoạn mã này vào cuối file index.html để nạp được mã Cloud</p>
+                    <textarea id="clientScriptArea" readonly rows="5" class="w-full bg-black/50 border border-white/10 rounded-xl p-4 font-mono text-[10px] text-blue-300 outline-none mb-4" placeholder="Đang tạo Script..."></textarea>
+                    <button onclick="copyClientScript()" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-black text-xs tracking-widest transition-all active:scale-95">COPY ĐOẠN MÃ TRÊN</button>
+                </div>
+
+                <!-- USER LIST -->
                 <div class="glass-panel rounded-3xl p-8">
-                    <h3 class="font-bold text-sm mb-6 flex items-center gap-2 uppercase tracking-widest text-gray-400">Thiết bị đã ghi nhận (Credits)</h3>
+                    <h3 class="font-bold text-sm mb-6 flex items-center gap-2 uppercase tracking-widest text-gray-400 text-xs">Thiết bị đã ghi nhận (Credits)</h3>
                     <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left text-xs">
                             <thead class="text-gray-500 border-b border-white/5">
                                 <tr><th class="pb-3 px-2">DEVICE ID</th><th class="pb-3 px-2">CREDITS</th><th class="pb-3 px-2 text-right">ACTION</th></tr>
                             </thead>
-                            <tbody id="userTableBody" class="text-gray-300"></tbody>
+                            <tbody id="userTableBody" class="text-gray-300">
+                                <!-- Dữ liệu sẽ được điền bởi refreshUserList -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
-            <!-- CỘT 2: VOUCHER CLOUD 1 LẦN -->
             <section class="space-y-6">
-                
+                <!-- CLOUD VOUCHER GENERATOR -->
                 <div class="glass-panel rounded-3xl p-8 border-t-4 border-emerald-500 relative overflow-hidden">
                     <h3 class="font-bold text-lg mb-1">Mã Nạp Cloud (1 Lần)</h3>
-                    <p class="text-[10px] text-emerald-500 font-bold uppercase tracking-widest mb-6">Tự động xóa sau khi nạp / Chống copy</p>
-                    
+                    <p class="text-[10px] text-emerald-500 font-bold uppercase tracking-widest mb-6">Tự động xóa sau khi nạp</p>
                     <div class="space-y-4">
                         <div class="grid grid-cols-3 gap-2">
                             <button onclick="setV(100)" class="py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500 text-xs font-bold transition-all btn-hover">100</button>
                             <button onclick="setV(200)" class="py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500 text-xs font-bold transition-all btn-hover">200</button>
                             <button onclick="setV(500)" class="py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500 text-xs font-bold transition-all btn-hover">500</button>
                         </div>
-                        <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-gray-500 uppercase px-1">Số Credit</label>
-                            <input id="valCustom" type="number" placeholder="Nhập số..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-lg font-black text-emerald-400 outline-none focus:border-emerald-500">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-gray-500 uppercase px-1">Khóa theo ID (Chỉ máy này nạp được)</label>
-                            <input id="valTargetId" type="text" placeholder="Dán ID khách (Tùy chọn)..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-xs font-mono outline-none focus:border-brand-500">
-                        </div>
+                        <input id="valCustom" type="number" placeholder="Số Credit..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-lg font-black text-emerald-400 outline-none focus:border-emerald-500">
+                        <input id="valTargetId" type="text" placeholder="Dán ID khách (Khóa máy)..." class="w-full bg-black/30 border border-white/5 rounded-xl px-4 py-3 text-xs font-mono outline-none focus:border-brand-500">
                         <button onclick="createVoucher()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-xs tracking-widest shadow-lg shadow-emerald-500/20 transition-all btn-hover">TẠO MÃ CLOUD NGAY</button>
                     </div>
-                    
                     <div id="vBox" class="hidden mt-6 p-5 border border-emerald-500/30 bg-emerald-500/5 rounded-2xl text-center">
-                        <p class="text-[9px] text-emerald-500 font-bold mb-2 uppercase">MÃ CLOUD ĐÃ SẴN SÀNG:</p>
                         <input id="vResult" readonly onclick="copyV()" class="w-full bg-black/40 border border-white/10 py-4 px-2 rounded-xl text-lg font-mono font-black text-white text-center outline-none cursor-copy tracking-tighter">
-                        <p class="text-[8px] text-gray-500 mt-2 italic">Dán mã này gửi cho khách</p>
                     </div>
                 </div>
 
-                <!-- CLOUD LOGS -->
-                <div class="glass-panel rounded-3xl p-8 h-[380px] flex flex-col">
+                <div class="glass-panel rounded-3xl p-8 h-[300px] flex flex-col">
                     <h3 class="font-bold text-xs uppercase tracking-widest text-gray-500 mb-6 flex justify-between items-center">Mã đang đợi nạp <span id="vCount" class="bg-white/10 px-2 py-0.5 rounded-full text-[9px]">0</span></h3>
                     <div id="logCloud" class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar"></div>
                 </div>
@@ -264,77 +343,137 @@
 
     <script>
         function handleLogin() {
-            if(document.getElementById('adminKey').value === "admin123") {
+            const adminKeyInput = document.getElementById('adminKey');
+            if(adminKeyInput && adminKeyInput.value === "admin123") {
                 sessionStorage.setItem("v35_admin_logged", "true");
                 showDash();
             } else { notify("Mật khẩu sai!", "error"); }
         }
 
         function showDash() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('mainDashboard').classList.remove('hidden');
-            refreshUserList();
+            const loginSection = document.getElementById('loginSection');
+            const mainDashboard = document.getElementById('mainDashboard');
+            if(loginSection) loginSection.classList.add('hidden');
+            if(mainDashboard) {
+                mainDashboard.classList.remove('hidden');
+                // Gọi các hàm cập nhật UI sau khi DOM của Dashboard đã hiển thị
+                setTimeout(() => {
+                    refreshUserList();
+                }, 50);
+            }
         }
 
-        if(sessionStorage.getItem("v35_admin_logged") === "true") showDash();
+        // Kiểm tra đăng nhập cũ
+        if(sessionStorage.getItem("v35_admin_logged") === "true") {
+            window.addEventListener('DOMContentLoaded', showDash);
+        }
 
         function lookupUser() {
-            const id = document.getElementById('lookupId').value.trim();
+            const idInput = document.getElementById('lookupId');
+            if(!idInput) return;
+            const id = idInput.value.trim();
             if(!id) return notify("Chưa nhập ID!", "error");
+            
             const saved = localStorage.getItem("v35_user_" + id) || localStorage.getItem("v35_user_settings");
             if (saved) {
                 const data = JSON.parse(SEC.decrypt(saved));
-                document.getElementById('keyGemini').value = data.apiKey || "";
-                document.getElementById('apiProvider').value = data.provider || "google";
+                const keyEl = document.getElementById('keyGemini');
+                const providerEl = document.getElementById('apiProvider');
+                if(keyEl) keyEl.value = data.apiKey || "";
+                if(providerEl) providerEl.value = data.provider || "google";
                 notify("Đã tải config cho " + id);
+            } else {
+                notify("Không tìm thấy dữ liệu cũ.", "error");
             }
         }
 
         function commitConfig() {
-            const id = document.getElementById('lookupId').value.trim();
-            if(!id) return notify("Cần ID!", "error");
-            const data = { apiKey: document.getElementById('keyGemini').value.trim(), provider: document.getElementById('apiProvider').value, baseUrl: "https://generativelanguage.googleapis.com", timestamp: new Date().toISOString() };
+            const idInput = document.getElementById('lookupId');
+            const keyInput = document.getElementById('keyGemini');
+            const providerInput = document.getElementById('apiProvider');
+            
+            if(!idInput || !idInput.value.trim()) return notify("Cần ID để lưu!", "error");
+            
+            const data = { 
+                apiKey: keyInput ? keyInput.value.trim() : "", 
+                provider: providerInput ? providerInput.value : "google", 
+                baseUrl: "https://generativelanguage.googleapis.com", 
+                timestamp: new Date().toISOString() 
+            };
+            
             const enc = SEC.encrypt(JSON.stringify(data));
-            localStorage.setItem("v35_user_" + id, enc);
+            localStorage.setItem("v35_user_" + idInput.value.trim(), enc);
             localStorage.setItem("v35_user_settings", enc);
-            notify("Đã lưu config vào Local!");
+            notify("Đã lưu config!");
             refreshUserList();
         }
 
         function copyEncryptedConfig() {
-            const data = { apiKey: document.getElementById('keyGemini').value.trim(), provider: document.getElementById('apiProvider').value, baseUrl: "https://generativelanguage.googleapis.com" };
-            if(!data.apiKey) return notify("Thiếu API Key!", "error");
+            const keyInput = document.getElementById('keyGemini');
+            const providerInput = document.getElementById('apiProvider');
+            const key = keyInput ? keyInput.value.trim() : "";
+            
+            if(!key) return notify("Thiếu API Key!", "error");
+            
+            const data = { 
+                apiKey: key, 
+                provider: providerInput ? providerInput.value : "google", 
+                baseUrl: "https://generativelanguage.googleapis.com" 
+            };
+            
             navigator.clipboard.writeText(SEC.encrypt(JSON.stringify(data)));
             notify("Đã COPY chuỗi mã hóa!");
         }
 
-        function setV(v) { document.getElementById('valCustom').value = v; }
+        function setV(v) { 
+            const customVal = document.getElementById('valCustom');
+            if(customVal) customVal.value = v; 
+        }
 
         async function createVoucher() {
-            const amt = document.getElementById('valCustom').value;
-            const targetId = document.getElementById('valTargetId').value.trim();
+            const valInput = document.getElementById('valCustom');
+            const targetInput = document.getElementById('valTargetId');
+            const amt = valInput ? valInput.value : "";
+            const targetId = targetInput ? targetInput.value.trim() : "";
+            
             if(!amt) return notify("Nhập số credit!", "error");
+            
             const code = await window.generateCloudVoucher(amt, targetId);
             if(code) {
-                document.getElementById('vResult').value = code;
-                document.getElementById('vBox').classList.remove('hidden');
+                const vResult = document.getElementById('vResult');
+                const vBox = document.getElementById('vBox');
+                if(vResult) vResult.value = code;
+                if(vBox) vBox.classList.remove('hidden');
                 notify("Mã Cloud đã đẩy lên Server!", "success");
+            }
+        }
+
+        function copyClientScript() {
+            const area = document.getElementById('clientScriptArea');
+            if(area) {
+                area.select();
+                document.execCommand('copy');
+                notify("Đã copy mã nhúng Index.html!");
             }
         }
 
         window.updateVoucherUI = (list) => {
             const log = document.getElementById('logCloud');
-            document.getElementById('vCount').innerText = list.length;
+            const count = document.getElementById('vCount');
+            if(!log) return;
+            
+            if(count) count.innerText = list.length;
             list.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+            
             log.innerHTML = list.map(v => `
-                <div class="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col gap-1">
+                <div class="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex flex-col gap-1 hover:bg-white/[0.06] transition-all">
                     <div class="flex justify-between items-center">
-                        <span class="text-[9px] font-bold text-emerald-500">CHỜ NẠP</span>
+                        <span class="text-[9px] font-bold text-emerald-500 uppercase">CHỜ NẠP</span>
                         <span class="font-bold text-xs text-yellow-400">${v.amount} CR</span>
                     </div>
                     <code class="text-[10px] text-gray-400 font-mono bg-black/40 p-2 rounded-lg mt-1 select-all">${v.code}</code>
-                    ${v.targetId ? `<p class="text-[8px] text-blue-400 font-bold uppercase mt-1">LOCKED: ${v.targetId}</p>` : ''}
-                    <button onclick="window.deleteVoucher('${v.code}')" class="text-[8px] text-red-500 text-right mt-1 hover:underline">XÓA MÃ</button>
+                    ${v.targetId ? `<p class="text-[8px] text-blue-400 font-bold uppercase mt-1">LOCK ID: ${v.targetId}</p>` : ''}
+                    <button onclick="window.deleteVoucher('${v.code}')" class="text-[8px] text-red-500 text-right mt-1 hover:underline">HỦY</button>
                 </div>
             `).join('');
             if(list.length === 0) log.innerHTML = '<p class="text-[9px] text-gray-700 text-center py-20">Trống.</p>';
@@ -342,6 +481,8 @@
 
         function refreshUserList() {
             const tbody = document.getElementById('userTableBody');
+            if(!tbody) return; // Bảo vệ lỗi null innerHTML
+            
             tbody.innerHTML = "";
             let found = false;
             for (let i = 0; i < localStorage.length; i++) {
@@ -354,20 +495,41 @@
                         <tr class="border-b border-white/5">
                             <td class="py-4 px-2 font-mono text-emerald-400 font-bold">${id}</td>
                             <td class="py-4 px-2 text-yellow-400 font-bold">${credit} CR</td>
-                            <td class="py-4 px-2 text-right">
-                                <button onclick="selectU('${id}')" class="text-brand-500 hover:underline">CHỌN</button>
-                            </td>
+                            <td class="py-4 px-2 text-right"><button onclick="selectU('${id}')" class="text-brand-500 hover:underline">Chọn</button></td>
                         </tr>`;
                 }
             }
+            if(!found) tbody.innerHTML = '<tr><td colspan="3" class="py-10 text-center text-gray-600">Trống (Chưa có ID nào được lưu).</td></tr>';
         }
 
-        function selectU(id) { document.getElementById('lookupId').value = id; lookupUser(); }
+        function selectU(id) { 
+            const lookupInput = document.getElementById('lookupId');
+            if(lookupInput) {
+                lookupInput.value = id; 
+                lookupUser();
+            }
+        }
+        
         function copyV() {
             const el = document.getElementById('vResult');
-            el.select(); document.execCommand('copy');
-            notify("Đã copy!");
+            if(el) {
+                el.select(); 
+                document.execCommand('copy');
+                const oldVal = el.value;
+                el.value = "ĐÃ COPY!";
+                setTimeout(() => el.value = oldVal, 1000);
+                notify("Đã copy mã nạp!");
+            }
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const adminKeyInput = document.getElementById('adminKey');
+            if(adminKeyInput) {
+                adminKeyInput.addEventListener('keypress', (e) => { 
+                    if (e.key === 'Enter') handleLogin(); 
+                });
+            }
+        });
     </script>
 </body>
 </html>
