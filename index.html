@@ -8,96 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Firebase SDK (Configured for Web Tĩnh v10.7.1 - CLEAN FIX) -->
-    <script type="module">
-        // Import thêm getApps, deleteApp để xử lý xung đột
-        import { initializeApp, getApps, deleteApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // ✅ CẤU HÌNH V35-CREDIT CHÍNH XÁC
-        const firebaseConfig = {
-            apiKey: "AIzaSyDcP99VUnNLOk8KB63W_tMNQZD116Y88jc",
-            authDomain: "v35-credit.firebaseapp.com",
-            projectId: "v35-credit",
-            storageBucket: "v35-credit.firebasestorage.app",
-            messagingSenderId: "172593145019",
-            appId: "1:172593145019:web:23c4001b0a56e31b15f59e"
-        };
-
-        // --- CLEAN SLATE: Xóa app cũ nếu có (Fix lỗi configuration-not-found) ---
-        const existingApps = getApps();
-        if (existingApps.length > 0) {
-            existingApps.forEach(app => deleteApp(app));
-        }
-
-        // Khởi tạo App
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        // ID định danh ứng dụng trong Firestore
-        const appStorageId = 'default-app-id';
-
-        let currentUser = null;
-
-        // RULE 3: Đăng nhập ẩn danh (LUÔN LUÔN - Bỏ qua Custom Token để tránh lỗi)
-        const initAuth = async () => {
-            try {
-                // Chỉ dùng signInAnonymously cho Web Tỉnh
-                await signInAnonymously(auth);
-            } catch (error) {
-                console.error("Lỗi đăng nhập Firebase:", error);
-            }
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            if (user) console.log("Cloud Connected (v10.7.1):", user.uid);
-        });
-
-        // HÀM KIỂM TRA MÃ CHẶT CHẼ (ONE-TIME ONLY)
-        window.redeemVoucherCloud = async (code) => {
-            if (!currentUser) await initAuth();
-            if (!currentUser) return { success: false, msg: "Lỗi kết nối máy chủ! Vui lòng tải lại trang." };
-
-            try {
-                // RULE 1: Truy vấn đúng đường dẫn Admin đã lưu
-                const voucherRef = doc(db, 'artifacts', appStorageId, 'public', 'data', 'vouchers', code);
-                const snap = await getDoc(voucherRef);
-
-                // 1. Kiểm tra mã tồn tại
-                if (!snap.exists()) {
-                    return { success: false, msg: "Mã nạp không tồn tại!" };
-                }
-
-                const data = snap.data();
-
-                // 2. Kiểm tra mã đã dùng chưa (Quan trọng nhất)
-                if (data.isUsed === true) {
-                    return { success: false, msg: "Mã này đã được sử dụng trước đó!" };
-                }
-
-                // 3. Khóa mã ngay lập tức (Chống dùng lại ở máy khác)
-                await updateDoc(voucherRef, {
-                    isUsed: true,
-                    usedAt: serverTimestamp(),
-                    usedBy: currentUser.uid,
-                    usedDevice: localStorage.getItem('v35_unique_device_id') || 'unknown'
-                });
-
-                // 4. Trả về thành công
-                return { success: true, amount: data.amount };
-            } catch (e) {
-                console.error("Cloud Error:", e);
-                return { success: false, msg: "Lỗi xử lý giao dịch: " + e.message };
-            }
-        };
-
-        // Chạy khởi tạo ngay lập tức
-        initAuth();
-    </script>
-
     <!-- COPYRIGHT PROTECTION SCRIPT -->
     <script>
         (function() {
@@ -110,6 +20,8 @@
                 if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
                 if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { e.preventDefault(); return false; }
             };
+            console.log("%cDỪNG LẠI!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px #000;");
+            console.log("%cĐây là phần mềm có bản quyền của ZALO: 0352803379.", "color: white; background: red; font-size: 16px; padding: 10px; border-radius: 5px;");
         })();
     </script>
 
@@ -333,7 +245,7 @@
                     <span class="text-[10px] font-bold tracking-widest">AUTO SCAN V35.60 (AUTO-SIZE)</span>
                 </button>
 
-                <!-- MODULES (KEPT ORIGINAL AS REQUESTED) -->
+                <!-- MODULES -->
                 <!-- FLUX KONTEXT (LZP) -->
                 <div class="relative group p-2 rounded-lg border border-violet-500/30 bg-violet-500/5 mb-3 animate-flux-pulse" id="kontext-module-container">
                     <div class="flex items-center gap-2 mb-2">
@@ -366,7 +278,7 @@
                     </div>
                 </div>
 
-                <!-- ... (REST OF MODULES KEPT AS IS) ... -->
+                <!-- ... REPLICA MODE, MILITARY, CINEMATIC, EXPOSURE, REF UPLOAD, PROCESSING, SUBJECT, IDENTITY, PROMPT, LOGO (KEPT AS IS) ... -->
                 <!-- REPLICA MODE -->
                 <div class="relative group p-2 rounded-lg border border-yellow-500/30 bg-yellow-500/5 mb-3">
                     <div class="flex items-center gap-2">
@@ -388,6 +300,7 @@
                         <svg class="w-3 h-3 text-yellow-500 toggle-icon" id="icon-military" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-military" class="module-content">
+                        <!-- ... Military content ... -->
                         <div class="module-inner space-y-2">
                              <div class="space-y-1">
                                 <label class="section-label text-yellow-600/80">Quân chủng / Lực lượng</label>
@@ -401,7 +314,6 @@
                                     <option value="vietnamese youth volunteer force, dark green uniform">⭐ Thanh niên Xung phong</option>
                                 </select>
                              </div>
-                             <!-- ... (Other military options) ... -->
                              <div class="space-y-1">
                                 <label class="section-label text-yellow-600/80">Quân phục / Thời kỳ</label>
                                 <select id="mil-uniform" class="pro-input w-full py-1.5 save-input">
@@ -753,7 +665,7 @@
                     </div>
                 </div>
 
-                <!-- MODULE 4: PROMPT & API -->
+                <!-- MODULE 4: PROMPT & API (REMOVED KEY INPUT) -->
                 <div class="module-group" id="module-prompt">
                     <button id="toggle-prompt" class="w-full flex justify-between items-center module-header">
                         <span class="text-[10px] font-bold text-slate-200 tracking-wide uppercase flex items-center gap-2">📝 PROMPT & API</span>
@@ -763,7 +675,7 @@
                         <div class="module-inner">
                             <textarea id="prompt-main" rows="3" class="pro-input w-full p-2 resize-none text-[10px] font-mono save-input mb-2" data-key="promptMainValue" placeholder="Hệ thống sẽ tự động tối ưu theo chuẩn Flux..."></textarea>
                             <input type="text" id="prompt-negative" placeholder="Loại trừ..." class="pro-input w-full py-1.5 save-input mb-2" data-key="promptNegative">
-                            <input type="password" id="user-api-key" placeholder="API Key riêng (Nếu cần)" class="pro-input w-full py-1.5 save-input" data-key="userApiKey">
+                            <!-- REMOVED API INPUT HERE -->
                         </div>
                     </div>
                 </div>
@@ -879,7 +791,7 @@
                     
                     <div id="placeholder-state" class="text-center p-24 border border-dashed border-violet-500/50 rounded-2xl bg-white/[0.01] hover:bg-white/[0.02] transition-all duration-500 animate-float backdrop-blur-sm">
                         <div class="w-20 h-20 bg-gradient-to-tr from-slate-800 to-slate-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5"><svg class="w-10 h-10 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
-                        <h3 class="text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒI ẢNH</h3>
+                        <h3 class="text-2xl font-bold text-violet-500 tracking-tight mb-2">PHỤC HỒIẢNH</h3>
                         <p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Kéo thả hoặc Dán ảnh vào đây</p>
                     </div>
                 </div>
@@ -904,7 +816,7 @@
             </button>
 
             <!-- 3. GENERATE BUTTON -->
-            <button id="mob-btn-run" class="hidden flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.4)] active:scale-95 transition-all">
+            <button id="mob-btn-run" class="hidden flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_20px_rgba(16,185,129,0.4)] active:scale-95 transition-all">
                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 <span>CHẠY NGAY</span>
             </button>
@@ -1035,7 +947,7 @@
 
                 <!-- Activation Section -->
                 <div class="w-full max-w-xs mt-4 md:mt-6 pt-4 md:pt-6 border-t border-white/5 z-10">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block text-center">NHẬP MÃ KÍCH HOẠT (CLOUD CHECK)</label>
+                    <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block text-center">NHẬP MÃ KÍCH HOẠT (SAU KHI THANH TOÁN)</label>
                     <div class="flex gap-2">
                         <input type="text" id="recharge-input" class="pro-input flex-1 py-2 md:py-2.5 text-center font-mono uppercase text-violet-300 border-violet-500/30 bg-violet-500/5 placeholder-slate-600 text-xs md:text-sm" placeholder="NHẬP MÃ V35-...">
                         <button id="btn-submit-recharge" class="px-3 md:px-4 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-lg active:scale-95 whitespace-nowrap">
@@ -1059,300 +971,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; 
-
-            // --- FUNCTION DEFINITIONS (Moved to Top to Fix ReferenceError) ---
-
-            const getApiConfig = () => {
-                const key = window.GEMINI_API_KEY || window.COMET_API_KEY || "";
-                const base = window.API_BASE_URL || "https://generativelanguage.googleapis.com";
-                const isComet = window.API_PROVIDER === 'comet';
-                return { key, base, isComet };
-            };
-            
-            const resizeImage = (base64Str, maxWidth = 1536) => {
-                return new Promise((resolve, reject) => { const img = new Image(); img.src = base64Str; img.onload = () => { let width = img.width; let height = img.height; if (width > maxWidth || height > maxWidth) { if (width > height) { height *= maxWidth / width; width = maxWidth; } else { width *= maxWidth / height; height = maxWidth; } } else { resolve(base64Str); return; } const canvas = document.createElement('canvas'); canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height); resolve(canvas.toDataURL('image/jpeg', 0.9)); }; img.onerror = (err) => reject(new Error("Lỗi tải ảnh để Scan")); });
-            };
-
-            const showToast = (message, type = 'info') => {
-                const container = document.getElementById('toast-container'); if(!container) return;
-                const toast = document.createElement('div');
-                const colors = type === 'error' ? 'bg-red-900/90 border-red-500/30 text-red-100' : type === 'warning' ? 'bg-yellow-900/90 border-yellow-500/30 text-yellow-100' : type === 'smart' ? 'bg-emerald-900/90 border-emerald-500/30 text-emerald-100' : type === 'flux' ? 'bg-violet-900/90 border-violet-500/30 text-violet-100' : type === 'cyan' ? 'bg-cyan-900/90 border-cyan-500/30 text-cyan-100' : type === 'real' ? 'bg-orange-900/90 border-orange-500/30 text-orange-100' : type === 'ancient' ? 'bg-purple-900/90 border-purple-500/30 text-purple-100' : type === 'success' ? 'bg-green-900/90 border-green-500/30 text-green-100' : 'bg-slate-800/90 border-slate-600/30 text-white';
-                toast.className = `flex items-center gap-4 px-5 py-4 rounded-xl border backdrop-blur-md shadow-2xl animate-toast-in ${colors}`;
-                toast.innerHTML = `<span class="text-xs font-bold tracking-wide">${message}</span>`;
-                container.appendChild(toast);
-                setTimeout(() => { toast.classList.add('animate-fade-out'); setTimeout(() => toast.remove(), 500); }, 3000);
-            };
-
-            const updateMobileBtnState = (state) => {
-                const upload = document.getElementById('mob-btn-upload');
-                const scan = document.getElementById('mob-btn-scan');
-                const run = document.getElementById('mob-btn-run');
-                const status = document.getElementById('mobile-status-text');
-                
-                // Reset all first
-                if(upload) upload.classList.add('hidden');
-                if(scan) scan.classList.add('hidden');
-                if(run) run.classList.add('hidden');
-                
-                if (state === 'upload') {
-                    if(upload) upload.classList.remove('hidden');
-                    if(status) { status.textContent = "WAITING FOR IMAGE"; status.className = "text-[8px] text-slate-500 font-mono tracking-widest"; }
-                } else if (state === 'scan') {
-                    if(scan) {
-                        scan.classList.remove('hidden');
-                        scan.disabled = false;
-                        scan.innerHTML = `<svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span>AUTO SCAN</span>`;
-                        scan.className = "flex-1 py-3.5 bg-gradient-to-b from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 border border-violet-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(124,58,237,0.3)] animate-pulse active:scale-95 transition-all";
-                    }
-                    if(status) {
-                        status.textContent = "IMAGE LOADED - PRESS SCAN";
-                        status.className = "text-[8px] font-mono tracking-widest text-violet-400 font-bold animate-pulse";
-                    }
-                } else if (state === 'scanning') {
-                    if(scan) {
-                        scan.classList.remove('hidden');
-                        scan.disabled = true;
-                        scan.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> SCANNING...`;
-                    }
-                    if(status) status.textContent = "AI ANALYZING...";
-                } else if (state === 'run') {
-                    if(run) {
-                        run.classList.remove('hidden');
-                        run.disabled = false;
-                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>CHẠY NGAY</span>`;
-                        run.className = "flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all";
-                    }
-                    if(status) {
-                        status.textContent = "READY TO GENERATE";
-                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
-                    }
-                } else if (state === 'running') {
-                    if(run) {
-                        run.classList.remove('hidden');
-                        run.disabled = true;
-                        run.innerHTML = `<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>PROCESSING...</span>`;
-                        run.className = "flex-1 py-3.5 bg-amber-600 border border-amber-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse transition-all cursor-not-allowed";
-                    }
-                    if(status) {
-                        status.textContent = "AI RESTORING...";
-                        status.className = "text-[8px] font-mono tracking-widest text-amber-400 font-bold animate-pulse";
-                    }
-                } else if (state === 'done') {
-                    if(run) {
-                        run.classList.remove('hidden');
-                        run.disabled = false;
-                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg><span>LÀM LẠI</span>`;
-                    }
-                    if(status) {
-                        status.textContent = "COMPLETED";
-                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
-                    }
-                }
-            };
-            
-            const initRechargeSystem = (deviceId) => {
-                const pkgCards = document.querySelectorAll('.recharge-pkg-card');
-                const qrImage = document.getElementById('vietqr-image');
-                const contentDisplay = document.getElementById('qr-content-display');
-
-                if(!qrImage) return;
-
-                const bankId = 'mbbank';
-                const accNo = '85543556868';
-                const accName = 'HOANG QUANG CUONG';
-                const template = 'compact'; 
-
-                const updateQR = (amount) => {
-                    const content = `V35 ${deviceId}`; 
-                    const url = `https://img.vietqr.io/image/${bankId}-${accNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(accName)}`;
-                    qrImage.src = url;
-                    if(contentDisplay) contentDisplay.textContent = content;
-                };
-
-                updateQR(200000);
-
-                pkgCards.forEach(card => {
-                    card.addEventListener('click', () => {
-                        pkgCards.forEach(c => {
-                            c.classList.remove('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50');
-                            c.classList.add('border-white/10', 'bg-white/5');
-                            c.querySelector('.pkg-border').classList.remove('opacity-100', 'scale-100');
-                            c.querySelector('.pkg-border').classList.add('opacity-0', 'scale-95');
-                        });
-                        
-                        card.classList.remove('border-white/10', 'bg-white/5');
-                        card.classList.add('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50');
-                        card.querySelector('.pkg-border').classList.remove('opacity-0', 'scale-95');
-                        card.querySelector('.pkg-border').classList.add('opacity-100', 'scale-100');
-
-                        const amount = card.dataset.amount;
-                        updateQR(amount);
-                    });
-                });
-            };
-
-            const toggleModule = (btnId, contentId, iconId) => { const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId); if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); };
-
-            const openSidebar = () => {
-                const sidebar = document.getElementById('sidebar');
-                const mobileBar = document.getElementById('mobile-action-bar');
-                if(sidebar) sidebar.classList.remove('-translate-x-full');
-                if(mobileBar) mobileBar.classList.add('translate-y-24', 'opacity-0'); 
-            };
-
-            const closeSidebar = () => {
-                const sidebar = document.getElementById('sidebar');
-                const mobileBar = document.getElementById('mobile-action-bar');
-                if(sidebar) sidebar.classList.add('-translate-x-full');
-                if(mobileBar) mobileBar.classList.remove('translate-y-24', 'opacity-0'); 
-            };
-            
-            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; 
-            
-                // Reset Download Buttons
-                const btnDownloadDesktop = document.getElementById('download-trigger');
-                const btnDownloadMobile = document.getElementById('download-mobile');
-                if(btnDownloadDesktop) btnDownloadDesktop.disabled = true;
-                if(btnDownloadMobile) {
-                    btnDownloadMobile.disabled = true;
-                    btnDownloadMobile.classList.add('opacity-30');
-                }
-                
-                // RESET TO PREVIEW MODE (HIDE SLIDER)
-                document.getElementById('img-modified-wrapper').style.width = '0%'; 
-                document.getElementById('slider-handle').style.left = '0%'; 
-                document.getElementById('slider-handle').style.display = 'none'; 
-                document.querySelector('.comp-label.after').style.display = 'none'; 
-                
-                showToast(`Đã tải ảnh: ${img.width}x${img.height}`, "success"); updateMobileBtnState('scan'); }; img.src = e.target.result; }; reader.readAsDataURL(file); };
-
-            const runImageProcessing = async () => {
-                const processBtn = document.getElementById('process-image');
-                const btnDownloadDesktop = document.getElementById('download-trigger');
-                const btnDownloadMobile = document.getElementById('download-mobile');
-
-                if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
-                
-                // --- FIXED: ADD TOAST AND SHOW MODAL WHEN NO CREDITS ---
-                if (!UserSystem.deductCredits(20)) { 
-                    showToast("Tài khoản không đủ Credit! Vui lòng nạp.", "error"); // Show error toast
-                    document.getElementById('recharge-modal').classList.remove('hidden'); 
-                    return; 
-                }
-                
-                updateMobileBtnState('running');
-                // Sync sidebar button state if visible
-                if(processBtn) {
-                    processBtn.disabled = true; 
-                    processBtn.innerHTML = "FLUX/KONTEXT PROCESSING..."; 
-                }
-                
-                document.getElementById('ai-terminal-overlay').classList.remove('hidden'); 
-                document.getElementById('scan-beam').classList.add('active');
-                
-                // AUTO CLOSE SIDEBAR TO SHOW PROCESS
-                closeSidebar();
-
-                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
-                try {
-                    const resizedBase64 = await resizeImage(state.base64);
-                    // Build prompt from inputs
-                    let finalPrompt = document.getElementById('prompt-main').value;
-                    if(!finalPrompt) finalPrompt = "Restore this photo, remove scratches, high quality, 8k";
-                    
-                    // --- NEW LOGIC START ---
-                    // Check Anti-flip
-                    const antiFlip = document.getElementById('check-anti-flip')?.checked;
-                    if (antiFlip) {
-                        finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (preserve composition:1.4)";
-                    }
-                    
-                    // Check Replica Mode (Identity Lock)
-                    const replicaMode = document.getElementById('mode-replica')?.checked;
-                    if (replicaMode) {
-                        finalPrompt += ", (exact facial features:1.5), (same face structure:1.5)";
-                    }
-                    // ADD STRONG CONSTRAINTS FOR STRUCTURE PRESERVATION
-                    finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (do not crop:1.4), (preserve original aspect ratio:1.4)";
-                    // --- NEW LOGIC END ---
-                    
-                    // Add extra modifiers
-                    finalPrompt += ", (best quality, 8k, hyper detailed)";
-
-                    const parts = [{ text: finalPrompt }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }];
-                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
-                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } }) });
-                    const data = await response.json();
-                    let base64Img = null;
-                    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
-                        for (const part of data.candidates[0].content.parts) { if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; } }
-                    }
-                    if(base64Img) {
-                        const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
-                        const restoredImg = new Image();
-                        restoredImg.onload = () => {
-                            state.restoredObj = restoredImg;
-                            
-                            // === FORCE RESIZE DISPLAY FIX ===
-                            const imgOriginal = document.getElementById('img-original');
-                            const imgModified = document.getElementById('img-modified');
-                            
-                            imgModified.src = finalImgSrc;
-                            
-                            // Force modified image to exactly match original's display size
-                            if(imgOriginal) {
-                                const w = imgOriginal.clientWidth;
-                                const h = imgOriginal.clientHeight;
-                                imgModified.style.width = w + 'px';
-                                imgModified.style.height = h + 'px';
-                                imgModified.style.maxWidth = 'none'; // Ensure no constrain
-                            }
-
-                            document.getElementById('comparison-view').style.display = 'flex';
-                            document.getElementById('placeholder-state').style.display = 'none';
-                            
-                            // Enable download buttons
-                            if(btnDownloadDesktop) btnDownloadDesktop.disabled = false;
-                            if(btnDownloadMobile) {
-                                btnDownloadMobile.disabled = false;
-                                btnDownloadMobile.classList.remove('opacity-30'); // Visual enable
-                            }
-                            
-                            // === FIX: RESET SLIDER TO 50% FOR CLARITY ===
-                            document.getElementById('img-modified-wrapper').style.width = '50%';
-                            document.getElementById('slider-handle').style.left = '50%';
-                            document.getElementById('slider-handle').style.display = 'flex'; 
-                            document.querySelector('.comp-label.after').style.display = 'block';
-                            
-                            updateMobileBtnState('done');
-                            showToast("Phục chế thành công!", "flux");
-                        };
-                        restoredImg.src = finalImgSrc;
-                    } else { throw new Error("Không tạo được ảnh."); }
-                } catch(e) { console.error(e); showToast("Lỗi: " + e.message, "error"); updateMobileBtnState('run'); }
-                finally { 
-                    if(processBtn) {
-                        processBtn.disabled = false; 
-                        processBtn.innerHTML = "TẠO ẢNH (FLUX KONTEXT)"; 
-                    }
-                    document.getElementById('ai-terminal-overlay').classList.add('hidden'); 
-                    document.getElementById('scan-beam').classList.remove('active'); 
-                }
-            };
-            
-            const downloadImage = () => {
-                if (!state.restoredObj) return showToast("Chưa có ảnh kết quả!", "error");
-                const link = document.createElement('a');
-                link.download = `V35-Restored-${Date.now()}.jpg`;
-                link.href = document.getElementById('img-modified').src;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            };
-
-            const resetApp = () => {
-                if(confirm("Làm mới toàn bộ?")) location.reload();
-            };
 
             // === HỆ THỐNG MÃ HÓA BẢO MẬT (ĐỒNG BỘ ADMIN) ===
             const Sec = {
@@ -1523,7 +1141,148 @@
                 }
             };
 
+            // === SIDEBAR HELPERS (MOVED UP FOR SAFETY) ===
+            const sidebar = document.getElementById('sidebar');
+            const mobileBar = document.getElementById('mobile-action-bar');
+
+            function openSidebar() {
+                if(sidebar) sidebar.classList.remove('-translate-x-full');
+                if(mobileBar) mobileBar.classList.add('translate-y-24', 'opacity-0'); 
+            }
+
+            function closeSidebar() {
+                if(sidebar) sidebar.classList.add('-translate-x-full');
+                if(mobileBar) mobileBar.classList.remove('translate-y-24', 'opacity-0'); 
+            }
+
+            // === NEW: PROFESSIONAL RECHARGE LOGIC ===
+            function initRechargeSystem(deviceId) {
+                const pkgCards = document.querySelectorAll('.recharge-pkg-card');
+                const qrImage = document.getElementById('vietqr-image');
+                const contentDisplay = document.getElementById('qr-content-display');
+
+                if(!qrImage) return;
+
+                const bankId = 'mbbank';
+                const accNo = '85543556868';
+                const accName = 'HOANG QUANG CUONG';
+                const template = 'compact'; 
+
+                const updateQR = (amount) => {
+                    const content = `V35 ${deviceId}`; 
+                    const url = `https://img.vietqr.io/image/${bankId}-${accNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(accName)}`;
+                    qrImage.src = url;
+                    if(contentDisplay) contentDisplay.textContent = content;
+                };
+
+                updateQR(200000);
+
+                pkgCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        pkgCards.forEach(c => {
+                            c.classList.remove('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50');
+                            c.classList.add('border-white/10', 'bg-white/5');
+                            c.querySelector('.pkg-border').classList.remove('opacity-100', 'scale-100');
+                            c.querySelector('.pkg-border').classList.add('opacity-0', 'scale-95');
+                        });
+                        
+                        card.classList.remove('border-white/10', 'bg-white/5');
+                        card.classList.add('active', 'border-violet-500/50', 'bg-violet-900/10', 'ring-1', 'ring-violet-500/50');
+                        card.querySelector('.pkg-border').classList.remove('opacity-0', 'scale-95');
+                        card.querySelector('.pkg-border').classList.add('opacity-100', 'scale-100');
+
+                        const amount = card.dataset.amount;
+                        updateQR(amount);
+                    });
+                });
+            }
+
+            // === NEW: MOBILE BUTTON STATE MANAGER ===
+            const updateMobileBtnState = (state) => {
+                const upload = document.getElementById('mob-btn-upload');
+                const scan = document.getElementById('mob-btn-scan');
+                const run = document.getElementById('mob-btn-run');
+                const status = document.getElementById('mobile-status-text');
+                
+                // Reset all first
+                if(upload) upload.classList.add('hidden');
+                if(scan) scan.classList.add('hidden');
+                if(run) run.classList.add('hidden');
+                
+                if (state === 'upload') {
+                    if(upload) upload.classList.remove('hidden');
+                    if(status) { status.textContent = "WAITING FOR IMAGE"; status.className = "text-[8px] text-slate-500 font-mono tracking-widest"; }
+                } else if (state === 'scan') {
+                    if(scan) {
+                        scan.classList.remove('hidden');
+                        scan.disabled = false;
+                        scan.innerHTML = `<svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span>AUTO SCAN</span>`;
+                        scan.className = "flex-1 py-3.5 bg-gradient-to-b from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 border border-violet-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(124,58,237,0.3)] animate-pulse active:scale-95 transition-all";
+                    }
+                    if(status) {
+                        status.textContent = "IMAGE LOADED - PRESS SCAN";
+                        status.className = "text-[8px] font-mono tracking-widest text-violet-400 font-bold animate-pulse";
+                    }
+                } else if (state === 'scanning') {
+                    if(scan) {
+                        scan.classList.remove('hidden');
+                        scan.disabled = true;
+                        scan.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> SCANNING...`;
+                    }
+                    if(status) status.textContent = "AI ANALYZING...";
+                } else if (state === 'run') {
+                    if(run) {
+                        run.classList.remove('hidden');
+                        run.disabled = false;
+                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>CHẠY NGAY</span>`;
+                        run.className = "flex-1 py-3.5 bg-gradient-to-b from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 border border-emerald-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all";
+                    }
+                    if(status) {
+                        status.textContent = "READY TO GENERATE";
+                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
+                    }
+                } else if (state === 'running') {
+                    if(run) {
+                        run.classList.remove('hidden');
+                        run.disabled = true;
+                        run.innerHTML = `<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>PROCESSING...</span>`;
+                        run.className = "flex-1 py-3.5 bg-amber-600 border border-amber-500/30 rounded-xl text-white font-bold text-[10px] tracking-widest flex flex-col items-center justify-center gap-1 shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse transition-all cursor-not-allowed";
+                    }
+                    if(status) {
+                        status.textContent = "AI RESTORING...";
+                        status.className = "text-[8px] font-mono tracking-widest text-amber-400 font-bold animate-pulse";
+                    }
+                } else if (state === 'done') {
+                    if(run) {
+                        run.classList.remove('hidden');
+                        run.disabled = false;
+                        run.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg><span>LÀM LẠI</span>`;
+                    }
+                    if(status) {
+                        status.textContent = "COMPLETED";
+                        status.className = "text-[8px] font-mono tracking-widest text-emerald-400 font-bold";
+                    }
+                }
+            }
+
+            UserSystem.init();
+
+            // === MANUAL RECHARGE TRIGGER ===
+            const creditDisplay = document.getElementById('credit-display');
+            if (creditDisplay) {
+                creditDisplay.onclick = () => document.getElementById('recharge-modal').classList.remove('hidden');
+            }
+
             let state = { base64: null, refBase64: null, restoredObj: null, originalImg: null, zoom: 1, rotation: 0, defaultPrompt: "Restore this photo, remove scratches, high quality, 8k", isLoupeActive: false, isReplicaMode: false, isFluxMode: true, currentSliderVal: 50, isComparing: false, aspectRatioType: null, userSettings: { username: '', apiKey: '', provider: 'google', baseUrl: 'https://generativelanguage.googleapis.com' } };
+            const showToast = (message, type = 'info') => {
+                const container = document.getElementById('toast-container'); if(!container) return;
+                const toast = document.createElement('div');
+                const colors = type === 'error' ? 'bg-red-900/90 border-red-500/30 text-red-100' : type === 'warning' ? 'bg-yellow-900/90 border-yellow-500/30 text-yellow-100' : type === 'smart' ? 'bg-emerald-900/90 border-emerald-500/30 text-emerald-100' : type === 'flux' ? 'bg-violet-900/90 border-violet-500/30 text-violet-100' : type === 'cyan' ? 'bg-cyan-900/90 border-cyan-500/30 text-cyan-100' : type === 'real' ? 'bg-orange-900/90 border-orange-500/30 text-orange-100' : type === 'ancient' ? 'bg-purple-900/90 border-purple-500/30 text-purple-100' : type === 'success' ? 'bg-green-900/90 border-green-500/30 text-green-100' : 'bg-slate-800/90 border-slate-600/30 text-white';
+                toast.className = `flex items-center gap-4 px-5 py-4 rounded-xl border backdrop-blur-md shadow-2xl animate-toast-in ${colors}`;
+                toast.innerHTML = `<span class="text-xs font-bold tracking-wide">${message}</span>`;
+                container.appendChild(toast);
+                setTimeout(() => { toast.classList.add('animate-fade-out'); setTimeout(() => toast.remove(), 500); }, 3000);
+            };
 
             const gateScreen = document.getElementById('security-gate'), gateSubmit = document.getElementById('gate-submit'), gateStatus = document.getElementById('gate-status');
             gateSubmit.addEventListener('click', async () => {
@@ -1532,6 +1291,18 @@
                 setTimeout(() => { gateStatus.textContent = "Đăng nhập thành công!"; gateStatus.className = "mt-6 text-[10px] text-green-400 font-bold"; setTimeout(() => { gateScreen.classList.add('animate-fade-out'); setTimeout(() => { gateScreen.style.display = 'none'; }, 500); showToast(`IP Đã Xác Thực: ${UserSystem.ipAddress}`, "smart"); }, 500); }, 1500);
             });
             
+            const getApiConfig = () => {
+                const key = window.GEMINI_API_KEY || window.COMET_API_KEY || "";
+                const base = window.API_BASE_URL || "https://generativelanguage.googleapis.com";
+                const isComet = window.API_PROVIDER === 'comet';
+                return { key, base, isComet };
+            };
+            
+            const resizeImage = (base64Str, maxWidth = 1536) => {
+                return new Promise((resolve, reject) => { const img = new Image(); img.src = base64Str; img.onload = () => { let width = img.width; let height = img.height; if (width > maxWidth || height > maxWidth) { if (width > height) { height *= maxWidth / width; width = maxWidth; } else { width *= maxWidth / height; height = maxWidth; } } else { resolve(base64Str); return; } const canvas = document.createElement('canvas'); canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height); resolve(canvas.toDataURL('image/jpeg', 0.9)); }; img.onerror = (err) => reject(new Error("Lỗi tải ảnh để Scan")); });
+            };
+
+            const toggleModule = (btnId, contentId, iconId) => { const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId); if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); };
             ['processing','subject','identity','prompt','logo','military','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
 
             // SIDEBAR TOGGLE & MOBILE BAR INTERACTION
@@ -1541,6 +1312,17 @@
             const closeSidebarMobileBtn = document.getElementById('close-sidebar-mobile');
             if(closeSidebarMobileBtn) closeSidebarMobileBtn.onclick = closeSidebar;
 
+            // --- FUNCTION DOWNLOAD IMAGE ---
+            const downloadImage = () => {
+                if (!state.restoredObj) return showToast("Chưa có ảnh kết quả!", "error");
+                const link = document.createElement('a');
+                link.download = `V35-Restored-${Date.now()}.jpg`;
+                link.href = document.getElementById('img-modified').src;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+            
             // Assign events for download buttons (Desktop & Mobile)
             const btnDownloadMobile = document.getElementById('download-mobile');
             if(btnDownloadMobile) btnDownloadMobile.onclick = downloadImage;
@@ -1548,12 +1330,128 @@
             const btnDownloadDesktop = document.getElementById('download-trigger');
             if(btnDownloadDesktop) btnDownloadDesktop.onclick = downloadImage;
 
+            // --- FUNCTION RESET APP ---
+            const resetApp = () => {
+                if(confirm("Làm mới toàn bộ?")) location.reload();
+            };
+            
             // Assign events for reset buttons
             const btnResetSidebar = document.getElementById('reset-button');
             if(btnResetSidebar) btnResetSidebar.onclick = resetApp;
             
             const btnResetMobile = document.getElementById('mob-btn-reset');
             if(btnResetMobile) btnResetMobile.onclick = resetApp;
+
+            // --- MAIN FUNCTION: PROCESS IMAGE ---
+            const runImageProcessing = async () => {
+                if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
+                
+                // --- FIXED: ADD TOAST AND SHOW MODAL WHEN NO CREDITS ---
+                if (!UserSystem.deductCredits(20)) { 
+                    showToast("Tài khoản không đủ Credit! Vui lòng nạp.", "error"); // Show error toast
+                    document.getElementById('recharge-modal').classList.remove('hidden'); 
+                    return; 
+                }
+                
+                updateMobileBtnState('running');
+                // Sync sidebar button state if visible
+                if(processBtn) {
+                    processBtn.disabled = true; 
+                    processBtn.innerHTML = "FLUX/KONTEXT PROCESSING..."; 
+                }
+                
+                document.getElementById('ai-terminal-overlay').classList.remove('hidden'); 
+                document.getElementById('scan-beam').classList.add('active');
+                
+                // AUTO CLOSE SIDEBAR TO SHOW PROCESS
+                closeSidebar();
+
+                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+                try {
+                    const resizedBase64 = await resizeImage(state.base64);
+                    // Build prompt from inputs
+                    let finalPrompt = document.getElementById('prompt-main').value;
+                    if(!finalPrompt) finalPrompt = "Restore this photo, remove scratches, high quality, 8k";
+                    
+                    // --- NEW LOGIC START ---
+                    // Check Anti-flip
+                    const antiFlip = document.getElementById('check-anti-flip')?.checked;
+                    if (antiFlip) {
+                        finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (preserve composition:1.4)";
+                    }
+                    
+                    // Check Replica Mode (Identity Lock)
+                    const replicaMode = document.getElementById('mode-replica')?.checked;
+                    if (replicaMode) {
+                        finalPrompt += ", (exact facial features:1.5), (same face structure:1.5)";
+                    }
+                    // ADD STRONG CONSTRAINTS FOR STRUCTURE PRESERVATION
+                    finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (do not crop:1.4), (preserve original aspect ratio:1.4)";
+                    // --- NEW LOGIC END ---
+                    
+                    // Add extra modifiers
+                    finalPrompt += ", (best quality, 8k, hyper detailed)";
+
+                    const parts = [{ text: finalPrompt }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }];
+                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } }) });
+                    const data = await response.json();
+                    let base64Img = null;
+                    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+                        for (const part of data.candidates[0].content.parts) { if (part.inlineData && part.inlineData.data) { base64Img = part.inlineData.data; break; } }
+                    }
+                    if(base64Img) {
+                        const finalImgSrc = `data:image/jpeg;base64,${base64Img}`;
+                        const restoredImg = new Image();
+                        restoredImg.onload = () => {
+                            state.restoredObj = restoredImg;
+                            
+                            // === FORCE RESIZE DISPLAY FIX ===
+                            const imgOriginal = document.getElementById('img-original');
+                            const imgModified = document.getElementById('img-modified');
+                            
+                            imgModified.src = finalImgSrc;
+                            
+                            // Force modified image to exactly match original's display size
+                            if(imgOriginal) {
+                                const w = imgOriginal.clientWidth;
+                                const h = imgOriginal.clientHeight;
+                                imgModified.style.width = w + 'px';
+                                imgModified.style.height = h + 'px';
+                                imgModified.style.maxWidth = 'none'; // Ensure no constrain
+                            }
+
+                            document.getElementById('comparison-view').style.display = 'flex';
+                            document.getElementById('placeholder-state').style.display = 'none';
+                            
+                            // Enable download buttons
+                            if(btnDownloadDesktop) btnDownloadDesktop.disabled = false;
+                            if(btnDownloadMobile) {
+                                btnDownloadMobile.disabled = false;
+                                btnDownloadMobile.classList.remove('opacity-30'); // Visual enable
+                            }
+                            
+                            // === FIX: RESET SLIDER TO 50% FOR CLARITY ===
+                            document.getElementById('img-modified-wrapper').style.width = '50%';
+                            document.getElementById('slider-handle').style.left = '50%';
+                            document.getElementById('slider-handle').style.display = 'flex'; 
+                            document.querySelector('.comp-label.after').style.display = 'block';
+                            
+                            updateMobileBtnState('done');
+                            showToast("Phục chế thành công!", "flux");
+                        };
+                        restoredImg.src = finalImgSrc;
+                    } else { throw new Error("Không tạo được ảnh."); }
+                } catch(e) { console.error(e); showToast("Lỗi: " + e.message, "error"); updateMobileBtnState('run'); }
+                finally { 
+                    if(processBtn) {
+                        processBtn.disabled = false; 
+                        processBtn.innerHTML = "TẠO ẢNH (FLUX KONTEXT)"; 
+                    }
+                    document.getElementById('ai-terminal-overlay').classList.add('hidden'); 
+                    document.getElementById('scan-beam').classList.remove('active'); 
+                }
+            };
 
             // REAL LOGIC RESTORATION
             const btnAutoPilot = document.getElementById('btn-auto-pilot'), processBtn = document.getElementById('process-image');
@@ -1746,6 +1644,22 @@
             }
 
             // File Load & Mobile Logic
+            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; 
+            
+            // Reset Download Buttons
+            if(btnDownloadDesktop) btnDownloadDesktop.disabled = true;
+            if(btnDownloadMobile) {
+                btnDownloadMobile.disabled = true;
+                btnDownloadMobile.classList.add('opacity-30');
+            }
+            
+            // RESET TO PREVIEW MODE (HIDE SLIDER)
+            document.getElementById('img-modified-wrapper').style.width = '0%'; 
+            document.getElementById('slider-handle').style.left = '0%'; 
+            document.getElementById('slider-handle').style.display = 'none'; 
+            document.querySelector('.comp-label.after').style.display = 'none'; 
+            
+            showToast(`Đã tải ảnh: ${img.width}x${img.height}`, "success"); updateMobileBtnState('scan'); }; img.src = e.target.result; }; reader.readAsDataURL(file); };
             const fileInput = document.getElementById('image-upload'); if(fileInput) fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) { loadImg(e.target.files[0]); e.target.value = ''; } });
             
             // Mobile Proxies
@@ -1758,30 +1672,7 @@
             
             // Redeem Code
             const redeemBtn = document.getElementById('btn-submit-recharge'), redeemInput = document.getElementById('recharge-input');
-            if(redeemBtn) redeemBtn.addEventListener('click', async () => { 
-                const code = redeemInput.value.trim().toUpperCase(); 
-                if(!code) return showToast("Vui lòng nhập mã!", "error"); 
-
-                const btn = document.getElementById('btn-submit-recharge');
-                const oldText = btn.textContent;
-                btn.disabled = true;
-                btn.textContent = "CHECKING...";
-
-                // --- GỌI HÀM CLOUD (MỚI) ---
-                const result = await window.redeemVoucherCloud(code);
-
-                if (result.success) {
-                    UserSystem.addCredits(result.amount); 
-                    showToast(`Nạp thành công +${result.amount} Credits!`, "success"); 
-                    document.getElementById('recharge-modal').classList.add('hidden'); 
-                    redeemInput.value = ''; 
-                } else {
-                    showToast(result.msg, "error");
-                }
-                
-                btn.disabled = false;
-                btn.textContent = oldText;
-            });
+            if(redeemBtn) redeemBtn.addEventListener('click', () => { const code = redeemInput.value.trim(); if(!code) return showToast("Vui lòng nhập mã!", "error"); const parts = code.split('-'); if(parts.length !== 5 || parts[0] !== 'V35') return showToast("Mã không hợp lệ!", "error"); const credits = parseInt(parts[1]); if(isNaN(credits)) return showToast("Lỗi định dạng tín dụng!", "error"); UserSystem.addCredits(credits); showToast(`Nạp thành công +${credits} Credits!`, "success"); document.getElementById('recharge-modal').classList.add('hidden'); redeemInput.value = ''; });
             
             // FIX NULL ERROR: CHECK IF CLOSE BTN EXISTS
             const closeRechargeBtn = document.getElementById('close-recharge');
@@ -1794,10 +1685,6 @@
             // Drag Logic
             const compContainer = document.getElementById('comp-inner'), imgModWrapper = document.getElementById('img-modified-wrapper'), sliderHandle = document.getElementById('slider-handle');
             if(compContainer) { let isDragging = false; const updateSlider = (percent) => { if(!imgModWrapper || !sliderHandle) return; percent = Math.max(0, Math.min(100, percent)); imgModWrapper.style.width = percent + '%'; sliderHandle.style.left = percent + '%'; }; compContainer.addEventListener('mousedown', () => isDragging = true); compContainer.addEventListener('touchstart', () => isDragging = true); window.addEventListener('mouseup', () => isDragging = false); window.addEventListener('touchend', () => isDragging = false); compContainer.addEventListener('mousemove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.clientX - rect.left)/rect.width)*100); } }); compContainer.addEventListener('touchmove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.touches[0].clientX - rect.left)/rect.width)*100); } }); }
-            
-            // Trigger init
-            UserSystem.init();
-
         });
     </script>
 </body>
