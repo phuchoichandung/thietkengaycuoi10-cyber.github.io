@@ -1445,8 +1445,8 @@
                         const upscaleSelect = document.getElementById('upscale-mode');
 
                         if (workflowSelect && moduleContainer) {
-                            let newWorkflow = 'default';
-                            let toastMsg = "";
+                            let newWorkflow = 'qwen_edit_pro'; // Changed default to Qwen Edit Pro
+                            let toastMsg = "Qwen Edit Pro (Thông minh)"; // Default msg
 
                             // Lighting Logic (TAO ANH SANG .json)
                             if (lightingSelect) {
@@ -1473,9 +1473,18 @@
                             if(result.sceneContext === 'wedding') { newWorkflow = 'wedding_kontext_v2'; toastMsg = "Ảnh Cưới"; }
                             else if(result.sceneContext === 'ancient_portrait') { newWorkflow = 'ancient_restore'; toastMsg = "Phục chế Tranh/Tượng"; }
                             else if(result.sceneContext === 'outdoor') { newWorkflow = 'outdoor_mode'; toastMsg = "Ngoại cảnh"; }
-                            else if(result.sceneContext === 'product') { newWorkflow = 'product_mode'; toastMsg = "Ảnh Sản phẩm"; }
-                            else if (result.isIDPhoto) { newWorkflow = 'white_bg'; toastMsg = "Ảnh Thẻ"; }
-                            else { newWorkflow = 'qwen_edit_pro'; toastMsg = "Qwen Edit Pro (Thông minh)"; } // Default to powerful Qwen
+                            else if (result.isIDPhoto) {
+                                // Updated Logic: Only select white_bg for clean, modern ID photos
+                                if (!result.isOldPhoto && result.damageType === 'none') {
+                                    newWorkflow = 'white_bg';
+                                    toastMsg = "Ảnh Thẻ (Tách nền)";
+                                } else {
+                                    newWorkflow = 'qwen_edit_pro'; // Restore old ID photos instead of stripping bg
+                                    toastMsg = "Phục hồi Ảnh Thẻ";
+                                }
+                            }
+                            else if(result.sceneContext === 'product' && !result.isOldPhoto) { newWorkflow = 'product_mode'; toastMsg = "Ảnh Sản phẩm"; }
+                            // Removed else block that defaulted to qwen_edit_pro since we set it as initial default
 
                             if(newWorkflow !== 'default') {
                                 workflowSelect.value = newWorkflow;
