@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ZALO: 0352803379 - STUDIO V35.80 (QWEN & INVSR INTEGRATED)</title>
+    <title>PHỤC HỒI ẢNH - STUDIO V35.80 (QWEN & INVSR INTEGRATED)</title>
     
     <!-- FONTS: Apple Style Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- COPYRIGHT PROTECTION SCRIPT -->
@@ -32,7 +32,7 @@
                 extend: {
                     fontFamily: { 
                         sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-                        mono: ['"SF Mono"', 'Menlo', 'monospace'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
                     },
                     colors: {
                         ios: {
@@ -56,7 +56,8 @@
                         'pulse-glow': 'pulseGlow 2s infinite',
                         'fade-out': 'fadeOut 0.5s ease-out forwards', 
                         'enter-up': 'enterUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
-                        'ios-press': 'iosPress 0.2s ease-out'
+                        'ios-press': 'iosPress 0.2s ease-out',
+                        'highlight-pulse': 'highlightPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         enterUp: { '0%': { opacity: '0', transform: 'translateY(20px) scale(0.98)' }, '100%': { opacity: '1', transform: 'translateY(0) scale(1)' } },
@@ -65,7 +66,8 @@
                         toastIn: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
                         pulseGlow: { '0%, 100%': { opacity: '1', boxShadow: '0 0 10px #0A84FF' }, '50%': { opacity: '0.8', boxShadow: '0 0 20px #0A84FF' } },
                         fadeOut: { '0%': { opacity: '1', visibility: 'visible' }, '100%': { opacity: '0', visibility: 'hidden' } },
-                        iosPress: { '0%': { transform: 'scale(1)' }, '50%': { transform: 'scale(0.97)' }, '100%': { transform: 'scale(1)' } }
+                        iosPress: { '0%': { transform: 'scale(1)' }, '50%': { transform: 'scale(0.97)' }, '100%': { transform: 'scale(1)' } },
+                        highlightPulse: { '0%, 100%': { borderColor: 'rgba(255, 214, 10, 0.5)', backgroundColor: 'rgba(255, 214, 10, 0.1)' }, '50%': { borderColor: 'rgba(255, 214, 10, 1)', backgroundColor: 'rgba(255, 214, 10, 0.2)' } }
                     }
                 }
             }
@@ -110,7 +112,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1); 
             color: #fff; 
             transition: all 0.2s; 
-            font-size: 12px; 
+            font-size: 11px; 
             border-radius: 8px; 
             padding-left: 12px;
         }
@@ -123,6 +125,8 @@
             background-repeat: no-repeat;
             background-size: 1.5em 1.5em;
         }
+        select option { background-color: #1c1c1e; color: #fff; padding: 12px; } 
+        select optgroup { background-color: #000; color: #8E8E93; font-weight: 700; }
 
         /* Module Accordion */
         .module-group { 
@@ -145,7 +149,7 @@
         .module-content.open .module-inner { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.05); }
         .module-inner { min-height: 0; overflow: hidden; }
 
-        /* iOS Switch / Checkbox */
+        /* iOS Switch / Checkbox - Styled as original but with iOS flair */
         .chk-pro { appearance: none; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid rgba(142, 142, 147, 0.5); background: transparent; display: grid; place-content: center; cursor: pointer; transition: all 0.2s; }
         .chk-pro::before { content: ""; width: 10px; height: 10px; transform: scale(0); background: #fff; border-radius: 2px; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .chk-pro:checked::before { transform: scale(1); }
@@ -153,11 +157,14 @@
         
         .chk-gold:checked { border-color: #FFD60A; background: #FFD60A; }
         .chk-red:checked { border-color: #FF453A; background: #FF453A; }
+        .chk-real:checked { border-color: #FF9F0A; background: #FF9F0A; }
 
         /* Sliders */
         input[type=range] { -webkit-appearance: none; background: transparent; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #ffffff; cursor: pointer; margin-top: -8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #ffffff; cursor: pointer; margin-top: -7px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.2); border-radius: 2px; }
+        .slider-red::-webkit-slider-thumb { background: #FF453A; }
+        .slider-flux::-webkit-slider-thumb { background: #BF5AF2; }
 
         /* Animations & Effects */
         .modal-fade-in { animation: modalFadeIn 0.3s var(--ease-ios); }
@@ -281,6 +288,7 @@
                     <div class="flex items-center gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                         <span id="top-bar-ip" class="text-[10px] text-gray-400 font-mono">IP: Loading...</span>
+                        <span class="text-[10px] text-[#0A84FF] font-bold ml-1">V35.80 (PRO)</span>
                     </div>
                 </div>
                 
@@ -295,7 +303,7 @@
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-4 scroll-smooth space-y-4 pb-24 lg:pb-4">
+            <div class="flex-1 overflow-y-auto p-4 scroll-smooth space-y-4 pb-24 lg:pb-4 custom-scrollbar">
                 <!-- 1. MAIN UPLOAD AREA -->
                 <div class="relative group">
                     <input type="file" id="image-upload" accept="image/*" class="hidden">
@@ -304,7 +312,7 @@
                             <div class="w-10 h-10 rounded-full bg-[#0A84FF]/20 flex items-center justify-center mb-3">
                                 <svg class="w-5 h-5 text-[#0A84FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
                             </div>
-                            <span class="text-xs font-medium text-gray-400">Chạm để tải ảnh gốc</span>
+                            <span class="text-xs font-medium text-gray-400 uppercase tracking-widest">Tải ảnh gốc (Kéo thả/Click)</span>
                         </div>
                     </label>
                 </div>
@@ -315,35 +323,37 @@
                     <span class="text-xs font-bold tracking-wide">AUTO SCAN V35.80 (AI DETECT)</span>
                 </button>
 
-                <!-- SETTINGS GROUPS -->
-                <!-- FLUX KONTEXT -->
+                <!-- MODULES -->
+                <!-- FLUX KONTEXT (LZP) -->
                 <div class="module-group" id="kontext-module-container">
                     <div class="p-4 border-b border-white/5 bg-[#2c2c2e]/50 backdrop-blur-md">
                         <div class="flex items-center justify-between mb-3">
                             <div class="flex flex-col">
-                                <span class="text-[13px] font-semibold text-white">Flux / Qwen Engine</span>
-                                <span class="text-[10px] text-gray-400">Core: Qwen-VL, Kontext, InvSR</span>
+                                <span class="text-[12px] font-bold text-[#BF5AF2] tracking-wide">🚀 FLUX / QWEN / REALVIS ENGINE</span>
+                                <span class="text-[10px] text-gray-400">Core: Qwen-VL, Kontext, SUPIR, InvSR</span>
                             </div>
                              <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="mode-flux" class="sr-only peer" checked>
-                                <div class="w-10 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#30D158]"></div>
+                                <div class="w-10 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#BF5AF2]"></div>
                             </label>
                         </div>
                         <div id="workflow-container">
-                            <select id="kontext-workflow" class="pro-input w-full py-2.5 cursor-pointer bg-black/20 text-white border-none appearance-none font-medium">
-                                <option value="qwen_edit_pro" selected>⚡ Qwen Edit Pro (Khuyên dùng)</option>
-                                <option value="replica_pro">🧬 Siêu Thực (Replica Pro)</option>
-                                <option value="invsr_deblur">🔪 InvSR Deblur (Trị mờ/rung)</option>
-                                <option value="ancient_restore">🏯 Phục chế Tranh/Tượng Cổ</option>
-                                <option value="wedding_kontext_v2">👰 Wedding Kontext V2</option>
-                                <option value="default">✨ Mặc định (Kontext Base)</option>
-                                <option value="realvis_v5">🦁 RealVisXL V5 (Deep Structure)</option>
-                                <option value="qwen_restore_full">⚡ Qwen Full Restore</option>
-                                <option value="wedding_pro">💍 Wedding Pro (Cơ bản)</option>
-                                <option value="outdoor_mode">🏞️ Ngoại cảnh (IC-Light)</option>
-                                <option value="product_mode">🛍️ Ảnh sản phẩm</option>
-                                <option value="white_bg">⬜ Tách nền trắng</option>
+                            <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">CHỌN QUY TRÌNH (WORKFLOW PRESETS)</label>
+                            <select id="kontext-workflow" class="pro-input w-full py-2.5 cursor-pointer bg-black/20 text-white border-none appearance-none font-medium text-[11px]">
+                                <option value="qwen_edit_pro" class="text-cyan-300 font-bold" selected>⚡ Qwen Edit Pro (Qwen-VL + Instruction) - KHUYÊN DÙNG</option>
+                                <option value="replica_pro" class="text-yellow-400 font-bold">🧬 SIÊU THỰC (REPLICA PRO) - KHÓA CẤU TRÚC SÂU</option>
+                                <option value="invsr_deblur" class="text-green-400 font-bold">🔪 InvSR Deblur (Chuyên trị Ảnh Mờ/Rung)</option>
+                                <option value="ancient_restore" class="text-purple-400 font-bold">🏯 Phục chế Tranh/Tượng Cổ (ReActor + ControlNet)</option>
+                                <option value="wedding_kontext_v2" class="text-pink-400 font-bold">👰 Wedding Kontext V2 (Full JSON)</option>
+                                <option value="default">✨ Mặc định (Kontext Base + OldPhoto-2)</option>
+                                <option value="realvis_v5" class="text-orange-400 font-bold">🦁 RealVisXL V5 (Phục hồi cấu trúc sâu)</option>
+                                <option value="qwen_restore_full" class="text-blue-400 font-bold">⚡ Qwen V2.5 Full Restore (Prompt Gốc JSON)</option>
+                                <option value="wedding_pro">💍 Wedding Pro + Upscale (Ảnh Cưới - Cơ bản)</option>
+                                <option value="outdoor_mode">🏞️ Phục hồi Ngoại Cảnh (IC-Light + PowerPaint)</option>
+                                <option value="product_mode">🛍️ Ảnh Sản Phẩm / Thương Mại (Ecommerce)</option>
+                                <option value="white_bg">⬜ Tách Nền Trắng (BiRefNet + RMBG-2.0)</option>
                             </select>
+                            <div class="text-[9px] text-gray-500 mt-1 italic">Sử dụng Qwen-Image-Edit & Kontext.safetensors</div>
                         </div>
                     </div>
                 </div>
@@ -352,8 +362,8 @@
                 <div class="module-group">
                     <div class="p-3 flex items-center justify-between">
                          <div class="flex flex-col">
-                            <span class="text-[12px] font-semibold text-[#FFD60A]">Chế độ Sao Y Bản Chính</span>
-                            <span class="text-[10px] text-gray-500">Align Lock - Chống lật hình</span>
+                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wide">💎 CHẾ ĐỘ SAO Y BẢN CHÍNH (ALIGN LOCK)</span>
+                            <span class="text-[10px] text-gray-500">KHÓA GÓC MẶT - CHỐNG BỊ LẬT HÌNH</span>
                         </div>
                          <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="mode-replica" class="sr-only peer">
@@ -366,32 +376,33 @@
                 <div class="module-group" id="module-military">
                     <button id="toggle-military" class="module-header w-full">
                         <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-red-500/20 flex items-center justify-center"><span class="text-xs">🇻🇳</span></div>
-                            <span class="text-[13px] font-medium text-gray-200">Quân Sử & Kỷ Vật</span>
+                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wide uppercase">🇻🇳 QUÂN SỬ & KỶ VẬT (FULL UPGRADE)</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-military" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-military" class="module-content">
                         <div class="module-inner space-y-3">
                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Lực lượng</label>
-                                <select id="mil-branch" class="pro-input w-full py-2"><option value="">-- Tự động --</option><option value="vietnamese army ground force, red collar tabs">Lục quân (Hàm Đỏ)</option><option value="vietnamese air force, blue collar tabs">Phòng không KQ</option><option value="vietnamese navy, navy blue uniform, white striped collar">Hải quân</option><option value="vietnamese border guard, green collar tabs">Biên phòng</option><option value="vietnamese public security, green uniform, red collar tabs">Công an Nhân dân</option><option value="vietnamese youth volunteer force, dark green uniform">Thanh niên XP</option></select>
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân chủng / Lực lượng</label>
+                                <select id="mil-branch" class="pro-input w-full py-2"><option value="">-- Tự động / Không chọn --</option><option value="vietnamese army ground force, red collar tabs">🟥 Lục quân (Hàm Đỏ)</option><option value="vietnamese air force, blue collar tabs">🟦 Phòng Không - Không Quân (Hàm Xanh Trời)</option><option value="vietnamese navy, navy blue uniform, white striped collar">⚓ Hải quân (Áo yếm/Hàm Tím than)</option><option value="vietnamese border guard, green collar tabs">🟩 Bộ đội Biên phòng (Hàm Xanh lá)</option><option value="vietnamese public security, green uniform, red collar tabs">👮 Công an Nhân dân (Cảnh phục)</option><option value="vietnamese youth volunteer force, dark green uniform">⭐ Thanh niên Xung phong</option></select>
                              </div>
                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân phục</label>
-                                <select id="mil-uniform" class="pro-input w-full py-2"><option value="">-- Mặc định --</option><option value="wearing tran thu shirt, padded cotton jacket, viet minh era">Áo Trấn Thủ</option><option value="wearing to chau uniform, plain green fatigue, vietnam war era">Tô Châu</option><option value="wearing K82 uniform, formal military tunic">K82 (Bao cấp)</option><option value="wearing K94 uniform, modern formal suit">K94/K03 (Hiện đại)</option></select>
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân phục / Thời kỳ</label>
+                                <select id="mil-uniform" class="pro-input w-full py-2"><option value="">-- Tự động / Mặc định --</option><option value="wearing tran thu shirt, padded cotton jacket, viet minh era">Áo Trấn Thủ (Chống Pháp)</option><option value="wearing to chau uniform, plain green fatigue, vietnam war era">Quân phục Tô Châu (Chống Mỹ)</option><option value="wearing K82 uniform, formal military tunic">Quân phục K82 (Bao cấp/Biên giới)</option><option value="wearing K94 uniform, modern formal suit">Quân phục K94/K03 (Hiện đại)</option><option value="wearing camouflage special force uniform">Đặc công (Rằn ri/Ngụy trang)</option></select>
                              </div>
                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Mũ / Nón</label>
-                                <select id="hat-select" class="pro-input w-full py-2" data-key="hatSelect"><option value="">-- Không xử lý --</option><option value="wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star">Mũ Cối</option><option value="wear vietnamese soft cap, boonie hat, green fabric, red star badge">Mũ Tai Bèo</option><option value="wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star">Mũ Kepi (Sao nổi)</option></select>
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Mũ & Nón (Chính xác)</label>
+                                <select id="hat-select" class="pro-input w-full py-2" data-key="hatSelect"><option value="">-- Không xử lý Mũ --</option><option value="wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star">Mũ Cối (Lính Bắc Việt) - Cứng & Tròn</option><option value="wear vietnamese soft cap, boonie hat, green fabric, red star badge">Mũ Tai Bèo (Mềm)</option><option value="wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star">Mũ Kepi (Sĩ quan - Sao nổi)</option><option value="wear vietnamese police kepi hat, green color, red band, gold badge">Mũ Kepi (Công an)</option><option value="wear vietnamese bamboo helmet, cloth covered">Mũ Nan (Bọc vải)</option></select>
                              </div>
                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân hàm</label>
-                                <select id="rank-select" class="pro-input w-full py-2" data-key="rankSelect"><option value="">-- Tự động --</option><option value="no_rank_insignia">KHÔNG ĐEO HÀM</option><optgroup label="Hạ sĩ quan"><option value="plain red collar tabs, soldier rank">Chiến sĩ</option><option value="red collar tabs with one yellow stripe">Hạ sĩ</option><option value="red collar tabs with two yellow stripes">Trung sĩ</option><option value="red collar tabs with three yellow stripes">Thượng sĩ</option></optgroup><optgroup label="Sĩ quan"><option value="red collar tabs with one star, officer rank">Thiếu úy</option><option value="red collar tabs with two stars, officer rank">Trung úy</option><option value="red collar tabs with three stars, officer rank">Thượng úy</option><option value="red collar tabs with four stars, officer rank">Đại úy</option></optgroup></select>
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Cấp bậc / Quân hàm</label>
+                                <select id="rank-select" class="pro-input w-full py-2" data-key="rankSelect"><option value="">-- Tự động / Không chọn --</option><option value="no_rank_insignia">🚫 KHÔNG ĐEO HÀM (ÁO TRƠN)</option><optgroup label="Hạ sĩ quan / Chiến sĩ"><option value="plain red collar tabs, soldier rank">Chiến sĩ (Hàm trơn/Binh nhì-nhất)</option><option value="red collar tabs with one yellow stripe">Hạ sĩ (1 gạch)</option><option value="red collar tabs with two yellow stripes">Trung sĩ (2 gạch)</option><option value="red collar tabs with three yellow stripes">Thượng sĩ (3 gạch)</option></optgroup><optgroup label="Sĩ quan (Sao + Gạch)"><option value="red collar tabs with one star, officer rank">Thiếu úy (1 sao)</option><option value="red collar tabs with two stars, officer rank">Trung úy (2 sao)</option><option value="red collar tabs with three stars, officer rank">Thượng úy (3 sao)</option><option value="red collar tabs with four stars, officer rank">Đại úy (4 sao)</option></optgroup></select>
                              </div>
                              <div class="grid grid-cols-2 gap-2 mt-2">
-                                <div class="flex items-center gap-2"><input id="check-sao-vang" type="checkbox" class="chk-pro chk-gold save-input"><label for="check-sao-vang" class="text-[11px] text-gray-300">HC Sao Vàng</label></div>
+                                <div class="flex items-center gap-2"><input id="check-sao-vang" type="checkbox" class="chk-pro chk-gold save-input"><label for="check-sao-vang" class="text-[11px] text-gray-300">Huân chương Sao Vàng</label></div>
                                 <div class="flex items-center gap-2"><input id="check-khang-chien" type="checkbox" class="chk-pro save-input"><label for="check-khang-chien" class="text-[11px] text-gray-300">HC Kháng Chiến</label></div>
+                                <div class="flex items-center gap-2"><input id="check-chien-si" type="checkbox" class="chk-pro save-input"><label for="check-chien-si" class="text-[11px] text-gray-300">Danh hiệu Chiến sĩ</label></div>
+                                <div class="flex items-center gap-2"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[11px] text-[#0A84FF]">Huy hiệu Đoàn</label></div>
                              </div>
                         </div>
                     </div>
@@ -401,32 +412,33 @@
                 <div class="module-group" id="module-cinematic">
                     <button id="toggle-cinematic" class="module-header w-full">
                         <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-pink-500/20 flex items-center justify-center"><svg class="w-4 h-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg></div>
-                            <span class="text-[13px] font-medium text-gray-200">Lighting & Màu Phim</span>
+                            <span class="text-[12px] font-bold text-[#FF453A] tracking-wide uppercase">🎞️ LIGHTING & MÀU PHIM (IC-LIGHT)</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-cinematic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-cinematic" class="module-content open">
                         <div class="module-inner space-y-4">
                              <div>
-                                <div class="flex justify-between text-[11px] text-gray-400 font-medium mb-2">
-                                    <span>Nhiễu hạt (Grain)</span>
+                                <div class="flex justify-between text-[11px] text-gray-400 font-bold mb-2">
+                                    <span>ĐỘ NHIỄU HẠT (FLUX GRAIN)</span>
                                     <span id="grain-val" class="text-white">3%</span>
                                 </div>
-                                <input type="range" id="grain-slider" min="0" max="100" value="3" class="w-full">
+                                <input type="range" id="grain-slider" min="0" max="100" value="3" class="w-full slider-red">
                              </div>
                              <select id="color-grading" class="pro-input w-full py-2 save-input">
-                                 <option value="">-- Standard --</option>
-                                 <optgroup label="Tao Anh Sang (JSON)">
-                                     <option value="golden_hour_blinds">🌅 Golden Hour</option>
-                                     <option value="moonlight_window">🌙 Moonlight</option>
-                                     <option value="streetlight_cozy">💡 Streetlight</option>
-                                     <option value="neon_cyberpunk">🌃 Neon</option>
+                                 <option value="">-- Màu gốc (Standard) --</option>
+                                 <optgroup label="✨ TAO ANH SANG Presets (JSON Integrated)">
+                                     <option value="golden_hour_blinds">🌅 Golden Hour + Blinds (Nắng xuyên rèm)</option>
+                                     <option value="moonlight_window">🌙 Moonlight Window (Trăng xanh huyền bí)</option>
+                                     <option value="streetlight_cozy">💡 Streetlight Cozy (Đèn đường ấm áp)</option>
+                                     <option value="neon_cyberpunk">🌃 Neon Vibrant (Hồng/Xanh Tương phản)</option>
+                                     <option value="soft_diffused">☁️ Soft Diffused (Ánh sáng mềm Studio)</option>
+                                     <option value="dappled_shade">🌳 Dappled Shade (Bóng nắng dưới cây)</option>
                                  </optgroup>
-                                 <optgroup label="Màu Phim">
-                                     <option value="kodak portra 400 style, natural skin tone, fine grain" selected>Kodak Portra</option>
-                                     <option value="fujifilm pro 400h style, cool tone, soft green tint">Fujifilm</option>
-                                     <option value="sepia tone, antique photo style">Sepia</option>
+                                 <optgroup label="🎞️ Màu Phim Cổ Điển">
+                                     <option value="kodak portra 400 style, natural skin tone, fine grain" selected>Kodak Portra (Chuẩn JSON)</option>
+                                     <option value="fujifilm pro 400h style, cool tone, soft green tint">Fujifilm (Trong trẻo)</option>
+                                     <option value="sepia tone, antique photo style">Sepia (Màu xưa cũ)</option>
                                  </optgroup>
                              </select>
                         </div>
@@ -437,28 +449,30 @@
                 <div class="module-group" id="module-exposure">
                     <button id="toggle-exposure" class="module-header w-full">
                          <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-blue-500/20 flex items-center justify-center"><svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg></div>
-                            <span class="text-[13px] font-medium text-gray-200">Xử lý cháy sáng</span>
+                            <span class="text-[12px] font-bold text-[#64D2FF] tracking-wide uppercase">☀️ XỬ LÝ CHÁY SÁNG (QWEN EDIT)</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-exposure" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-exposure" class="module-content">
                         <div class="module-inner space-y-3">
-                             <div class="flex items-center justify-between">
-                                <span class="text-[12px] text-gray-300">Kích hoạt Qwen Edit</span>
+                             <div class="flex items-center justify-between p-2 rounded bg-[#0A84FF]/10 border border-[#0A84FF]/20">
+                                <div class="flex flex-col">
+                                    <span class="text-[12px] font-bold text-[#64D2FF]">KÍCH HOẠT QWEN EDIT (V2511)</span>
+                                    <span class="text-[9px] text-[#64D2FF]/70">Core: Qwen-Image-Edit + LoRA 移除光影</span>
+                                </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="check-qwen-exposure" class="sr-only peer">
-                                    <div class="w-9 h-5 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0A84FF]"></div>
+                                    <input type="checkbox" id="check-qwen-exposure" class="sr-only peer save-input">
+                                    <div class="w-9 h-5 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#64D2FF]"></div>
                                 </label>
                             </div>
                             <div class="space-y-2 pl-2 border-l-2 border-white/10 ml-1">
                                 <div class="flex items-center gap-2">
                                     <input id="check-remove-shadow" type="checkbox" class="chk-pro save-input" checked>
-                                    <label for="check-remove-shadow" class="text-[11px] text-gray-400">LoRA: Xóa bóng gắt</label>
+                                    <label for="check-remove-shadow" class="text-[11px] text-gray-400">LoRA: 移除光影 (Xóa bóng gắt)</label>
                                 </div>
                                  <div class="flex items-center gap-2">
                                     <input id="check-soft-light" type="checkbox" class="chk-pro save-input" checked>
-                                    <label for="check-soft-light" class="text-[11px] text-gray-400">Soft Light (Ánh sáng mềm)</label>
+                                    <label for="check-soft-light" class="text-[11px] text-gray-400">Prompt: Soft Light (Ánh sáng mềm)</label>
                                 </div>
                             </div>
                         </div>
@@ -472,15 +486,18 @@
                              <div id="ref-img-preview" class="w-8 h-8 rounded-lg bg-black/40 border border-white/10 flex-shrink-0 bg-cover bg-center" style="display:none;"></div>
                              <input type="file" id="ref-upload" accept="image/*" class="hidden">
                              <label for="ref-upload" class="flex-1 h-9 border border-dashed border-gray-600 rounded-lg flex items-center justify-center cursor-pointer hover:bg-white/5 transition-colors">
-                                 <span id="ref-text" class="text-[11px] text-gray-400">+ Ảnh tham chiếu (Tăng giống)</span>
+                                 <span id="ref-text" class="text-[11px] text-gray-400 font-bold">+ Ảnh tham chiếu (Tăng giống)</span>
                              </label>
                              <button id="clear-ref" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 flex items-center justify-center" style="display:none;">✕</button>
                         </div>
                         <div class="flex items-center justify-between mt-2">
-                            <span class="text-[11px] font-medium text-purple-400">Face Swap (ReActor)</span>
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-[#BF5AF2]">Kích hoạt Face Swap (ReActor)</span>
+                                <span class="text-[9px] text-[#BF5AF2]/70">Thay thế khuôn mặt thay vì trộn (InsightFace)</span>
+                            </div>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="check-reactor" class="sr-only peer">
-                                <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-purple-500"></div>
+                                <input type="checkbox" id="check-reactor" class="sr-only peer save-input">
+                                <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#BF5AF2]"></div>
                             </label>
                         </div>
                      </div>
@@ -490,37 +507,36 @@
                 <div class="module-group" id="module-processing">
                     <button id="toggle-processing" class="module-header w-full">
                         <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-gray-700 flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
-                            <span class="text-[13px] font-medium text-gray-200">Xử lý hình ảnh</span>
+                            <span class="text-[12px] font-bold text-gray-200 tracking-wide uppercase">🛠️ XỬ LÝ HÌNH ẢNH (LZP DETAIL)</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-processing" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-processing" class="module-content open">
                         <div class="module-inner space-y-4">
-                             <div class="p-3 bg-black/20 rounded-lg">
-                                <div class="flex justify-between text-[11px] text-gray-400 font-medium mb-2">
-                                    <span>Tuân thủ</span>
-                                    <span>Sáng tạo (Flux)</span>
+                             <div class="p-3 bg-[#BF5AF2]/10 rounded-lg border border-[#BF5AF2]/20">
+                                <div class="flex justify-between text-[11px] text-[#BF5AF2] font-bold mb-2">
+                                    <span>TUÂN THỦ GỐC</span>
+                                    <span>CHI TIẾT FLUX</span>
                                 </div>
-                                <input type="range" id="creativity-slider" min="0" max="100" value="45" class="w-full">
-                                <div class="text-[10px] text-center text-[#0A84FF] mt-1 font-mono" id="creativity-val">Mức 45% (Balanced)</div>
+                                <input type="range" id="creativity-slider" min="0" max="100" value="45" class="w-full slider-flux">
+                                <div class="text-[10px] text-center text-[#BF5AF2] mt-1 font-mono" id="creativity-val">Mức 45% (LZP Balanced)</div>
                              </div>
 
                              <div class="grid grid-cols-2 gap-2">
-                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5"><input id="check-dehaze" type="checkbox" class="chk-pro save-input"><label for="check-dehaze" class="text-[11px] text-gray-300">Khử sương</label></div>
-                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5"><input id="check-contrast-fix" type="checkbox" class="chk-pro save-input"><label for="check-contrast-fix" class="text-[11px] text-gray-300">Tương phản</label></div>
-                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5"><input id="check-uniform-skin" type="checkbox" class="chk-pro save-input" checked><label for="check-uniform-skin" class="text-[11px] text-gray-300">Đều màu da</label></div>
-                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5"><input id="check-vibrant" type="checkbox" class="chk-pro save-input" checked><label for="check-vibrant" class="text-[11px] text-gray-300 font-bold text-[#0A84FF]">LZP COLOR</label></div>
+                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5"><input id="check-dehaze" type="checkbox" class="chk-pro save-input"><label for="check-dehaze" class="text-[11px] text-gray-300">Khử sương mù</label></div>
+                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5"><input id="check-contrast-fix" type="checkbox" class="chk-pro save-input"><label for="check-contrast-fix" class="text-[11px] font-bold text-[#BF5AF2]">Kontext Contrast</label></div>
+                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5"><input id="check-uniform-skin" type="checkbox" class="chk-pro save-input" checked><label for="check-uniform-skin" class="text-[11px] text-gray-300">Đều màu da</label></div>
+                                 <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5"><input id="check-vibrant" type="checkbox" class="chk-pro save-input" checked><label for="check-vibrant" class="text-[11px] font-bold text-[#BF5AF2]">LZP COLOR</label></div>
                              </div>
                              
                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Upscale (4K)</label>
-                                <select id="upscale-mode" class="pro-input w-full py-2 cursor-pointer">
-                                    <option value="supir_tiled" selected>🌟 Tiled 4K (SUPIR) - Nét nhất</option>
-                                    <option value="invsr_sharp">🔪 InvSR Deblur (Chống Rung)</option>
-                                    <option value="pixel_perfect">💎 Pixel Perfect</option>
-                                    <option value="ultrasharp">⚡ 4x-UltraSharp</option>
-                                    <option value="none">🚫 Không Upscale</option>
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Chế độ Phóng to (Upscale - 4K.json Integrated)</label>
+                                <select id="upscale-mode" class="pro-input w-full py-2 cursor-pointer save-input">
+                                    <option value="supir_tiled" selected>🌟 Tiled 4K (SUPIR + Ultimate SD) - Nét nhất</option>
+                                    <option value="invsr_sharp" class="text-green-400 font-bold">🔪 InvSR Deblur (Chống Rung/Mờ - CHAY NET OK)</option>
+                                    <option value="pixel_perfect" class="text-yellow-400">💎 Pixel Perfect (Giữ nguyên hạt da)</option>
+                                    <option value="ultrasharp">⚡ 4x-UltraSharp (Tốc độ nhanh)</option>
+                                    <option value="none">🚫 Không Upscale (Nhanh nhất)</option>
                                 </select>
                              </div>
 
@@ -528,14 +544,17 @@
                                  <div class="flex items-center justify-between">
                                     <span class="text-[12px] text-gray-300">Chi tiết mặt (Face Detail)</span>
                                     <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="check-face" data-key="checkFace" class="sr-only peer" checked>
+                                        <input type="checkbox" id="check-face" data-key="checkFace" class="sr-only peer save-input" checked>
                                         <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#0A84FF]"></div>
                                     </label>
                                  </div>
-                                 <div class="flex items-center justify-between">
-                                    <span class="text-[12px] text-gray-300">Nét nền & Hoa lá (Botanical)</span>
+                                 <div class="flex items-center justify-between p-2 rounded bg-[#BF5AF2]/10 border border-[#BF5AF2]/20">
+                                    <div class="flex flex-col">
+                                        <span class="text-[12px] font-bold text-[#BF5AF2]">Làm nét Nền & Hoa Lá</span>
+                                        <span class="text-[9px] text-[#BF5AF2]/70">Chế độ: Botanical Detail (Baby.json)</span>
+                                    </div>
                                     <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="check-background" class="sr-only peer" checked>
+                                        <input type="checkbox" id="check-background" class="sr-only peer save-input" checked>
                                         <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#30D158]"></div>
                                     </label>
                                  </div>
@@ -548,8 +567,7 @@
                 <div class="module-group" id="module-subject">
                     <button id="toggle-subject" class="module-header w-full">
                          <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-orange-500/20 flex items-center justify-center"><svg class="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg></div>
-                            <span class="text-[13px] font-medium text-gray-200">Đối tượng & Trang phục</span>
+                            <span class="text-[12px] font-bold text-gray-200 tracking-wide uppercase">👔 ĐỐI TƯỢNG & TRANG PHỤC</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-subject" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
@@ -558,27 +576,32 @@
                             <div class="grid grid-cols-3 gap-2 mb-3">
                                  <select id="gender-select" class="pro-input py-2 save-input" data-key="gender"><option value="">Giới tính</option><option value="male">Nam</option><option value="female">Nữ</option><option value="male and female">Nam & Nữ</option></select>
                                  <input type="number" id="age-input" placeholder="Tuổi" class="pro-input py-2 save-input text-center" data-key="age">
-                                 <select id="damage-level" class="pro-input py-2 save-input" data-key="damageLevel"><option value="">Hư hại</option><option value="fix slightly blurry" selected>Nhẹ</option><option value="fix scratches, mold">Vừa</option><option value="fix torn, missing details">Nặng</option></select>
+                                 <select id="damage-level" class="pro-input py-2 save-input" data-key="damageLevel"><option value="">Độ hỏng</option><option value="fix slightly blurry" selected>Nhẹ</option><option value="fix scratches, mold">Vừa</option><option value="fix torn, missing details">Nặng</option></select>
                             </div>
                             <select id="texture-mode" class="pro-input w-full py-2 save-input mb-3" data-key="textureMode">
-                                <option value="">-- Texture (Chất liệu da) --</option>
-                                <option value="true skin, natural pores, film grain, realistic skin:1.2, natural beauty:1.2" selected>🧬 TRUE SKIN (LỖ CHÂN LÔNG)</option>
-                                <option value="Canon EOS 5D Mark IV, 85mm lens, shallow depth of field, perfect lighting, raw photo, realistic skin texture">📸 Canon 5D (Studio)</option>
-                                <option value="smooth skin, ai beauty">AI Beauty (Mịn)</option>
+                                <option value="">-- Độ chân thực (Texture) --</option>
+                                <option value="true skin, natural pores, film grain, realistic skin:1.2, natural beauty:1.2" selected>🧬 TRUE SKIN (DA THẬT - LỖ CHÂN LÔNG)</option>
+                                <option value="Canon EOS 5D Mark IV, 85mm lens, shallow depth of field, perfect lighting, raw photo, realistic skin texture">📸 Canon 5D + 85mm Lens (Studio Skin)</option>
+                                <option value="smooth skin, ai beauty">Mịn màng (AI Beauty)</option>
                             </select>
                             <div class="space-y-3">
-                                <div class="flex items-center justify-between p-2 rounded bg-blue-500/10 border border-blue-500/20">
-                                    <span class="text-[12px] font-medium text-blue-400">Chế độ Ảnh thẻ (ID Photo)</span>
+                                <div class="flex items-center justify-between p-2 rounded bg-[#0A84FF]/10 border border-[#0A84FF]/20">
+                                    <div class="flex flex-col">
+                                        <span class="text-[12px] font-bold text-[#0A84FF]">CHẾ ĐỘ ẢNH THẺ (ID PHOTO)</span>
+                                        <span class="text-[9px] text-[#0A84FF]/70">Phông xanh/trắng chuẩn (chuan.txt)</span>
+                                    </div>
                                     <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="check-id-photo" class="sr-only peer">
-                                        <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-500"></div>
+                                        <input type="checkbox" id="check-id-photo" class="sr-only peer save-input">
+                                        <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#0A84FF]"></div>
                                     </label>
                                 </div>
                                 <select id="event-context" class="pro-input w-full py-2 cursor-pointer save-input" data-key="eventContext">
-                                    <option value="">-- Ngữ cảnh thông minh --</option>
-                                    <option value="original_enhanced">🛡️ Nền Gốc + LZP BOOST</option>
-                                    <option value="blue_bg">🟦 Nền Xanh</option>
-                                    <option value="white_bg">⬜ Nền Trắng</option>
+                                    <option value="">-- (AUTO) Ngữ cảnh thông minh --</option>
+                                    <option value="original_enhanced" class="text-violet-400 font-bold">🛡️ Nền Gốc + MAX CHI TIẾT (LZP BOOST)</option>
+                                    <optgroup label="Thay Nền Màu">
+                                        <option value="blue_bg">🟦 Nền Xanh (Blue)</option>
+                                        <option value="white_bg">⬜ Nền Trắng (White)</option>
+                                    </optgroup>
                                 </select>
                             </div>
                         </div>
@@ -589,49 +612,54 @@
                 <div class="module-group" id="module-identity">
                     <button id="toggle-identity" class="module-header w-full">
                          <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-red-500/20 flex items-center justify-center"><svg class="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.2-2.858.567-4.181m12.366 2.145c.941 1.042 1.488 2.3 1.551 3.669" /></svg></div>
-                            <span class="text-[13px] font-medium text-gray-200">Khóa Nét (Identity)</span>
+                            <span class="text-[12px] font-bold text-gray-200 tracking-wide uppercase">🧬 KHÓA NÉT (IDENTITY GUARD)</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-identity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-identity" class="module-content">
                         <div class="module-inner">
-                            <div class="mb-3">
-                                <div class="flex justify-between text-[11px] text-gray-400 font-medium mb-2">
+                            <div class="mb-3 border border-white/10 rounded p-2 bg-black/20">
+                                <div class="flex justify-between text-[11px] text-gray-400 font-bold mb-2">
                                     <span>Mức độ khóa</span>
                                     <span id="identity-weight-val" class="text-white">300%</span>
                                 </div>
-                                <input type="range" id="identity-weight-slider" min="100" max="400" step="10" value="300" class="w-full" data-key="identityWeight">
+                                <input type="range" id="identity-weight-slider" min="100" max="400" step="10" value="300" class="w-full slider-red save-input" data-key="identityWeight">
                             </div>
-                            <div class="flex items-center justify-between p-2 mb-2 bg-red-500/10 rounded-lg">
-                                <span class="text-[12px] font-bold text-red-400">CHỐNG LẬT HÌNH (Anti-Flip)</span>
+                            <div class="flex items-center justify-between p-2 mb-2 bg-[#FF453A]/10 border border-[#FF453A]/20 rounded-lg">
+                                <div class="flex flex-col">
+                                    <span class="text-[12px] font-bold text-[#FF453A]">🚫 CHỐNG LẬT HÌNH (SMART ANTI-FLIP)</span>
+                                    <span class="text-[9px] text-[#FF453A]/70">Tự động nhận diện Tỷ lệ ảnh & Góc mặt</span>
+                                </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="check-anti-flip" class="sr-only peer" checked>
-                                    <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-red-500"></div>
+                                    <input type="checkbox" id="check-anti-flip" class="sr-only peer save-input" checked>
+                                    <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#FF453A]"></div>
                                 </label>
                             </div>
-                             <div class="mb-2 hidden" id="structure-container">
-                                <div class="flex justify-between text-[11px] text-purple-300 font-bold mb-1">
-                                    <span>Khóa cấu trúc</span>
-                                    <span id="structure-val">0.8</span>
+                             <div class="mb-2 p-2 border border-[#BF5AF2]/30 bg-[#BF5AF2]/10 rounded hidden" id="structure-container">
+                                <div class="flex justify-between text-[11px] text-[#BF5AF2] font-bold mb-1">
+                                    <span>KHÓA CẤU TRÚC (CONTROLNET)</span>
+                                    <span id="structure-val">Mạnh (0.8)</span>
                                 </div>
-                                <input type="range" id="structure-slider" min="0" max="100" value="80" class="w-full">
+                                <input type="range" id="structure-slider" min="0" max="100" value="80" class="w-full slider-flux">
                              </div>
-                            <div class="flex items-center justify-between p-2 mb-3 bg-white/5 rounded-lg">
-                                <span class="text-[12px] text-gray-300">Giữ nét Á Đông</span>
+                            <div class="flex items-center justify-between p-2 mb-3 bg-white/5 rounded-lg border border-white/5">
+                                <div class="flex flex-col">
+                                    <span class="text-[12px] font-bold text-gray-200">GIỮ NÉT Á ĐÔNG (Asian Identity)</span>
+                                    <span class="text-[9px] text-gray-500">Chống "Tây hóa", giữ đặc điểm người Việt</span>
+                                </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="check-asian-identity" data-key="checkAsianIdentity" class="sr-only peer" checked>
+                                    <input type="checkbox" id="check-asian-identity" data-key="checkAsianIdentity" class="sr-only peer save-input" checked>
                                     <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-gray-400"></div>
                                 </label>
                             </div>
                             
-                            <div class="mt-2 border-t border-white/5 pt-2">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold mb-2 block">Bảo tồn đặc điểm (Chống sửa)</label>
+                            <div class="mt-2 border-t border-[#FF453A]/20 pt-2">
+                                <label class="text-[10px] uppercase text-[#FF453A]/80 font-bold mb-2 block">🛡️ BẢO TỒN ĐẶC ĐIỂM (CHỐNG AI SỬA)</label>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <div class="flex items-center gap-2"><input id="check-cross-eyed" type="checkbox" class="chk-pro chk-red save-input"><label for="check-cross-eyed" class="text-[11px] text-gray-300">Mắt Lé</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-ptosis" type="checkbox" class="chk-pro chk-red save-input"><label for="check-ptosis" class="text-[11px] text-gray-300">Sụp Mí</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-closed-eyes" type="checkbox" class="chk-pro chk-red save-input"><label for="check-closed-eyes" class="text-[11px] text-gray-300">Mắt Nhắm</label></div>
-                                    <div class="flex items-center gap-2"><input id="check-monolid" type="checkbox" class="chk-pro chk-red save-input"><label for="check-monolid" class="text-[11px] text-gray-300">Một Mí</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-cross-eyed" type="checkbox" class="chk-pro chk-red save-input"><label for="check-cross-eyed" class="text-[11px] text-gray-300">Mắt Lé / Lác</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-ptosis" type="checkbox" class="chk-pro chk-red save-input"><label for="check-ptosis" class="text-[11px] text-gray-300">Mắt Sụp Mí</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-closed-eyes" type="checkbox" class="chk-pro chk-red save-input"><label for="check-closed-eyes" class="text-[11px] text-gray-300">Mắt Nhắm / Ngủ</label></div>
+                                    <div class="flex items-center gap-2"><input id="check-monolid" type="checkbox" class="chk-pro chk-red save-input"><label for="check-monolid" class="text-[11px] text-gray-300">Mắt Một Mí</label></div>
                                     <div class="flex items-center gap-2"><input id="check-buck-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-buck-teeth" class="text-[11px] text-gray-300">Răng Hô</label></div>
                                     <div class="flex items-center gap-2"><input id="check-black-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-black-teeth" class="text-[11px] text-gray-300">Răng Đen</label></div>
                                 </div>
@@ -644,15 +672,14 @@
                 <div class="module-group" id="module-prompt">
                     <button id="toggle-prompt" class="module-header w-full">
                          <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-gray-700 flex items-center justify-center"><span class="text-xs font-mono font-bold">P</span></div>
-                            <span class="text-[13px] font-medium text-gray-200">Prompt & API</span>
+                            <span class="text-[12px] font-bold text-gray-200 tracking-wide uppercase">📝 PROMPT & API</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-prompt" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-prompt" class="module-content">
                         <div class="module-inner">
-                            <textarea id="prompt-main" rows="3" class="pro-input w-full p-3 resize-none text-[11px] font-mono save-input mb-2 bg-black/30" data-key="promptMainValue" placeholder="System auto-generates optimized prompts..."></textarea>
-                            <input type="text" id="prompt-negative" placeholder="Negative prompt..." class="pro-input w-full py-2 save-input mb-2" data-key="promptNegative">
+                            <textarea id="prompt-main" rows="3" class="pro-input w-full p-3 resize-none text-[11px] font-mono save-input mb-2 bg-black/30" data-key="promptMainValue" placeholder="Hệ thống sẽ tự động tối ưu theo chuẩn Flux..."></textarea>
+                            <input type="text" id="prompt-negative" placeholder="Loại trừ..." class="pro-input w-full py-2 save-input mb-2" data-key="promptNegative">
                         </div>
                     </div>
                 </div>
@@ -661,21 +688,23 @@
                 <div class="module-group" id="module-logo">
                     <button id="toggle-logo" class="module-header w-full">
                          <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded bg-yellow-500/20 flex items-center justify-center"><span class="text-xs">©</span></div>
-                            <span class="text-[13px] font-medium text-gray-200">Chèn Logo</span>
+                            <span class="text-[12px] font-bold text-gray-200 uppercase">©️ CHÈN LOGO BẢN QUYỀN</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-logo" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-logo" class="module-content">
                         <div class="module-inner">
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-[12px] text-gray-300">Đóng dấu bản quyền</span>
+                                <div class="flex flex-col">
+                                    <span class="text-[12px] font-bold text-gray-300">Kích hoạt đóng dấu Logo</span>
+                                    <span class="text-[9px] text-gray-500">Dạng lưới mờ 10% phủ ảnh</span>
+                                </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="check-logo" class="sr-only peer save-input">
                                     <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#FFD60A]"></div>
                                 </label>
                             </div>
-                            <input type="text" id="custom-logo-text" class="pro-input w-full py-2 bg-black/20 text-center font-bold text-yellow-400 placeholder-gray-600" placeholder="Nhập tên/SĐT...">
+                            <input type="text" id="custom-logo-text" class="pro-input w-full py-2 bg-black/20 text-center font-bold text-yellow-400 placeholder-gray-600" placeholder="Nhập tên hoặc SĐT của bạn...">
                         </div>
                     </div>
                 </div>
@@ -699,7 +728,7 @@
                 <button id="toggle-sidebar-btn" class="text-gray-400 p-2 rounded-lg active:bg-white/10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
                 <div class="flex flex-col items-center">
                      <span class="font-semibold text-white text-[13px]">Photo Restoration</span>
-                     <span class="text-[9px] text-gray-500 font-mono tracking-widest" id="mobile-status-text">WAITING</span>
+                     <span class="text-[9px] text-gray-500 font-mono tracking-widest" id="mobile-status-text">WAITING FOR IMAGE</span>
                 </div>
                 <button id="download-mobile" class="text-[#0A84FF] p-2 rounded-full active:bg-white/10 transition-all disabled:opacity-30" disabled>
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
@@ -738,8 +767,8 @@
                                   <img id="img-modified" class="absolute top-0 left-0 max-h-[75vh] w-auto pointer-events-none select-none" style="max-width: none;">
                               </div>
                               
-                              <div class="comp-label before">TRƯỚC</div>
-                              <div class="comp-label after">SAU</div>
+                              <div class="comp-label before">GỐC (BEFORE)</div>
+                              <div class="comp-label after">KẾT QUẢ (AFTER)</div>
 
                               <div id="slider-handle" class="absolute top-0 bottom-0 left-[50%] w-0.5 bg-white/80 z-20 pointer-events-none shadow-[0_0_10px_rgba(0,0,0,0.5)]">
                                   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white/20 backdrop-blur-md border border-white rounded-full flex items-center justify-center shadow-lg">
@@ -790,62 +819,115 @@
         </div>
     </div>
 
-    <!-- RECHARGE MODAL (iOS Card Style) -->
-    <div id="recharge-modal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-xl hidden flex items-center justify-center modal-fade-in p-4 overflow-y-auto">
-        <div class="w-full max-w-[800px] bg-[#1c1c1e] border border-white/10 rounded-[32px] shadow-2xl flex flex-col md:flex-row relative overflow-hidden">
-            <button id="close-recharge" class="absolute top-4 right-4 z-50 p-2 bg-[#2c2c2e] rounded-full text-gray-400 hover:text-white transition-all">
+    <!-- RECHARGE MODAL (Redesigned iOS Style) -->
+    <div id="recharge-modal" class="fixed inset-0 z-[110] bg-black/80 backdrop-blur-2xl hidden flex items-center justify-center modal-fade-in p-4 overflow-y-auto">
+        <div class="w-full max-w-[900px] bg-[#1c1c1e] border border-white/10 rounded-[32px] shadow-2xl flex flex-col md:flex-row relative overflow-hidden h-auto md:h-[600px]">
+            <button id="close-recharge" class="absolute top-5 right-5 z-50 p-2 bg-[#2c2c2e]/80 backdrop-blur-md rounded-full text-gray-400 hover:text-white transition-all hover:scale-110 active:scale-95">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
-            <div class="w-full md:w-5/12 bg-[#000]/20 border-r border-white/5 p-6 md:p-8 flex flex-col">
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold text-white tracking-tight">Gói Credits</h3>
-                    <p class="text-[11px] text-gray-500 mt-1">Chọn gói phù hợp để thanh toán</p>
+            <!-- Left: Packages Selection -->
+            <div class="w-full md:w-5/12 bg-[#000000]/40 border-r border-white/5 p-6 md:p-8 flex flex-col relative">
+                <!-- Apple-style header -->
+                <div class="mb-8">
+                    <span class="text-[10px] font-bold text-[#0A84FF] uppercase tracking-widest mb-2 block">STORE</span>
+                    <h3 class="text-3xl font-bold text-white tracking-tight">Nạp Credits</h3>
+                    <p class="text-[13px] text-gray-400 mt-2 font-medium">Mua lượt xử lý ảnh chất lượng cao.</p>
                 </div>
 
-                <div class="space-y-3 flex-1">
-                    <div class="recharge-pkg-card group relative p-4 rounded-2xl bg-[#2c2c2e] border border-transparent hover:bg-[#3a3a3c] cursor-pointer transition-all active:scale-[0.98]" data-amount="100000" data-credits="80">
-                        <div class="flex justify-between items-center">
-                            <div><span class="block text-lg font-bold text-white">100k</span><span class="text-[10px] text-gray-500">GÓI CƠ BẢN</span></div>
-                            <div class="text-right"><span class="block text-lg font-bold text-[#FFD60A]">80 CR</span></div>
+                <div class="space-y-4 flex-1 overflow-y-auto pr-1 custom-scrollbar">
+                    <!-- Package 1 -->
+                    <div class="recharge-pkg-card group relative p-5 rounded-2xl bg-[#2c2c2e] border border-white/5 hover:border-white/20 cursor-pointer transition-all duration-300 active:scale-[0.98]" data-amount="100000" data-credits="80">
+                        <div class="flex justify-between items-center relative z-10">
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">CƠ BẢN</span>
+                                <span class="text-2xl font-bold text-white mt-1">100.000đ</span>
+                            </div>
+                            <div class="text-right bg-white/5 px-3 py-1.5 rounded-lg border border-white/5 group-hover:bg-white/10 transition">
+                                <span class="block text-lg font-mono font-bold text-[#FFD60A]">80 CR</span>
+                            </div>
                         </div>
-                        <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-2xl opacity-0 pkg-border transition-opacity"></div>
+                        <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-2xl opacity-0 pkg-border transition-opacity duration-300 shadow-[0_0_30px_rgba(10,132,255,0.15)]"></div>
                     </div>
 
-                    <div class="recharge-pkg-card active group relative p-4 rounded-2xl bg-[#0A84FF]/10 border border-[#0A84FF] cursor-pointer transition-all active:scale-[0.98]" data-amount="200000" data-credits="200">
-                        <div class="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">POPULAR</div>
-                        <div class="flex justify-between items-center">
-                            <div><span class="block text-xl font-bold text-white">200k</span><span class="text-[10px] text-[#0A84FF] font-bold">KHUYÊN DÙNG</span></div>
-                            <div class="text-right"><span class="block text-xl font-bold text-[#FFD60A]">200 CR</span><span class="text-[9px] text-green-400">+20% Bonus</span></div>
+                    <!-- Package 2 (Popular) -->
+                    <div class="recharge-pkg-card active group relative p-5 rounded-2xl bg-[#1c1c1e] border border-[#0A84FF]/30 cursor-pointer transition-all duration-300 active:scale-[0.98]" data-amount="200000" data-credits="200">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#0A84FF] to-[#007AFF] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-20">PHỔ BIẾN NHẤT</div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-[#0A84FF] uppercase tracking-wide">TIÊU CHUẨN</span>
+                                <span class="text-3xl font-bold text-white mt-1">200.000đ</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-xl font-mono font-bold text-[#FFD60A]">200 CR</span>
+                                <span class="text-[10px] font-bold text-[#30D158] bg-[#30D158]/10 px-1.5 py-0.5 rounded mt-1 inline-block">+20% Bonus</span>
+                            </div>
                         </div>
-                        <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-2xl opacity-100 pkg-border"></div>
+                        <!-- Active glow effect -->
+                        <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-2xl opacity-100 pkg-border shadow-[0_0_30px_rgba(10,132,255,0.2)]"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-[#0A84FF]/5 to-transparent rounded-2xl"></div>
                     </div>
 
-                    <div class="recharge-pkg-card group relative p-4 rounded-2xl bg-[#2c2c2e] border border-transparent hover:bg-[#3a3a3c] cursor-pointer transition-all active:scale-[0.98]" data-amount="500000" data-credits="500">
-                        <div class="flex justify-between items-center">
-                            <div><span class="block text-lg font-bold text-white">500k</span><span class="text-[10px] text-gray-500">STUDIO PRO</span></div>
-                            <div class="text-right"><span class="block text-lg font-bold text-[#FFD60A]">500 CR</span></div>
+                    <!-- Package 3 -->
+                    <div class="recharge-pkg-card group relative p-5 rounded-2xl bg-[#2c2c2e] border border-white/5 hover:border-white/20 cursor-pointer transition-all duration-300 active:scale-[0.98]" data-amount="500000" data-credits="500">
+                        <div class="flex justify-between items-center relative z-10">
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-purple-400 uppercase tracking-wide">STUDIO PRO</span>
+                                <span class="text-2xl font-bold text-white mt-1">500.000đ</span>
+                            </div>
+                            <div class="text-right bg-purple-500/10 px-3 py-1.5 rounded-lg border border-purple-500/20">
+                                <span class="block text-lg font-mono font-bold text-[#FFD60A]">500 CR</span>
+                            </div>
                         </div>
-                        <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-2xl opacity-0 pkg-border transition-opacity"></div>
+                        <div class="absolute inset-0 border-2 border-purple-500 rounded-2xl opacity-0 pkg-border transition-opacity duration-300 shadow-[0_0_30px_rgba(191,90,242,0.15)]"></div>
                     </div>
+                </div>
+                
+                <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-500">
+                    <span>Hỗ trợ: 035.280.3379 (Zalo)</span>
+                    <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div> Online</span>
                 </div>
             </div>
 
-            <div class="w-full md:w-7/12 p-6 md:p-8 flex flex-col items-center justify-center relative bg-[#000]">
-                <div class="bg-white p-3 rounded-2xl shadow-xl mb-6">
-                    <img id="vietqr-image" src="" alt="QR" class="w-48 h-48 object-contain rounded-lg">
-                </div>
-
-                <div class="w-full max-w-xs text-center space-y-4">
-                    <div class="bg-[#1c1c1e] rounded-xl p-3 border border-white/10">
-                        <p class="text-[10px] text-gray-500 font-bold uppercase mb-1">NỘI DUNG CHUYỂN KHOẢN</p>
-                        <p id="qr-content-display" class="text-xl font-mono font-bold text-[#FFD60A]">LOADING...</p>
+            <!-- Right: Payment & Input -->
+            <div class="w-full md:w-7/12 bg-[#000000] relative flex flex-col">
+                <!-- Background ambient light -->
+                <div class="absolute top-[-50%] right-[-50%] w-full h-full bg-[#0A84FF]/10 rounded-full blur-[100px] pointer-events-none"></div>
+                
+                <div class="flex-1 flex flex-col items-center justify-center p-8 relative z-10">
+                    <!-- QR Container (Ticket Style) -->
+                    <div class="bg-white p-1 rounded-[24px] shadow-2xl mb-8 relative group transform hover:scale-[1.02] transition-transform duration-500">
+                        <div class="absolute -inset-1 bg-gradient-to-tr from-[#0A84FF] to-purple-600 rounded-[26px] blur opacity-40 group-hover:opacity-60 transition duration-500"></div>
+                        <div class="relative bg-white rounded-[22px] p-4 overflow-hidden">
+                            <img id="vietqr-image" src="" alt="Payment QR" class="w-56 h-56 object-contain rounded-xl mix-blend-multiply">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-red-500 shadow-[0_0_15px_red] animate-scan opacity-50 pointer-events-none"></div>
+                            <div class="text-center mt-2">
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">MB BANK • HOANG QUANG CUONG</p>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="pt-4 border-t border-white/10 w-full">
-                        <div class="flex gap-2">
-                            <input type="text" id="recharge-input" class="pro-input flex-1 py-3 text-center font-mono uppercase text-lg bg-[#1c1c1e] border-white/10 placeholder-gray-600" placeholder="V35-XXXX">
-                            <button id="btn-submit-recharge" class="px-5 bg-[#30D158] hover:bg-[#28c04d] text-white rounded-xl text-xs font-bold transition-all active:scale-95">KÍCH HOẠT</button>
+
+                    <!-- Payment Info -->
+                    <div class="w-full max-w-sm space-y-6">
+                        <div class="text-center">
+                            <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">NỘI DUNG CHUYỂN KHOẢN (AUTO)</p>
+                            <div class="bg-[#1c1c1e] border border-white/10 rounded-xl py-3 px-4 flex items-center justify-center gap-3 group cursor-copy">
+                                <span id="qr-content-display" class="text-xl font-mono font-bold text-[#FFD60A] tracking-wider select-all">LOADING...</span>
+                                <svg class="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </div>
+                        </div>
+
+                        <!-- Activation Input -->
+                        <div class="space-y-2">
+                            <div class="relative flex items-center">
+                                <input type="text" id="recharge-input" class="w-full bg-[#1c1c1e] border border-white/10 text-white font-mono text-center text-lg py-4 rounded-xl focus:border-[#0A84FF] focus:ring-1 focus:ring-[#0A84FF] transition-all outline-none placeholder-gray-700 uppercase tracking-widest" placeholder="NHẬP MÃ V35-...">
+                                <div class="absolute right-2 top-1/2 -translate-y-1/2">
+                                    <button id="btn-submit-recharge" class="bg-[#30D158] hover:bg-[#28c04d] text-white px-4 py-2 rounded-lg text-xs font-bold transition-transform active:scale-95 shadow-lg shadow-green-900/20">
+                                        KÍCH HOẠT
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-center text-gray-500">Hệ thống tự động kích hoạt sau khi nhập mã.</p>
                         </div>
                     </div>
                 </div>
@@ -1351,7 +1433,7 @@
                 if(!state.base64) return showToast("Vui lòng tải ảnh trước!", "error");
                 const originalText = btnAutoPilot.innerHTML;
                 btnAutoPilot.disabled = true;
-                btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCANNING...</span>`;
+                btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCAN V35.80 (AI DETECT)...</span>`;
                 updateMobileBtnState('scanning');
                 const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
                 if (!keyToUse) { showToast("Chưa có API Key! Vui lòng liên hệ Admin.", "error"); btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; updateMobileBtnState('scan'); return; }
@@ -1359,7 +1441,7 @@
                 try {
                     const resizedBase64 = await resizeImage(state.base64);
                     const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 40000);
-                    const promptText = "Analyze this image for photo restoration. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\"|\"nature\", \"lightingCondition\": \"rembrandt\"|\"golden_hour\"|\"neon\"|\"soft_diffused\"|\"flat\"|\"overexposed\"|\"harsh_sun\"|\"moonlight\"|\"streetlight\", \"backgroundType\": \"plain\"|\"complex_outdoor\"|\"complex_indoor\", \"isNature\": boolean, \"isMilitary\": boolean, \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\"|\"blur\", \"isOldPhoto\": boolean, \"isIDPhoto\": boolean, \"isHazy\": boolean, \"hasStrabismus\": boolean, \"hasDroopyEyelids\": boolean, \"hasClosedEyes\": boolean, \"hasMonolids\": boolean, \"hasBuckTeeth\": boolean, \"hasBlackenedTeeth\": boolean }";
+                    const promptText = "Analyze this image for photo restoration. Look closely at facial features, lighting, and imperfections. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\"|\"nature\", \"lightingCondition\": \"rembrandt\"|\"golden_hour\"|\"neon\"|\"soft_diffused\"|\"flat\"|\"overexposed\"|\"harsh_sun\"|\"moonlight\"|\"streetlight\", \"backgroundType\": \"plain\"|\"complex_outdoor\"|\"complex_indoor\", \"faceAngle\": \"front\"|\"side_left\"|\"side_right\"|\"tilted_up\"|\"tilted_down\", \"jawStructure\": \"defined\"|\"soft\"|\"round\"|\"square\", \"noseAngle\": \"straight\"|\"tilted\", \"mouthAngle\": \"straight\"|\"tilted\", \"eyeSymmetry\": \"even\"|\"uneven\", \"hasAsymmetry\": boolean, \"isNature\": boolean, \"isMilitary\": boolean, \"isGroupPhoto\": boolean, \"hasVisibleRankInsignia\": boolean, \"rankColor\": \"red\"|\"green\"|\"blue\"|\"none\", \"specificHat\": \"pith_helmet\"|\"soft_cap\"|\"kepi\"|\"bamboo_helmet\"|\"none\", \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\"|\"blur\", \"isOldPhoto\": boolean, \"isLowContrast\": boolean, \"isNoisy\": boolean, \"hasStrabismus\": boolean, \"hasDroopyEyelids\": boolean, \"hasClosedEyes\": boolean, \"hasDistinctiveImperfections\": boolean, \"hasMonolids\": boolean, \"hasBuckTeeth\": boolean, \"hasBlackenedTeeth\": boolean, \"needsBackgroundRestoration\": boolean, \"militaryBranch\": \"army\"|\"air_force\"|\"navy\"|\"border_guard\"|\"police\"|\"youth_volunteer\"|\"unknown\", \"uniformEra\": \"tran_thu\"|\"to_chau\"|\"k82\"|\"k94\"|\"camouflage\"|\"unknown\", \"rankLevel\": \"soldier\"|\"officer\"|\"unknown\", \"hasMedalSaoVang\": boolean, \"hasMedalKhangChien\": boolean, \"hasBadgeDoan\": boolean, \"isIDPhoto\": boolean, \"isHazy\": boolean }";
                     const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
                     const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, signal: controller.signal, body: JSON.stringify({ contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }] }] }) });
                     clearTimeout(timeoutId);
@@ -1376,6 +1458,7 @@
                         const result = JSON.parse(text);
                         const autoReport = [];
 
+                        // === SAFE SETTER FUNCTION (FIXED) ===
                         const setChecked = (id, val) => { const el = document.getElementById(id); if(el) el.checked = val; };
 
                         if(document.getElementById('gender-select')) {
@@ -1416,7 +1499,7 @@
                         if (!state.isReplicaMode) { 
                             const modeReplica = document.getElementById('mode-replica');
                             if(modeReplica) modeReplica.click(); 
-                            autoReport.push("Chế độ Siêu thực");
+                            autoReport.push("Chế độ Siêu thực (Replica)");
                         }
                         
                         let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed background:1.3). `;
@@ -1435,17 +1518,28 @@
                         const upscaleSelect = document.getElementById('upscale-mode');
 
                         if (workflowSelect && moduleContainer) {
-                            let newWorkflow = 'qwen_edit_pro'; 
-                            let toastMsg = "Qwen Edit Pro"; 
+                            let newWorkflow = 'qwen_edit_pro'; // Changed default to Qwen Edit Pro
+                            let toastMsg = "Qwen Edit Pro (Thông minh)"; // Default msg
 
+                            // Lighting Logic (TAO ANH SANG .json)
                             if (lightingSelect) {
-                                if (result.lightingCondition === 'golden_hour') { lightingSelect.value = 'golden_hour_blinds'; autoReport.push("Ánh sáng: Golden Hour"); } 
-                                else if (result.lightingCondition === 'moonlight') { lightingSelect.value = 'moonlight_window'; autoReport.push("Ánh sáng: Moonlight"); } 
-                                else if (result.lightingCondition === 'neon') { lightingSelect.value = 'neon_cyberpunk'; autoReport.push("Ánh sáng: Neon"); }
+                                if (result.lightingCondition === 'golden_hour') {
+                                    lightingSelect.value = 'golden_hour_blinds';
+                                    autoReport.push("Ánh sáng: Golden Hour");
+                                } else if (result.lightingCondition === 'moonlight') {
+                                    lightingSelect.value = 'moonlight_window';
+                                    autoReport.push("Ánh sáng: Moonlight");
+                                } else if (result.lightingCondition === 'neon') {
+                                    lightingSelect.value = 'neon_cyberpunk';
+                                    autoReport.push("Ánh sáng: Neon");
+                                } else if (result.lightingCondition === 'soft_diffused') {
+                                    lightingSelect.value = 'soft_diffused';
+                                }
                             }
 
+                            // Workflow Logic
                             if ((result.damageType === 'blur' || result.isHazy) && upscaleSelect) {
-                                upscaleSelect.value = 'invsr_sharp'; 
+                                upscaleSelect.value = 'invsr_sharp'; // CHAY NET OK.json
                                 autoReport.push("Kích hoạt InvSR Chống Rung");
                             }
 
@@ -1453,24 +1547,33 @@
                             else if(result.sceneContext === 'ancient_portrait') { newWorkflow = 'ancient_restore'; toastMsg = "Phục chế Tranh/Tượng"; }
                             else if(result.sceneContext === 'outdoor') { newWorkflow = 'outdoor_mode'; toastMsg = "Ngoại cảnh"; }
                             else if (result.isIDPhoto) {
-                                if (!result.isOldPhoto && result.damageType === 'none') { newWorkflow = 'white_bg'; toastMsg = "Ảnh Thẻ (Tách nền)"; } 
-                                else { newWorkflow = 'qwen_edit_pro'; toastMsg = "Phục hồi Ảnh Thẻ"; }
+                                // Updated Logic: Only select white_bg for clean, modern ID photos
+                                if (!result.isOldPhoto && result.damageType === 'none') {
+                                    newWorkflow = 'white_bg';
+                                    toastMsg = "Ảnh Thẻ (Tách nền)";
+                                } else {
+                                    newWorkflow = 'qwen_edit_pro'; // Restore old ID photos instead of stripping bg
+                                    toastMsg = "Phục hồi Ảnh Thẻ";
+                                }
                             }
                             else if(result.sceneContext === 'product' && !result.isOldPhoto) { newWorkflow = 'product_mode'; toastMsg = "Ảnh Sản phẩm"; }
+                            // Removed else block that defaulted to qwen_edit_pro since we set it as initial default
 
                             if(newWorkflow !== 'default') {
                                 workflowSelect.value = newWorkflow;
                                 autoReport.push("Workflow: " + toastMsg);
-                                moduleContainer.classList.add('ring-1', 'ring-[#0A84FF]');
-                                setTimeout(() => { moduleContainer.classList.remove('ring-1', 'ring-[#0A84FF]'); }, 3000);
+                                moduleContainer.classList.add('animate-highlight-pulse', 'ring-2', 'ring-[#FFD60A]');
+                                setTimeout(() => {
+                                    moduleContainer.classList.remove('animate-highlight-pulse', 'ring-2', 'ring-[#FFD60A]');
+                                }, 3000);
                             }
                         }
 
                         if (window.innerWidth >= 1024) { openSidebar(); } 
-                        else { showToast("✅ Auto Scan hoàn tất", "success"); }
+                        else { showToast("✅ Đã áp dụng cấu hình Auto Scan", "success"); }
                         
                         autoReport.forEach((msg, index) => {
-                            setTimeout(() => { showToast("🤖 " + msg, "info"); }, index * 800); 
+                            setTimeout(() => { showToast("🤖 Auto: " + msg, "smart"); }, index * 800); 
                         });
 
                         updateMobileBtnState('run');
