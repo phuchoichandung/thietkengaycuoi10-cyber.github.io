@@ -1659,7 +1659,13 @@
 
                             if(result.sceneContext === 'wedding') { newWorkflow = 'wedding_kontext_v2'; toastMsg = "WORKFLOW: ẢNH CƯỚI"; }
                             else if(result.sceneContext === 'ancient_portrait') { newWorkflow = 'ancient_restore'; toastMsg = "WORKFLOW: TRANH/TƯỢNG"; }
-                            else if(result.sceneContext === 'outdoor') { newWorkflow = 'outdoor_mode'; toastMsg = "WORKFLOW: NGOẠI CẢNH"; }
+                            // ------------------------- SỬA ĐỔI QUAN TRỌNG Ở ĐÂY -------------------------
+                            // Thêm điều kiện bắt 'nature' và isNature cho chế độ Ngoại cảnh
+                            else if(result.sceneContext === 'outdoor' || result.sceneContext === 'nature' || result.isNature === true || result.backgroundType === 'complex_outdoor') { 
+                                newWorkflow = 'outdoor_mode'; 
+                                toastMsg = "WORKFLOW: NGOẠI CẢNH"; 
+                            }
+                            // ---------------------------------------------------------------------------
                             else if (result.isIDPhoto) {
                                 if (!result.isOldPhoto && result.damageType === 'none') { newWorkflow = 'white_bg'; toastMsg = "WORKFLOW: TÁCH NỀN"; } 
                                 else { newWorkflow = 'qwen_edit_pro'; toastMsg = "WORKFLOW: PHỤC HỒI ẢNH THẺ"; }
