@@ -63,7 +63,8 @@
                         'typewriter': 'typewriter 0.5s steps(40, end)',
                         'shimmer-fast': 'shimmer 1.5s linear infinite',
                         'pop-in': 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-                        'text-cycle': 'textCycle 2s ease-in-out forwards', // Animation for cycling text
+                        'text-cycle': 'textCycle 2s ease-in-out forwards', 
+                        'spin-slow': 'spin 3s linear infinite',
                     },
                     keyframes: {
                         enterUp: { '0%': { opacity: '0', transform: 'translateY(30px) scale(0.95)' }, '100%': { opacity: '1', transform: 'translateY(0) scale(1)' } },
@@ -242,23 +243,20 @@
         .passcode-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #fff; margin: 0 8px; }
         .passcode-dot.filled { background: #fff; }
 
-        /* Mac Window Style Dots */
-        .mac-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
-        .mac-dot.red { background-color: #FF5F56; }
-        .mac-dot.yellow { background-color: #FFBD2E; }
-        .mac-dot.green { background-color: #27C93F; }
+        /* Mac Window Style Dots - REMOVED for HUD Style */
+        /* .mac-dot { ... } */
 
-        /* Tag in Mac Window (For Process Status) */
+        /* Tag in HUD (For Process Status) */
         .scan-tag { 
             display: inline-flex; align-items: center; 
             padding: 4px 10px; margin: 2px;
-            border-radius: 12px; 
-            background: rgba(255,255,255,0.1); 
+            border-radius: 6px; 
+            background: rgba(255,255,255,0.05); 
             border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; font-size: 10px; font-weight: 600; font-family: monospace;
+            color: #fff; font-size: 9px; font-weight: 600; font-family: monospace;
             opacity: 0; animation: pop-in 0.3s forwards;
         }
-        .scan-tag.highlight { border-color: #FFD60A; color: #FFD60A; background: rgba(255, 214, 10, 0.1); }
+        .scan-tag.highlight { border-color: #0A84FF; color: #0A84FF; background: rgba(10, 132, 255, 0.1); }
 
         /* Sequential Log Text (Corner) - Appear then Disappear */
         .sequential-log-text {
@@ -345,26 +343,26 @@
     <!-- SYSTEM NOTIFICATION AREA -->
     <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none w-auto max-w-sm items-end"></div>
     
-    <!-- NEW: MAC WINDOW (ONLY FOR RUNNING STATUS) -->
-    <div id="scan-window-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm hidden">
-        <div class="w-[90%] max-w-[340px] bg-[#1c1c1e]/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-enter-up">
-            <!-- Mac Window Header -->
-            <div class="h-8 bg-white/5 border-b border-white/5 flex items-center px-3 gap-0">
-                <div class="mac-dot red"></div>
-                <div class="mac-dot yellow"></div>
-                <div class="mac-dot green"></div>
-                <span class="ml-auto text-[10px] font-mono font-bold text-gray-500 tracking-wider">SYSTEM STATUS</span>
-            </div>
-            <!-- Content -->
-            <div class="p-5 flex flex-col items-center min-h-[140px] justify-center">
-                <div id="scan-radar-icon" class="w-12 h-12 rounded-full border-2 border-[#0A84FF] flex items-center justify-center mb-3 relative">
-                    <div class="absolute inset-0 bg-[#0A84FF]/20 rounded-full animate-spin" style="animation-duration: 3s;"></div>
-                    <svg class="w-6 h-6 text-[#0A84FF] animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+    <!-- NEW: MODERN HUD OVERLAY (Replaces Old Mac Window) -->
+    <div id="scan-window-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/60 backdrop-blur-md hidden transition-all duration-300">
+        <div class="relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-white/5 shadow-2xl animate-enter-up">
+            <div class="bg-[#0f0f11]/90 backdrop-blur-xl rounded-xl p-6 flex flex-col items-center min-w-[260px] border border-white/5 relative overflow-hidden">
+                <!-- Decorative BG glow -->
+                <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 animate-spin-slow pointer-events-none"></div>
+                
+                <!-- Advanced Spinner -->
+                <div class="relative mb-4">
+                    <div class="w-14 h-14 rounded-full border-2 border-white/10"></div>
+                    <div class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-t-[#0A84FF] border-r-[#0A84FF] border-b-transparent border-l-transparent animate-spin"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
                 </div>
-                <h3 id="scan-title" class="text-sm font-bold text-white mb-3 animate-pulse">ĐANG XỬ LÝ...</h3>
+
+                <h3 id="scan-title" class="text-xs font-bold text-white tracking-[0.2em] mb-3 uppercase relative z-10">AI PROCESSING</h3>
                 
                 <!-- Tag Container (Populated by JS - Settings) -->
-                <div id="scan-tags-container" class="flex flex-wrap justify-center w-full gap-1">
+                <div id="scan-tags-container" class="flex flex-wrap justify-center gap-1.5 w-full relative z-10 max-w-[220px]">
                     <!-- Settings tags will appear here -->
                 </div>
             </div>
@@ -892,7 +890,7 @@
             <div class="lg:hidden h-14 glass-panel border-b border-white/5 flex items-center px-4 justify-between z-30 relative w-full">
                 <button id="toggle-sidebar-btn" class="text-gray-400 p-2 rounded-lg active:bg-white/10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
                 <div class="flex flex-col items-center">
-                     <span class="font-bold text-white text-[14px] tracking-tight">AI RESTORATION</span>
+                     <span class="font-bold text-white text-[14px] tracking-tight">PHỤC HỒI ẢNH</span>
                      <div class="flex items-center gap-2 opacity-60">
                         <span class="text-[9px] font-mono">V36.12</span>
                         <span class="text-[9px]">•</span>
