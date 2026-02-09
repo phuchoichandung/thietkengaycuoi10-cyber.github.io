@@ -181,6 +181,7 @@
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.2); border-radius: 2px; }
         .slider-red::-webkit-slider-thumb { background: #FF453A; }
         .slider-flux::-webkit-slider-thumb { background: #BF5AF2; }
+        .slider-cyan::-webkit-slider-thumb { background: #64D2FF; box-shadow: 0 0 10px #64D2FF; }
 
         /* Animations & Effects */
         .modal-fade-in { animation: modalFadeIn 0.3s var(--ease-ios); }
@@ -242,9 +243,6 @@
         /* Security Gate iOS Style */
         .passcode-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #fff; margin: 0 8px; }
         .passcode-dot.filled { background: #fff; }
-
-        /* Mac Window Style Dots - REMOVED for HUD Style */
-        /* .mac-dot { ... } */
 
         /* Tag in HUD (For Process Status) */
         .scan-tag { 
@@ -374,7 +372,7 @@
         <!-- SIDEBAR (iOS Settings Style) -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-[60] w-full sm:w-[380px] flex-shrink-0 glass-panel flex flex-col transition-transform duration-300 ease-out lg:static lg:translate-x-0 -translate-x-full shadow-2xl lg:shadow-none bg-[#000]/90 lg:bg-transparent">
             
-            <!-- Sidebar Header (Cleaned up for Desktop) - UPDATED -->
+            <!-- Sidebar Header -->
             <div class="h-14 px-5 flex items-center justify-between border-b border-white/10 bg-white/[0.02]">
                 <div class="flex flex-col justify-center">
                     <h1 class="text-[14px] font-bold tracking-tight text-white uppercase">PHỤC HỒI ẢNH</h1>
@@ -435,6 +433,8 @@
                             <select id="kontext-workflow" class="pro-input w-full py-2.5 cursor-pointer bg-black/20 text-white border-none appearance-none font-medium text-[11px]">
                                 <option value="qwen_edit_pro" class="text-cyan-300 font-bold" selected>⚡ Qwen Edit Pro (Qwen-VL + Instruction) - KHUYÊN DÙNG</option>
                                 <option value="replica_pro" class="text-yellow-400 font-bold">🧬 SIÊU THỰC (REPLICA PRO) - KHÓA CẤU TRÚC SÂU</option>
+                                <option value="qwen_lightning" class="text-teal-300 font-bold">⚡ Qwen V2.5-VL (Lightning Fast) - SIÊU NHANH</option>
+                                <option value="old_photo_v1">📜 Kontext V1.0 Native (Ref-Latent Boost)</option>
                                 <option value="invsr_deblur" class="text-green-400 font-bold">🔪 InvSR Deblur (Chuyên trị Ảnh Mờ/Rung)</option>
                                 <option value="ancient_restore" class="text-purple-400 font-bold">🏯 Phục chế Tranh/Tượng Cổ (ReActor + ControlNet)</option>
                                 <option value="wedding_kontext_v2" class="text-pink-400 font-bold">👰 Wedding Kontext V2 (Full JSON)</option>
@@ -497,6 +497,21 @@
                                 <div class="flex items-center gap-2"><input id="check-chien-si" type="checkbox" class="chk-pro save-input"><label for="check-chien-si" class="text-[11px] text-gray-300">Danh hiệu Chiến sĩ</label></div>
                                 <div class="flex items-center gap-2"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[11px] text-[#0A84FF]">Huy hiệu Đoàn</label></div>
                              </div>
+                             <!-- ADDED FROM INDEX1: INSIGNIA BOOST & BLOCK RANK -->
+                             <div class="flex items-center gap-2 p-2 rounded border border-yellow-500/20 bg-yellow-500/10 mt-1">
+                                <input id="check-insignia-boost" type="checkbox" class="chk-pro save-input">
+                                <label for="check-insignia-boost" class="cursor-pointer select-none flex-1">
+                                    <span class="block text-[10px] font-bold text-yellow-400">TĂNG NÉT QUÂN HÀM & LOGO</span>
+                                    <span class="block text-[8px] text-yellow-500/70">Xử lý riêng viền Sao Mũ & Chi tiết kim loại</span>
+                                </label>
+                            </div>
+                             <div class="flex items-center gap-2 p-2 rounded border border-red-500/20 bg-red-500/10 mt-1">
+                                <input id="block-rank" type="checkbox" class="chk-pro chk-red save-input">
+                                <label for="block-rank" class="cursor-pointer select-none flex-1">
+                                    <span class="block text-[10px] font-bold text-red-400">CHẶN VẼ QUÂN HÀM (GIỮ CỔ ÁO TRƠN)</span>
+                                    <span class="block text-[8px] text-red-500/70">Tick vào nếu ảnh gốc không có ve/hàm mà AI cứ vẽ thêm</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -572,6 +587,14 @@
                                     <label for="check-soft-light" class="text-[11px] text-gray-400">Prompt: Soft Light (Ánh sáng mềm)</label>
                                 </div>
                             </div>
+                            <!-- ADDED FROM INDEX1: EXPOSURE STRENGTH SLIDER -->
+                            <div class="border border-white/10 rounded bg-black/20 p-2">
+                                <div class="flex justify-between text-[11px] text-[#64D2FF] font-bold mb-1">
+                                    <span>CƯỜNG ĐỘ XỬ LÝ (STRENGTH)</span>
+                                    <span id="exposure-val" class="text-gray-200">1.0</span>
+                                </div>
+                                <input type="range" id="exposure-slider" min="0.1" max="2.0" step="0.1" value="1.0" class="w-full slider-cyan">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -633,6 +656,8 @@
                                     <option value="invsr_sharp" class="text-green-400 font-bold">🔪 InvSR Deblur (Chống Rung/Mờ - CHAY NET OK)</option>
                                     <option value="pixel_perfect" class="text-yellow-400">💎 Pixel Perfect (Giữ nguyên hạt da)</option>
                                     <option value="ultrasharp">⚡ 4x-UltraSharp (Tốc độ nhanh)</option>
+                                    <!-- ADDED FROM INDEX1: REALESRGAN -->
+                                    <option value="realesrgan">💍 RealESRGAN (Ảnh cưới/Mịn da)</option>
                                     <option value="none">🚫 Không Upscale (Nhanh nhất)</option>
                                 </select>
                              </div>
@@ -723,6 +748,8 @@
                                 <option value="true skin, natural pores, film grain, realistic skin:1.2, natural beauty:1.2" selected>🧬 TRUE SKIN (DA THẬT - LỖ CHÂN LÔNG)</option>
                                 <option value="Canon EOS 5D Mark IV, 85mm lens, shallow depth of field, perfect lighting, raw photo, realistic skin texture">📸 Canon 5D + 85mm Lens (Studio Skin)</option>
                                 <option value="smooth skin, ai beauty">Mịn màng (AI Beauty)</option>
+                                <!-- ADDED FROM INDEX1: FILM GRAIN -->
+                                <option value="high detail, film grain">Chi tiết cao (Film Grain)</option>
                             </select>
                             <div class="space-y-3">
                                 <div class="flex items-center justify-between p-2 rounded bg-[#0A84FF]/10 border border-[#0A84FF]/20">
@@ -751,6 +778,11 @@
                                     <optgroup label="Thay Nền Màu">
                                         <option value="blue_bg">🟦 Nền Xanh (Blue)</option>
                                         <option value="white_bg">⬜ Nền Trắng (White)</option>
+                                    </optgroup>
+                                    <!-- ADDED FROM INDEX1: FLUX STYLE -->
+                                    <optgroup label="Flux Style (Theo JSON)">
+                                        <option value="outdoor_garden">🌿 Sân Vườn / Hoa Lá (Chuẩn JSON)</option>
+                                        <option value="luxury_interior">🕰️ Nội Thất Sang Trọng</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -1640,46 +1672,6 @@
                     let finalPrompt = document.getElementById('prompt-main').value;
                     if(!finalPrompt) finalPrompt = "Restore this photo, remove scratches, high quality, 8k";
                     
-                    // --- FIX V36: FORCE READ MILITARY VALUES IF AUTO SCAN OR MANUAL SELECT ---
-                    // This was missing in your original code, causing the AI to ignore the selection
-                    
-                    // 1. Military Branch
-                    const milBranch = document.getElementById('mil-branch');
-                    if(milBranch && milBranch.value) finalPrompt += `, (${milBranch.value}:1.3)`;
-
-                    // 2. Uniform
-                    const milUniform = document.getElementById('mil-uniform');
-                    if(milUniform && milUniform.value) finalPrompt += `, (${milUniform.value}:1.3)`;
-
-                    // 3. Hat (Priority High)
-                    const hatSelect = document.getElementById('hat-select');
-                    if(hatSelect && hatSelect.value) finalPrompt += `, (${hatSelect.value}:1.4)`;
-
-                    // 4. Rank
-                    const rankSelect = document.getElementById('rank-select');
-                    if(rankSelect && rankSelect.value) {
-                         if(rankSelect.value === 'no_rank_insignia') {
-                             finalPrompt += ", (no collar tabs:1.4), (plain collar:1.4)";
-                         } else {
-                             finalPrompt += `, (${rankSelect.value}:1.4), (detailed collar tabs:1.3)`;
-                         }
-                    }
-
-                    // 5. Medals and Badges (Very High Priority)
-                    if(document.getElementById('check-sao-vang')?.checked) {
-                        finalPrompt += ", (Gold Star Order medal on left chest:1.5), (detailed gold star medal:1.4), (red ribbon with yellow stars:1.3)";
-                    }
-                    if(document.getElementById('check-khang-chien')?.checked) {
-                        finalPrompt += ", (Resistance War Medal:1.4), (colorful medal ribbon bar on chest:1.3)";
-                    }
-                    if(document.getElementById('check-chien-si')?.checked) {
-                        finalPrompt += ", (Emulation Soldier Badge:1.3), (metallic badge on pocket:1.2)";
-                    }
-                    if(document.getElementById('check-doan')?.checked) {
-                        finalPrompt += ", (Ho Chi Minh Communist Youth Union badge:1.4), (blue and red circular badge with star on left pocket:1.3)";
-                    }
-                    // --- END FIX ---
-
                     const antiFlip = document.getElementById('check-anti-flip')?.checked;
                     if (antiFlip) {
                         finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (preserve composition:1.4)";
@@ -1702,14 +1694,24 @@
                     }
 
                     const workflowSelect = document.getElementById('kontext-workflow');
-                    if (workflowSelect && workflowSelect.value === 'qwen_edit_pro') {
-                        finalPrompt = "Instruction: " + finalPrompt; 
-                        finalPrompt += ". Describe key features of the input image, then explain how the user's text instruction should alter the image while maintaining consistency.";
+                    // ADDED LOGIC FOR NEW WORKFLOWS FROM INDEX1
+                    if (workflowSelect) {
+                        if (workflowSelect.value === 'qwen_edit_pro') {
+                            finalPrompt = "Instruction: " + finalPrompt; 
+                            finalPrompt += ". Describe key features of the input image, then explain how the user's text instruction should alter the image while maintaining consistency.";
+                        } else if (workflowSelect.value === 'qwen_lightning') {
+                             finalPrompt += ", (Qwen-Image-Edit-2511:1.2), (Lightning-4steps-V1.0-fp32:1.0)";
+                             finalPrompt += ", (Instruction: High-resolution photo reconstruction:1.5)";
+                        } else if (workflowSelect.value === 'old_photo_v1') {
+                             finalPrompt += ", (Kontext_老照片修复lora_v1.safetensors:1.0), (ReferenceLatent:1.2)";
+                        }
                     }
 
                     const upscaleMode = document.getElementById('upscale-mode');
                     if (upscaleMode && upscaleMode.value === 'invsr_sharp') {
                         finalPrompt += ", (sharp focus:1.4), (remove motion blur:1.3), (InvSR deblurring:1.2)";
+                    } else if (upscaleMode && upscaleMode.value === 'realesrgan') {
+                        finalPrompt += ", (RealESRGAN x4 Plus:1.4), (smooth restoration:1.3)";
                     }
 
                     const colorGrade = document.getElementById('color-grading');
@@ -1719,6 +1721,22 @@
                          finalPrompt += ", (Moonlight through window panes:1.3), (bluish soft grid shadows:1.2), (mysterious night mood)";
                     } else if (colorGrade && colorGrade.value.includes('colorize_bw_old_photo')) {
                          finalPrompt += ", (colorize:1.5), (vibrant colors), (natural skin tones:1.4), (realistic clothes colors)";
+                    }
+
+                    // ADDED LOGIC FOR MILITARY EXTRAS FROM INDEX1
+                    const isInsigniaBoost = document.getElementById('check-insignia-boost')?.checked || false;
+                    const isBlockRank = document.getElementById('block-rank')?.checked || false;
+                    if (isInsigniaBoost) finalPrompt += `, (detailed military insignia:1.6), (shiny gold star badge:1.6), (collar rank details:1.5)`;
+                    if (isBlockRank) finalPrompt += `, (plain collar:1.5), (no rank insignia:1.5)`;
+
+                    // ADDED LOGIC FOR EXPOSURE STRENGTH FROM INDEX1
+                    const isQwenExposure = document.getElementById('check-qwen-exposure')?.checked || false;
+                    const exposureStrength = parseFloat(document.getElementById('exposure-slider')?.value || 1.0);
+                    if (isQwenExposure) {
+                         const isRemoveShadow = document.getElementById('check-remove-shadow')?.checked;
+                         if (isRemoveShadow) {
+                            finalPrompt += `, (remove harsh light and shadow:${(1.5 * exposureStrength).toFixed(1)}), (neutralize exposure:${(1.4 * exposureStrength).toFixed(1)})`;
+                        }
                     }
 
                     finalPrompt += ", (best quality, 8k, hyper detailed)";
@@ -1860,6 +1878,9 @@
                             const contentMilitary = document.getElementById('content-military');
                             if(contentMilitary) contentMilitary.classList.add('open'); 
                             autoReport.push("PHÁT HIỆN: QUÂN PHỤC");
+                            // Auto boost insignia logic
+                            setChecked('check-insignia-boost', true);
+                            autoReport.push("AUTO: TĂNG NÉT QUÂN HÀM");
 
                             if(result.militaryUniformType === 'public_security') {
                                 document.getElementById('mil-branch').value = "vietnamese public security, green uniform, red collar tabs";
