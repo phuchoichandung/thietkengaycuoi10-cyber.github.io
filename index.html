@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PHỤC HỒI ẢNH - V36.25 AUTO MILITARY</title>
+    <title>PHỤC HỒI ẢNH - AI RESTORATION PRO (V36.12 UI REMASTER)</title>
     
     <!-- FONTS: Apple Style Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -22,6 +22,7 @@
                 if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { e.preventDefault(); return false; }
             };
             console.log("%cDỪNG LẠI!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px #000;");
+            console.log("%cĐây là phần mềm có bản quyền.", "color: white; background: red; font-size: 16px; padding: 10px; border-radius: 5px;");
         })();
     </script>
 
@@ -101,7 +102,7 @@
         }
         input, textarea { -webkit-user-select: text; user-select: text; }
 
-        /* Custom Scrollbar */
+        /* Custom Scrollbar - iOS Style (Hidden mostly) */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
@@ -113,6 +114,13 @@
             backdrop-filter: blur(25px); 
             -webkit-backdrop-filter: blur(25px);
             border-right: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        
+        .ios-card {
+            background: rgba(44, 44, 46, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: background 0.2s;
         }
         
         .pro-input { 
@@ -157,7 +165,7 @@
         .module-content.open .module-inner { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.05); }
         .module-inner { min-height: 0; overflow: hidden; }
 
-        /* iOS Switch / Checkbox */
+        /* iOS Switch / Checkbox - Styled as original but with iOS flair */
         .chk-pro { appearance: none; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid rgba(142, 142, 147, 0.5); background: transparent; display: grid; place-content: center; cursor: pointer; transition: all 0.2s; }
         .chk-pro::before { content: ""; width: 10px; height: 10px; transform: scale(0); background: #fff; border-radius: 2px; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .chk-pro:checked::before { transform: scale(1); }
@@ -174,18 +182,19 @@
         .slider-red::-webkit-slider-thumb { background: #FF453A; }
         .slider-flux::-webkit-slider-thumb { background: #BF5AF2; }
 
-        /* Animations */
+        /* Animations & Effects */
         .modal-fade-in { animation: modalFadeIn 0.3s var(--ease-ios); }
         @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.92); filter: blur(10px); } to { opacity: 1; transform: scale(1); filter: blur(0); } }
         
         .shimmer-text { background: linear-gradient(90deg, #8E8E93 0%, #fff 50%, #8E8E93 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
         
+        /* Mobile Specifics */
         @media (max-width: 1024px) {
             #sidebar { width: 100% !important; max-width: 100% !important; border-right: none; background: #000; }
         }
         
-        /* Image Comparison Frame */
+        /* Image Comparison Frame - KEEP ORIGINAL */
         .mobile-image-frame {
             border: 1px solid rgba(255, 255, 255, 0.15); 
             box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.7);
@@ -230,7 +239,14 @@
         }
         .btn-iso-glass:active { background: rgba(255,255,255,0.15); transform: scale(0.97); }
 
-        /* Tag in HUD */
+        /* Security Gate iOS Style */
+        .passcode-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #fff; margin: 0 8px; }
+        .passcode-dot.filled { background: #fff; }
+
+        /* Mac Window Style Dots - REMOVED for HUD Style */
+        /* .mac-dot { ... } */
+
+        /* Tag in HUD (For Process Status) */
         .scan-tag { 
             display: inline-flex; align-items: center; 
             padding: 4px 10px; margin: 2px;
@@ -242,7 +258,7 @@
         }
         .scan-tag.highlight { border-color: #0A84FF; color: #0A84FF; background: rgba(10, 132, 255, 0.1); }
 
-        /* Sequential Log Text */
+        /* Sequential Log Text (Corner) - Appear then Disappear */
         .sequential-log-text {
             display: block;
             font-family: 'JetBrains Mono', monospace;
@@ -268,30 +284,35 @@
 
 <body class="font-sans flex overflow-hidden select-none relative" oncontextmenu="return false;">
     
-    <!-- BACKGROUND -->
+    <!-- BACKGROUND: Simple Deep Dark -->
     <div class="fixed inset-0 bg-black z-0">
         <div class="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] bg-blue-900/10 rounded-full blur-[120px]"></div>
         <div class="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] bg-purple-900/10 rounded-full blur-[120px]"></div>
     </div>
 
-    <!-- SECURITY GATE -->
+    <!-- SECURITY GATE (Redesigned: Soft iOS / Mobile First) -->
     <div id="security-gate" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black transition-opacity duration-500">
+        <!-- Dynamic Background -->
         <div class="absolute inset-0 z-0">
             <div class="absolute top-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[100px] animate-blob"></div>
             <div class="absolute bottom-[-10%] right-[-10%] w-[70vw] h-[70vw] bg-purple-600/20 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
             <div class="absolute inset-0 bg-black/40 backdrop-blur-3xl"></div>
         </div>
 
+        <!-- Main Content -->
         <div class="relative z-10 w-full max-w-sm px-6 flex flex-col items-center justify-center h-full sm:h-auto sm:py-12">
+            
+            <!-- Logo / Icon Area -->
             <div class="mb-10 flex flex-col items-center animate-enter-up">
                 <div class="w-20 h-20 rounded-[28px] bg-gradient-to-br from-[#1c1c1e] to-[#2c2c2e] border border-white/10 flex items-center justify-center shadow-2xl shadow-purple-900/20 mb-6 relative group">
                     <div class="absolute inset-0 rounded-[28px] bg-white/5 blur-lg opacity-50"></div>
                     <svg class="w-8 h-8 text-white/90 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
                 </div>
                 <h1 class="text-3xl font-bold text-white tracking-tight text-center">PHỤC HỒI ẢNH</h1>
-                <p class="text-sm text-gray-400 mt-2 font-medium tracking-wide text-center">AI Restoration Professional (V36.25)</p>
+                <p class="text-sm text-gray-400 mt-2 font-medium tracking-wide text-center">AI Professional System</p>
             </div>
 
+            <!-- ID Card -->
             <div class="w-full bg-[#1c1c1e]/80 backdrop-blur-xl border border-white/10 rounded-[24px] p-1.5 shadow-2xl mb-6 animate-enter-up" style="animation-delay: 0.1s;">
                 <div class="bg-black/50 rounded-[20px] p-5 flex items-center justify-between border border-white/5">
                     <div class="flex flex-col">
@@ -304,23 +325,32 @@
                 </div>
             </div>
 
+            <!-- Action Button -->
             <button id="gate-submit" class="w-full py-4 bg-white text-black rounded-[20px] text-[15px] font-bold tracking-wide transition-all active:scale-95 shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 mb-8 animate-enter-up flex items-center justify-center gap-2" style="animation-delay: 0.2s;" disabled>
                 <span>VÀO PHÒNG LÀM VIỆC</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
+            
+            <!-- Status -->
             <p id="gate-status" class="text-[11px] text-gray-500 font-medium animate-pulse">Đang xác thực bảo mật...</p>
+        </div>
+        
+        <div class="absolute bottom-8 text-[10px] text-gray-600 font-mono tracking-widest opacity-50">
+            SECURE CONNECTION • V36.0 (UPDATED)
         </div>
     </div>
     
     <!-- SYSTEM NOTIFICATION AREA -->
     <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none w-auto max-w-sm items-end"></div>
     
-    <!-- MODERN HUD OVERLAY -->
+    <!-- NEW: MODERN HUD OVERLAY (Replaces Old Mac Window) -->
     <div id="scan-window-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/60 backdrop-blur-md hidden transition-all duration-300">
         <div class="relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-white/5 shadow-2xl animate-enter-up">
             <div class="bg-[#0f0f11]/90 backdrop-blur-xl rounded-xl p-6 flex flex-col items-center min-w-[260px] border border-white/5 relative overflow-hidden">
+                <!-- Decorative BG glow -->
                 <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 animate-spin-slow pointer-events-none"></div>
                 
+                <!-- Advanced Spinner -->
                 <div class="relative mb-4">
                     <div class="w-14 h-14 rounded-full border-2 border-white/10"></div>
                     <div class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-t-[#0A84FF] border-r-[#0A84FF] border-b-transparent border-l-transparent animate-spin"></div>
@@ -330,17 +360,21 @@
                 </div>
 
                 <h3 id="scan-title" class="text-xs font-bold text-white tracking-[0.2em] mb-3 uppercase relative z-10">AI PROCESSING</h3>
-                <div id="scan-tags-container" class="flex flex-wrap justify-center gap-1.5 w-full relative z-10 max-w-[220px]"></div>
+                
+                <!-- Tag Container (Populated by JS - Settings) -->
+                <div id="scan-tags-container" class="flex flex-wrap justify-center gap-1.5 w-full relative z-10 max-w-[220px]">
+                    <!-- Settings tags will appear here -->
+                </div>
             </div>
         </div>
     </div>
 
     <div class="flex w-full h-full relative z-10" id="fullscreen-target">
         
-        <!-- SIDEBAR -->
+        <!-- SIDEBAR (iOS Settings Style) -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-[60] w-full sm:w-[380px] flex-shrink-0 glass-panel flex flex-col transition-transform duration-300 ease-out lg:static lg:translate-x-0 -translate-x-full shadow-2xl lg:shadow-none bg-[#000]/90 lg:bg-transparent">
             
-            <!-- Sidebar Header -->
+            <!-- Sidebar Header (Cleaned up for Desktop) - UPDATED -->
             <div class="h-14 px-5 flex items-center justify-between border-b border-white/10 bg-white/[0.02]">
                 <div class="flex flex-col justify-center">
                     <h1 class="text-[14px] font-bold tracking-tight text-white uppercase">PHỤC HỒI ẢNH</h1>
@@ -365,8 +399,8 @@
             <div class="flex-1 overflow-y-auto p-4 scroll-smooth space-y-4 pb-24 lg:pb-4 custom-scrollbar">
                 <!-- 1. MAIN UPLOAD AREA -->
                 <div class="relative group">
-                    <input type="file" id="image-upload" accept="image/*" style="display:none" onclick="this.value=null">
-                    <label id="drop-zone" onclick="triggerUpload()" class="flex flex-col items-center justify-center w-full h-32 border border-dashed border-gray-600 rounded-2xl cursor-pointer bg-[#1c1c1e] hover:bg-[#2c2c2e] hover:border-[#0A84FF] transition-all duration-200 group">
+                    <input type="file" id="image-upload" accept="image/*" class="hidden">
+                    <label id="drop-zone" for="image-upload" class="flex flex-col items-center justify-center w-full h-32 border border-dashed border-gray-600 rounded-2xl cursor-pointer bg-[#1c1c1e] hover:bg-[#2c2c2e] hover:border-[#0A84FF] transition-all duration-200 group">
                         <div id="upload-placeholder" class="flex flex-col items-center pointer-events-none group-hover:scale-105 transition-transform">
                             <div class="w-10 h-10 rounded-full bg-[#0A84FF]/20 flex items-center justify-center mb-3">
                                 <svg class="w-5 h-5 text-[#0A84FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
@@ -379,12 +413,10 @@
                 <!-- 2. AUTO-PILOT BUTTON -->
                 <button id="btn-auto-pilot" class="w-full py-3.5 bg-gradient-to-r from-[#0A84FF] to-[#0062cc] text-white rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-[0.98] shadow-lg shadow-blue-900/20 group">
                     <svg class="w-4 h-4 animate-pulse group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span class="text-xs font-bold tracking-wide">AUTO SCAN (DETECT VETERAN V36.25)</span>
+                    <span class="text-xs font-bold tracking-wide">AUTO SCAN V36.12 (MILITARY TACTIC)</span>
                 </button>
-                <div class="text-[9px] text-gray-500 text-center italic mt-[-10px] mb-2">
-                    *Tự động phát hiện & phục hồi: Mũ cối, Sao vàng, Quân hàm, Kỷ vật...
-                </div>
 
+                <!-- MODULES -->
                 <!-- FLUX KONTEXT (LZP) -->
                 <div class="module-group" id="kontext-module-container">
                     <div class="p-4 border-b border-white/5 bg-[#2c2c2e]/50 backdrop-blur-md">
@@ -427,9 +459,45 @@
                             <span class="text-[10px] text-gray-500">KHÓA GÓC MẶT - CHỐNG BỊ LẬT HÌNH</span>
                         </div>
                          <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="mode-replica" class="sr-only peer" checked>
+                            <input type="checkbox" id="mode-replica" class="sr-only peer">
                             <div class="w-9 h-5 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#FFD60A]"></div>
                         </label>
+                    </div>
+                </div>
+
+                <!-- MODULE: QUÂN SỬ VIỆT NAM -->
+                <div class="module-group" id="module-military">
+                    <button id="toggle-military" class="module-header w-full">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wide uppercase">🇻🇳 QUÂN SỬ & KỶ VẬT (FULL UPGRADE)</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-military" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-military" class="module-content">
+                        <div class="module-inner space-y-3">
+                             <div class="space-y-1">
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân chủng / Lực lượng</label>
+                                <select id="mil-branch" class="pro-input w-full py-2"><option value="">-- Tự động / Không chọn --</option><option value="vietnamese army ground force, red collar tabs">🟥 Lục quân (Hàm Đỏ)</option><option value="vietnamese air force, blue collar tabs">🟦 Phòng Không - Không Quân (Hàm Xanh Trời)</option><option value="vietnamese navy, navy blue uniform, white striped collar">⚓ Hải quân (Áo yếm/Hàm Tím than)</option><option value="vietnamese border guard, green collar tabs">🟩 Bộ đội Biên phòng (Hàm Xanh lá)</option><option value="vietnamese public security, green uniform, red collar tabs">👮 Công an Nhân dân (Cảnh phục)</option><option value="vietnamese youth volunteer force, dark green uniform">⭐ Thanh niên Xung phong</option></select>
+                             </div>
+                             <div class="space-y-1">
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân phục / Thời kỳ</label>
+                                <select id="mil-uniform" class="pro-input w-full py-2"><option value="">-- Tự động / Mặc định --</option><option value="wearing tran thu shirt, padded cotton jacket, viet minh era">Áo Trấn Thủ (Chống Pháp)</option><option value="wearing to chau uniform, plain green fatigue, vietnam war era">Quân phục Tô Châu (Chống Mỹ)</option><option value="wearing K82 uniform, formal military tunic">Quân phục K82 (Bao cấp/Biên giới)</option><option value="wearing K94 uniform, modern formal suit">Quân phục K94/K03 (Hiện đại)</option><option value="wearing camouflage special force uniform">Đặc công (Rằn ri/Ngụy trang)</option></select>
+                             </div>
+                             <div class="space-y-1">
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Mũ & Nón (Chính xác)</label>
+                                <select id="hat-select" class="pro-input w-full py-2" data-key="hatSelect"><option value="">-- Không xử lý Mũ --</option><option value="wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star">Mũ Cối (Lính Bắc Việt) - Cứng & Tròn</option><option value="wear vietnamese soft cap, boonie hat, green fabric, red star badge">Mũ Tai Bèo (Mềm)</option><option value="wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star">Mũ Kepi (Sĩ quan - Sao nổi)</option><option value="wear vietnamese police kepi hat, green color, red band, gold badge">Mũ Kepi (Công an)</option><option value="wear vietnamese bamboo helmet, cloth covered">Mũ Nan (Bọc vải)</option></select>
+                             </div>
+                             <div class="space-y-1">
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Cấp bậc / Quân hàm</label>
+                                <select id="rank-select" class="pro-input w-full py-2" data-key="rankSelect"><option value="">-- Tự động / Không chọn --</option><option value="no_rank_insignia">🚫 KHÔNG ĐEO HÀM (ÁO TRƠN)</option><optgroup label="Hạ sĩ quan / Chiến sĩ"><option value="plain red collar tabs, soldier rank">Chiến sĩ (Hàm trơn/Binh nhì-nhất)</option><option value="red collar tabs with one yellow stripe">Hạ sĩ (1 gạch)</option><option value="red collar tabs with two yellow stripes">Trung sĩ (2 gạch)</option><option value="red collar tabs with three yellow stripes">Thượng sĩ (3 gạch)</option></optgroup><optgroup label="Sĩ quan (Sao + Gạch)"><option value="red collar tabs with one star, officer rank">Thiếu úy (1 sao)</option><option value="red collar tabs with two stars, officer rank">Trung úy (2 sao)</option><option value="red collar tabs with three stars, officer rank">Thượng úy (3 sao)</option><option value="red collar tabs with four stars, officer rank">Đại úy (4 sao)</option></optgroup></select>
+                             </div>
+                             <div class="grid grid-cols-2 gap-2 mt-2">
+                                <div class="flex items-center gap-2"><input id="check-sao-vang" type="checkbox" class="chk-pro chk-gold save-input"><label for="check-sao-vang" class="text-[11px] text-gray-300">Huân chương Sao Vàng</label></div>
+                                <div class="flex items-center gap-2"><input id="check-khang-chien" type="checkbox" class="chk-pro save-input"><label for="check-khang-chien" class="text-[11px] text-gray-300">HC Kháng Chiến</label></div>
+                                <div class="flex items-center gap-2"><input id="check-chien-si" type="checkbox" class="chk-pro save-input"><label for="check-chien-si" class="text-[11px] text-gray-300">Danh hiệu Chiến sĩ</label></div>
+                                <div class="flex items-center gap-2"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[11px] text-[#0A84FF]">Huy hiệu Đoàn</label></div>
+                             </div>
+                        </div>
                     </div>
                 </div>
 
@@ -603,7 +671,7 @@
                                  </div>
                              </div>
 
-                             <!-- V36 ADVANCED BLOCK -->
+                             <!-- V35.25 ADVANCED BLOCK (ADDED) -->
                              <div class="mt-2 pt-2 border-t border-white/5 space-y-2">
                                 <label class="text-[10px] font-bold text-blue-400 uppercase tracking-wider mb-1 block">🚀 V36.0 ADVANCED (ĐỘC QUYỀN)</label>
                                 
@@ -665,6 +733,16 @@
                                     <label class="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" id="check-id-photo" class="sr-only peer save-input">
                                         <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#0A84FF]"></div>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded bg-[#FFD60A]/10 border border-[#FFD60A]/20">
+                                    <div class="flex flex-col">
+                                        <span class="text-[12px] font-bold text-[#FFD60A]">CHẾ ĐỘ ẢNH THỜ (ALTAR)</span>
+                                        <span class="text-[9px] text-[#FFD60A]/70">Trang nghiêm, đối xứng, phông xanh</span>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="check-altar-mode" class="sr-only peer save-input">
+                                        <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[#FFD60A]"></div>
                                     </label>
                                 </div>
                                 <select id="event-context" class="pro-input w-full py-2 cursor-pointer save-input" data-key="eventContext">
@@ -808,13 +886,13 @@
 
         <!-- WORKSPACE -->
         <main class="flex-1 flex flex-col relative overflow-hidden bg-black" id="main-workspace">
-            <!-- MOBILE HEADER -->
+            <!-- MOBILE HEADER (Glass) -->
             <div class="lg:hidden h-14 glass-panel border-b border-white/5 flex items-center px-4 justify-between z-30 relative w-full">
                 <button id="toggle-sidebar-btn" class="text-gray-400 p-2 rounded-lg active:bg-white/10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
                 <div class="flex flex-col items-center">
                      <span class="font-bold text-white text-[14px] tracking-tight">PHỤC HỒI ẢNH</span>
                      <div class="flex items-center gap-2 opacity-60">
-                        <span class="text-[9px] font-mono">V36.25</span>
+                        <span class="text-[9px] font-mono">V36.12</span>
                         <span class="text-[9px]">•</span>
                         <span id="mobile-status-text" class="text-[9px] font-mono tracking-widest">WAITING</span>
                      </div>
@@ -824,7 +902,7 @@
                 </div>
             </div>
             
-            <!-- DESKTOP TOOLBAR -->
+            <!-- DESKTOP TOOLBAR (Floating Island) -->
             <div class="absolute top-6 left-1/2 -translate-x-1/2 h-12 glass-panel rounded-full flex items-center px-2 z-20 shadow-2xl hidden sm:flex border border-white/10 gap-2">
                 <div class="flex items-center px-3 border-r border-white/10">
                      <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-2"></span>
@@ -849,6 +927,7 @@
                     <div id="scan-beam" class="absolute top-0 left-0 w-full h-[5px] bg-gradient-to-b from-[#0A84FF] to-transparent shadow-[0_0_40px_#0A84FF] opacity-0 z-50 pointer-events-none transition-opacity duration-300"></div>
                     <style>.active#scan-beam { opacity: 1; animation: scan-fast 1.5s linear infinite; }</style>
 
+                    <!-- MAGIC DUST OVERLAY (NEW EFFECT) -->
                     <div id="magic-dust" class="absolute inset-0 z-40 pointer-events-none hidden">
                          <div class="absolute inset-0 bg-blue-500/10 mix-blend-screen animate-pulse"></div>
                     </div>
@@ -870,12 +949,15 @@
                               </div>
                          </div>
                          
-                         <div id="scan-log-overlay" class="absolute bottom-4 left-4 z-30 flex flex-col items-start pointer-events-none max-w-[200px] overflow-hidden"></div>
+                         <!-- CORNER LOG OVERLAY (NEW: Sequential Tag Display) -->
+                         <div id="scan-log-overlay" class="absolute bottom-4 left-4 z-30 flex flex-col items-start pointer-events-none max-w-[200px] overflow-hidden">
+                             <!-- Log lines will appear here dynamically -->
+                         </div>
                     </div>
 
                     <canvas id="canvas-process" class="hidden"></canvas>
                     
-                    <div id="placeholder-state" onclick="triggerUpload()" class="text-center p-12 md:p-24 border border-dashed border-gray-700 rounded-3xl bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 backdrop-blur-sm cursor-pointer">
+                    <div id="placeholder-state" class="text-center p-12 md:p-24 border border-dashed border-gray-700 rounded-3xl bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 backdrop-blur-sm cursor-pointer">
                         <div class="w-24 h-24 bg-gradient-to-tr from-gray-800 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5"><svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
                         <h3 class="text-xl font-bold text-white tracking-tight mb-2">Chạm để tải ảnh</h3>
                         <p class="text-xs text-gray-500 font-medium">Hỗ trợ mọi định dạng ảnh</p>
@@ -888,7 +970,7 @@
     <!-- MOBILE GLASS DOCK -->
     <div id="mobile-action-bar" class="lg:hidden fixed bottom-6 left-4 right-4 z-[90] flex items-center justify-center pointer-events-none transition-all duration-500 translate-y-32 opacity-0">
         <div class="bg-[#1c1c1e]/90 backdrop-blur-xl border border-white/10 p-2 rounded-[24px] shadow-2xl flex gap-3 w-full max-w-sm pointer-events-auto ring-1 ring-white/5">
-            <button id="mob-btn-upload" onclick="triggerUpload()" class="flex-1 py-4 bg-gray-800/80 rounded-[18px] text-white font-bold text-[10px] flex flex-col items-center justify-center gap-1 active:scale-95 transition-all shadow-inner">
+            <button id="mob-btn-upload" class="flex-1 py-4 bg-gray-800/80 rounded-[18px] text-white font-bold text-[10px] flex flex-col items-center justify-center gap-1 active:scale-95 transition-all shadow-inner">
                 <svg class="w-6 h-6 text-[#0A84FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4 4m0 0L8 8m4-4v12"></path></svg>
                 <span>TẢI ẢNH</span>
             </button>
@@ -906,21 +988,24 @@
         </div>
     </div>
 
-    <!-- RECHARGE MODAL -->
+    <!-- RECHARGE MODAL (Redesigned: Soft iOS Style) -->
     <div id="recharge-modal" class="fixed inset-0 z-[110] bg-black/80 backdrop-blur-2xl hidden flex items-center justify-center modal-fade-in p-4 overflow-y-auto">
         <div class="w-full max-w-[400px] bg-[#1c1c1e] border border-white/10 rounded-[32px] shadow-2xl flex flex-col relative overflow-hidden">
             <button id="close-recharge" class="absolute top-4 right-4 z-50 p-2 bg-[#2c2c2e]/80 backdrop-blur-md rounded-full text-gray-400 hover:text-white transition-all hover:scale-110 active:scale-95">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
+            <!-- Store Header -->
             <div class="p-6 pb-2">
                 <span class="text-[10px] font-bold text-[#0A84FF] uppercase tracking-widest mb-1 block">STORE</span>
                 <h3 class="text-2xl font-bold text-white tracking-tight">Nạp Credits</h3>
                 <p class="text-[12px] text-gray-400 mt-1">1 Credit = 1 Lần xử lý ảnh chất lượng cao.</p>
             </div>
 
+            <!-- Packages (UPDATED AS REQUESTED) -->
             <div class="px-6 space-y-3 max-h-[40vh] overflow-y-auto custom-scrollbar">
                 
+                <!-- 50k - 4 Credit -->
                 <div class="recharge-pkg-card group relative p-4 rounded-[20px] bg-[#2c2c2e] border border-white/5 hover:bg-[#3a3a3c] cursor-pointer transition-all active:scale-[0.98]" data-amount="50000" data-credits="4">
                     <div class="flex justify-between items-center relative z-10">
                         <div>
@@ -934,6 +1019,7 @@
                     <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-[20px] opacity-0 pkg-border transition-opacity"></div>
                 </div>
 
+                <!-- 80k - 7 Credit -->
                 <div class="recharge-pkg-card group relative p-4 rounded-[20px] bg-[#2c2c2e] border border-white/5 hover:bg-[#3a3a3c] cursor-pointer transition-all active:scale-[0.98]" data-amount="80000" data-credits="7">
                     <div class="flex justify-between items-center relative z-10">
                         <div>
@@ -947,6 +1033,7 @@
                     <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-[20px] opacity-0 pkg-border transition-opacity"></div>
                 </div>
 
+                <!-- 100k - 9 Credit -->
                 <div class="recharge-pkg-card active group relative p-4 rounded-[20px] bg-[#0A84FF]/10 border border-[#0A84FF]/50 cursor-pointer transition-all active:scale-[0.98]" data-amount="100000" data-credits="9">
                     <div class="absolute -top-2 right-4 bg-blue-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-lg">POPULAR</div>
                     <div class="flex justify-between items-center relative z-10">
@@ -961,6 +1048,7 @@
                     <div class="absolute inset-0 border-2 border-[#0A84FF] rounded-[20px] opacity-100 pkg-border"></div>
                 </div>
 
+                <!-- 200k - 19 Credit -->
                 <div class="recharge-pkg-card group relative p-4 rounded-[20px] bg-[#2c2c2e] border border-white/5 hover:bg-[#3a3a3c] cursor-pointer transition-all active:scale-[0.98]" data-amount="200000" data-credits="19">
                     <div class="absolute -top-2 right-4 bg-purple-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-lg">HOT DEAL</div>
                     <div class="flex justify-between items-center relative z-10">
@@ -975,6 +1063,7 @@
                     <div class="absolute inset-0 border-2 border-purple-500 rounded-[20px] opacity-0 pkg-border transition-opacity"></div>
                 </div>
 
+                <!-- 500k - 45 Credit -->
                 <div class="recharge-pkg-card group relative p-4 rounded-[20px] bg-[#2c2c2e] border border-white/5 hover:bg-[#3a3a3c] cursor-pointer transition-all active:scale-[0.98]" data-amount="500000" data-credits="45">
                     <div class="absolute -top-2 right-4 bg-yellow-500 text-black text-[9px] font-bold px-2 py-0.5 rounded-full shadow-lg">VIP STUDIO</div>
                     <div class="flex justify-between items-center relative z-10">
@@ -991,7 +1080,9 @@
 
             </div>
 
+            <!-- Payment & Input Area -->
             <div class="p-6 mt-2 bg-black/20 backdrop-blur-xl border-t border-white/5">
+                <!-- QR Image (Compact) -->
                 <div class="flex justify-center mb-4">
                     <div class="bg-white p-1 rounded-xl shadow-lg relative group">
                         <img id="vietqr-image" src="" alt="QR" class="w-32 h-32 object-contain rounded-lg">
@@ -1001,6 +1092,7 @@
                     </div>
                 </div>
 
+                <!-- Content Display -->
                 <div class="text-center mb-4">
                     <p class="text-[9px] text-gray-500 font-bold uppercase mb-1">NỘI DUNG CK (AUTO)</p>
                     <div class="inline-block bg-[#1c1c1e] px-3 py-1 rounded-lg border border-white/10">
@@ -1008,6 +1100,7 @@
                     </div>
                 </div>
 
+                <!-- Input Field (iOS Style) -->
                 <div class="relative">
                     <input type="text" id="recharge-input" class="w-full bg-[#2c2c2e] text-white text-center font-mono text-sm py-3 pl-4 pr-12 rounded-xl border border-white/10 focus:border-[#0A84FF] focus:bg-[#3a3a3c] transition-all outline-none placeholder-gray-500 uppercase tracking-widest" placeholder="NHẬP MÃ V36...">
                     <button id="btn-submit-recharge" class="absolute right-1 top-1 bottom-1 aspect-square bg-[#30D158] hover:bg-[#28c04d] text-white rounded-lg flex items-center justify-center transition-transform active:scale-95 shadow-lg">
@@ -1018,20 +1111,8 @@
         </div>
     </div>
 
-    <!-- MAIN SCRIPT -->
+    <!-- MAIN SCRIPT: PRESERVED ORIGINAL LOGIC -->
     <script>
-        // GLOBAL HELPER TO TRIGGER UPLOAD SAFELY
-        window.triggerUpload = function() {
-            const input = document.getElementById('image-upload');
-            if(input) {
-                // Reset value to ensure change event fires even if same file selected
-                input.value = null; 
-                input.click();
-            } else {
-                console.error("Upload input not found!");
-            }
-        };
-
         const DEFAULT_ENCRYPTED_CONFIG = "LRFALDY3LTQ/IH1xZxg7PigidAVWQX1/ZyIlOw46MmdjfSAqYSUjW3QnGQd0ZAU1DngybTckJQEfP1hSNgspJzAbIgofNW4bMRIfBBoCbxkrNBtkF2dzaTUrMCUoKDEkEQ99MCouMCZnc2knOCw2FD44dAkXNycxMyZoanAqNTBxMC4hMSJSRTZ9Jiw4cDg="; 
         const ALLOWED_DOMAINS = []; 
 
@@ -1068,31 +1149,57 @@
                     
                     await this.fetchIP();
                     this.loadCredits();
+
+                    try {
+                        const currentHost = window.location.hostname;
+                        if (ALLOWED_DOMAINS.length > 0) {
+                            const isLocal = currentHost === "" || currentHost === "localhost" || currentHost === "127.0.0.1";
+                            if (!isLocal && !ALLOWED_DOMAINS.includes(currentHost)) {
+                                console.error("DOMAIN NOT ALLOWED: " + currentHost);
+                                showToast("⛔ TÊN MIỀN KHÔNG HỢP LỆ! Vui lòng liên hệ Admin.", "error");
+                                document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:red;font-family:monospace;text-align:center;"><h1>⛔ ACCESS DENIED<br>DOMAIN: ${currentHost}</h1></div>`;
+                                return;
+                            }
+                        }
+
+                        let configStr = localStorage.getItem("v35_user_settings");
+                        if (!configStr && DEFAULT_ENCRYPTED_CONFIG) {
+                            configStr = DEFAULT_ENCRYPTED_CONFIG;
+                            console.log("Using Embedded Config");
+                        }
+
+                        if (configStr) {
+                            const decryptConfig = (t) => {
+                                const k = "V35_SECURE_KEY_SALT";
+                                try {
+                                    if(!t) return null;
+                                    let text = atob(t);
+                                    let result = '';
+                                    for(let i = 0; i < text.length; i++) {
+                                        result += String.fromCharCode(text.charCodeAt(i) ^ k.charCodeAt(i % k.length));
+                                    }
+                                    return result;
+                                } catch(e) { return null; }
+                            };
+
+                            const jsonStr = decryptConfig(configStr);
+                            if (jsonStr) {
+                                const config = JSON.parse(jsonStr);
+                                if (config && config.apiKey) {
+                                    window.GEMINI_API_KEY = config.apiKey || "";
+                                    window.API_PROVIDER = config.provider || "google";
+                                    window.API_BASE_URL = config.baseUrl || "https://generativelanguage.googleapis.com";
+                                    
+                                    console.log("API Config Loaded:", window.API_PROVIDER);
+                                    showToast("✅ Đã tải cấu hình API", "success");
+                                }
+                            }
+                        }
+                    } catch(e) { console.error("Config Load Error", e); }
+
                     this.updateUI();
                     initRechargeSystem(this.deviceId);
                     updateMobileBtnState('upload');
-
-                    // Default Config Load Logic (Embed)
-                    let configStr = localStorage.getItem("v35_user_settings");
-                    if (!configStr && DEFAULT_ENCRYPTED_CONFIG) {
-                        configStr = DEFAULT_ENCRYPTED_CONFIG;
-                    }
-
-                    if (configStr) {
-                         const k = "V35_SECURE_KEY_SALT";
-                         try {
-                            let text = atob(configStr);
-                            let result = '';
-                            for(let i = 0; i < text.length; i++) {
-                                result += String.fromCharCode(text.charCodeAt(i) ^ k.charCodeAt(i % k.length));
-                            }
-                            const config = JSON.parse(result);
-                            if (config && config.apiKey) {
-                                window.GEMINI_API_KEY = config.apiKey || "";
-                                window.API_BASE_URL = config.baseUrl || "https://generativelanguage.googleapis.com";
-                            }
-                        } catch(e) {}
-                    }
                 },
 
                 async fetchIP() {
@@ -1101,6 +1208,7 @@
                     const gateBtn = document.getElementById('gate-submit');
                     const gateStatus = document.getElementById('gate-status');
                     
+                    // Sidebar Elements
                     const sidebarIpDisplay = document.getElementById('sidebar-ip-display');
                     const sidebarIdDisplay = document.getElementById('sidebar-id-display');
 
@@ -1125,17 +1233,13 @@
                     };
 
                     try {
-                        // Timeout promise to prevent hanging forever
-                        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 3000));
-                        const fetchPromise = fetch(`https://api.ipify.org?format=json&t=${Date.now()}`);
-                        
-                        const response = await Promise.race([fetchPromise, timeout]);
+                        const response = await fetch(`https://api.ipify.org?format=json&t=${Date.now()}`);
                         const data = await response.json();
                         this.ipAddress = data.ip;
                         enableGate(data.ip);
                         return data.ip;
                     } catch (e) {
-                        console.warn("IP Fetch failed or timed out, enabling Offline Mode");
+                        console.warn("IP Fetch Failed, using offline mode");
                         this.ipAddress = "Offline Mode"; 
                         enableGate("Offline Mode");
                         return null;
@@ -1201,6 +1305,7 @@
                 if(mobileBar) mobileBar.classList.remove('translate-y-32', 'opacity-0'); 
             }
             
+            // Mobile Credit Click to Open Recharge
             const mobCredit = document.getElementById('mobile-credit-display');
             if(mobCredit) {
                 mobCredit.onclick = () => document.getElementById('recharge-modal').classList.remove('hidden');
@@ -1219,12 +1324,15 @@
                 const template = 'compact'; 
 
                 const updateQR = (amount) => {
+                    // CẬP NHẬT: Kèm ID khách hàng vào nội dung chuyển khoản
+                    // Định dạng: V36 [DEVICE-ID] (Updated V36)
                     const content = `V36 ${deviceId}`; 
                     const url = `https://img.vietqr.io/image/${bankId}-${accNo}-${template}.png?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(accName)}`;
                     qrImage.src = url;
                     if(contentDisplay) contentDisplay.textContent = content;
                 };
 
+                // Default 100k
                 updateQR(100000);
 
                 pkgCards.forEach(card => {
@@ -1315,32 +1423,7 @@
                 creditDisplay.onclick = () => document.getElementById('recharge-modal').classList.remove('hidden');
             }
 
-            // AUTO-MILITARY STATE
-            let state = { 
-                base64: null, 
-                refBase64: null, 
-                restoredObj: null, 
-                originalImg: null, 
-                zoom: 1, 
-                rotation: 0, 
-                defaultPrompt: "Restore this photo, remove scratches, high quality, 8k", 
-                isLoupeActive: false, 
-                isReplicaMode: false, 
-                isFluxMode: true, 
-                currentSliderVal: 50, 
-                isComparing: false, 
-                aspectRatioType: null, 
-                militaryDetails: {
-                    isActive: false,
-                    hat: false, // Mũ cối / Mũ công an
-                    rank: false, // Quân hàm
-                    star: false, // Sao vàng
-                    medal: false, // Huân chương
-                    branch: 'none' // army / police
-                },
-                userSettings: { username: '', apiKey: '', provider: 'google', baseUrl: 'https://generativelanguage.googleapis.com' } 
-            };
-
+            let state = { base64: null, refBase64: null, restoredObj: null, originalImg: null, zoom: 1, rotation: 0, defaultPrompt: "Restore this photo, remove scratches, high quality, 8k", isLoupeActive: false, isReplicaMode: false, isFluxMode: true, currentSliderVal: 50, isComparing: false, aspectRatioType: null, userSettings: { username: '', apiKey: '', provider: 'google', baseUrl: 'https://generativelanguage.googleapis.com' } };
             const showToast = (message, type = 'info') => {
                 const container = document.getElementById('toast-container'); if(!container) return;
                 const toast = document.createElement('div');
@@ -1351,6 +1434,7 @@
                 setTimeout(() => { toast.classList.add('animate-fade-out'); setTimeout(() => toast.remove(), 500); }, 3000);
             };
             
+            // --- SCAN WINDOW LOGIC ---
             function showScanWindow() {
                 const win = document.getElementById('scan-window-overlay');
                 if(win) win.classList.remove('hidden');
@@ -1364,11 +1448,15 @@
             function updateScanTags(messages) {
                 const container = document.getElementById('scan-tags-container');
                 if(!container) return;
+                
+                // Clear existing
                 container.innerHTML = '';
+                
+                // Add tags immediately (for status window)
                 messages.forEach((msg) => {
                     const tag = document.createElement('span');
                     tag.className = 'scan-tag';
-                    if (msg.includes('AUTO:') || msg.includes('PHÁT HIỆN:') || msg.includes('WORKFLOW:') || msg.includes('TAG:')) {
+                    if (msg.includes('AUTO:') || msg.includes('PHÁT HIỆN:') || msg.includes('WORKFLOW:')) {
                         tag.classList.add('highlight');
                     }
                     tag.innerText = msg;
@@ -1376,72 +1464,79 @@
                 });
             }
 
+            // NEW: SEQUENTIAL CORNER LOG EFFECT (APPEAR THEN DISAPPEAR)
             function playSequentialLog(messages) {
                 const container = document.getElementById('scan-log-overlay');
                 if (!container) return;
-                container.innerHTML = ''; 
+
+                container.innerHTML = ''; // Reset
+
+                // Process sequentially using a timer loop
                 let delay = 0;
                 messages.forEach((msg) => {
                     setTimeout(() => {
+                        // Clear previous
                         container.innerHTML = '';
+                        
                         const line = document.createElement('span');
                         line.className = 'sequential-log-text';
+                        
                         let cleanMsg = msg;
-                        if (msg.includes('AUTO:') || msg.includes('PHÁT HIỆN:') || msg.includes('WORKFLOW:') || msg.includes('TAG:')) {
+                        if (msg.includes('AUTO:') || msg.includes('PHÁT HIỆN:') || msg.includes('WORKFLOW:')) {
                              line.classList.add('highlight');
-                             cleanMsg = msg.replace('AUTO: ', '').replace('PHÁT HIỆN: ', '').replace('WORKFLOW: ', '').replace('TAG: ', '');
+                             cleanMsg = msg.replace('AUTO: ', '').replace('PHÁT HIỆN: ', '').replace('WORKFLOW: ', '');
                         } else {
                              cleanMsg = msg.replace('FIX: ', '');
                         }
+                        
                         line.innerText = cleanMsg;
                         container.appendChild(line);
+                        
                     }, delay);
-                    delay += 1800; 
+                    
+                    delay += 1800; // Wait for animation to almost finish before next
                 });
+                
+                // Clear after all done
                 setTimeout(() => {
                     container.innerHTML = '';
                 }, delay + 2000);
             }
             
+            // Helper to get active settings for status window
             function getActiveSettings() {
                 const settings = [];
+                
+                // Check basic checkboxes
                 if(document.getElementById('mode-flux')?.checked) settings.push("FLUX ENGINE: ON");
                 if(document.getElementById('mode-replica')?.checked) settings.push("REPLICA MODE");
                 if(document.getElementById('check-face')?.checked) settings.push("FACE DETAIL");
                 if(document.getElementById('check-hair')?.checked) settings.push("HAIR DRAWING");
+                if(document.getElementById('check-background')?.checked) settings.push("BG SHARPEN");
                 
-                // --- AUTO MILITARY TAGS (LOGIC NGẦM) ---
-                if (state.militaryDetails.isActive) {
-                    if(state.militaryDetails.hat) settings.push("AUTO: MŨ/NÓN");
-                    if(state.militaryDetails.rank) settings.push("AUTO: QUÂN HÀM");
-                    if(state.militaryDetails.star) settings.push("AUTO: SAO VÀNG");
-                    if(state.militaryDetails.medal) settings.push("AUTO: HUÂN CHƯƠNG");
-                    if(state.militaryDetails.branch === 'police') settings.push("AUTO: CÔNG AN VN");
-                    else settings.push("AUTO: QUÂN ĐỘI VN");
-                }
-
-                // --- IDENTITY TAGS ---
-                if(document.getElementById('check-monolid')?.checked) settings.push("TAG: MONOLID");
-                if(document.getElementById('check-cross-eyed')?.checked) settings.push("TAG: CROSS-EYED");
-                if(document.getElementById('check-buck-teeth')?.checked) settings.push("TAG: BUCK TEETH");
-                if(document.getElementById('check-black-teeth')?.checked) settings.push("TAG: BLACK TEETH");
-                if(document.getElementById('check-asian-identity')?.checked) settings.push("TAG: ASIAN IDENTITY");
-
-                // --- WORKFLOW TAG ---
-                const workflow = document.getElementById('kontext-workflow');
-                if(workflow && workflow.value !== 'default') {
-                    settings.push(`WORKFLOW: ${workflow.options[workflow.selectedIndex].text.split('(')[0].trim()}`);
-                }
-
+                // Check Upscale
                 const upscale = document.getElementById('upscale-mode');
                 if(upscale && upscale.value !== 'none') {
-                    let simpleName = upscale.options[upscale.selectedIndex].text.split('(')[0].trim().replace(/^[^\w\s]+/, '');
+                    const text = upscale.options[upscale.selectedIndex].text;
+                    // Extract simple name
+                    let simpleName = text.split('(')[0].trim().replace(/^[^\w\s]+/, ''); // Remove emoji
                     settings.push(`UPSCALE: ${simpleName}`);
                 }
                 
+                // Check Workflow
+                const workflow = document.getElementById('kontext-workflow');
+                if(workflow && workflow.value !== 'default') {
+                     // Extract simple name
+                    let simpleName = workflow.options[workflow.selectedIndex].text.split('(')[0].trim().replace(/^[^\w\s]+/, '');
+                    settings.push(`WORKFLOW: ${simpleName}`);
+                }
+                
+                // Check Logo
                 if(document.getElementById('check-logo')?.checked) settings.push("WATERMARK: ON");
+
                 return settings;
             }
+
 
             const gateScreen = document.getElementById('security-gate'), gateSubmit = document.getElementById('gate-submit'), gateStatus = document.getElementById('gate-status');
             gateSubmit.addEventListener('click', async () => {
@@ -1456,20 +1551,17 @@
                     gateStatus.className = "text-[11px] text-green-500 font-bold flex items-center gap-2 justify-center"; 
                     setTimeout(() => { 
                         gateScreen.classList.add('animate-fade-out'); 
-                        // IMPORTANT: Force hide and disable pointer events
-                        setTimeout(() => { 
-                            gateScreen.style.display = 'none'; 
-                            gateScreen.style.pointerEvents = 'none';
-                        }, 500); 
+                        setTimeout(() => { gateScreen.style.display = 'none'; }, 500); 
                         showToast(`Chào mừng trở lại!`, "success"); 
                     }, 500); 
                 }, 1000);
             });
             
             const getApiConfig = () => {
-                const key = window.GEMINI_API_KEY || "";
+                const key = window.GEMINI_API_KEY || window.COMET_API_KEY || "";
                 const base = window.API_BASE_URL || "https://generativelanguage.googleapis.com";
-                return { key, base, isComet: false };
+                const isComet = window.API_PROVIDER === 'comet';
+                return { key, base, isComet };
             };
             
             const resizeImage = (base64Str, maxWidth = 1536) => {
@@ -1477,7 +1569,7 @@
             };
 
             const toggleModule = (btnId, contentId, iconId) => { const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId); if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); };
-            ['processing','subject','identity','prompt','logo','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
+            ['processing','subject','identity','prompt','logo','military','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
 
             const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
             if(toggleSidebarBtn) toggleSidebarBtn.onclick = openSidebar;
@@ -1494,6 +1586,9 @@
                 link.click();
                 document.body.removeChild(link);
             };
+            
+            const btnDownloadMobile = document.getElementById('download-mobile');
+            if(btnDownloadMobile) btnDownloadMobile.onclick = downloadImage;
             
             const btnDownloadDesktop = document.getElementById('download-trigger');
             if(btnDownloadDesktop) btnDownloadDesktop.onclick = downloadImage;
@@ -1523,18 +1618,23 @@
                     processBtn.innerHTML = "TẠO ẢNH (FLUX/QWEN ENGINE)"; 
                 }
                 
+                // Show Scan Window (Status Window)
                 showScanWindow();
                 document.getElementById('scan-title').innerText = "ĐANG XỬ LÝ ẢNH...";
+                // Populate tags with active settings
                 const activeSettings = getActiveSettings();
                 updateScanTags(activeSettings);
                 
+                // Show traditional terminal if needed, or rely on status
+                // document.getElementById('ai-terminal-overlay').classList.remove('hidden'); 
                 document.getElementById('scan-beam').classList.add('active');
+                
                 const magicDust = document.getElementById('magic-dust');
                 if(magicDust) magicDust.classList.remove('hidden');
 
                 closeSidebar();
 
-                const { key: keyToUse, base: apiBase } = getApiConfig();
+                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
                 try {
                     const resizedBase64 = await resizeImage(state.base64);
                     let finalPrompt = document.getElementById('prompt-main').value;
@@ -1549,60 +1649,22 @@
                     if (replicaMode) {
                         finalPrompt += ", (exact facial features:1.5), (same face structure:1.5)";
                     }
-                    finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (do not crop:1.4)";
+                    finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (do not crop:1.4), (preserve original aspect ratio:1.4)";
                     
-                    // --- AUTO MILITARY PROMPT INJECTION (LOGIC MỚI - CHUNG CHUNG) ---
-                    // Nếu phát hiện chi tiết quân sự trong Auto Scan, tự động thêm vào prompt
-                    if (state.militaryDetails.isActive) {
-                        finalPrompt += ", (Vietnamese military style), (clean uniform texture)";
-                        
-                        // Công an vs Quân đội
-                        if (state.militaryDetails.branch === 'police') {
-                            finalPrompt += ", (Vietnam public security uniform), (police cap badge:1.5)";
-                        } else {
-                            finalPrompt += ", (Vietnam People's Army uniform)";
-                        }
-
-                        // Chi tiết cụ thể
-                        if (state.militaryDetails.hat) {
-                            if (state.militaryDetails.branch === 'police') finalPrompt += ", (police peaked cap:1.4)";
-                            else finalPrompt += ", (green pith helmet:1.4)";
-                        }
-                        if (state.militaryDetails.star) finalPrompt += ", (golden star emblem:1.6), (shiny metal texture)";
-                        if (state.militaryDetails.rank) finalPrompt += ", (red shoulder rank insignia:1.4), (detailed epaulettes)";
-                        if (state.militaryDetails.medal) finalPrompt += ", (military medals on chest:1.3)";
+                    const isAltarMode = document.getElementById('check-altar-mode')?.checked;
+                    if (isAltarMode) {
+                        finalPrompt += ", (formal portrait:1.4), (symmetrical face:1.3), (solemn expression), (perfectly centered), (white background:0.5)";
                     }
 
-                    // --- INJECT MISSING FEATURES (IDENTITY & WORKFLOW) ---
-                    
-                    // 1. Workflow Injection
-                    const workflow = document.getElementById('kontext-workflow').value;
-                    if (workflow === 'qwen_edit_pro') finalPrompt += ", (Qwen-VL enhanced), (follow instructions perfectly), (high fidelity)"; 
-                    else if (workflow === 'replica_pro') finalPrompt += ", (high fidelity replication), (strict structure:1.4)";
-                    else if (workflow === 'invsr_deblur') finalPrompt += ", (deblur), (sharpen focus:1.4)";
-                    else if (workflow === 'ancient_restore') finalPrompt += ", (restore ancient texture), (remove cracks)";
-                    else if (workflow === 'realvis_v5') finalPrompt += ", (realistic vision), (natural lighting)";
-                    else if (workflow === 'wedding_kontext_v2') finalPrompt += ", (wedding photo style), (romantic lighting)";
-                    else if (workflow === 'qwen_restore_full') finalPrompt += ", (full restoration), (remove all damage)";
-                    else if (workflow === 'wedding_pro') finalPrompt += ", (wedding photography), (elegant style)";
-                    else if (workflow === 'outdoor_mode') finalPrompt += ", (natural outdoor lighting), (scenic background)";
-                    else if (workflow === 'product_mode') finalPrompt += ", (product photography), (studio lighting)";
-                    else if (workflow === 'white_bg') finalPrompt += ", (white background), (clean background)";
-
-
-                    // 2. Identity Guard Injection
-                    if(document.getElementById('check-monolid')?.checked) finalPrompt += ", (monolid eyes:1.4), (epicanthic fold)";
-                    if(document.getElementById('check-cross-eyed')?.checked) finalPrompt += ", (cross-eyed:1.4), (strabismus)";
-                    if(document.getElementById('check-buck-teeth')?.checked) finalPrompt += ", (buck teeth:1.4), (prominent teeth)";
-                    if(document.getElementById('check-black-teeth')?.checked) finalPrompt += ", (black lacquered teeth:1.4), (ohaguro style)";
-                    if(document.getElementById('check-asian-identity')?.checked) finalPrompt += ", (Vietnamese facial features:1.3), (Asian race)";
-                    if(document.getElementById('check-ptosis')?.checked) finalPrompt += ", (ptosis:1.4), (droopy eyelid)";
-                    if(document.getElementById('check-closed-eyes')?.checked) finalPrompt += ", (closed eyes:1.4), (sleeping)";
-
-                    // --- OTHER MODES ---
                     const isIDPhoto = document.getElementById('check-id-photo')?.checked;
                     if (isIDPhoto) {
-                        finalPrompt += ", (passport photo:1.5), (studio lighting:1.3), (neutral background:1.4)";
+                        finalPrompt += ", (passport photo:1.5), (studio lighting:1.3), (neutral background:1.4), (look at camera), (high quality headshot)";
+                    }
+
+                    const workflowSelect = document.getElementById('kontext-workflow');
+                    if (workflowSelect && workflowSelect.value === 'qwen_edit_pro') {
+                        finalPrompt = "Instruction: " + finalPrompt; 
+                        finalPrompt += ". Describe key features of the input image, then explain how the user's text instruction should alter the image while maintaining consistency.";
                     }
 
                     const upscaleMode = document.getElementById('upscale-mode');
@@ -1610,11 +1672,25 @@
                         finalPrompt += ", (sharp focus:1.4), (remove motion blur:1.3), (InvSR deblurring:1.2)";
                     }
 
+                    const colorGrade = document.getElementById('color-grading');
+                    if (colorGrade && colorGrade.value.includes('golden_hour')) {
+                         finalPrompt += ", (Golden hour sunlight filtered through window blinds:1.3), (striped light patterns:1.2)";
+                    } else if (colorGrade && colorGrade.value.includes('moonlight')) {
+                         finalPrompt += ", (Moonlight through window panes:1.3), (bluish soft grid shadows:1.2), (mysterious night mood)";
+                    } else if (colorGrade && colorGrade.value.includes('colorize_bw_old_photo')) {
+                         finalPrompt += ", (colorize:1.5), (vibrant colors), (natural skin tones:1.4), (realistic clothes colors)";
+                    }
+
+                    finalPrompt += ", (best quality, 8k, hyper detailed)";
+
                     const parts = [{ text: finalPrompt }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }];
-                    const headers = { 'Content-Type': 'application/json' };
+                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
                     const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, body: JSON.stringify({ contents: [{ parts: parts }], generationConfig: { responseModalities: ["TEXT", "IMAGE"] } }) });
                     
-                    if (!response.ok) throw new Error("Lỗi kết nối API (" + response.status + ")");
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error?.message || "Lỗi kết nối API (" + response.status + ")");
+                    }
 
                     const data = await response.json();
                     let base64Img = null;
@@ -1627,10 +1703,11 @@
                         restoredImg.onload = () => {
                             state.restoredObj = restoredImg;
                             
+                            const imgOriginal = document.getElementById('img-original');
                             const imgModified = document.getElementById('img-modified');
+                            
                             imgModified.src = finalImgSrc;
                             
-                            const imgOriginal = document.getElementById('img-original');
                             if(imgOriginal) {
                                 const w = imgOriginal.clientWidth;
                                 const h = imgOriginal.clientHeight;
@@ -1643,6 +1720,10 @@
                             document.getElementById('placeholder-state').style.display = 'none';
                             
                             if(btnDownloadDesktop) btnDownloadDesktop.disabled = false;
+                            if(btnDownloadMobile) {
+                                btnDownloadMobile.disabled = false;
+                                btnDownloadMobile.classList.remove('opacity-30'); 
+                            }
                             
                             document.getElementById('img-modified-wrapper').style.width = '50%';
                             document.getElementById('slider-handle').style.left = '50%';
@@ -1660,7 +1741,9 @@
                         processBtn.disabled = false; 
                         processBtn.innerHTML = "TẠO ẢNH (FLUX/QWEN ENGINE)"; 
                     }
+                    // Hide status window when done
                     hideScanWindow();
+                    
                     document.getElementById('scan-beam').classList.remove('active'); 
                     if(magicDust) magicDust.classList.add('hidden');
                 }
@@ -1668,30 +1751,38 @@
 
             const btnAutoPilot = document.getElementById('btn-auto-pilot'), processBtn = document.getElementById('process-image');
             
-            // --- AUTO SCAN LOGIC (NÂNG CẤP V36.25 - AUTO DETECT) ---
             if(btnAutoPilot) btnAutoPilot.addEventListener('click', async () => {
                 if(!state.base64) return showToast("Vui lòng tải ảnh trước!", "error");
                 const originalText = btnAutoPilot.innerHTML;
                 btnAutoPilot.disabled = true;
                 btnAutoPilot.innerHTML = `<span class="animate-pulse">AUTO-SCANNING...</span>`;
                 
-                document.getElementById('scan-log-overlay').innerHTML = ''; 
-                updateMobileBtnState('scanning');
-                const { key: keyToUse, base: apiBase } = getApiConfig();
+                // Do NOT Show Window for Auto Scan anymore
+                // showScanWindow(); 
+                document.getElementById('scan-log-overlay').innerHTML = ''; // Reset log
                 
-                // RESET STATE QUÂN SỰ
-                state.militaryDetails = { isActive: false, hat: false, rank: false, star: false, medal: false, branch: 'none' };
+                updateMobileBtnState('scanning');
+                const { key: keyToUse, base: apiBase, isComet } = getApiConfig();
+                if (!keyToUse) { 
+                    showToast("Chưa có API Key!", "error"); 
+                    btnAutoPilot.disabled = false; btnAutoPilot.innerHTML = originalText; updateMobileBtnState('scan'); 
+                    return; 
+                }
 
                 try {
                     const resizedBase64 = await resizeImage(state.base64);
-                    // Updated Prompt to Detect Veteran Specifics
-                    const promptText = "Analyze this image for Vietnamese photo restoration. Check for: 1. Pith helmet (mũ cối) or Police Cap. 2. Yellow Star (sao vàng). 3. Rank insignia (quân hàm). 4. Medals. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\"|\"nature\", \"isMilitary\": boolean, \"militaryEra\": \"indochina\"|\"vietnam_war\"|\"subsidy\"|\"modern\"|\"unknown\", \"militaryBranch\": \"army\"|\"navy\"|\"airforce\"|\"police\"|\"militia_guerilla\"|\"tnxp\", \"rankLevel\": \"soldier\"|\"officer_uy\"|\"officer_ta\"|\"none\", \"hatType\": \"pith_helmet\"|\"soft_cap\"|\"kepi\"|\"police_cap\"|\"none\", \"hasMedals\": boolean, \"hasYellowStar\": boolean, \"isAltarPortrait\": boolean, \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\"|\"blur\", \"isOldPhoto\": boolean, \"isIDPhoto\": boolean }";
+                    const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 40000);
                     
-                    const parts = [{ text: promptText }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }];
-                    const headers = { 'Content-Type': 'application/json' };
-                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, body: JSON.stringify({ contents: [{ parts: parts }] }) });
+                    const promptText = "Analyze this image for photo restoration. Return ONLY JSON: { \"sceneContext\": \"wedding\"|\"funeral\"|\"casual\"|\"studio\"|\"outdoor\"|\"product\"|\"painting\"|\"ancient_portrait\"|\"nature\", \"materialType\": \"paper_photo\"|\"canvas\"|\"newspaper\"|\"silk\"|\"digital\", \"specificDamage\": \"scratches\"|\"mold_spots\"|\"water_stain\"|\"tear\"|\"severe_decay\"|\"none\", \"colorCast\": \"sepia\"|\"cyan\"|\"red\"|\"yellow\"|\"none\", \"estimatedEra\": \"french_colonial\"|\"vietnam_war\"|\"subsidy_period\"|\"modern\"|\"unknown\", \"faceSize\": \"portrait_closeup\"|\"medium_shot\"|\"group_small_faces\", \"lightingCondition\": \"rembrandt\"|\"golden_hour\"|\"neon\"|\"soft_diffused\"|\"flat\"|\"overexposed\"|\"harsh_sun\"|\"moonlight\"|\"streetlight\", \"backgroundType\": \"plain\"|\"complex_outdoor\"|\"complex_indoor\", \"hairCondition\": \"blurry_mess\"|\"sharp\"|\"normal\", \"skinTexture\": \"waxy\"|\"detailed\"|\"grainy\", \"fabricDetail\": \"lost\"|\"visible\", \"hasJewelry\": boolean, \"isNature\": boolean, \"isMilitary\": boolean, \"militaryUniformType\": \"army_ground\"|\"air_force\"|\"navy\"|\"border_guard\"|\"public_security\"|\"youth_volunteer\"|\"unknown\", \"militaryHatType\": \"pith_helmet\"|\"soft_cap\"|\"kepi_officer\"|\"kepi_police\"|\"bamboo_helmet\"|\"none\", \"hasGoldStarMedal\": boolean, \"hasResistanceMedal\": boolean, \"hasYouthBadge\": boolean, \"isBlackAndWhite\": boolean, \"isAltarPortrait\": boolean, \"gender\": \"male\"|\"female\", \"age\": number, \"damageType\": \"scratches\"|\"faded\"|\"sepia\"|\"severe_damage\"|\"none\"|\"blur\", \"isOldPhoto\": boolean, \"isIDPhoto\": boolean, \"isHazy\": boolean, \"hasStrabismus\": boolean, \"hasDroopyEyelids\": boolean, \"hasClosedEyes\": boolean, \"hasMonolids\": boolean, \"hasBuckTeeth\": boolean, \"hasBlackenedTeeth\": boolean, \"isGroupPhoto\": boolean }";
                     
-                    if (!response.ok) throw new Error("Lỗi Scan (" + response.status + ")");
+                    const headers = { 'Content-Type': 'application/json' }; if (isComet) headers['Authorization'] = `Bearer ${keyToUse}`;
+                    const response = await fetch(`${apiBase}/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${keyToUse}`, { method: 'POST', headers: headers, signal: controller.signal, body: JSON.stringify({ contents: [{ parts: [{ text: promptText }, { inlineData: { mimeType: "image/jpeg", data: resizedBase64.split(',')[1] } }] }] }) });
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error?.message || "Lỗi Scan (" + response.status + ")");
+                    }
 
                     const data = await response.json();
                     let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -1699,50 +1790,204 @@
                         text = text.replace(/```json/g, '').replace(/```/g, '').trim();
                         const result = JSON.parse(text);
                         const autoReport = [];
+
                         const setChecked = (id, val) => { const el = document.getElementById(id); if(el) el.checked = val; };
 
-                        // --- AUTO DETECT LOGIC ---
-                        if (result.isMilitary || result.isAltarPortrait || result.militaryBranch === 'police') {
-                            state.militaryDetails.isActive = true;
-                            state.militaryDetails.branch = result.militaryBranch;
-                            
-                            autoReport.push("PHÁT HIỆN: CHIẾN SỸ VN");
-                            
-                            if (result.hatType !== 'none') {
-                                state.militaryDetails.hat = true;
-                                if (result.hatType === 'pith_helmet' || result.hasYellowStar) state.militaryDetails.star = true;
-                                autoReport.push("TAG: MŨ/NÓN SAO VÀNG");
-                            }
-                            if (result.rankLevel !== 'none') {
-                                state.militaryDetails.rank = true;
-                                autoReport.push("TAG: QUÂN HÀM");
-                            }
-                            if (result.hasMedals) {
-                                state.militaryDetails.medal = true;
-                                autoReport.push("TAG: HUÂN CHƯƠNG");
-                            }
-                            if (result.militaryBranch === 'police') {
-                                autoReport.push("TAG: CÔNG AN NHÂN DÂN");
-                            }
+                        if(document.getElementById('gender-select')) {
+                            const genderVal = result.gender === 'male' ? 'male' : (result.gender === 'female' ? 'female' : '');
+                            document.getElementById('gender-select').value = genderVal;
+                            if(genderVal) autoReport.push(`PHÁT HIỆN: GIỚI TÍNH ${genderVal === 'male' ? 'NAM' : 'NỮ'}`);
                         }
-
-                        if(result.isIDPhoto) { setChecked('check-id-photo', true); autoReport.push("CHẾ ĐỘ: ẢNH THẺ"); }
-                        if(result.gender && document.getElementById('gender-select')) document.getElementById('gender-select').value = result.gender;
-
-                        // Tạo Prompt thông minh chung chung nhưng đủ ý
-                        let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed skin texture:1.5)`;
+                        if(document.getElementById('age-input')) {
+                            document.getElementById('age-input').value = result.age || 30;
+                            autoReport.push(`PHÁT HIỆN: ĐỘ TUỔI ${result.age || 30}`);
+                        }
+                        if(result.isIDPhoto) { 
+                            setChecked('check-id-photo', true); 
+                            const moduleSubject = document.getElementById('module-subject');
+                            if(moduleSubject) moduleSubject.classList.add('open'); 
+                            autoReport.push("CHẾ ĐỘ: ẢNH THẺ");
+                        }
                         
-                        if (state.militaryDetails.isActive) {
-                             smartPrompt += ", (Vietnamese military history style), (authentic uniform details)";
+                        if(result.isAltarPortrait) {
+                            setChecked('check-altar-mode', true);
+                            const moduleSubject = document.getElementById('module-subject');
+                            if(moduleSubject) moduleSubject.classList.add('open');
+                            autoReport.push("PHÁT HIỆN: ẢNH THỜ");
+                        }
+                        
+                        if(result.isMilitary) { 
+                            const contentMilitary = document.getElementById('content-military');
+                            if(contentMilitary) contentMilitary.classList.add('open'); 
+                            autoReport.push("PHÁT HIỆN: QUÂN PHỤC");
+
+                            if(result.militaryUniformType === 'public_security') {
+                                document.getElementById('mil-branch').value = "vietnamese public security, green uniform, red collar tabs";
+                                autoReport.push("AUTO: CÔNG AN");
+                            } else if (result.militaryUniformType === 'navy') {
+                                document.getElementById('mil-branch').value = "vietnamese navy, navy blue uniform, white striped collar";
+                                autoReport.push("AUTO: HẢI QUÂN");
+                            } else if (result.militaryUniformType === 'army_ground') {
+                                document.getElementById('mil-branch').value = "vietnamese army ground force, red collar tabs";
+                                autoReport.push("AUTO: LỤC QUÂN");
+                            }
+
+                            if(result.militaryHatType === 'pith_helmet') {
+                                document.getElementById('hat-select').value = "wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star";
+                                autoReport.push("AUTO: MŨ CỐI");
+                            } else if (result.militaryHatType === 'soft_cap') {
+                                document.getElementById('hat-select').value = "wear vietnamese soft cap, boonie hat, green fabric, red star badge";
+                                autoReport.push("AUTO: MŨ TAI BÈO");
+                            } else if (result.militaryHatType === 'kepi_police') {
+                                document.getElementById('hat-select').value = "wear vietnamese police kepi hat, green color, red band, gold badge";
+                                autoReport.push("AUTO: MŨ KEPI CA");
+                            } else if (result.militaryHatType === 'kepi_officer') {
+                                document.getElementById('hat-select').value = "wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star";
+                                autoReport.push("AUTO: MŨ KEPI SQ");
+                            }
+
+                            if(result.hasGoldStarMedal) { setChecked('check-sao-vang', true); autoReport.push("AUTO: SAO VÀNG"); }
+                            if(result.hasResistanceMedal) { setChecked('check-khang-chien', true); autoReport.push("AUTO: HC KHÁNG CHIẾN"); }
+                            if(result.hasYouthBadge) { setChecked('check-doan', true); autoReport.push("AUTO: HUY HIỆU ĐOÀN"); }
                         }
 
+                        if(result.isGroupPhoto) {
+                            setChecked('check-group-mode', true);
+                            autoReport.push("CHẾ ĐỘ: ẢNH ĐÁM ĐÔNG");
+                        }
+
+                        let identityFeaturesFound = false;
+                        if(result.hasStrabismus) { setChecked('check-cross-eyed', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: MẮT LÉ"); }
+                        if(result.hasDroopyEyelids) { setChecked('check-ptosis', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: MẮT SỤP MÍ"); }
+                        if(result.hasClosedEyes) { setChecked('check-closed-eyes', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: MẮT NHẮM"); }
+                        if(result.hasMonolids) { setChecked('check-monolid', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: MẮT MỘT MÍ"); }
+                        if(result.hasBuckTeeth) { setChecked('check-buck-teeth', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: RĂNG HÔ"); }
+                        if(result.hasBlackenedTeeth) { setChecked('check-black-teeth', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: RĂNG ĐEN"); }
+
+                        if(identityFeaturesFound) {
+                            const contentIdentity = document.getElementById('content-identity');
+                            if(contentIdentity) contentIdentity.classList.add('open');
+                        }
+                        
+                        if (!state.isReplicaMode) { 
+                            const modeReplica = document.getElementById('mode-replica');
+                            if(modeReplica) modeReplica.click(); 
+                            autoReport.push("KÍCH HOẠT: CHẾ ĐỘ SIÊU THỰC");
+                        }
+                        
+                        let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed background:1.3). `;
+                        smartPrompt += "(hyper-realistic skin texture:1.6), (detailed skin pores:1.5), (rosy undertone:1.3), (natural beauty:1.2). ";
+                        if(result.isMilitary) smartPrompt += ", (Vietnamese military uniform:1.5), (historic details:1.4)";
+                        
+                        if(result.materialType === 'canvas') {
+                             smartPrompt += ", (remove canvas texture:1.4), (smooth surface:1.2)";
+                             autoReport.push("FIX: VÂN VẢI CANVAS");
+                        } else if (result.materialType === 'newspaper') {
+                             smartPrompt += ", (remove halftone pattern:1.3), (denoise:1.4)";
+                             autoReport.push("FIX: ẢNH BÁO CŨ");
+                        }
+
+                        if(result.specificDamage === 'mold_spots') {
+                            smartPrompt += ", (remove mold spots:1.5), (clean fungal growth:1.4)";
+                            autoReport.push("AUTO CLEAN: NẤM MỐC");
+                        } else if (result.specificDamage === 'water_stain') {
+                            smartPrompt += ", (remove water stains:1.4), (fix discoloration:1.3)";
+                            autoReport.push("AUTO CLEAN: Ố NƯỚC");
+                        } else if (result.specificDamage === 'tear') {
+                            smartPrompt += ", (inpainting torn edges:1.5), (fill missing parts:1.4)";
+                            autoReport.push("AUTO FILL: VẾT RÁCH");
+                        }
+
+                        if(!result.isBlackAndWhite && result.colorCast !== 'none') {
+                            smartPrompt += `, (remove ${result.colorCast} color cast:1.4), (white balance:1.3), (natural colors)`;
+                            autoReport.push(`FIX: ÁM MÀU (${result.colorCast.toUpperCase()})`);
+                        }
+
+                        if(result.faceSize === 'portrait_closeup') {
+                            smartPrompt += ", (extremely detailed eyes:1.4), (individual eyelashes:1.3)";
+                        } else if (result.faceSize === 'group_small_faces') {
+                            smartPrompt += ", (clear facial features:1.5), (avoid distorted faces:1.4)";
+                        }
+
+                        if(result.estimatedEra === 'french_colonial' && !result.isMilitary) {
+                            smartPrompt += ", (1940s vietnamese clothing style:1.2)";
+                        } else if (result.estimatedEra === 'subsidy_period' && !result.isMilitary) {
+                             smartPrompt += ", (1980s vietnamese fashion:1.2)";
+                        }
+
+                        if (result.hairCondition === 'blurry_mess' || result.faceSize === 'portrait_closeup') {
+                            smartPrompt += ", (LZP Hair:1.4), (detailed hair strands:1.5), (remove hair blur)";
+                            setChecked('check-hair', true);
+                            autoReport.push("AUTO: VẼ LẠI TÓC (LZP)");
+                        }
+
+                        if (result.skinTexture === 'waxy' || result.fabricDetail === 'lost') {
+                            smartPrompt += ", (detailed skin pores:1.4), (realistic fabric texture:1.3), (micro details:1.3)";
+                            setChecked('check-texture-boost', true);
+                            autoReport.push("AUTO: TĂNG CHI TIẾT");
+                        }
+
+                        if (result.hasJewelry) {
+                            smartPrompt += ", (detailed jewelry:1.4), (sparkling gold/silver:1.2)";
+                            autoReport.push("AUTO: LÀM NÉT TRANG SỨC");
+                        }
+                        
                         const promptMain = document.getElementById('prompt-main');
                         if(promptMain) promptMain.value = smartPrompt;
                         
+                        const contentPrompt = document.getElementById('content-prompt');
+                        if(contentPrompt) contentPrompt.classList.add('open');
+                        
+                        const workflowSelect = document.getElementById('kontext-workflow');
+                        const moduleContainer = document.getElementById('kontext-module-container');
+                        const lightingSelect = document.getElementById('color-grading');
+                        const upscaleSelect = document.getElementById('upscale-mode');
+
+                        if (workflowSelect && moduleContainer) {
+                            let newWorkflow = 'qwen_edit_pro'; 
+                            let toastMsg = "QWEN EDIT PRO"; 
+
+                            if (lightingSelect) {
+                                if (result.isBlackAndWhite && result.isOldPhoto) {
+                                    lightingSelect.value = 'colorize_bw_old_photo';
+                                    autoReport.push("AUTO: TÔ MÀU ẢNH CŨ");
+                                }
+                                else if (result.lightingCondition === 'golden_hour') { lightingSelect.value = 'golden_hour_blinds'; autoReport.push("LIGHTING: GOLDEN HOUR"); } 
+                                else if (result.lightingCondition === 'moonlight') { lightingSelect.value = 'moonlight_window'; autoReport.push("LIGHTING: MOONLIGHT"); } 
+                                else if (result.lightingCondition === 'neon') { lightingSelect.value = 'neon_cyberpunk'; autoReport.push("LIGHTING: NEON"); }
+                            }
+
+                            if ((result.damageType === 'blur' || result.isHazy) && upscaleSelect) {
+                                upscaleSelect.value = 'invsr_sharp'; 
+                                autoReport.push("UPSCALE: INVSR CHỐNG RUNG");
+                            }
+
+                            if(result.sceneContext === 'wedding') { newWorkflow = 'wedding_kontext_v2'; toastMsg = "WORKFLOW: ẢNH CƯỚI"; }
+                            else if(result.sceneContext === 'ancient_portrait') { newWorkflow = 'ancient_restore'; toastMsg = "WORKFLOW: TRANH/TƯỢNG"; }
+                            else if(result.sceneContext === 'outdoor' || result.sceneContext === 'nature' || result.isNature === true || result.backgroundType === 'complex_outdoor') { 
+                                newWorkflow = 'outdoor_mode'; 
+                                toastMsg = "WORKFLOW: NGOẠI CẢNH"; 
+                            }
+                            else if (result.isIDPhoto) {
+                                if (!result.isOldPhoto && result.damageType === 'none') { newWorkflow = 'white_bg'; toastMsg = "WORKFLOW: TÁCH NỀN"; } 
+                                else { newWorkflow = 'qwen_edit_pro'; toastMsg = "WORKFLOW: PHỤC HỒI ẢNH THẺ"; }
+                            }
+                            else if(result.sceneContext === 'product' && !result.isOldPhoto) { newWorkflow = 'product_mode'; toastMsg = "WORKFLOW: SẢN PHẨM"; }
+
+                            if(newWorkflow !== 'default') {
+                                workflowSelect.value = newWorkflow;
+                                autoReport.push(toastMsg);
+                                moduleContainer.classList.add('ring-1', 'ring-[#0A84FF]');
+                                setTimeout(() => { moduleContainer.classList.remove('ring-1', 'ring-[#0A84FF]'); }, 3000);
+                            }
+                        }
+
                         if (window.innerWidth >= 1024) { openSidebar(); } 
+                        
+                        // NEW LOGIC: SEQUENTIAL LOG (CORNER) INSTEAD OF WINDOW
                         playSequentialLog(autoReport); 
+                        
                         updateMobileBtnState('run');
-                        showToast("Scan xong! Đã tự động nhận diện chi tiết.", "success");
                     }
                 } catch(e) { 
                     console.error(e); 
@@ -1759,70 +2004,84 @@
                 mobRunBtn.onclick = runImageProcessing;
             }
 
-            // ADD DRAG AND DROP SUPPORT TO FIX "CAN'T UPLOAD"
-            const setupDragDrop = () => {
-                const dropZone = document.getElementById('drop-zone');
-                const placeholder = document.getElementById('placeholder-state');
-                const body = document.body;
-
-                const preventDefaults = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                };
-
-                const highlight = (el) => {
-                    el.classList.add('border-[#0A84FF]', 'bg-[#2c2c2e]');
-                };
-
-                const unhighlight = (el) => {
-                    el.classList.remove('border-[#0A84FF]', 'bg-[#2c2c2e]');
-                };
-
-                const handleDrop = (e) => {
-                    const dt = e.dataTransfer;
-                    const files = dt.files;
-                    if (files.length > 0 && files[0].type.startsWith('image/')) {
-                        loadImg(files[0]);
-                    } else {
-                        showToast("Vui lòng thả file ảnh!", "error");
-                    }
-                };
-
-                // Prevent default drag behaviors on body to stop browser from opening file
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    body.addEventListener(eventName, preventDefaults, false);
-                });
-
-                // Setup specific zones
-                [dropZone, placeholder].forEach(el => {
-                    if(!el) return;
-                    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                        el.addEventListener(eventName, preventDefaults, false);
-                    });
-                    ['dragenter', 'dragover'].forEach(eventName => {
-                        el.addEventListener(eventName, () => highlight(el), false);
-                    });
-                    ['dragleave', 'drop'].forEach(eventName => {
-                        el.addEventListener(eventName, () => unhighlight(el), false);
-                    });
-                    el.addEventListener('drop', handleDrop, false);
-                });
-            };
-            
-            setupDragDrop();
-
             const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; 
             
             if(btnDownloadDesktop) btnDownloadDesktop.disabled = true;
+            if(btnDownloadMobile) {
+                btnDownloadMobile.disabled = true;
+                btnDownloadMobile.classList.add('opacity-30');
+            }
+            
             document.getElementById('img-modified-wrapper').style.width = '0%'; 
             document.getElementById('slider-handle').style.left = '0%'; 
             document.getElementById('slider-handle').style.display = 'none'; 
             document.querySelector('.comp-label.after').style.display = 'none'; 
-            document.getElementById('scan-log-overlay').innerHTML = ''; 
+            document.getElementById('scan-log-overlay').innerHTML = ''; // Reset log
 
             showToast(`Đã tải ảnh: ${img.width}x${img.height}`, "success"); updateMobileBtnState('scan'); }; img.src = e.target.result; }; reader.readAsDataURL(file); };
             const fileInput = document.getElementById('image-upload'); if(fileInput) fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) { loadImg(e.target.files[0]); e.target.value = ''; } });
+            
+            const mobBtnUpload = document.getElementById('mob-btn-upload'), mobBtnScan = document.getElementById('mob-btn-scan'), mobBar = document.getElementById('mobile-action-bar');
+            if(mobBar) setTimeout(() => mobBar.classList.remove('translate-y-32', 'opacity-0'), 1000);
+            if(mobBtnUpload) mobBtnUpload.onclick = () => document.getElementById('image-upload').click();
+            if(mobBtnScan) mobBtnScan.onclick = () => document.getElementById('btn-auto-pilot').click();
+            
+            // CLICK TO UPLOAD FOR PLACEHOLDER (ADDED)
+            const placeholderEl = document.getElementById('placeholder-state');
+            if(placeholderEl) {
+                placeholderEl.addEventListener('click', () => {
+                    document.getElementById('image-upload').click();
+                });
+            }
+            
+            const redeemBtn = document.getElementById('btn-submit-recharge');
+            const redeemInput = document.getElementById('recharge-input');
 
+            if(redeemBtn) redeemBtn.addEventListener('click', () => { 
+                const code = redeemInput.value.trim(); 
+                if(!code) return showToast("Vui lòng nhập mã!", "error"); 
+                
+                const usedCodes = JSON.parse(localStorage.getItem('v35_used_codes') || '[]');
+                if (usedCodes.includes(code)) return showToast("Mã này đã được sử dụng!", "error");
+
+                if (!code.startsWith('V36-')) return showToast("Mã không đúng định dạng V36-...", "error");
+
+                const token = code.substring(4);
+                const decrypted = Sec.dec(token);
+
+                if (!decrypted) return showToast("Mã không hợp lệ hoặc bị lỗi!", "error");
+
+                const parts = decrypted.split('|');
+                if (parts.length < 3) return showToast("Dữ liệu mã bị hỏng!", "error");
+
+                const amount = parseInt(parts[0]);
+                const targetMachine = parts[1];
+
+                if (targetMachine !== UserSystem.deviceId) {
+                    console.log(`Mismatch: Code for ${targetMachine}, Current is ${UserSystem.deviceId}`);
+                    return showToast(`Mã này bị khóa cho máy: ${targetMachine}. Bạn không thể dùng!`, "error");
+                }
+
+                if (isNaN(amount)) return showToast("Lỗi giá trị Credit!", "error");
+
+                UserSystem.addCredits(amount);
+                
+                usedCodes.push(code);
+                localStorage.setItem('v35_used_codes', JSON.stringify(usedCodes));
+
+                const msg = amount > 0 ? `Nạp thành công +${amount} Ảnh!` : `Đã trừ ${Math.abs(amount)} Ảnh!`;
+                showToast(msg, amount > 0 ? "success" : "warning");
+                
+                document.getElementById('recharge-modal').classList.add('hidden'); 
+                redeemInput.value = ''; 
+            });
+            
+            const closeRechargeBtn = document.getElementById('close-recharge');
+            if (closeRechargeBtn) closeRechargeBtn.onclick = () => document.getElementById('recharge-modal').classList.add('hidden');
+            
+            const sliders = document.querySelectorAll('input[type="range"]');
+            sliders.forEach(s => s.addEventListener('input', (e) => { const label = document.getElementById(e.target.id.replace('slider', 'val') || e.target.id.replace('weight-slider', 'weight-val')); if(label) label.textContent = e.target.value + (e.target.max > 10 ? '%' : ''); }));
+            
             const compContainer = document.getElementById('comp-inner'), imgModWrapper = document.getElementById('img-modified-wrapper'), sliderHandle = document.getElementById('slider-handle');
             if(compContainer) { let isDragging = false; const updateSlider = (percent) => { if(!imgModWrapper || !sliderHandle) return; percent = Math.max(0, Math.min(100, percent)); imgModWrapper.style.width = percent + '%'; sliderHandle.style.left = percent + '%'; }; compContainer.addEventListener('mousedown', () => isDragging = true); compContainer.addEventListener('touchstart', () => isDragging = true); window.addEventListener('mouseup', () => isDragging = false); window.addEventListener('touchend', () => isDragging = false); compContainer.addEventListener('mousemove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.clientX - rect.left)/rect.width)*100); } }); compContainer.addEventListener('touchmove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.touches[0].clientX - rect.left)/rect.width)*100); } }); }
         });
