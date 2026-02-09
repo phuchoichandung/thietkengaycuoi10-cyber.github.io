@@ -1640,6 +1640,46 @@
                     let finalPrompt = document.getElementById('prompt-main').value;
                     if(!finalPrompt) finalPrompt = "Restore this photo, remove scratches, high quality, 8k";
                     
+                    // --- FIX V36: FORCE READ MILITARY VALUES IF AUTO SCAN OR MANUAL SELECT ---
+                    // This was missing in your original code, causing the AI to ignore the selection
+                    
+                    // 1. Military Branch
+                    const milBranch = document.getElementById('mil-branch');
+                    if(milBranch && milBranch.value) finalPrompt += `, (${milBranch.value}:1.3)`;
+
+                    // 2. Uniform
+                    const milUniform = document.getElementById('mil-uniform');
+                    if(milUniform && milUniform.value) finalPrompt += `, (${milUniform.value}:1.3)`;
+
+                    // 3. Hat (Priority High)
+                    const hatSelect = document.getElementById('hat-select');
+                    if(hatSelect && hatSelect.value) finalPrompt += `, (${hatSelect.value}:1.4)`;
+
+                    // 4. Rank
+                    const rankSelect = document.getElementById('rank-select');
+                    if(rankSelect && rankSelect.value) {
+                         if(rankSelect.value === 'no_rank_insignia') {
+                             finalPrompt += ", (no collar tabs:1.4), (plain collar:1.4)";
+                         } else {
+                             finalPrompt += `, (${rankSelect.value}:1.4), (detailed collar tabs:1.3)`;
+                         }
+                    }
+
+                    // 5. Medals and Badges (Very High Priority)
+                    if(document.getElementById('check-sao-vang')?.checked) {
+                        finalPrompt += ", (Gold Star Order medal on left chest:1.5), (detailed gold star medal:1.4), (red ribbon with yellow stars:1.3)";
+                    }
+                    if(document.getElementById('check-khang-chien')?.checked) {
+                        finalPrompt += ", (Resistance War Medal:1.4), (colorful medal ribbon bar on chest:1.3)";
+                    }
+                    if(document.getElementById('check-chien-si')?.checked) {
+                        finalPrompt += ", (Emulation Soldier Badge:1.3), (metallic badge on pocket:1.2)";
+                    }
+                    if(document.getElementById('check-doan')?.checked) {
+                        finalPrompt += ", (Ho Chi Minh Communist Youth Union badge:1.4), (blue and red circular badge with star on left pocket:1.3)";
+                    }
+                    // --- END FIX ---
+
                     const antiFlip = document.getElementById('check-anti-flip')?.checked;
                     if (antiFlip) {
                         finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (preserve composition:1.4)";
