@@ -383,117 +383,33 @@
                     <span class="text-xs font-bold tracking-wide">AUTO SCAN V36.20 (VETERAN DETECT)</span>
                 </button>
 
-                <!-- MODULE MỚI: LIỆT SĨ & LLVT (THAY THẾ QUÂN SỬ & KỶ VẬT) -->
+                <!-- MODULE MỚI: PHỤC HỒI CHIẾN SỸ (V36.20 UPGRADE) -->
                 <div class="module-group" id="module-veteran">
                     <button id="toggle-veteran" class="module-header w-full">
                         <div class="flex items-center gap-2">
-                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wide uppercase">🇻🇳 PHỤC CHẾ LIỆT SĨ & LLVT (PRO)</span>
+                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wide uppercase">🇻🇳 PHỤC HỒI CHIẾN SỸ (CHUYÊN SÂU)</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-veteran" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div id="content-veteran" class="module-content">
+                    <div id="content-veteran" class="module-content open">
                         <div class="module-inner space-y-3">
-                             <!-- Lực lượng & Trang phục -->
+                             <!-- PRESET SELECTOR (CHUYÊN NGHIỆP) -->
                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân phục & Lực lượng (Chính xác)</label>
-                                <select id="veteran-uniform" class="pro-input w-full py-2">
-                                    <option value="">-- Tự động / Mặc định --</option>
-                                    <optgroup label="Kháng chiến Chống Pháp (1945-1954)">
-                                        <option value="vietnamese soldier, tran thu padded jacket, viet minh era">Áo Trấn Thủ (Chần bông)</option>
-                                        <option value="viet minh soldier, simple khaki uniform">Vệ Quốc Đoàn (Kaki vàng/nâu)</option>
-                                    </optgroup>
-                                    <optgroup label="Kháng chiến Chống Mỹ (1955-1975)">
-                                        <option value="north vietnamese soldier, to chau uniform, green plain shirt, pointed collar">Áo Tô Châu (Nam/Nữ - Xanh lá)</option>
-                                        <option value="viet cong guerilla, black pajamas, checkered scarf">Du kích (Áo bà ba đen + Khăn rằn)</option>
-                                        <option value="tnxp uniform, dark green shirt, youth volunteer badge">Thanh Niên Xung Phong (Màu cỏ úa)</option>
-                                        <option value="vietnamese navy, navy blue uniform, sailor collar">Hải Quân (Áo yếm/Tím than)</option>
-                                        <option value="vietnamese air force, blue uniform">Không Quân (Áo bay)</option>
-                                    </optgroup>
-                                    <optgroup label="Công An Nhân Dân">
-                                        <option value="vietnamese public security, green olive uniform, red collar tabs">Cảnh phục An Ninh (Xanh rêu)</option>
-                                        <option value="vietnamese police traffic, yellow uniform">Cảnh sát Giao thông (Vàng)</option>
-                                        <option value="vietnamese police old style, khaki uniform">Công an vũ trang (Cũ)</option>
-                                    </optgroup>
-                                    <optgroup label="Thời bao cấp & Hiện đại">
-                                        <option value="vietnamese army K82 uniform, dark green, stiff fabric">Quân phục K82 (Cổ bẻ/Vải cứng)</option>
-                                        <option value="vietnamese army K94 uniform, formal suit">Quân phục K94 (Lễ phục)</option>
-                                        <option value="vietnamese border guard, green uniform, red trim">Bộ đội Biên phòng (Hàm xanh)</option>
-                                    </optgroup>
+                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">CHỌN CHẾ ĐỘ (PRESET)</label>
+                                <select id="veteran-preset" class="pro-input w-full py-2 cursor-pointer font-bold text-[#FFD60A]">
+                                    <option value="none">-- Không áp dụng / Mặc định --</option>
+                                    <option value="preset_1">1. ẢNH THỜ LIỆT SỸ (TRANG NGHIÊM)</option>
+                                    <option value="preset_2">2. CHIẾN SỸ KHÁNG CHIẾN (ĐEN TRẮNG)</option>
+                                    <option value="preset_3">3. MÀU HÓA CHUẨN QUÂN PHỤC VN</option>
+                                    <option value="preset_4">4. QUÂN HÀM & SAO VÀNG RÕ NÉT</option>
+                                    <option value="preset_5">5. CÔNG AN NHÂN DÂN (ẢNH HỒ SƠ)</option>
                                 </select>
                              </div>
-
-                             <!-- Mũ & Nón -->
-                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Mũ / Nón</label>
-                                <select id="veteran-hat" class="pro-input w-full py-2">
-                                    <option value="">-- Không xử lý Mũ --</option>
-                                    <option value="wearing vietnamese pith helmet, hard green helmet, red badge with yellow star">Mũ Cối (Sao nổi - Chuẩn lính)</option>
-                                    <option value="wearing boonie hat, soft green fabric, red star badge">Mũ Tai Bèo (Mềm - Giải phóng)</option>
-                                    <option value="wearing kepi hat, army officer style, mixed red and green">Mũ Kepi Sĩ Quan (Đỏ/Xanh)</option>
-                                    <option value="wearing kepi hat, police style, green with red band">Mũ Kepi Công An</option>
-                                    <option value="wearing bamboo helmet, covered with cloth">Mũ Nan (Bọc vải)</option>
-                                    <option value="wearing garrison cap, calo hat, air force style">Mũ Calo (Không quân/Thiếu sinh)</option>
-                                </select>
+                             
+                             <!-- PRESET DESCRIPTION DISPLAY -->
+                             <div id="veteran-preset-desc" class="text-[10px] text-gray-400 italic px-2 py-1 border-l-2 border-white/10">
+                                 Chưa chọn chế độ chuyên sâu.
                              </div>
-
-                             <!-- Cấp bậc / Quân hàm -->
-                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Cấp hiệu (Cầu vai/Ve áo)</label>
-                                <select id="veteran-rank" class="pro-input w-full py-2">
-                                    <option value="">-- Tự động / Không chọn --</option>
-                                    <option value="no rank insignia, plain collar">🚫 Không đeo hàm (Áo trơn)</option>
-                                    <optgroup label="Chiến sĩ / Hạ sĩ quan">
-                                        <option value="red collar tabs, plain red, soldier rank">Chiến sĩ (Binh nhì/Binh nhất - Đỏ trơn)</option>
-                                        <option value="red collar tabs, one yellow stripe">Hạ sĩ (1 gạch ngang)</option>
-                                        <option value="red collar tabs, two yellow stripes">Trung sĩ (2 gạch ngang)</option>
-                                        <option value="red collar tabs, three yellow stripes">Thượng sĩ (3 gạch ngang)</option>
-                                    </optgroup>
-                                    <optgroup label="Sĩ quan cấp Úy (1 gạch + Sao)">
-                                        <option value="red collar tabs, one star, one silver stripe">Thiếu úy (1 sao)</option>
-                                        <option value="red collar tabs, two stars, one silver stripe">Trung úy (2 sao)</option>
-                                        <option value="red collar tabs, three stars, one silver stripe">Thượng úy (3 sao)</option>
-                                        <option value="red collar tabs, four stars, one silver stripe">Đại úy (4 sao)</option>
-                                    </optgroup>
-                                    <optgroup label="Sĩ quan cấp Tá (2 gạch + Sao)">
-                                        <option value="red collar tabs, one star, two silver stripes">Thiếu tá (1 sao)</option>
-                                        <option value="red collar tabs, two stars, two silver stripes">Trung tá (2 sao)</option>
-                                        <option value="red collar tabs, three stars, two silver stripes">Thượng tá (3 sao)</option>
-                                        <option value="red collar tabs, four stars, two silver stripes">Đại tá (4 sao)</option>
-                                    </optgroup>
-                                </select>
-                             </div>
-
-                             <!-- Checkbox Tùy chọn -->
-                             <div class="grid grid-cols-2 gap-2 mt-2">
-                                <div class="flex items-center gap-2 p-2 rounded bg-[#FFD60A]/10 border border-[#FFD60A]/20">
-                                    <input id="check-sao-vang" type="checkbox" class="chk-pro chk-gold save-input">
-                                    <label for="check-sao-vang" class="text-[11px] text-[#FFD60A] font-bold">Huân chương Sao Vàng</label>
-                                </div>
-                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5">
-                                    <input id="check-khang-chien" type="checkbox" class="chk-pro save-input">
-                                    <label for="check-khang-chien" class="text-[11px] text-gray-300">HC Kháng Chiến</label>
-                                </div>
-                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5">
-                                    <input id="check-huy-hieu-dang" type="checkbox" class="chk-pro chk-red save-input">
-                                    <label for="check-huy-hieu-dang" class="text-[11px] text-red-400">Huy hiệu Đảng</label>
-                                </div>
-                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5">
-                                    <input id="check-doan" type="checkbox" class="chk-pro chk-blue save-input">
-                                    <label for="check-doan" class="text-[11px] text-blue-400">Huy hiệu Đoàn</label>
-                                </div>
-                             </div>
-
-                             <!-- Chế độ Ảnh Thờ Đặc Biệt -->
-                             <div class="flex items-center justify-between p-2 mt-2 rounded bg-purple-500/10 border border-purple-500/20">
-                                <div class="flex flex-col">
-                                    <span class="text-[12px] font-bold text-purple-400">CHẾ ĐỘ ẢNH THỜ (TRANG NGHIÊM)</span>
-                                    <span class="text-[9px] text-purple-400/70">Cân đối mặt, phông xanh, ánh sáng studio</span>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="check-altar-pro" class="sr-only peer save-input">
-                                    <div class="w-8 h-4 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-purple-500"></div>
-                                </label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1135,6 +1051,40 @@
     <script>
         const DEFAULT_ENCRYPTED_CONFIG = "LRFALDY3LTQ/IH1xZxg7PigidAVWQX1/ZyIlOw46MmdjfSAqYSUjW3QnGQd0ZAU1DngybTckJQEfP1hSNgspJzAbIgofNW4bMRIfBBoCbxkrNBtkF2dzaTUrMCUoKDEkEQ99MCouMCZnc2knOCw2FD44dAkXNycxMyZoanAqNTBxMC4hMSJSRTZ9Jiw4cDg="; 
         const ALLOWED_DOMAINS = []; 
+        
+        // --- CẤU HÌNH PROMPT VETERAN CHUYÊN SÂU ---
+        const VETERAN_PRESETS = {
+            "preset_1": {
+                name: "ẢNH THỜ LIỆT SỸ (CHUẨN ẢNH THỜ)",
+                desc: "Phục hồi trang nghiêm, cân đối mặt, ánh sáng studio, phông nền chuẩn.",
+                positive: "Restore old Vietnamese fallen soldier portrait, high fidelity face restoration, keep original facial identity 100 percent, Vietnamese heroic soldier, solemn and respectful expression, balanced lighting, natural skin texture, remove scratches and noise, historical accuracy, traditional Vietnamese memorial portrait style, high resolution, clear eyes and facial structure, no beautify, no smile exaggeration",
+                negative: "anime, cartoon, 3d, fantasy, western face, korean face, chinese face, beauty filter, plastic skin, over sharpen, fake details, wrong uniform, wrong insignia, modern military, face change, face swap, AI artifacts"
+            },
+            "preset_2": {
+                name: "CHIẾN SỸ KHÁNG CHIẾN (ĐEN TRẮNG)",
+                desc: "Giữ chất ảnh tư liệu, phục hồi chi tiết bị rách/mờ, tăng độ nét.",
+                positive: "Vietnamese resistance war soldier, old black and white photo restoration, documentary photography style, authentic Vietnamese military uniform, natural facial reconstruction, remove cracks, dust, scratches, preserve original emotion, historical realism, film grain controlled, sharp but not modern, true identity preservation",
+                negative: "colorized, modern style, anime, CGI, AI face, smooth skin, beauty retouch, foreign military, incorrect rank, digital painting"
+            },
+            "preset_3": {
+                name: "MÀU HÓA ẢNH CHIẾN SỸ (MÀU CHUẨN)",
+                desc: "Lên màu quân phục chuẩn QĐND Việt Nam, màu da tự nhiên.",
+                positive: "Colorize old Vietnamese soldier photo, historically accurate colors, Vietnam People's Army green uniform, natural skin tone Vietnamese, realistic lighting, no color exaggeration, authentic fabric texture, preserve original photo mood, photo restoration quality, realistic and respectful",
+                negative: "vivid colors, cinematic fantasy, wrong green uniform, western color palette, over saturation, anime style, modern fashion"
+            },
+            "preset_4": {
+                name: "CHIẾN SỸ SAO VÀNG - QUÂN HÀM RÕ NÉT",
+                desc: "Tập trung phục hồi chi tiết Mũ, Sao vàng, Cầu vai, Huân chương.",
+                positive: "Vietnam People's Army soldier, golden star emblem on cap, Vietnamese military rank insignia, accurate shoulder epaulettes, clear medals and decorations, sharp uniform details, historical accuracy, official military portrait style, realistic fabric and metal texture",
+                negative: "extra stars, fake rank, foreign insignia, wrong flag, fantasy medals, cartoon, anime, plastic uniform"
+            },
+            "preset_5": {
+                name: "CÔNG AN NHÂN DÂN (ẢNH HỒ SƠ)",
+                desc: "Phục hồi sắc nét, trang nghiêm dành cho lực lượng CAND.",
+                positive: "Vietnam People's Public Security officer, official Vietnamese police uniform, red and yellow insignia, formal posture, serious and dignified expression, official portrait photography, clean background, high clarity face restoration, authentic Vietnamese police style",
+                negative: "foreign police, western uniform, beauty retouch, fashion portrait, anime, CGI"
+            }
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; 
@@ -1595,28 +1545,24 @@
                     }
                     finalPrompt += ", (maintain original composition:1.5), (do not flip:1.5), (do not crop:1.4)";
                     
-                    // VETERAN PRO PROMPT INJECTION
-                    const vetUniform = document.getElementById('veteran-uniform')?.value;
-                    if(vetUniform) finalPrompt += `, (${vetUniform}:1.5)`;
-                    
-                    const vetHat = document.getElementById('veteran-hat')?.value;
-                    if(vetHat) finalPrompt += `, (${vetHat}:1.4)`;
-                    
-                    const vetRank = document.getElementById('veteran-rank')?.value;
-                    if(vetRank && !vetRank.includes('no rank')) finalPrompt += `, (${vetRank}:1.4)`;
-                    
-                    const isAltarPro = document.getElementById('check-altar-pro')?.checked;
-                    if (isAltarPro) {
-                        finalPrompt += ", (formal portrait:1.4), (symmetrical face:1.3), (solemn expression), (centered composition), (blue background:0.3)";
+                    // --- VETERAN PRO PROMPT INJECTION (UPDATED LOGIC) ---
+                    const veteranPreset = document.getElementById('veteran-preset').value;
+                    if (veteranPreset && veteranPreset !== 'none' && VETERAN_PRESETS[veteranPreset]) {
+                        // Inject Positive Prompt
+                        finalPrompt += ", " + VETERAN_PRESETS[veteranPreset].positive;
+                        
+                        // Inject Negative Prompt (Appended to existing negative)
+                        let negInput = document.getElementById('prompt-negative');
+                        let currentNeg = negInput ? negInput.value : "";
+                        // Prepend preset negative to ensure it takes precedence
+                        if(negInput) negInput.value = VETERAN_PRESETS[veteranPreset].negative + ", " + currentNeg;
                     }
 
+                    // --- OTHER MODES ---
                     const isIDPhoto = document.getElementById('check-id-photo')?.checked;
                     if (isIDPhoto) {
                         finalPrompt += ", (passport photo:1.5), (studio lighting:1.3), (neutral background:1.4)";
                     }
-
-                    if (document.getElementById('check-sao-vang')?.checked) finalPrompt += ", (Gold Star Medal:1.3)";
-                    if (document.getElementById('check-khang-chien')?.checked) finalPrompt += ", (Resistance Medal:1.3)";
 
                     const upscaleMode = document.getElementById('upscale-mode');
                     if (upscaleMode && upscaleMode.value === 'invsr_sharp') {
@@ -1681,6 +1627,7 @@
 
             const btnAutoPilot = document.getElementById('btn-auto-pilot'), processBtn = document.getElementById('process-image');
             
+            // --- AUTO SCAN LOGIC (NÂNG CẤP V36.20) ---
             if(btnAutoPilot) btnAutoPilot.addEventListener('click', async () => {
                 if(!state.base64) return showToast("Vui lòng tải ảnh trước!", "error");
                 const originalText = btnAutoPilot.innerHTML;
@@ -1710,46 +1657,42 @@
                         const autoReport = [];
                         const setChecked = (id, val) => { const el = document.getElementById(id); if(el) el.checked = val; };
 
-                        // General detections
-                        if(result.isAltarPortrait) { setChecked('check-altar-pro', true); autoReport.push("PHÁT HIỆN: ẢNH THỜ"); }
-                        if(result.isIDPhoto) { setChecked('check-id-photo', true); autoReport.push("CHẾ ĐỘ: ẢNH THẺ"); }
-                        if(result.gender && document.getElementById('gender-select')) document.getElementById('gender-select').value = result.gender;
-
-                        // Military Logic
-                        if(result.isMilitary) {
+                        // --- MAPPING LOGIC SANG PRESET MỚI ---
+                        const vetSelect = document.getElementById('veteran-preset');
+                        
+                        // 1. Logic Ảnh Thờ / Liệt Sỹ
+                        if(result.isAltarPortrait) { 
+                            vetSelect.value = "preset_1";
+                            autoReport.push("PHÁT HIỆN: ẢNH THỜ LIỆT SỸ");
+                        }
+                        
+                        // 2. Logic Quân sự / Công An
+                        else if(result.isMilitary) {
                             const contentVeteran = document.getElementById('content-veteran');
                             if(contentVeteran) contentVeteran.classList.add('open');
                             autoReport.push("PHÁT HIỆN: QUÂN NHÂN");
 
-                            // Uniform Mapping
-                            const uniSelect = document.getElementById('veteran-uniform');
-                            if(uniSelect) {
-                                if(result.militaryEra === 'indochina') uniSelect.value = "vietnamese soldier, tran thu padded jacket, viet minh era";
-                                else if(result.militaryBranch === 'militia_guerilla') uniSelect.value = "viet cong guerilla, black pajamas, checkered scarf";
-                                else if(result.militaryBranch === 'tnxp') uniSelect.value = "tnxp uniform, dark green shirt, youth volunteer badge";
-                                else if(result.militaryBranch === 'police') uniSelect.value = "vietnamese public security, green olive uniform, red collar tabs";
-                                else if(result.militaryBranch === 'navy') uniSelect.value = "vietnamese navy, navy blue uniform, sailor collar";
-                                else if(result.militaryEra === 'vietnam_war') uniSelect.value = "north vietnamese soldier, to chau uniform, green plain shirt, pointed collar";
-                                else if(result.militaryEra === 'modern') uniSelect.value = "vietnamese army K94 uniform, formal suit";
-                                
-                                if(uniSelect.value) autoReport.push("AUTO: QUÂN PHỤC");
+                            if(result.militaryBranch === 'police') {
+                                vetSelect.value = "preset_5"; // Công an
+                                autoReport.push("AUTO: CÔNG AN NHÂN DÂN");
+                            } else if (result.hasMedals || result.rankLevel !== 'none' || result.hatType !== 'none') {
+                                vetSelect.value = "preset_4"; // Có sao/hàm/huân chương
+                                autoReport.push("AUTO: QUÂN HÀM RÕ NÉT");
+                            } else if (result.isOldPhoto && result.damageType !== 'none') {
+                                vetSelect.value = "preset_2"; // Kháng chiến cũ
+                                autoReport.push("AUTO: CHIẾN SỸ KHÁNG CHIẾN");
+                            } else {
+                                vetSelect.value = "preset_3"; // Mặc định màu hóa
+                                autoReport.push("AUTO: MÀU HÓA QUÂN PHỤC");
                             }
-
-                            // Hat Mapping
-                            const hatSelect = document.getElementById('veteran-hat');
-                            if(hatSelect) {
-                                if(result.hatType === 'pith_helmet') hatSelect.value = "wearing vietnamese pith helmet, hard green helmet, red badge with yellow star";
-                                else if(result.hatType === 'soft_cap') hatSelect.value = "wearing boonie hat, soft green fabric, red star badge";
-                                else if(result.hatType === 'kepi') hatSelect.value = "wearing kepi hat, army officer style, mixed red and green";
-                                else if(result.hatType === 'bamboo') hatSelect.value = "wearing bamboo helmet, covered with cloth";
-                                
-                                if(hatSelect.value) autoReport.push("AUTO: MŨ/NÓN");
-                            }
-
-                            // Medals
-                            if(result.hasMedals) { setChecked('check-khang-chien', true); autoReport.push("AUTO: HUÂN CHƯƠNG"); }
                         }
-                        
+
+                        // Trigger change event to update description
+                        vetSelect.dispatchEvent(new Event('change'));
+
+                        if(result.isIDPhoto) { setChecked('check-id-photo', true); autoReport.push("CHẾ ĐỘ: ẢNH THẺ"); }
+                        if(result.gender && document.getElementById('gender-select')) document.getElementById('gender-select').value = result.gender;
+
                         let smartPrompt = `Restore this ${result.sceneContext} photo. (high resolution:1.5), (masterpiece:1.4), (detailed skin texture:1.5). `;
                         const promptMain = document.getElementById('prompt-main');
                         if(promptMain) promptMain.value = smartPrompt;
@@ -1845,6 +1788,22 @@
             const sliders = document.querySelectorAll('input[type="range"]');
             sliders.forEach(s => s.addEventListener('input', (e) => { const label = document.getElementById(e.target.id.replace('slider', 'val') || e.target.id.replace('weight-slider', 'weight-val')); if(label) label.textContent = e.target.value + (e.target.max > 10 ? '%' : ''); }));
             
+            // --- DESCRIPTION UPDATE FOR VETERAN PRESET ---
+            const vetPresetSel = document.getElementById('veteran-preset');
+            const vetDesc = document.getElementById('veteran-preset-desc');
+            if(vetPresetSel && vetDesc) {
+                vetPresetSel.addEventListener('change', () => {
+                    const val = vetPresetSel.value;
+                    if(val && VETERAN_PRESETS[val]) {
+                        vetDesc.textContent = VETERAN_PRESETS[val].desc;
+                        vetDesc.className = "text-[10px] text-[#FFD60A] italic px-2 py-1 border-l-2 border-[#FFD60A]";
+                    } else {
+                        vetDesc.textContent = "Chưa chọn chế độ chuyên sâu.";
+                        vetDesc.className = "text-[10px] text-gray-400 italic px-2 py-1 border-l-2 border-white/10";
+                    }
+                });
+            }
+
             const compContainer = document.getElementById('comp-inner'), imgModWrapper = document.getElementById('img-modified-wrapper'), sliderHandle = document.getElementById('slider-handle');
             if(compContainer) { let isDragging = false; const updateSlider = (percent) => { if(!imgModWrapper || !sliderHandle) return; percent = Math.max(0, Math.min(100, percent)); imgModWrapper.style.width = percent + '%'; sliderHandle.style.left = percent + '%'; }; compContainer.addEventListener('mousedown', () => isDragging = true); compContainer.addEventListener('touchstart', () => isDragging = true); window.addEventListener('mouseup', () => isDragging = false); window.addEventListener('touchend', () => isDragging = false); compContainer.addEventListener('mousemove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.clientX - rect.left)/rect.width)*100); } }); compContainer.addEventListener('touchmove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.touches[0].clientX - rect.left)/rect.width)*100); } }); }
         });
