@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PHỤC HỒI ẢNH - AI RESTORATION PRO (V36.12 UI REMASTER)</title>
+    <title>PHỤC HỒI ẢNH - AI RESTORATION PRO (V36.15 CUSTOM)</title>
     
     <!-- FONTS: Apple Style Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -465,37 +465,51 @@
                     </div>
                 </div>
 
-                <!-- MODULE: QUÂN SỬ VIỆT NAM -->
-                <div class="module-group" id="module-military">
-                    <button id="toggle-military" class="module-header w-full">
+                <!-- NEW MODULE: CHI TIẾT & PHỤ KIỆN (Replacing Military Module) -->
+                <div class="module-group" id="module-accessories">
+                    <button id="toggle-accessories" class="module-header w-full">
                         <div class="flex items-center gap-2">
-                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wide uppercase">🇻🇳 QUÂN SỬ & KỶ VẬT (FULL UPGRADE)</span>
+                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wide uppercase">🎖️ CHI TIẾT & PHỤ KIỆN (AUTO DETECT)</span>
                         </div>
-                        <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-military" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg class="w-4 h-4 text-gray-500 transition-transform" id="icon-accessories" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div id="content-military" class="module-content">
+                    <div id="content-accessories" class="module-content">
                         <div class="module-inner space-y-3">
-                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân chủng / Lực lượng</label>
-                                <select id="mil-branch" class="pro-input w-full py-2"><option value="">-- Tự động / Không chọn --</option><option value="vietnamese army ground force, red collar tabs">🟥 Lục quân (Hàm Đỏ)</option><option value="vietnamese air force, blue collar tabs">🟦 Phòng Không - Không Quân (Hàm Xanh Trời)</option><option value="vietnamese navy, navy blue uniform, white striped collar">⚓ Hải quân (Áo yếm/Hàm Tím than)</option><option value="vietnamese border guard, green collar tabs">🟩 Bộ đội Biên phòng (Hàm Xanh lá)</option><option value="vietnamese public security, green uniform, red collar tabs">👮 Công an Nhân dân (Cảnh phục)</option><option value="vietnamese youth volunteer force, dark green uniform">⭐ Thanh niên Xung phong</option></select>
-                             </div>
-                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Quân phục / Thời kỳ</label>
-                                <select id="mil-uniform" class="pro-input w-full py-2"><option value="">-- Tự động / Mặc định --</option><option value="wearing tran thu shirt, padded cotton jacket, viet minh era">Áo Trấn Thủ (Chống Pháp)</option><option value="wearing to chau uniform, plain green fatigue, vietnam war era">Quân phục Tô Châu (Chống Mỹ)</option><option value="wearing K82 uniform, formal military tunic">Quân phục K82 (Bao cấp/Biên giới)</option><option value="wearing K94 uniform, modern formal suit">Quân phục K94/K03 (Hiện đại)</option><option value="wearing camouflage special force uniform">Đặc công (Rằn ri/Ngụy trang)</option></select>
-                             </div>
-                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Mũ & Nón (Chính xác)</label>
-                                <select id="hat-select" class="pro-input w-full py-2" data-key="hatSelect"><option value="">-- Không xử lý Mũ --</option><option value="wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star">Mũ Cối (Lính Bắc Việt) - Cứng & Tròn</option><option value="wear vietnamese soft cap, boonie hat, green fabric, red star badge">Mũ Tai Bèo (Mềm)</option><option value="wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star">Mũ Kepi (Sĩ quan - Sao nổi)</option><option value="wear vietnamese police kepi hat, green color, red band, gold badge">Mũ Kepi (Công an)</option><option value="wear vietnamese bamboo helmet, cloth covered">Mũ Nan (Bọc vải)</option></select>
-                             </div>
-                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase text-gray-500 font-bold ml-1">Cấp bậc / Quân hàm</label>
-                                <select id="rank-select" class="pro-input w-full py-2" data-key="rankSelect"><option value="">-- Tự động / Không chọn --</option><option value="no_rank_insignia">🚫 KHÔNG ĐEO HÀM (ÁO TRƠN)</option><optgroup label="Hạ sĩ quan / Chiến sĩ"><option value="plain red collar tabs, soldier rank">Chiến sĩ (Hàm trơn/Binh nhì-nhất)</option><option value="red collar tabs with one yellow stripe">Hạ sĩ (1 gạch)</option><option value="red collar tabs with two yellow stripes">Trung sĩ (2 gạch)</option><option value="red collar tabs with three yellow stripes">Thượng sĩ (3 gạch)</option></optgroup><optgroup label="Sĩ quan (Sao + Gạch)"><option value="red collar tabs with one star, officer rank">Thiếu úy (1 sao)</option><option value="red collar tabs with two stars, officer rank">Trung úy (2 sao)</option><option value="red collar tabs with three stars, officer rank">Thượng úy (3 sao)</option><option value="red collar tabs with four stars, officer rank">Đại úy (4 sao)</option></optgroup></select>
-                             </div>
                              <div class="grid grid-cols-2 gap-2 mt-2">
-                                <div class="flex items-center gap-2"><input id="check-sao-vang" type="checkbox" class="chk-pro chk-gold save-input"><label for="check-sao-vang" class="text-[11px] text-gray-300">Huân chương Sao Vàng</label></div>
-                                <div class="flex items-center gap-2"><input id="check-khang-chien" type="checkbox" class="chk-pro save-input"><label for="check-khang-chien" class="text-[11px] text-gray-300">HC Kháng Chiến</label></div>
-                                <div class="flex items-center gap-2"><input id="check-chien-si" type="checkbox" class="chk-pro save-input"><label for="check-chien-si" class="text-[11px] text-gray-300">Danh hiệu Chiến sĩ</label></div>
-                                <div class="flex items-center gap-2"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[11px] text-[#0A84FF]">Huy hiệu Đoàn</label></div>
+                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition">
+                                    <input id="check-pith-helmet" type="checkbox" class="chk-pro save-input">
+                                    <label for="check-pith-helmet" class="text-[11px] text-gray-300">Nón Cối (Pith Helmet)</label>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition">
+                                    <input id="check-kepi-hat" type="checkbox" class="chk-pro save-input">
+                                    <label for="check-kepi-hat" class="text-[11px] text-gray-300">Mũ Kepi (Cứng)</label>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition">
+                                    <input id="check-soft-cap" type="checkbox" class="chk-pro save-input">
+                                    <label for="check-soft-cap" class="text-[11px] text-gray-300">Mũ Tai Bèo/Mềm</label>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition">
+                                    <input id="check-bamboo-hat" type="checkbox" class="chk-pro save-input">
+                                    <label for="check-bamboo-hat" class="text-[11px] text-gray-300">Mũ Nan/Lá</label>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition">
+                                    <input id="check-gold-star" type="checkbox" class="chk-pro chk-gold save-input">
+                                    <label for="check-gold-star" class="text-[11px] text-[#FFD60A] font-bold">Sao Vàng (Mũ/Huy hiệu)</label>
+                                </div>
+                                <div class="flex items-center gap-2 p-2 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition">
+                                    <input id="check-badge" type="checkbox" class="chk-pro chk-red save-input">
+                                    <label for="check-badge" class="text-[11px] text-gray-300">Huy Hiệu/Huân Chương</label>
+                                </div>
+                             </div>
+                             
+                             <div class="pt-2 border-t border-white/5">
+                                <div class="flex items-center gap-2 p-2 rounded bg-[#0A84FF]/10 border border-[#0A84FF]/20">
+                                    <input id="check-uniform" type="checkbox" class="chk-pro save-input">
+                                    <label for="check-uniform" class="flex-1 cursor-pointer select-none">
+                                        <span class="block text-[11px] font-bold text-[#0A84FF]">QUÂN PHỤC / TRANG PHỤC NGÀNH</span>
+                                        <span class="block text-[9px] text-[#0A84FF]/60">Phục hồi chi tiết áo, cầu vai, cổ cồn</span>
+                                    </label>
+                                </div>
                              </div>
                         </div>
                     </div>
@@ -1569,7 +1583,7 @@
             };
 
             const toggleModule = (btnId, contentId, iconId) => { const btn = document.getElementById(btnId), content = document.getElementById(contentId), icon = document.getElementById(iconId); if(btn) btn.addEventListener('click', () => { if(content) content.classList.toggle('open'); if(icon && content) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); };
-            ['processing','subject','identity','prompt','logo','military','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
+            ['processing','subject','identity','prompt','logo','accessories','cinematic','exposure'].forEach(id => toggleModule(`toggle-${id}`, `content-${id}`, `icon-${id}`));
 
             const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
             if(toggleSidebarBtn) toggleSidebarBtn.onclick = openSidebar;
@@ -1660,6 +1674,15 @@
                     if (isIDPhoto) {
                         finalPrompt += ", (passport photo:1.5), (studio lighting:1.3), (neutral background:1.4), (look at camera), (high quality headshot)";
                     }
+
+                    // -- CHECKBOXES FOR ACCESSORIES (UPDATED) --
+                    if(document.getElementById('check-pith-helmet')?.checked) finalPrompt += ", (wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape:1.4)";
+                    if(document.getElementById('check-kepi-hat')?.checked) finalPrompt += ", (wear formal kepi hat, military officer hat:1.3)";
+                    if(document.getElementById('check-soft-cap')?.checked) finalPrompt += ", (wear soft cap, boonie hat, green fabric:1.3)";
+                    if(document.getElementById('check-bamboo-hat')?.checked) finalPrompt += ", (wear bamboo helmet, sun hat:1.3)";
+                    if(document.getElementById('check-gold-star')?.checked) finalPrompt += ", (red badge with yellow star:1.4), (gold star emblem:1.3)";
+                    if(document.getElementById('check-badge')?.checked) finalPrompt += ", (military medals on chest:1.3), (badges:1.2)";
+                    if(document.getElementById('check-uniform')?.checked) finalPrompt += ", (Vietnamese military uniform:1.3), (historic details)";
 
                     const workflowSelect = document.getElementById('kontext-workflow');
                     if (workflowSelect && workflowSelect.value === 'qwen_edit_pro') {
@@ -1817,38 +1840,32 @@
                         }
                         
                         if(result.isMilitary) { 
-                            const contentMilitary = document.getElementById('content-military');
-                            if(contentMilitary) contentMilitary.classList.add('open'); 
+                            // AUTO DETECT CHECKBOXES (New Logic)
+                            const contentAccessories = document.getElementById('content-accessories');
+                            if(contentAccessories) contentAccessories.classList.add('open');
                             autoReport.push("PHÁT HIỆN: QUÂN PHỤC");
+                            
+                            // Check Uniform
+                            setChecked('check-uniform', true);
 
-                            if(result.militaryUniformType === 'public_security') {
-                                document.getElementById('mil-branch').value = "vietnamese public security, green uniform, red collar tabs";
-                                autoReport.push("AUTO: CÔNG AN");
-                            } else if (result.militaryUniformType === 'navy') {
-                                document.getElementById('mil-branch').value = "vietnamese navy, navy blue uniform, white striped collar";
-                                autoReport.push("AUTO: HẢI QUÂN");
-                            } else if (result.militaryUniformType === 'army_ground') {
-                                document.getElementById('mil-branch').value = "vietnamese army ground force, red collar tabs";
-                                autoReport.push("AUTO: LỤC QUÂN");
-                            }
-
+                            // Check Hat Type
                             if(result.militaryHatType === 'pith_helmet') {
-                                document.getElementById('hat-select').value = "wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star";
-                                autoReport.push("AUTO: MŨ CỐI");
+                                setChecked('check-pith-helmet', true);
+                                autoReport.push("AUTO: NÓN CỐI");
                             } else if (result.militaryHatType === 'soft_cap') {
-                                document.getElementById('hat-select').value = "wear vietnamese soft cap, boonie hat, green fabric, red star badge";
+                                setChecked('check-soft-cap', true);
                                 autoReport.push("AUTO: MŨ TAI BÈO");
-                            } else if (result.militaryHatType === 'kepi_police') {
-                                document.getElementById('hat-select').value = "wear vietnamese police kepi hat, green color, red band, gold badge";
-                                autoReport.push("AUTO: MŨ KEPI CA");
-                            } else if (result.militaryHatType === 'kepi_officer') {
-                                document.getElementById('hat-select').value = "wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star";
-                                autoReport.push("AUTO: MŨ KEPI SQ");
+                            } else if (result.militaryHatType === 'kepi_police' || result.militaryHatType === 'kepi_officer') {
+                                setChecked('check-kepi-hat', true);
+                                autoReport.push("AUTO: MŨ KEPI");
+                            } else if (result.militaryHatType === 'bamboo_helmet') {
+                                setChecked('check-bamboo-hat', true);
+                                autoReport.push("AUTO: MŨ NAN");
                             }
 
-                            if(result.hasGoldStarMedal) { setChecked('check-sao-vang', true); autoReport.push("AUTO: SAO VÀNG"); }
-                            if(result.hasResistanceMedal) { setChecked('check-khang-chien', true); autoReport.push("AUTO: HC KHÁNG CHIẾN"); }
-                            if(result.hasYouthBadge) { setChecked('check-doan', true); autoReport.push("AUTO: HUY HIỆU ĐOÀN"); }
+                            // Check Badges/Stars
+                            if(result.hasGoldStarMedal) { setChecked('check-gold-star', true); autoReport.push("AUTO: SAO VÀNG"); }
+                            if(result.hasResistanceMedal || result.hasYouthBadge) { setChecked('check-badge', true); autoReport.push("AUTO: HUY HIỆU"); }
                         }
 
                         if(result.isGroupPhoto) {
