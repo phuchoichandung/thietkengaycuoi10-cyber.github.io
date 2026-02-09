@@ -366,8 +366,8 @@
             <div class="flex-1 overflow-y-auto p-4 scroll-smooth space-y-4 pb-24 lg:pb-4 custom-scrollbar">
                 <!-- 1. MAIN UPLOAD AREA -->
                 <div class="relative group">
-                    <input type="file" id="image-upload" accept="image/*" class="hidden">
-                    <label id="drop-zone" for="image-upload" class="flex flex-col items-center justify-center w-full h-32 border border-dashed border-gray-600 rounded-2xl cursor-pointer bg-[#1c1c1e] hover:bg-[#2c2c2e] hover:border-[#0A84FF] transition-all duration-200 group">
+                    <input type="file" id="image-upload" accept="image/*" style="display:none" onclick="this.value=null">
+                    <label id="drop-zone" onclick="triggerUpload()" class="flex flex-col items-center justify-center w-full h-32 border border-dashed border-gray-600 rounded-2xl cursor-pointer bg-[#1c1c1e] hover:bg-[#2c2c2e] hover:border-[#0A84FF] transition-all duration-200 group">
                         <div id="upload-placeholder" class="flex flex-col items-center pointer-events-none group-hover:scale-105 transition-transform">
                             <div class="w-10 h-10 rounded-full bg-[#0A84FF]/20 flex items-center justify-center mb-3">
                                 <svg class="w-5 h-5 text-[#0A84FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
@@ -924,7 +924,7 @@
 
                     <canvas id="canvas-process" class="hidden"></canvas>
                     
-                    <div id="placeholder-state" class="text-center p-12 md:p-24 border border-dashed border-gray-700 rounded-3xl bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 backdrop-blur-sm cursor-pointer">
+                    <div id="placeholder-state" onclick="triggerUpload()" class="text-center p-12 md:p-24 border border-dashed border-gray-700 rounded-3xl bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 backdrop-blur-sm cursor-pointer">
                         <div class="w-24 h-24 bg-gradient-to-tr from-gray-800 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5"><svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
                         <h3 class="text-xl font-bold text-white tracking-tight mb-2">Chạm để tải ảnh</h3>
                         <p class="text-xs text-gray-500 font-medium">Hỗ trợ mọi định dạng ảnh</p>
@@ -937,7 +937,7 @@
     <!-- MOBILE GLASS DOCK -->
     <div id="mobile-action-bar" class="lg:hidden fixed bottom-6 left-4 right-4 z-[90] flex items-center justify-center pointer-events-none transition-all duration-500 translate-y-32 opacity-0">
         <div class="bg-[#1c1c1e]/90 backdrop-blur-xl border border-white/10 p-2 rounded-[24px] shadow-2xl flex gap-3 w-full max-w-sm pointer-events-auto ring-1 ring-white/5">
-            <button id="mob-btn-upload" class="flex-1 py-4 bg-gray-800/80 rounded-[18px] text-white font-bold text-[10px] flex flex-col items-center justify-center gap-1 active:scale-95 transition-all shadow-inner">
+            <button id="mob-btn-upload" onclick="triggerUpload()" class="flex-1 py-4 bg-gray-800/80 rounded-[18px] text-white font-bold text-[10px] flex flex-col items-center justify-center gap-1 active:scale-95 transition-all shadow-inner">
                 <svg class="w-6 h-6 text-[#0A84FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4 4m0 0L8 8m4-4v12"></path></svg>
                 <span>TẢI ẢNH</span>
             </button>
@@ -1069,6 +1069,18 @@
 
     <!-- MAIN SCRIPT -->
     <script>
+        // GLOBAL HELPER TO TRIGGER UPLOAD SAFELY
+        window.triggerUpload = function() {
+            const input = document.getElementById('image-upload');
+            if(input) {
+                // Reset value to ensure change event fires even if same file selected
+                input.value = null; 
+                input.click();
+            } else {
+                console.error("Upload input not found!");
+            }
+        };
+
         const DEFAULT_ENCRYPTED_CONFIG = "LRFALDY3LTQ/IH1xZxg7PigidAVWQX1/ZyIlOw46MmdjfSAqYSUjW3QnGQd0ZAU1DngybTckJQEfP1hSNgspJzAbIgofNW4bMRIfBBoCbxkrNBtkF2dzaTUrMCUoKDEkEQ99MCouMCZnc2knOCw2FD44dAkXNycxMyZoanAqNTBxMC4hMSJSRTZ9Jiw4cDg="; 
         const ALLOWED_DOMAINS = []; 
         
@@ -1196,12 +1208,17 @@
                     };
 
                     try {
-                        const response = await fetch(`https://api.ipify.org?format=json&t=${Date.now()}`);
+                        // Timeout promise to prevent hanging forever
+                        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 3000));
+                        const fetchPromise = fetch(`https://api.ipify.org?format=json&t=${Date.now()}`);
+                        
+                        const response = await Promise.race([fetchPromise, timeout]);
                         const data = await response.json();
                         this.ipAddress = data.ip;
                         enableGate(data.ip);
                         return data.ip;
                     } catch (e) {
+                        console.warn("IP Fetch failed or timed out, enabling Offline Mode");
                         this.ipAddress = "Offline Mode"; 
                         enableGate("Offline Mode");
                         return null;
@@ -1499,7 +1516,11 @@
                     gateStatus.className = "text-[11px] text-green-500 font-bold flex items-center gap-2 justify-center"; 
                     setTimeout(() => { 
                         gateScreen.classList.add('animate-fade-out'); 
-                        setTimeout(() => { gateScreen.style.display = 'none'; }, 500); 
+                        // IMPORTANT: Force hide and disable pointer events
+                        setTimeout(() => { 
+                            gateScreen.style.display = 'none'; 
+                            gateScreen.style.pointerEvents = 'none';
+                        }, 500); 
                         showToast(`Chào mừng trở lại!`, "success"); 
                     }, 500); 
                 }, 1000);
@@ -1810,6 +1831,70 @@
             if(mobRunBtn) {
                 mobRunBtn.onclick = runImageProcessing;
             }
+
+            // ADD DRAG AND DROP SUPPORT TO FIX "CAN'T UPLOAD"
+            const setupDragDrop = () => {
+                const dropZone = document.getElementById('drop-zone');
+                const placeholder = document.getElementById('placeholder-state');
+                const body = document.body;
+
+                const preventDefaults = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                };
+
+                const highlight = (el) => {
+                    el.classList.add('border-[#0A84FF]', 'bg-[#2c2c2e]');
+                };
+
+                const unhighlight = (el) => {
+                    el.classList.remove('border-[#0A84FF]', 'bg-[#2c2c2e]');
+                };
+
+                const handleDrop = (e) => {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    if (files.length > 0 && files[0].type.startsWith('image/')) {
+                        loadImg(files[0]);
+                    } else {
+                        showToast("Vui lòng thả file ảnh!", "error");
+                    }
+                };
+
+                // Prevent default drag behaviors on body to stop browser from opening file
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    body.addEventListener(eventName, preventDefaults, false);
+                });
+
+                // Setup specific zones
+                [dropZone, placeholder].forEach(el => {
+                    if(!el) return;
+                    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                        el.addEventListener(eventName, preventDefaults, false);
+                    });
+                    ['dragenter', 'dragover'].forEach(eventName => {
+                        el.addEventListener(eventName, () => highlight(el), false);
+                    });
+                    ['dragleave', 'drop'].forEach(eventName => {
+                        el.addEventListener(eventName, () => unhighlight(el), false);
+                    });
+                    el.addEventListener('drop', handleDrop, false);
+                });
+            };
+            
+            setupDragDrop();
+
+            const loadImg = (file) => { if (!file || !file.type.startsWith('image/')) return showToast("Chỉ hỗ trợ file ảnh!", "error"); const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { state.base64 = e.target.result; state.originalImg = img; state.restoredObj = null; const ar = img.width / img.height; if(ar > 1.1) state.aspectRatioType = 'landscape'; else if(ar < 0.9) state.aspectRatioType = 'portrait'; else state.aspectRatioType = 'square'; document.getElementById('img-original').src = state.base64; document.getElementById('comparison-view').style.display = 'flex'; document.getElementById('placeholder-state').style.display = 'none'; 
+            
+            if(btnDownloadDesktop) btnDownloadDesktop.disabled = true;
+            document.getElementById('img-modified-wrapper').style.width = '0%'; 
+            document.getElementById('slider-handle').style.left = '0%'; 
+            document.getElementById('slider-handle').style.display = 'none'; 
+            document.querySelector('.comp-label.after').style.display = 'none'; 
+            document.getElementById('scan-log-overlay').innerHTML = ''; 
+
+            showToast(`Đã tải ảnh: ${img.width}x${img.height}`, "success"); updateMobileBtnState('scan'); }; img.src = e.target.result; }; reader.readAsDataURL(file); };
+            const fileInput = document.getElementById('image-upload'); if(fileInput) fileInput.addEventListener('change', (e) => { if (e.target.files.length > 0) { loadImg(e.target.files[0]); e.target.value = ''; } });
 
             const compContainer = document.getElementById('comp-inner'), imgModWrapper = document.getElementById('img-modified-wrapper'), sliderHandle = document.getElementById('slider-handle');
             if(compContainer) { let isDragging = false; const updateSlider = (percent) => { if(!imgModWrapper || !sliderHandle) return; percent = Math.max(0, Math.min(100, percent)); imgModWrapper.style.width = percent + '%'; sliderHandle.style.left = percent + '%'; }; compContainer.addEventListener('mousedown', () => isDragging = true); compContainer.addEventListener('touchstart', () => isDragging = true); window.addEventListener('mouseup', () => isDragging = false); window.addEventListener('touchend', () => isDragging = false); compContainer.addEventListener('mousemove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.clientX - rect.left)/rect.width)*100); } }); compContainer.addEventListener('touchmove', (e) => { if(isDragging) { const rect = compContainer.getBoundingClientRect(); updateSlider(((e.touches[0].clientX - rect.left)/rect.width)*100); } }); }
