@@ -244,17 +244,15 @@
         .passcode-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #fff; margin: 0 8px; }
         .passcode-dot.filled { background: #fff; }
 
-        /* Tag in HUD (For Process Status) */
+        /* Tag in HUD (For Process Status) - REDESIGNED FOR HUD */
         .scan-tag { 
             display: inline-flex; align-items: center; 
-            padding: 4px 10px; margin: 2px;
-            border-radius: 6px; 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2px 6px; margin: 0 2px;
             color: #fff; font-size: 9px; font-weight: 600; font-family: monospace;
             opacity: 0; animation: pop-in 0.3s forwards;
+            white-space: nowrap;
         }
-        .scan-tag.highlight { border-color: #0A84FF; color: #0A84FF; background: rgba(10, 132, 255, 0.1); }
+        .scan-tag.highlight { color: #FFD60A; text-shadow: 0 0 5px rgba(255, 214, 10, 0.5); }
 
         /* Sequential Log Text (Corner) - Appear then Disappear */
         .sequential-log-text {
@@ -323,9 +321,9 @@
                 </div>
             </div>
 
-            <!-- Action Button -->
+            <!-- Action Button - TEXT CHANGED HERE -->
             <button id="gate-submit" class="w-full py-4 bg-white text-black rounded-[20px] text-[15px] font-bold tracking-wide transition-all active:scale-95 shadow-lg shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 mb-8 animate-enter-up flex items-center justify-center gap-2" style="animation-delay: 0.2s;" disabled>
-                <span>VÀO PHÒNG LÀM VIỆC</span>
+                <span>VÀO PHỤC HỒI ẢNH</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
             
@@ -341,27 +339,22 @@
     <!-- SYSTEM NOTIFICATION AREA -->
     <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none w-auto max-w-sm items-end"></div>
     
-    <!-- NEW: MODERN HUD OVERLAY (Replaces Old Mac Window) -->
-    <div id="scan-window-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/60 backdrop-blur-md hidden transition-all duration-300">
-        <div class="relative p-1 rounded-2xl bg-gradient-to-b from-white/10 to-white/5 shadow-2xl animate-enter-up">
-            <div class="bg-[#0f0f11]/90 backdrop-blur-xl rounded-xl p-6 flex flex-col items-center min-w-[260px] border border-white/5 relative overflow-hidden">
-                <!-- Decorative BG glow -->
-                <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 animate-spin-slow pointer-events-none"></div>
-                
-                <!-- Advanced Spinner -->
-                <div class="relative mb-4">
-                    <div class="w-14 h-14 rounded-full border-2 border-white/10"></div>
-                    <div class="absolute top-0 left-0 w-14 h-14 rounded-full border-2 border-t-[#0A84FF] border-r-[#0A84FF] border-b-transparent border-l-transparent animate-spin"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                </div>
+    <!-- NEW: MODERN DYNAMIC ISLAND HUD (Replaces Old Window) -->
+    <!-- This is the "New Interface" to replace the ugly box. It's a sleek bar at the bottom. -->
+    <div id="scan-window-overlay" class="fixed bottom-24 lg:bottom-10 left-1/2 transform -translate-x-1/2 z-[100] flex flex-col items-center justify-center hidden transition-all duration-500">
+        <div class="pro-hud-container flex items-center gap-4 px-6 py-3 bg-[#1c1c1e]/90 backdrop-blur-2xl border border-white/10 rounded-full shadow-2xl shadow-blue-900/20 ring-1 ring-white/5">
+            <!-- Loader -->
+            <div class="relative w-5 h-5 flex-shrink-0">
+                <div class="absolute inset-0 border-2 border-white/20 rounded-full"></div>
+                <div class="absolute inset-0 border-2 border-t-[#0A84FF] rounded-full animate-spin"></div>
+            </div>
 
-                <h3 id="scan-title" class="text-xs font-bold text-white tracking-[0.2em] mb-3 uppercase relative z-10">AI PROCESSING</h3>
-                
-                <!-- Tag Container (Populated by JS - Settings) -->
-                <div id="scan-tags-container" class="flex flex-wrap justify-center gap-1.5 w-full relative z-10 max-w-[220px]">
-                    <!-- Settings tags will appear here -->
+            <!-- Text Info & Tags -->
+            <div class="flex items-center gap-3">
+                <span id="scan-title" class="text-[10px] font-bold text-[#0A84FF] tracking-widest uppercase animate-pulse flex-shrink-0">ĐANG XỬ LÝ...</span>
+                <div class="h-4 w-[1px] bg-white/10"></div>
+                <div id="scan-tags-container" class="flex items-center overflow-hidden max-w-[200px] gap-1 mask-linear-fade">
+                    <!-- Tags will be injected here as text spans -->
                 </div>
             </div>
         </div>
