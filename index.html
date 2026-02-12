@@ -6,7 +6,7 @@
     <title>PHỤC HỒI ẢNH - AI RESTORATION PRO (V36.60 + UI V41 UPGRADE)</title>
     
     <!-- FONTS: Apple Style Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- COPYRIGHT PROTECTION SCRIPT -->
@@ -220,7 +220,7 @@
             #sidebar { width: 100% !important; max-width: 100% !important; border-right: none; background: rgba(10, 10, 12, 0.85); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
         }
         
-        /* Image Comparison Frame - KEEP ORIGINAL */
+        /* Image Comparison Frame */
         .mobile-image-frame {
             border: 1px solid rgba(255, 255, 255, 0.15); 
             box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.7);
@@ -247,28 +247,16 @@
         .comp-label.before { right: 16px; } 
         .comp-label.after { left: 16px; } 
 
-        /* Button Styles ISO 2026 (Upgraded Soft Glassmorphism) */
+        /* Button Styles (CLEAN iOS STYLE) */
         .btn-iso-primary {
-            background: rgba(10, 132, 255, 0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: #0A84FF;
             color: #ffffff;
-            border-radius: 22px; 
-            font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px -5px rgba(10, 132, 255, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+            border-radius: 20px; 
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3);
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            position: relative;
-            overflow: hidden;
         }
-        .btn-iso-primary::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
-            pointer-events: none;
-        }
-        .btn-iso-primary:active { transform: scale(0.96); opacity: 0.9; box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3); }
+        .btn-iso-primary:active { transform: scale(0.96); opacity: 0.9; }
 
         .btn-iso-glass {
             background: rgba(255,255,255,0.06);
@@ -284,22 +272,11 @@
         .btn-iso-glass:hover { background: rgba(255,255,255,0.1); color: #fff; }
         .btn-iso-glass:active { transform: scale(0.96); background: rgba(255,255,255,0.08); }
 
-        /* Fluid Animation for Auto Scan */
-        .bg-fluid-gradient {
-            background-size: 200% 200%;
-            animation: fluidGradient 4s ease infinite;
-        }
-        @keyframes fluidGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         /* Security Gate iOS Style */
         .passcode-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #fff; margin: 0 8px; }
         .passcode-dot.filled { background: #fff; }
 
-        /* Tag in HUD (For Process Status) - REDESIGNED FOR HUD */
+        /* Tag in HUD */
         .scan-tag { 
             display: inline-flex; align-items: center; 
             padding: 2px 6px; margin: 0 2px;
@@ -309,7 +286,7 @@
         }
         .scan-tag.highlight { color: #FFD60A; text-shadow: 0 0 5px rgba(255, 214, 10, 0.5); }
 
-        /* Sequential Log Text (Corner) - Appear then Disappear */
+        /* Sequential Log Text (Corner) */
         .sequential-log-text {
             display: block;
             font-family: 'JetBrains Mono', monospace;
@@ -337,8 +314,6 @@
             -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
         }
 
-        /* --- ADDED FROM INDEX2: V41 UI UPGRADES --- */
-        
         /* Grid Background Effect */
         .cyber-grid-bg {
             background-image: 
@@ -350,7 +325,7 @@
             animation: gridMove 20s linear infinite;
         }
 
-        /* Modern HUD Loader (Ring) - ĐÃ SỬA LỖI ĐƠ KHÔNG XOAY */
+        /* Modern HUD Loader (Ring) */
         @keyframes spinRing {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -410,11 +385,11 @@
 
 <body class="font-sans flex overflow-hidden select-none relative" oncontextmenu="return false;">
     
-    <!-- BACKGROUND: Simple Deep Dark + CYBER GRID (ADDED) -->
+    <!-- BACKGROUND: Simple Deep Dark + CYBER GRID -->
     <div class="fixed inset-0 bg-black z-0">
         <div class="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] bg-blue-900/10 rounded-full blur-[120px]"></div>
         <div class="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] bg-purple-900/10 rounded-full blur-[120px]"></div>
-        <!-- New Subtle Grid for High Tech feel -->
+        <!-- Subtle Grid for High Tech feel -->
         <div class="absolute inset-0 cyber-grid-bg opacity-20 pointer-events-none"></div>
     </div>
 
@@ -434,9 +409,10 @@
             <div class="mb-10 flex flex-col items-center animate-enter-up">
                 <div class="w-20 h-20 rounded-[28px] bg-gradient-to-br from-[#1c1c1e] to-[#2c2c2e] border border-white/10 flex items-center justify-center shadow-2xl shadow-purple-900/20 mb-6 relative group">
                     <div class="absolute inset-0 rounded-[28px] bg-white/5 blur-lg opacity-50"></div>
-                    <svg class="w-8 h-8 text-white/90 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                    <svg class="w-8 h-8 text-white/90 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1.586-1.586a2 2 0 00-2.828 0L6 18H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4l-3 3m0 0l-3-3m3 3V4"></path></svg>
                 </div>
-                <h1 class="text-3xl font-bold text-white tracking-tight text-center">PHỤC HỒI ẢNH</h1>
+                <!-- SỬA LỖI: MẤT DẤU / CHỮ TRẮNG -->
+                <h1 class="text-3xl md:text-4xl font-bold text-white tracking-wide text-center drop-shadow-lg">PHỤC HỒI ẢNH</h1>
                 <p class="text-sm text-gray-400 mt-2 font-medium tracking-wide text-center">AI Professional System</p>
             </div>
 
@@ -471,7 +447,7 @@
     <!-- SYSTEM NOTIFICATION AREA -->
     <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none w-auto max-w-sm items-end"></div>
     
-    <!-- NEW: UPGRADED CYBER HUD LOADING OVERLAY (Replaces Old Bar from Index 1) -->
+    <!-- HUD LOADING OVERLAY -->
     <div id="scan-window-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center hidden bg-black/40 backdrop-blur-sm transition-all duration-500">
         <!-- New Central HUD -->
         <div class="relative w-[80vw] max-w-[300px] bg-[#1c1c1e]/90 backdrop-blur-2xl border border-white/10 rounded-[32px] p-6 shadow-2xl shadow-blue-500/20 ring-1 ring-white/5 flex flex-col items-center animate-enter-up">
@@ -506,7 +482,8 @@
             <!-- Sidebar Header -->
             <div class="h-14 px-5 flex items-center justify-between border-b border-white/10 bg-white/[0.02]">
                 <div class="flex flex-col justify-center">
-                    <h1 class="text-[14px] font-bold tracking-tight text-white uppercase drop-shadow-md">PHỤC HỒI ẢNH</h1>
+                    <!-- SỬA LỖI: CHỮ TRẮNG -->
+                    <h1 class="text-[16px] font-bold tracking-wide text-white uppercase drop-shadow-sm">PHỤC HỒI ẢNH</h1>
                     <div class="flex items-center gap-2 mt-0.5 opacity-80">
                         <span id="sidebar-ip-display" class="text-[9px] font-mono text-[#0A84FF] font-bold tracking-tight">IP: LOADING...</span>
                         <span class="text-[9px] text-gray-600">|</span>
@@ -516,7 +493,7 @@
                 
                 <div class="flex items-center gap-3">
                     <div class="flex flex-col items-end mr-1 px-3 py-1.5 rounded-[10px] bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-all shadow-sm" id="credit-display">
-                        <span class="text-[8px] text-gray-400 font-bold uppercase tracking-wider">RH COINS</span>
+                        <span class="text-[8px] text-gray-400 font-bold uppercase tracking-wider">SỐ LƯỢNG CÒN LẠI</span>
                         <span class="text-[14px] font-mono font-bold text-[#FFD60A] drop-shadow-sm leading-none mt-0.5" id="credit-count">---</span>
                     </div>
                     <button id="close-sidebar-mobile" class="lg:hidden p-2 rounded-full bg-[#2c2c2e] text-white hover:bg-[#3c3c3e] transition-colors">
@@ -539,11 +516,10 @@
                     </label>
                 </div>
 
-                <!-- 2. AUTO-PILOT BUTTON (iOS 2026 Fluid Style) -->
-                <button id="btn-auto-pilot" class="w-full py-4 relative isolate overflow-hidden rounded-[22px] flex items-center justify-center gap-2 transition-all active:scale-[0.96] mb-3 border border-white/20 shadow-[0_10px_30px_-5px_rgba(10,132,255,0.4),inset_0_1.5px_2px_rgba(255,255,255,0.4)] group">
-                    <div class="absolute inset-0 bg-gradient-to-r from-[#0A84FF]/80 via-[#BF5AF2]/80 to-[#0A84FF]/80 bg-fluid-gradient backdrop-blur-3xl z-0"></div>
-                    <svg class="w-4 h-4 text-white z-20 animate-pulse group-hover:rotate-180 transition-transform duration-500 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span class="text-[13px] font-bold text-white tracking-widest z-20 drop-shadow-md">AUTO SCAN V36.50</span>
+                <!-- 2. AUTO-PILOT BUTTON (Clean iOS Style) -->
+                <button id="btn-auto-pilot" class="w-full py-3.5 rounded-[20px] flex items-center justify-center gap-2 transition-all active:scale-[0.96] mb-3 bg-[#1c1c1e] hover:bg-[#2c2c2e] border border-white/10 shadow-sm group">
+                    <svg class="w-4 h-4 text-[#0A84FF] group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span class="text-[13px] font-semibold text-[#0A84FF] tracking-wider">AUTO SCAN V36.50</span>
                 </button>
 
                 <!-- MODULES (EXISTING V36 MODULES) -->
@@ -552,12 +528,12 @@
                     <div class="p-4 border-b border-white/5 bg-[#2c2c2e]/40 backdrop-blur-md">
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col">
-                                <span class="text-[12.5px] font-bold text-[#BF5AF2] tracking-wide drop-shadow-sm">🚀 ENGINE XỬ LÝ</span>
+                                <span class="text-[12.5px] font-bold text-white tracking-wide drop-shadow-sm">🚀 ENGINE XỬ LÝ</span>
                                 <span class="text-[10px] text-gray-400 font-medium mt-0.5">Core: Qwen-VL, Kontext, SUPIR, InvSR</span>
                             </div>
                              <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="mode-flux" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-black/40 border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#BF5AF2] shadow-inner"></div>
+                                <div class="w-11 h-6 bg-black/40 border border-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                             </label>
                         </div>
                         <div id="workflow-container">
@@ -586,12 +562,13 @@
                 <div class="module-group">
                     <div class="p-4 flex items-center justify-between">
                          <div class="flex flex-col">
-                            <span class="text-[12.5px] font-bold text-[#FFD60A] tracking-wide drop-shadow-sm">💎 SAO Y GỐC</span>
+                            <!-- CHỮ TRẮNG -->
+                            <span class="text-[12.5px] font-bold text-white tracking-wide drop-shadow-sm">💎 SAO Y GỐC</span>
                             <span class="text-[10px] text-gray-400 font-medium mt-0.5">KHÓA GÓC MẶT - CHỐNG LẬT HÌNH</span>
                         </div>
                          <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="mode-replica" class="sr-only peer">
-                            <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#FFD60A] shadow-inner"></div>
+                            <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                         </label>
                     </div>
                 </div>
@@ -600,7 +577,8 @@
                 <div class="module-group" id="module-military">
                     <button id="toggle-military" class="module-header w-full">
                         <div class="flex items-center gap-2">
-                            <span class="text-[12px] font-bold text-[#FFD60A] tracking-wider uppercase drop-shadow-sm">🇻🇳 QUÂN SỬ (PRO)</span>
+                            <!-- CHỮ TRẮNG, BỎ CỜ VN -->
+                            <span class="text-[12px] font-bold text-white tracking-wider uppercase drop-shadow-sm">QUÂN SỬ (PRO)</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-400 transition-transform" id="icon-military" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
@@ -625,29 +603,29 @@
                              
                              <!-- PRO UPGRADE: SUPER DETAIL -->
                              <div class="space-y-2 mt-4 pt-3 border-t border-white/5">
-                                 <label class="text-[10.5px] font-bold text-[#FFD60A] uppercase tracking-widest block drop-shadow-sm">⭐ CHUYÊN SÂU</label>
+                                 <label class="text-[10.5px] font-bold text-white uppercase tracking-widest block drop-shadow-sm">⭐ CHUYÊN SÂU</label>
                                  <div class="grid grid-cols-2 gap-3">
-                                     <div class="flex items-center gap-2.5"><input id="check-metal-shader" type="checkbox" class="chk-pro chk-gold save-input"><label for="check-metal-shader" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Kim loại (Huy hiệu)</label></div>
+                                     <div class="flex items-center gap-2.5"><input id="check-metal-shader" type="checkbox" class="chk-pro save-input"><label for="check-metal-shader" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Kim loại (Huy hiệu)</label></div>
                                      <div class="flex items-center gap-2.5"><input id="check-fabric-detail" type="checkbox" class="chk-pro save-input"><label for="check-fabric-detail" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Chất vải (Tô Châu)</label></div>
                                  </div>
                              </div>
 
                              <div class="grid grid-cols-2 gap-3 mt-3">
-                                <div class="flex items-center gap-2.5"><input id="check-sao-vang" type="checkbox" class="chk-pro chk-gold save-input"><label for="check-sao-vang" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">HC Sao Vàng</label></div>
+                                <div class="flex items-center gap-2.5"><input id="check-sao-vang" type="checkbox" class="chk-pro save-input"><label for="check-sao-vang" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">HC Sao Vàng</label></div>
                                 <div class="flex items-center gap-2.5"><input id="check-khang-chien" type="checkbox" class="chk-pro save-input"><label for="check-khang-chien" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">HC Kháng Chiến</label></div>
                                 <div class="flex items-center gap-2.5"><input id="check-chien-si" type="checkbox" class="chk-pro save-input"><label for="check-chien-si" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Chiến sĩ</label></div>
-                                <div class="flex items-center gap-2.5"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[11.5px] font-bold text-[#0A84FF] cursor-pointer">Huy hiệu Đoàn</label></div>
+                                <div class="flex items-center gap-2.5"><input id="check-doan" type="checkbox" class="chk-pro save-input"><label for="check-doan" class="text-[11.5px] font-bold text-gray-200 cursor-pointer">Huy hiệu Đoàn</label></div>
                              </div>
-                             <div class="flex items-center gap-3 p-3 rounded-xl border border-yellow-500/10 bg-yellow-500/5 mt-3 transition-colors hover:bg-yellow-500/10">
+                             <div class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-black/20 mt-3 transition-colors hover:bg-black/40">
                                 <input id="check-insignia-boost" type="checkbox" class="chk-pro save-input">
                                 <label for="check-insignia-boost" class="cursor-pointer select-none flex-1">
-                                    <span class="block text-[11px] font-bold text-yellow-500 drop-shadow-sm mb-0.5">NÉT QUÂN HÀM/LOGO</span>
+                                    <span class="block text-[11px] font-bold text-gray-200 drop-shadow-sm mb-0.5">NÉT QUÂN HÀM/LOGO</span>
                                 </label>
                             </div>
-                             <div class="flex items-center gap-3 p-3 rounded-xl border border-red-500/10 bg-red-500/5 mt-2 transition-colors hover:bg-red-500/10">
+                             <div class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-black/20 mt-2 transition-colors hover:bg-black/40">
                                 <input id="block-rank" type="checkbox" class="chk-pro chk-red save-input">
                                 <label for="block-rank" class="cursor-pointer select-none flex-1">
-                                    <span class="block text-[11px] font-bold text-red-400 drop-shadow-sm mb-0.5">CHẶN VẼ QUÂN HÀM</span>
+                                    <span class="block text-[11px] font-bold text-gray-200 drop-shadow-sm mb-0.5">CHẶN VẼ QUÂN HÀM</span>
                                 </label>
                             </div>
                         </div>
@@ -658,7 +636,8 @@
                 <div class="module-group" id="module-cinematic">
                     <button id="toggle-cinematic" class="module-header w-full">
                         <div class="flex items-center gap-2">
-                            <span class="text-[12px] font-bold text-[#FF453A] tracking-wider uppercase drop-shadow-sm">🎞️ MÀU PHIM & SÁNG</span>
+                            <!-- CHỮ TRẮNG -->
+                            <span class="text-[12px] font-bold text-white tracking-wider uppercase drop-shadow-sm">🎞️ MÀU PHIM & SÁNG</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-400 transition-transform" id="icon-cinematic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
@@ -699,19 +678,20 @@
                 <div class="module-group" id="module-exposure">
                     <button id="toggle-exposure" class="module-header w-full">
                          <div class="flex items-center gap-2">
-                            <span class="text-[12px] font-bold text-[#64D2FF] tracking-wider uppercase drop-shadow-sm">☀️ XỬ LÝ CHÁY SÁNG</span>
+                            <!-- CHỮ TRẮNG -->
+                            <span class="text-[12px] font-bold text-white tracking-wider uppercase drop-shadow-sm">☀️ XỬ LÝ CHÁY SÁNG</span>
                         </div>
                         <svg class="w-4 h-4 text-gray-400 transition-transform" id="icon-exposure" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="content-exposure" class="module-content">
                         <div class="module-inner space-y-4">
-                             <div class="flex items-center justify-between p-3 rounded-xl bg-[#0A84FF]/5 border border-[#0A84FF]/10 transition-colors hover:bg-[#0A84FF]/10">
+                             <div class="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/10 transition-colors hover:bg-black/40">
                                 <div class="flex flex-col">
-                                    <span class="text-[11.5px] font-bold text-[#64D2FF] mb-0.5">BẬT QWEN EDIT</span>
+                                    <span class="text-[11.5px] font-bold text-white mb-0.5">BẬT QWEN EDIT</span>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="check-qwen-exposure" class="sr-only peer save-input">
-                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#64D2FF] shadow-inner"></div>
+                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                 </label>
                             </div>
                             <div class="space-y-3 pl-3 border-l-[1.5px] border-white/5 ml-1.5">
@@ -724,9 +704,9 @@
                                     <label for="check-soft-light" class="text-[11.5px] font-medium text-gray-300 cursor-pointer">Ánh sáng mềm</label>
                                 </div>
                             </div>
-                            <!-- ADDED FROM INDEX1: EXPOSURE STRENGTH SLIDER -->
+                            <!-- EXPOSURE STRENGTH SLIDER -->
                             <div class="border border-white/5 rounded-xl bg-black/20 p-3 shadow-inner">
-                                <div class="flex justify-between text-[11px] text-[#64D2FF] font-bold mb-3 tracking-wide">
+                                <div class="flex justify-between text-[11px] text-gray-300 font-bold mb-3 tracking-wide">
                                     <span>CƯỜNG ĐỘ</span>
                                     <span id="exposure-val" class="text-white bg-black/30 px-2 py-0.5 rounded-md border border-white/5">1.0</span>
                                 </div>
@@ -746,8 +726,8 @@
                     </button>
                     <div id="content-processing" class="module-content">
                         <div class="module-inner space-y-4">
-                             <div class="p-4 bg-[#BF5AF2]/5 rounded-xl border border-[#BF5AF2]/10 transition-colors hover:bg-[#BF5AF2]/10">
-                                <div class="flex justify-between text-[11px] text-[#BF5AF2] font-bold mb-3 tracking-wide">
+                             <div class="p-4 bg-black/20 rounded-xl border border-white/5 transition-colors hover:bg-black/30">
+                                <div class="flex justify-between text-[11px] text-white font-bold mb-3 tracking-wide">
                                     <span>BÁM GỐC</span>
                                     <span>SÁNG TẠO</span>
                                 </div>
@@ -757,9 +737,9 @@
 
                              <div class="grid grid-cols-2 gap-3">
                                  <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-black/20 border border-white/5 hover:bg-black/40 transition-colors"><input id="check-dehaze" type="checkbox" class="chk-pro save-input"><label for="check-dehaze" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Khử sương mù</label></div>
-                                 <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-black/20 border border-white/5 hover:bg-black/40 transition-colors"><input id="check-contrast-fix" type="checkbox" class="chk-pro save-input"><label for="check-contrast-fix" class="text-[11.5px] font-bold text-[#BF5AF2] cursor-pointer">Contrast</label></div>
+                                 <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-black/20 border border-white/5 hover:bg-black/40 transition-colors"><input id="check-contrast-fix" type="checkbox" class="chk-pro save-input"><label for="check-contrast-fix" class="text-[11.5px] font-bold text-gray-200 cursor-pointer">Contrast</label></div>
                                  <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-black/20 border border-white/5 hover:bg-black/40 transition-colors"><input id="check-uniform-skin" type="checkbox" class="chk-pro save-input" checked><label for="check-uniform-skin" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Đều màu da</label></div>
-                                 <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-black/20 border border-white/5 hover:bg-black/40 transition-colors"><input id="check-vibrant" type="checkbox" class="chk-pro save-input" checked><label for="check-vibrant" class="text-[11.5px] font-bold text-[#BF5AF2] cursor-pointer">LZP COLOR</label></div>
+                                 <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-black/20 border border-white/5 hover:bg-black/40 transition-colors"><input id="check-vibrant" type="checkbox" class="chk-pro save-input" checked><label for="check-vibrant" class="text-[11.5px] font-bold text-gray-200 cursor-pointer">LZP COLOR</label></div>
                              </div>
                              
                              <div class="space-y-1.5 mt-2">
@@ -782,13 +762,13 @@
                                         <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                     </label>
                                  </div>
-                                 <div class="flex items-center justify-between p-3 rounded-xl bg-[#30D158]/5 border border-[#30D158]/10 transition-colors hover:bg-[#30D158]/10">
+                                 <div class="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/10 transition-colors hover:bg-black/30">
                                     <div class="flex flex-col">
-                                        <span class="text-[11.5px] font-bold text-[#30D158] mb-0.5">Nét nền/hoa lá</span>
+                                        <span class="text-[11.5px] font-bold text-white mb-0.5">Nét nền/hoa lá</span>
                                     </div>
                                     <label class="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" id="check-background" class="sr-only peer save-input" checked>
-                                        <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#30D158] shadow-inner"></div>
+                                        <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                     </label>
                                  </div>
                                  <div class="flex items-center justify-between">
@@ -802,33 +782,33 @@
                                     <span class="text-[12px] font-medium text-gray-200">Tăng chi tiết vải/da</span>
                                     <label class="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" id="check-texture-boost" class="sr-only peer save-input" checked>
-                                        <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#FFD60A] shadow-inner"></div>
+                                        <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                     </label>
                                  </div>
                              </div>
 
                              <!-- V35.25 ADVANCED BLOCK (ADDED) -->
                              <div class="mt-4 pt-3 border-t border-white/5 space-y-3">
-                                <label class="text-[10.5px] font-bold text-blue-400 uppercase tracking-widest mb-1.5 block drop-shadow-sm">🚀 NÂNG CAO (PRO)</label>
+                                <label class="text-[10.5px] font-bold text-white uppercase tracking-widest mb-1.5 block drop-shadow-sm">🚀 NÂNG CAO (PRO)</label>
                                 
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-blue-500/5 border border-blue-500/10 transition-colors hover:bg-blue-500/10">
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-black/20 border border-white/10 transition-colors hover:bg-black/30">
                                     <input id="check-group-mode" type="checkbox" class="chk-pro save-input">
                                     <label for="check-group-mode" class="flex-1 cursor-pointer select-none">
-                                        <span class="block text-[11px] font-bold text-blue-300 drop-shadow-sm mb-0.5">ẢNH ĐÁM ĐÔNG</span>
+                                        <span class="block text-[11px] font-bold text-gray-200 drop-shadow-sm mb-0.5">ẢNH ĐÁM ĐÔNG</span>
                                     </label>
                                 </div>
 
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-orange-500/5 border border-orange-500/10 transition-colors hover:bg-orange-500/10" id="container-blur-prepass">
-                                    <input id="check-blur-prepass" type="checkbox" class="chk-pro chk-real save-input">
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-black/20 border border-white/10 transition-colors hover:bg-black/30" id="container-blur-prepass">
+                                    <input id="check-blur-prepass" type="checkbox" class="chk-pro save-input">
                                     <label for="check-blur-prepass" class="flex-1 cursor-pointer select-none">
-                                        <span class="block text-[11px] font-bold text-orange-400 drop-shadow-sm mb-0.5">KHỬ NHIỄU SÂU</span>
+                                        <span class="block text-[11px] font-bold text-gray-200 drop-shadow-sm mb-0.5">KHỬ NHIỄU SÂU</span>
                                     </label>
                                 </div>
 
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-red-500/5 border border-red-500/10 transition-colors hover:bg-red-500/10">
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-black/20 border border-white/10 transition-colors hover:bg-black/30">
                                     <input id="check-extreme-mode" type="checkbox" class="chk-pro chk-red save-input">
                                     <label for="check-extreme-mode" class="flex-1 cursor-pointer select-none">
-                                        <span class="block text-[11px] font-bold text-red-400 drop-shadow-sm mb-0.5">⚡ CƯỠNG ÉP PHỤC HỒI</span>
+                                        <span class="block text-[11px] font-bold text-gray-200 drop-shadow-sm mb-0.5">⚡ CƯỠNG ÉP PHỤC HỒI</span>
                                     </label>
                                 </div>
                             </div>
@@ -861,22 +841,22 @@
                                 </select>
                             </div>
                             <div class="space-y-3.5">
-                                <div class="flex items-center justify-between p-3 rounded-xl bg-[#0A84FF]/5 border border-[#0A84FF]/10 transition-colors hover:bg-[#0A84FF]/10">
+                                <div class="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/10 transition-colors hover:bg-black/30">
                                     <div class="flex flex-col">
-                                        <span class="text-[11.5px] font-bold text-[#0A84FF] mb-0.5">ẢNH THẺ</span>
+                                        <span class="text-[11.5px] font-bold text-white mb-0.5">ẢNH THẺ</span>
                                     </div>
                                     <label class="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" id="check-id-photo" class="sr-only peer save-input">
                                         <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                     </label>
                                 </div>
-                                <div class="flex items-center justify-between p-3 rounded-xl bg-[#FFD60A]/5 border border-[#FFD60A]/10 transition-colors hover:bg-[#FFD60A]/10">
+                                <div class="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/10 transition-colors hover:bg-black/30">
                                     <div class="flex flex-col">
-                                        <span class="text-[11.5px] font-bold text-[#FFD60A] mb-0.5">ẢNH THỜ</span>
+                                        <span class="text-[11.5px] font-bold text-white mb-0.5">ẢNH THỜ</span>
                                     </div>
                                     <label class="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" id="check-altar-mode" class="sr-only peer save-input">
-                                        <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#FFD60A] shadow-inner"></div>
+                                        <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                     </label>
                                 </div>
                                 <div class="space-y-1.5 pt-1">
@@ -916,13 +896,13 @@
                                 </div>
                                 <input type="range" id="identity-weight-slider" min="100" max="400" step="10" value="300" class="w-full slider-red save-input" data-key="identityWeight">
                             </div>
-                            <div class="flex items-center justify-between p-3 mb-3 bg-[#FF453A]/5 border border-[#FF453A]/10 rounded-xl transition-colors hover:bg-[#FF453A]/10">
+                            <div class="flex items-center justify-between p-3 mb-3 bg-black/20 border border-white/10 rounded-xl transition-colors hover:bg-black/40">
                                 <div class="flex flex-col">
-                                    <span class="text-[11.5px] font-bold text-[#FF453A] mb-0.5">🚫 CHỐNG LẬT MẶT</span>
+                                    <span class="text-[11.5px] font-bold text-white mb-0.5">🚫 CHỐNG LẬT MẶT</span>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="check-anti-flip" class="sr-only peer save-input" checked>
-                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#FF453A] shadow-inner"></div>
+                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                 </label>
                             </div>
                              <div class="mb-3 p-3 border border-[#BF5AF2]/20 bg-[#BF5AF2]/5 rounded-xl hidden" id="structure-container">
@@ -938,13 +918,13 @@
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="check-asian-identity" data-key="checkAsianIdentity" class="sr-only peer save-input" checked>
-                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-gray-400 shadow-inner"></div>
+                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                 </label>
                             </div>
-                            <div class="flex items-center gap-3 p-3 rounded-xl border border-purple-500/10 bg-purple-500/5 mb-3 transition-colors hover:bg-purple-500/10">
+                            <div class="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-black/20 mb-3 transition-colors hover:bg-black/40">
                                 <input id="check-dual-controlnet" type="checkbox" class="chk-pro save-input">
                                 <label for="check-dual-controlnet" class="flex-1 cursor-pointer select-none">
-                                    <span class="block text-[11px] font-bold text-purple-300 drop-shadow-sm mb-0.5">KHÓA CẤU TRÚC KÉP</span>
+                                    <span class="block text-[11px] font-bold text-gray-200 drop-shadow-sm mb-0.5">KHÓA CẤU TRÚC KÉP</span>
                                 </label>
                             </div>
                             <div class="grid grid-cols-2 gap-3 border-t border-white/5 pt-3 mb-3">
@@ -954,15 +934,15 @@
                                 <div class="flex items-center gap-2.5" id="container-imperfection"><input id="lock-imperfection" type="checkbox" class="chk-pro chk-gold save-input" data-key="lockImperfection"><label for="lock-imperfection" class="text-[11px] text-yellow-500 font-bold drop-shadow-sm cursor-pointer">Khuyết Điểm</label></div>
                             </div>
                             
-                            <div class="mt-3 border-t border-[#FF453A]/20 pt-3">
-                                <label class="text-[10.5px] uppercase text-[#FF453A] font-bold tracking-widest mb-2.5 block drop-shadow-sm">🛡️ BẢO TỒN ĐẶC ĐIỂM</label>
+                            <div class="mt-3 border-t border-white/10 pt-3">
+                                <label class="text-[10.5px] uppercase text-white font-bold tracking-widest mb-2.5 block drop-shadow-sm">🛡️ BẢO TỒN ĐẶC ĐIỂM</label>
                                 <div class="grid grid-cols-2 gap-3">
-                                    <div class="flex items-center gap-2.5"><input id="check-cross-eyed" type="checkbox" class="chk-pro chk-red save-input"><label for="check-cross-eyed" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Lé</label></div>
-                                    <div class="flex items-center gap-2.5"><input id="check-ptosis" type="checkbox" class="chk-pro chk-red save-input"><label for="check-ptosis" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Sụp Mí</label></div>
-                                    <div class="flex items-center gap-2.5"><input id="check-closed-eyes" type="checkbox" class="chk-pro chk-red save-input"><label for="check-closed-eyes" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Nhắm</label></div>
-                                    <div class="flex items-center gap-2.5"><input id="check-monolid" type="checkbox" class="chk-pro chk-red save-input"><label for="check-monolid" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Một Mí</label></div>
-                                    <div class="flex items-center gap-2.5"><input id="check-buck-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-buck-teeth" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Răng Hô</label></div>
-                                    <div class="flex items-center gap-2.5"><input id="check-black-teeth" type="checkbox" class="chk-pro chk-red save-input"><label for="check-black-teeth" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Răng Đen</label></div>
+                                    <div class="flex items-center gap-2.5"><input id="check-cross-eyed" type="checkbox" class="chk-pro save-input"><label for="check-cross-eyed" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Lé</label></div>
+                                    <div class="flex items-center gap-2.5"><input id="check-ptosis" type="checkbox" class="chk-pro save-input"><label for="check-ptosis" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Sụp Mí</label></div>
+                                    <div class="flex items-center gap-2.5"><input id="check-closed-eyes" type="checkbox" class="chk-pro save-input"><label for="check-closed-eyes" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Nhắm</label></div>
+                                    <div class="flex items-center gap-2.5"><input id="check-monolid" type="checkbox" class="chk-pro save-input"><label for="check-monolid" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Mắt Một Mí</label></div>
+                                    <div class="flex items-center gap-2.5"><input id="check-buck-teeth" type="checkbox" class="chk-pro save-input"><label for="check-buck-teeth" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Răng Hô</label></div>
+                                    <div class="flex items-center gap-2.5"><input id="check-black-teeth" type="checkbox" class="chk-pro save-input"><label for="check-black-teeth" class="text-[11.5px] font-medium text-gray-200 cursor-pointer">Răng Đen</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1001,7 +981,7 @@
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="check-logo" class="sr-only peer save-input">
-                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#FFD60A] shadow-inner"></div>
+                                    <div class="w-10 h-[22px] bg-black/40 border border-white/10 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[16px] after:w-[16px] after:transition-all peer-checked:bg-[#0A84FF] shadow-inner"></div>
                                 </label>
                             </div>
                             <input type="text" id="custom-logo-text" class="pro-input w-full py-3 bg-black/30 text-center font-bold text-yellow-400 placeholder-gray-600 shadow-inner mb-1 tracking-wider" placeholder="Nhập tên hoặc SĐT của bạn...">
@@ -1030,9 +1010,9 @@
 
             <!-- Footer Actions -->
             <div class="p-4 bg-[rgba(20,20,22,0.85)] backdrop-blur-2xl border-t border-white/10 z-20 space-y-3">
-                <button id="process-image" class="w-full py-4 btn-iso-primary text-[13.5px] flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed drop-shadow-md">
-                    <svg class="w-4 h-4 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span class="drop-shadow-md tracking-wider">TẠO ẢNH (FLUX/QWEN)</span>
+                <button id="process-image" class="w-full py-4 btn-iso-primary text-[13.5px] flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span class="tracking-wider">TẠO ẢNH (FLUX/QWEN)</span>
                 </button>
                 <button id="reset-button" class="w-full py-3 btn-iso-glass text-[11.5px] tracking-wider text-gray-300 hover:text-white flex justify-center items-center gap-1.5">
                     LÀM MỚI TẤT CẢ
@@ -1046,7 +1026,8 @@
             <div class="lg:hidden h-14 glass-panel border-b border-white/5 flex items-center px-4 justify-between z-30 relative w-full">
                 <button id="toggle-sidebar-btn" class="text-gray-400 p-2 rounded-lg active:bg-white/10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
                 <div class="flex flex-col items-center">
-                     <span class="font-bold text-white text-[14px] tracking-tight">PHỤC HỒI ẢNH</span>
+                     <!-- SỬA LỖI: CHỮ TRẮNG -->
+                     <span class="font-bold text-white text-[15px] tracking-wide drop-shadow-md">PHỤC HỒI ẢNH</span>
                      <div class="flex items-center gap-2 opacity-60">
                         <span class="text-[9px] font-mono">V36.60 PRO</span>
                         <span class="text-[9px]">•</span>
@@ -1093,9 +1074,9 @@
 
                     <!-- NÚT LƯU ẢNH TRÊN MÁY TÍNH (ĐẶT DƯỚI ẢNH - CHỈ HIỆN KHI XONG, ẨN TRÊN MOBILE) -->
                     <div class="w-full flex justify-center mt-6">
-                        <button id="desktop-btn-download" class="hidden bg-[#BF5AF2]/90 backdrop-blur-xl hover:bg-[#a845d8] text-white px-8 py-3.5 rounded-[22px] font-bold shadow-[0_10px_30px_-5px_rgba(191,90,242,0.5),inset_0_1.5px_2px_rgba(255,255,255,0.4)] items-center gap-2 transition-transform active:scale-95 border border-white/20 z-50">
-                            <svg class="w-5 h-5 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            <span class="drop-shadow-md">LƯU ẢNH VỀ MÁY</span>
+                        <button id="desktop-btn-download" class="hidden bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white px-8 py-3.5 rounded-[22px] font-bold border border-white/20 z-50 items-center gap-2 transition-transform active:scale-95 shadow-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span>LƯU ẢNH VỀ MÁY</span>
                         </button>
                     </div>
 
@@ -1135,7 +1116,7 @@
             </button>
             
             <!-- NÚT LƯU ẢNH TRÊN ĐIỆN THOẠI (HIỆN KHI XỬ LÝ XONG) -->
-            <button id="mob-btn-download" class="hidden flex-1 py-4 bg-[#BF5AF2]/90 backdrop-blur-xl rounded-[22px] text-white font-bold text-[10px] flex flex-col items-center justify-center gap-1 shadow-[0_8px_20px_-4px_rgba(191,90,242,0.5),inset_0_1.5px_2px_rgba(255,255,255,0.4)] active:scale-95 transition-all border border-white/20">
+            <button id="mob-btn-download" class="hidden flex-1 py-4 bg-[#0A84FF]/90 backdrop-blur-xl rounded-[22px] text-white font-bold text-[10px] flex flex-col items-center justify-center gap-1 shadow-[0_8px_20px_-4px_rgba(10,132,255,0.5),inset_0_1.5px_2px_rgba(255,255,255,0.4)] active:scale-95 transition-all border border-white/20">
                 <svg class="w-6 h-6 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 <span class="drop-shadow-md">LƯU ẢNH</span>
             </button>
@@ -1156,8 +1137,8 @@
             <!-- Store Header -->
             <div class="p-6 pb-2">
                 <span class="text-[10px] font-bold text-[#0A84FF] uppercase tracking-widest mb-1 block">STORE</span>
-                <h3 class="text-2xl font-bold text-white tracking-tight">Nạp RH Coins</h3>
-                <p class="text-[12px] text-gray-400 mt-1">1 RH Coin = 1 Lần xử lý ảnh chất lượng cao.</p>
+                <h3 class="text-2xl font-bold text-white tracking-tight">Nạp thêm lượt chạy</h3>
+                <p class="text-[12px] text-gray-400 mt-1">1 Lượt = 1 Lần xử lý ảnh chất lượng cao.</p>
             </div>
 
             <!-- Packages (UPDATED: Grid Layout) -->
@@ -1532,9 +1513,8 @@
                 updateUI() {
                     const el = document.getElementById('credit-count');
                     const mobEl = document.getElementById('mobile-credit-count');
-                    if (el) el.textContent = this.credits;
-                    // UPDATED: RH COINS text
-                    if (mobEl) mobEl.textContent = this.credits + " COINS";
+                    if (el) el.textContent = this.credits + " ẢNH";
+                    if (mobEl) mobEl.textContent = this.credits + " ẢNH";
                 }
             };
 
@@ -1628,7 +1608,7 @@
                 if(run) run.classList.add('hidden');
                 if(download) download.classList.add('hidden'); // ADDED
                 if(deskDownload) { 
-                    deskDownload.className = "hidden bg-[#BF5AF2]/90 backdrop-blur-xl hover:bg-[#a845d8] text-white px-8 py-3.5 rounded-[22px] font-bold shadow-[0_10px_30px_-5px_rgba(191,90,242,0.5),inset_0_1.5px_2px_rgba(255,255,255,0.4)] items-center gap-2 transition-transform active:scale-95 border border-white/20 z-50";
+                    deskDownload.className = "hidden bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white px-8 py-3.5 rounded-[22px] font-bold border border-white/20 z-50 items-center gap-2 transition-transform active:scale-95 shadow-sm";
                 }
                 
                 if (state === 'upload') {
@@ -1681,7 +1661,7 @@
                         download.classList.remove('hidden');
                     }
                     if(deskDownload) { // ADDED: ONLY SHOW ON DESKTOP
-                        deskDownload.className = "max-md:hidden md:flex bg-[#BF5AF2]/90 backdrop-blur-xl hover:bg-[#a845d8] text-white px-8 py-3.5 rounded-[22px] font-bold shadow-[0_10px_30px_-5px_rgba(191,90,242,0.5),inset_0_1.5px_2px_rgba(255,255,255,0.4)] items-center gap-2 transition-transform active:scale-95 border border-white/20 z-50";
+                        deskDownload.className = "max-md:hidden md:flex bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white px-8 py-3.5 rounded-[22px] font-bold border border-white/20 z-50 items-center gap-2 transition-transform active:scale-95 shadow-sm";
                     }
                     if(status) {
                         status.textContent = "COMPLETED";
@@ -1827,7 +1807,6 @@
                     setTimeout(() => { 
                         gateScreen.classList.add('animate-fade-out'); 
                         setTimeout(() => { gateScreen.style.display = 'none'; }, 500); 
-                        showToast(`Chào mừng trở lại!`, "success"); 
                     }, 500); 
                 }, 1000);
             });
@@ -1884,7 +1863,7 @@
                 if(!state.base64) return showToast("Vui lòng tải ảnh!", "error");
                 
                 if (!UserSystem.deductCredits(1)) { 
-                    showToast("Tài khoản không đủ RH Coin! Vui lòng nạp.", "error"); 
+                    showToast("Tài khoản không đủ Số lượng Ảnh! Vui lòng nạp.", "error"); 
                     document.getElementById('recharge-modal').classList.remove('hidden'); 
                     return; 
                 }
@@ -2146,21 +2125,15 @@
                         }
                         if(result.isIDPhoto) { 
                             setChecked('check-id-photo', true); 
-                            const contentSubject = document.getElementById('content-subject');
-                            if(contentSubject) contentSubject.classList.add('open'); 
                             autoReport.push("CHẾ ĐỘ: ẢNH THẺ");
                         }
                         
                         if(result.isAltarPortrait) {
                             setChecked('check-altar-mode', true);
-                            const contentSubject = document.getElementById('content-subject');
-                            if(contentSubject) contentSubject.classList.add('open');
                             autoReport.push("PHÁT HIỆN: ẢNH THỜ");
                         }
                         
                         if(result.isMilitary) { 
-                            const contentMilitary = document.getElementById('content-military');
-                            if(contentMilitary) contentMilitary.classList.add('open'); 
                             autoReport.push("PHÁT HIỆN: QUÂN PHỤC");
                             // Auto boost insignia logic
                             setChecked('check-insignia-boost', true);
@@ -2183,7 +2156,7 @@
                             }
 
                             if(result.militaryHatType === 'pith_helmet') {
-                                document.getElementById('hat-select').value = "wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge with yellow star";
+                                document.getElementById('hat-select').value = "wear vietnamese pith helmet, hard pith helmet, dark green color, rounded shape, red badge với yellow star";
                                 autoReport.push("AUTO: MŨ CỐI");
                             } else if (result.militaryHatType === 'soft_cap') {
                                 document.getElementById('hat-select').value = "wear vietnamese soft cap, boonie hat, green fabric, red star badge";
@@ -2192,7 +2165,7 @@
                                 document.getElementById('hat-select').value = "wear vietnamese police kepi hat, green color, red band, gold badge";
                                 autoReport.push("AUTO: MŨ KEPI CA");
                             } else if (result.militaryHatType === 'kepi_officer') {
-                                document.getElementById('hat-select').value = "wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge with gold star";
+                                document.getElementById('hat-select').value = "wear vietnamese officer kepi hat, mixed red and green color, gold chin strap, red badge với gold star";
                                 autoReport.push("AUTO: MŨ KEPI SQ");
                             }
 
@@ -2213,11 +2186,6 @@
                         if(result.hasMonolids) { setChecked('check-monolid', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: MẮT MỘT MÍ"); }
                         if(result.hasBuckTeeth) { setChecked('check-buck-teeth', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: RĂNG HÔ"); }
                         if(result.hasBlackenedTeeth) { setChecked('check-black-teeth', true); identityFeaturesFound = true; autoReport.push("KHÓA NÉT: RĂNG ĐEN"); }
-
-                        if(identityFeaturesFound) {
-                            const contentIdentity = document.getElementById('content-identity');
-                            if(contentIdentity) contentIdentity.classList.add('open');
-                        }
                         
                         if (!state.isReplicaMode) { 
                             const modeReplica = document.getElementById('mode-replica');
@@ -2288,9 +2256,6 @@
                         
                         const promptMain = document.getElementById('prompt-main');
                         if(promptMain) promptMain.value = smartPrompt;
-                        
-                        const contentPrompt = document.getElementById('content-prompt');
-                        if(contentPrompt) contentPrompt.classList.add('open');
                         
                         const workflowSelect = document.getElementById('kontext-workflow');
                         const moduleContainer = document.getElementById('kontext-module-container');
@@ -2410,7 +2375,7 @@
                     return showToast(`Mã này bị khóa cho máy: ${targetMachine}. Bạn không thể dùng!`, "error");
                 }
 
-                if (isNaN(amount)) return showToast("Lỗi giá trị RH Coin!", "error");
+                if (isNaN(amount)) return showToast("Lỗi giá trị!", "error");
 
                 UserSystem.addCredits(amount);
                 
