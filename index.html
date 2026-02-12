@@ -297,20 +297,24 @@
             animation: gridMove 20s linear infinite;
         }
 
-        /* Modern HUD Loader (Ring) */
+        /* Modern HUD Loader (Ring) - ĐÃ SỬA LỖI ĐƠ KHÔNG XOAY */
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         .loader-ring {
             border: 3px solid rgba(10, 132, 255, 0.1);
             border-top: 3px solid #0A84FF;
             border-radius: 50%;
             width: 60px; height: 60px;
-            animation: spin-slow 1s linear infinite; /* Reuse existing spin animation but faster here usually */
+            animation: spinRing 1s linear infinite;
         }
         .loader-ring-inner {
             border: 3px solid rgba(255, 214, 10, 0.1);
             border-bottom: 3px solid #FFD60A;
             border-radius: 50%;
             width: 40px; height: 40px;
-            animation: spin-slow 1.5s linear infinite reverse;
+            animation: spinRing 1.5s linear infinite reverse;
         }
         
         /* Drop Zone Pulse */
