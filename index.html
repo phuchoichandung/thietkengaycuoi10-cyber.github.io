@@ -1264,6 +1264,19 @@
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; 
 
+            // HÀM TẠO THỜI GIAN CHUẨN ĐỂ LƯU TÊN FILE (ÉP CHUẨN GIỜ VIỆT NAM GMT+7)
+            const getFormattedTime = () => {
+                const now = new Date();
+                const vnTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Ho_Chi_Minh"}));
+                const d = String(vnTime.getDate()).padStart(2, '0');
+                const m = String(vnTime.getMonth() + 1).padStart(2, '0');
+                const y = vnTime.getFullYear();
+                const h = String(vnTime.getHours()).padStart(2, '0');
+                const min = String(vnTime.getMinutes()).padStart(2, '0');
+                const s = String(vnTime.getSeconds()).padStart(2, '0');
+                return `${d}-${m}-${y}_${h}h${min}m${s}s`;
+            };
+
             const Sec = {
                 key: "V35_SEC_V2", 
                 dec(t){
@@ -1456,7 +1469,7 @@
                             e.stopPropagation();
                             const link = document.createElement('a');
                             link.href = src;
-                            link.download = `History-Image-${Date.now()}.jpg`;
+                            link.download = `V36-History_${getFormattedTime()}.jpg`;
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
@@ -1549,7 +1562,7 @@
                         if (qrImage.src) {
                             const link = document.createElement('a');
                             link.href = qrImage.src;
-                            link.download = `QR-Nap-Tien-${Date.now()}.png`;
+                            link.download = `V36-QR-Nap-Tien_${getFormattedTime()}.png`;
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
@@ -1820,7 +1833,7 @@
             const downloadImage = () => {
                 if (!state.restoredObj) return showToast("Chưa có ảnh kết quả!", "error");
                 const link = document.createElement('a');
-                link.download = `V36-Restored-${Date.now()}.jpg`;
+                link.download = `V36-Restored_${getFormattedTime()}.jpg`;
                 link.href = document.getElementById('img-modified').src;
                 document.body.appendChild(link);
                 link.click();
